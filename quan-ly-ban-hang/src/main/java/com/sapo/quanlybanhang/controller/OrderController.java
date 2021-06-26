@@ -4,12 +4,9 @@ import com.sapo.quanlybanhang.dto.OrderDetailDto;
 import com.sapo.quanlybanhang.dto.OrderDto;
 import com.sapo.quanlybanhang.dto.OrderPageable;
 import com.sapo.quanlybanhang.dto.OrderResponse;
-import com.sapo.quanlybanhang.entity.OrderDetailEntity;
-import com.sapo.quanlybanhang.entity.OrderEntity;
-import com.sapo.quanlybanhang.entity.ProductEntity;
-import com.sapo.quanlybanhang.repository.OrderRepository;
+
 import com.sapo.quanlybanhang.service.IOrderService;
-import com.sapo.quanlybanhang.service.impl.OrderService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -39,13 +36,14 @@ public class OrderController {
 
     @PostMapping("/orders")
     public ResponseEntity save (@RequestBody OrderDto orderDto){
+        return  null;
 //        List<OrderDetailDto> orderDetailDtos = orderDto.getOrderDetailDtos();
 //        if(orderDetailDtos.size()==0){
 //            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new OrderResponse("message","không có sản phẩm"));
 //        }
-        if(orderService.save(orderDto) != null){
-            return ResponseEntity.ok(orderDto);
-        }
-        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new OrderResponse("message","không có sản phẩm"));
+//        if(orderService.save(orderDto) != null){
+//            return ResponseEntity.ok(orderDto);
+//        }
+//        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new OrderResponse("message","không có sản phẩm"));
     }
 }

@@ -14,7 +14,7 @@ import java.util.Date;
 public class ProductEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
     @Column(name = "code")
     private String code;
     @Column(name = "name")
