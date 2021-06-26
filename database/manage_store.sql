@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.25, for Win64 (x86_64)
 --
--- Host: localhost    Database: qualy
+-- Host: localhost    Database: manage_store
 -- ------------------------------------------------------
 -- Server version	8.0.25
 
@@ -143,7 +143,7 @@ CREATE TABLE `oder_detail` (
   PRIMARY KEY (`id`),
   KEY `order_id_idx` (`order_id`),
   KEY `product_id_idx` (`product_id`),
-  CONSTRAINT `order_id` FOREIGN KEY (`order_id`) REFERENCES `order` (`id`),
+  CONSTRAINT `order_id` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`),
   CONSTRAINT `product_id` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -159,21 +159,21 @@ INSERT INTO `oder_detail` VALUES (1,1,1,2,1000),(2,2,2,1,600);
 UNLOCK TABLES;
 
 --
--- Table structure for table `order`
+-- Table structure for table `orders`
 --
 
-DROP TABLE IF EXISTS `order`;
+DROP TABLE IF EXISTS `orders`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `order` (
+CREATE TABLE `orders` (
   `id` int NOT NULL AUTO_INCREMENT,
   `code` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
   `customer_id` int NOT NULL,
   `staff_id` int NOT NULL,
   `created_by` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
   `modified_by` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `created_date` datetime DEFAULT NULL,
-  `modified_date` datetime DEFAULT NULL,
+  `created_date` date DEFAULT NULL,
+  `modified_date` date DEFAULT NULL,
   `status` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `customer_id_idx` (`customer_id`),
@@ -184,13 +184,13 @@ CREATE TABLE `order` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `order`
+-- Dumping data for table `orders`
 --
 
-LOCK TABLES `order` WRITE;
-/*!40000 ALTER TABLE `order` DISABLE KEYS */;
-INSERT INTO `order` VALUES (1,'#QL',1,1,'Nguyễn Văn a','2021-02-02',NULL,NULL,NULL),(2,'#QL2',1,1,'Nguyễn Văn a','2021-02-02',NULL,NULL,NULL),(3,'#QL3',1,2,'Nguyễn Văn B','2021-02-02',NULL,NULL,NULL),(4,'#QL4',14,2,'Nguyễn Văn B','2021-02-02',NULL,NULL,NULL),(5,'#Ql4',1,1,'Nguyễn Văn B','2021-11-11 13:23:44',NULL,NULL,NULL);
-/*!40000 ALTER TABLE `order` ENABLE KEYS */;
+LOCK TABLES `orders` WRITE;
+/*!40000 ALTER TABLE `orders` DISABLE KEYS */;
+INSERT INTO `orders` VALUES (1,'#QL',1,1,'Nguyễn Văn a','Nguyễn Văn a','2021-02-02','2021-02-02','a'),(2,'#QL2',1,1,'Nguyễn Văn a','Nguyễn Văn a','2021-02-02','2021-02-02','a'),(3,'#QL3',1,2,'Nguyễn Văn B','Nguyễn Văn a','2021-02-02','2021-02-02','a'),(4,'#QL4',14,2,'Nguyễn Văn B','Nguyễn Văn a','2021-02-02','2021-02-02','a'),(5,'#Ql4',1,1,'Nguyễn Văn B','Nguyễn Văn a','2021-02-02','2021-02-02','a');
+/*!40000 ALTER TABLE `orders` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -218,7 +218,7 @@ CREATE TABLE `products` (
   `category_id` int NOT NULL,
   `modified_by` varchar(45) DEFAULT NULL,
   `created_by` varchar(45) DEFAULT NULL,
-  `status` varchar(45) DEFAULT NULL,
+  `state` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `supplier_id_idx` (`supplier_id`),
   KEY `color_id_idx` (`color_id`),
@@ -230,7 +230,7 @@ CREATE TABLE `products` (
   CONSTRAINT `color_id` FOREIGN KEY (`color_id`) REFERENCES `colors` (`id`),
   CONSTRAINT `size_id` FOREIGN KEY (`size_id`) REFERENCES `size` (`id`),
   CONSTRAINT `supplier_id` FOREIGN KEY (`supplier_id`) REFERENCES `supplier` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -239,7 +239,7 @@ CREATE TABLE `products` (
 
 LOCK TABLES `products` WRITE;
 /*!40000 ALTER TABLE `products` DISABLE KEYS */;
-INSERT INTO `products` VALUES (1,'#A','Áo khoác Chino thời thượng SID56708',1,100,0,'aa',500.000,1,'chất vải mát',1,'2021-02-02','2021-02-02',1,1,NULL,NULL,NULL),(2,'#A1','Áo khoác đầm dáng xòe nút bọc 2in1',1,100,0,'aaa',600.000,1,'chất vải mát',2,'2021-02-02','2021-02-02',2,1,NULL,NULL,NULL),(3,'#V','Váy phối sọc cá tính SID62366',2,100,0,'bbbb',300.000,2,'váy ngắn mát',5,'2021-02-02','2021-02-02',2,2,NULL,NULL,NULL),(4,'#V2','Váy phối sọc cá tính SID62366',2,100,0,'vvvv',250.000,2,'váy đầm',4,'2021-02-02','2021-02-02',1,2,NULL,NULL,NULL),(5,'#AT','Áo thun phối sọc cá tính SID62366',3,100,0,'ttt',250.000,3,'áo thun coton',5,'2021-02-02','2021-02-02',3,3,NULL,NULL,NULL),(6,'#AT1','Áo thun phối sọc cá tính SID62366',4,100,0,'tttt',300.000,3,'áo thun dáng xuông',4,'2021-02-02','2021-02-02',3,4,NULL,NULL,NULL);
+INSERT INTO `products` VALUES (1,'#cccccccccccccccc','ccccccccccc khoác Chino thời thượng SID56708',1,100,0,'aa',500.000,1,'chất vải mát',1,'2021-02-02','2021-02-02',1,1,NULL,NULL,NULL),(2,'#A1','Áo khoác đầm dáng xòe nút bọc 2in1',1,100,0,'aaa',600.000,1,'chất vải mát',2,'2021-02-02','2021-02-02',2,1,NULL,NULL,NULL),(3,'#V','Váy phối sọc cá tính SID62366',2,100,0,'bbbb',300.000,2,'váy ngắn mát',5,'2021-02-02','2021-02-02',2,2,NULL,NULL,'aaa'),(4,'#V2','Váy phối sọc cá tính SID62366',2,100,0,'vvvv',250.000,2,'váy đầm',4,'2021-02-02','2021-02-02',1,2,NULL,NULL,'aaaa'),(5,'#AT','Áo thun phối sọc cá tính SID62366',3,100,0,'ttt',250.000,3,'áo thun coton',5,'2021-02-02','2021-02-02',3,3,NULL,NULL,NULL),(6,'#AT1','Áo thun phối sọc cá tính SID62366',4,100,0,'tttt',300.000,3,'áo thun dáng xuông',4,'2021-02-02','2021-02-02',3,4,NULL,NULL,NULL),(9,'#A','Áoaaaaaaaaaaaaaaaaaaaaaaa khoác Chino thời thượng SID56708',1,0,0,NULL,500.000,1,'chất vải mát',1,NULL,NULL,1,1,NULL,NULL,NULL),(10,'#A','Áoaaaaaaaaaaaaaaaaaaaaaaa khoác Chino thời thượng SID56708',1,0,0,NULL,500.000,1,'chất vải mát',1,NULL,NULL,1,1,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `products` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -390,4 +390,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-06-25 10:18:32
+-- Dump completed on 2021-06-26 10:47:33
