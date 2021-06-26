@@ -3,19 +3,28 @@ package com.sapo.quanlybanhang.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 
 @Entity
 @Table(name = "oder_detail")
 @Data
-public class OrderDetailEntity {
+@EqualsAndHashCode
+public class OrderDetailEntity implements Serializable {
+
+    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
+
     @Column(name = "quanlity")
     private int quanlity;
+
     @Column(name = "discount")
-    private int discount;
+    private Long discount;
+
+    @Column (name = "code")
+    private  String code;
 
     @ManyToOne
     @JoinColumn(name = "order_id")
@@ -23,17 +32,6 @@ public class OrderDetailEntity {
 
     @ManyToOne
     @JoinColumn(name = "product_id")
-    private OrderEntity product;
-
-
-
-    public OrderDetailEntity(int id, int quanlity, int discount) {
-        this.id = id;
-        this.quanlity = quanlity;
-        this.discount = discount;
-    }
-
-    public OrderDetailEntity() {
-    }
+    private ProductEntity product;
 
 }
