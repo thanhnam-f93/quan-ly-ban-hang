@@ -40,6 +40,7 @@ public class CustomerEntity {
 
     @Column(name ="modified_date")
     private Date modifiedDate;
+
     @Column(name ="created_by")
     private String createBy;
 

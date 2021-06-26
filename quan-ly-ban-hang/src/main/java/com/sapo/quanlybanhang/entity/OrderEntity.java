@@ -3,6 +3,7 @@ package com.sapo.quanlybanhang.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -21,10 +22,10 @@ public class OrderEntity {
     private String code;
 
     @Column(name ="created_date")
-    private Date createdDate;
+    private Timestamp createdDate;
 
     @Column(name ="modified_date")
-    private Date modifiedDate;
+    private Timestamp modifiedDate;
 
     @Column(name ="created_by")
     private String createBy;
