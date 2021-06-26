@@ -1,6 +1,8 @@
 package com.sapo.quanlybanhang.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
@@ -9,6 +11,9 @@ import javax.persistence.Id;
 import java.util.Date;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
+
 public class StaffDto {
 
     private int id;

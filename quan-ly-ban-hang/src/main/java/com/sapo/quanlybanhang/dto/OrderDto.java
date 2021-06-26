@@ -1,29 +1,40 @@
 package com.sapo.quanlybanhang.dto;
 
-import lombok.Data;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import java.util.Date;
+import lombok.*;
+
+import javax.persistence.Entity;
+import java.sql.Timestamp;
+import java.util.List;
+
 @Data
+@Entity
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
+
 public class OrderDto {
 
-    private int id;
+    private Integer id;
 
     private String code;
 
-    private String customerId;
+    private Long price;
 
-    private String staffId;
+    private Timestamp createdDate;
 
-    private Date createdDate;
-
-    private Date modifiedDate;
+    private Timestamp modifiedDate;
 
     private String createBy;
 
     private String modifiedBy;
+
+    private Integer customId;
+
+    private Integer staffId;
+
+    private List<OrderDetailDto> orderDetailDtos;
+
 
 }
