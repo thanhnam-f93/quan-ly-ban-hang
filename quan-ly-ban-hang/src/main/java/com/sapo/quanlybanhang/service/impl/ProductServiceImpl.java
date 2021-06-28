@@ -8,6 +8,9 @@ import com.sapo.quanlybanhang.repository.*;
 import com.sapo.quanlybanhang.service.ProductService;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.modelmapper.ModelMapper;
 
@@ -32,7 +35,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List getAll() {
-        List<ProductEntity> productEntities = productRepository.findAll();
+        List<ProductEntity> productEntities = productRepository.findAllByStateIsNull();
         List<ProductDto> productDtos = new ArrayList<>();
         Converter converter = new Converter();
 
@@ -116,4 +119,82 @@ public class ProductServiceImpl implements ProductService {
         }
         return null;
     }
+
+    @Override
+    public List sortByName() {
+        List<ProductEntity> productEntities = productRepository.sortByName();
+        List<ProductDto> productDtos = new ArrayList<>();
+        Converter converter = new Converter();
+
+        for (ProductEntity item : productEntities) {
+            productDtos.add(converter.ConverterToDtoProduct(item));
+
+        }
+
+        return productDtos;
+    }
+
+    @Override
+    public List sortByPrice() {
+        List<ProductEntity> productEntities = productRepository.findAllByIdIsNotNullOrderByPriceDesc();
+        List<ProductDto> productDtos = new ArrayList<>();
+        Converter converter = new Converter();
+
+        for (ProductEntity item : productEntities) {
+            productDtos.add(converter.ConverterToDtoProduct(item));
+
+        }
+        return productDtos;
+    }
+
+    @Override
+    public List sortByNumber() {
+        List<ProductEntity> productEntities = productRepository.sortByNumber();
+        List<ProductDto> productDtos = new ArrayList<>();
+        Converter converter = new Converter();
+
+        for (ProductEntity item : productEntities) {
+            productDtos.add(converter.ConverterToDtoProduct(item));
+
+        }
+
+        return productDtos;
+    }
+
+    @Override
+    public List searchByCategory(int keyword) {
+        if (keyword != 0) {
+            List<ProductEntity> productEntities = productRepository.findByCategory_Id(keyword);
+            List<ProductDto> productDtos = new ArrayList<>();
+            Converter converter = new Converter();
+            for (ProductEntity item : productEntities) {
+                productDtos.add(converter.ConverterToDtoProduct(item));
+            }
+            return productDtos;
+        }
+        return null;
+    }
+
+    @Override
+    public List findPaginated(int papeNo, int papeSize) {
+        Pageable pageable = PageRequest.of(papeNo - 1, papeSize);
+        Page<ProductEntity> productEntities = productRepository.findAll(pageable);
+        List<ProductDto> productDtos = new ArrayList<>();
+        Converter converter = new Converter();
+        for (ProductEntity item : productEntities) {
+            productDtos.add(converter.ConverterToDtoProduct(item));
+        }
+        return productDtos;
+    }
+
+    @Override
+    public ProductEntity deleteByID(int id) {
+        ProductEntity productEntity = productRepository.findByIdAndStateIsNull(id);
+        if(productEntity !=null){
+            productEntity.setState("Deleted");
+            productRepository.save(productEntity);
+        }
+        return null;
+    }
 }
+

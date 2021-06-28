@@ -23,6 +23,18 @@ public class ProductController {
     public List<ProductDto> getAll(){
         return productService.getAll();
     }
+    @GetMapping(value = "/products/name")
+    public List<ProductDto> sortByName(){
+        return productService.sortByName();
+    }
+    @GetMapping(value = "/products/price")
+    public List<ProductDto> sortByPrice(){
+        return productService.sortByPrice();
+    }
+    @GetMapping(value = "/products/number")
+    public List<ProductDto> sortByNumber(){
+        return productService.sortByNumber();
+    }
 
     @PostMapping(value = "/products")
     public InputProductDto create(@RequestBody InputProductDto productDto){
@@ -54,5 +66,21 @@ public class ProductController {
     @GetMapping(value = "/product_search/{keyword}")
     public List<ProductDto> search(@PathVariable String keyword){
         return productService.findAll(keyword);
+    }
+    @GetMapping(value = "/product_searchByCategory/{keyword}")
+    public List<ProductDto> searchByCategory(@PathVariable int keyword){
+        return productService.searchByCategory(keyword);
+    }
+
+    @GetMapping(value = "/product")
+    public List<ProductEntity> findPaginated(@RequestParam int pageNo) {
+        int pageSize = 3;
+        return  productService.findPaginated(pageNo,pageSize);
+
+
+    }
+    @DeleteMapping(value = "/products/{id}")
+    public void deleteProductById(@PathVariable int id){
+        productService.deleteByID(id);
     }
 }

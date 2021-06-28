@@ -12,6 +12,28 @@ public interface ProductRepository extends JpaRepository<ProductEntity,Integer> 
     @Query(value = "select * from products as p where p.name LIKE %?1% ", nativeQuery = true)
     List<ProductEntity> findAll(String keyword);
 
+//    @Query(value = "SELECT * FROM products as p where p.category_id = ?1; ", nativeQuery = true)
+//    List<ProductEntity> findAllByCategory(String keyword);
+
+    List<ProductEntity> findAllByStateIsNull();
+
+    ProductEntity findByIdAndStateIsNull(int id);
+
+    List<ProductEntity> findAllByIdIsNotNullOrderByPriceDesc();
+
+    @Query(value = "SELECT * FROM products as p order by p.price desc " , nativeQuery = true)
+    List<ProductEntity> sortByPrice();
+
+    @Query(value = "SELECT * FROM products as p order by p.name desc " , nativeQuery = true)
+    List<ProductEntity> sortByName();
+
+    @Query(value = "SELECT * FROM products as p order by p.number_product desc " , nativeQuery = true)
+    List<ProductEntity> sortByNumber();
+
+
+
+
+
 
 
 }
