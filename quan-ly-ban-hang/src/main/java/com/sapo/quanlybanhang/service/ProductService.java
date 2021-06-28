@@ -2,6 +2,7 @@ package com.sapo.quanlybanhang.service;
 
 import com.sapo.quanlybanhang.dto.InputProductDto;
 import com.sapo.quanlybanhang.dto.ProductDto;
+import com.sapo.quanlybanhang.dto.UpdateDto;
 import com.sapo.quanlybanhang.entity.ProductEntity;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +21,9 @@ public interface ProductService <t>{
     List<t> searchByCategory(int keyword);
     List<t> findPaginated(int papeNo, int papeSize);
     ProductEntity deleteByID(int id);
+
+    ProductDto updateProduct(int id, UpdateDto productDto);
+
 
 
 }

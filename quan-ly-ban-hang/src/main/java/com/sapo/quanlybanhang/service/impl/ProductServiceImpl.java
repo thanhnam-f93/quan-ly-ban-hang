@@ -3,6 +3,7 @@ package com.sapo.quanlybanhang.service.impl;
 import com.sapo.quanlybanhang.converter.Converter;
 import com.sapo.quanlybanhang.dto.InputProductDto;
 import com.sapo.quanlybanhang.dto.ProductDto;
+import com.sapo.quanlybanhang.dto.UpdateDto;
 import com.sapo.quanlybanhang.entity.*;
 import com.sapo.quanlybanhang.repository.*;
 import com.sapo.quanlybanhang.service.ProductService;
@@ -38,12 +39,9 @@ public class ProductServiceImpl implements ProductService {
         List<ProductEntity> productEntities = productRepository.findAllByStateIsNull();
         List<ProductDto> productDtos = new ArrayList<>();
         Converter converter = new Converter();
-
         for (ProductEntity item : productEntities) {
             productDtos.add(converter.ConverterToDtoProduct(item));
-
         }
-
         return productDtos;
     }
 
@@ -102,7 +100,6 @@ public class ProductServiceImpl implements ProductService {
 
         product.setCode(productEntity.getCode());
         product.setName(productEntity.getName());
-
         return productRepository.save(product);
     }
 
@@ -189,12 +186,42 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductEntity deleteByID(int id) {
-        ProductEntity productEntity = productRepository.findByIdAndStateIsNull(id);
-        if(productEntity !=null){
+        ProductEntity productEntity = productRepository.findByIdAndStateIsNotNull(id);
+        if (productEntity != null) {
             productEntity.setState("Deleted");
             productRepository.save(productEntity);
         }
         return null;
+    }
+
+    @Override
+    public ProductDto updateProduct(int id, UpdateDto updateDto) {
+        ProductEntity product = productRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Not found."));
+
+        product.setCode(updateDto.getCode());
+        product.setName(updateDto.getName());
+
+        CategoryEntity categoryEntity = categoryRepository.getById(updateDto.getCategory_id());
+        product.setCategory(categoryEntity);
+
+        BrandEntity brandEntity = brandRepository.getById((updateDto.getBrand_id()));
+        product.setBrand(brandEntity);
+
+        ColorEntity colorEntity = colorRepository.getById(updateDto.getColor_id());
+        product.setColor(colorEntity);
+
+        SizeEntity sizeEntity = sizeRepository.getById(updateDto.getSize_id());
+        product.setSize(sizeEntity);
+
+        SupplierEntity supplierEntity = supplierRepository.getById(updateDto.getSupplier_id());
+        product.setSupplier(supplierEntity);
+
+
+        productRepository.save(product);
+        Converter converter = new Converter();
+        return converter.ConverterToDtoProduct(product);
+
+
     }
 }
 
