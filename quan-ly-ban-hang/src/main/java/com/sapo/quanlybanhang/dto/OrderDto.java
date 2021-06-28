@@ -33,5 +33,9 @@ public class OrderDto {
 
     private List<OrderDetailDto> orderDetailDtos;
 
+    private String customerName;
+
+    private String StaffName;
+
 
 }

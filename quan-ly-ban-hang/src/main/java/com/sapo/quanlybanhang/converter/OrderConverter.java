@@ -27,6 +27,8 @@ public class OrderConverter {
         dto.setPrice(entity.getPrice());
         dto.setStaffId(entity.getStaff().getId());
         dto.setCustomId(entity.getCustomer().getId());
+        dto.setCustomerName(entity.getCustomer().getName());
+        dto.setStaffName(entity.getStaff().getFullName());
         return dto;
     }
 }
