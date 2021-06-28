@@ -15,6 +15,7 @@ public interface ProductService <t>{
     ProductDto findById(int id);
     ProductEntity update(int id, ProductEntity productEntity);
     List<t> findAll(String keyword);
+    List<t> getAllByDay();
     List<t> sortByName();
     List<t> sortByPrice();
     List<t> sortByNumber();

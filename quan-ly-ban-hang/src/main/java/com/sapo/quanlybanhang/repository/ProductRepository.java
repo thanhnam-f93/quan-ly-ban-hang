@@ -26,8 +26,12 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Integer>
 
     List<ProductEntity> findAllByIdIsNotNullOrderByPriceDesc();
 
+    @Query(value = "SELECT * FROM products as p where created_date>= now() - INTERVAL 7 day ", nativeQuery = true)
+    List<ProductEntity> getALLByDay();
+
     @Query(value = "SELECT * FROM products as p order by p.price desc ", nativeQuery = true)
     List<ProductEntity> sortByPrice();
+
 
     @Query(value = "SELECT * FROM products as p order by p.name desc ", nativeQuery = true)
     List<ProductEntity> sortByName();

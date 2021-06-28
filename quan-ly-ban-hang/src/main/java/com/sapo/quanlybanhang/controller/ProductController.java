@@ -26,6 +26,11 @@ public class ProductController {
         return productService.getAll();
     }
 
+    @GetMapping(value = "/day")
+    public List<ProductDto> getAllByDay() {
+        return productService.getAllByDay();
+    }
+
     @GetMapping(value = "/products/name")
     public List<ProductDto> sortByName() {
         return productService.sortByName();

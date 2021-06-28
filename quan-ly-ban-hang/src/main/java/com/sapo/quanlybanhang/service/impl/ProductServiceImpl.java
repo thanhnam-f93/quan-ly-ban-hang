@@ -118,6 +118,17 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public List getAllByDay() {
+        List<ProductEntity> productEntities = productRepository.getALLByDay();
+        List<ProductDto> productDtos = new ArrayList<>();
+        Converter converter = new Converter();
+        for (ProductEntity item : productEntities) {
+            productDtos.add(converter.ConverterToDtoProduct(item));
+        }
+        return productDtos;
+    }
+
+    @Override
     public List sortByName() {
         List<ProductEntity> productEntities = productRepository.sortByName();
         List<ProductDto> productDtos = new ArrayList<>();
