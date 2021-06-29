@@ -5,14 +5,13 @@ import com.sapo.quanlybanhang.converter.OrderDetailConverter;
 import com.sapo.quanlybanhang.dao.IOrderDao;
 import com.sapo.quanlybanhang.dto.OrderDetailDto;
 import com.sapo.quanlybanhang.dto.OrderDto;
+import com.sapo.quanlybanhang.dto.OrderPageable;
 import com.sapo.quanlybanhang.entity.*;
-import com.sapo.quanlybanhang.repository.CustomerRepository;
-import com.sapo.quanlybanhang.repository.OrderRepository;
-import com.sapo.quanlybanhang.repository.ProductRepository;
-import com.sapo.quanlybanhang.repository.StaffRepository;
+import com.sapo.quanlybanhang.repository.*;
 import com.sapo.quanlybanhang.service.IOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,6 +37,9 @@ public class OrderService implements IOrderService {
     @Autowired
     private IOrderDao orderDao;
 
+    @Autowired
+    OrderDetailRepository orderDetailRepository;
+
     @Override
     public List<OrderDto> findAll( Pageable pageable) {
         List<OrderEntity> list = orderRepository.findAll(pageable).getContent();
@@ -62,10 +64,17 @@ public class OrderService implements IOrderService {
                                 .map(item -> OrderDetailConverter.toEntity(item)).collect(Collectors.toList());
 
         for(OrderDetailEntity item : orderDetailEntities){
+        if(productEntities.get(index).getNumberProduct()-item.getQuanlity()<0){
+            return null;
+        }
            ProductEntity productEntity = productEntities.get(index);
             item.setOrder(orderEntity);
             price += item.getDiscount() * item.getQuanlity();
+            item.setPrice(item.getDiscount() * item.getQuanlity());
             item.setProduct(productEntity);
+            item.getProduct().setSellProduct(item.getQuanlity()+item.getProduct().getSellProduct());
+            item.getProduct().setNumberProduct(item.getProduct().getNumberProduct()-item.getQuanlity());
+            item.setRemainAmount(item.getQuanlity());
             index+=1;
         }
         orderEntity.setPrice(price);
@@ -84,7 +93,8 @@ public class OrderService implements IOrderService {
 
     @Override
     @Transactional
-    public List<OrderDto> findByCodeAndCustomer(String input) {
-        return orderDao.findByCodeAndCustomer(input).stream().map(item -> OrderConverter.toDto(item)).collect(Collectors.toList());
+    public List<OrderDto> findByCodeAndCustomer(OrderPageable orderPageable) {
+        return orderDao.findByCodeAndCustomer( orderPageable).stream().map(item -> OrderConverter.toDto(item)).collect(Collectors.toList());
     }
+
 }

@@ -12,6 +12,8 @@ public class OrderDetailConverter {
         dto.setQuanlity(entity.getQuanlity());
         dto.setCodeOrder(entity.getProduct().getCode());
         dto.setCodeProduct(entity.getProduct().getCode());
+        dto.setRemainAmount(entity.getRemainAmount());
+        dto.setProductName(entity.getProduct().getName());
         return  dto;
     }
 
@@ -21,6 +23,7 @@ public class OrderDetailConverter {
         entity.setCode(dto.getCode());
         entity.setDiscount(dto.getDiscount());
         entity.setQuanlity(dto.getQuanlity());
+        entity.setRemainAmount(dto.getRemainAmount());
         return  entity;
     }
 }

@@ -19,14 +19,22 @@ import java.util.List;
 public class OrderController {
     @Autowired
     private IOrderService orderService;
+
 /**
-    paging of order . sort descending
+    paging of order . sort descending, sortyby created date
+    search and filter
  */
     @GetMapping("/orders")
     public List<OrderDto> findAll(@RequestBody OrderPageable orderPageable){
-        Sort sort = Sort.by(orderPageable.getSortBy()).descending();
-        Pageable pageable = PageRequest.of(orderPageable.getPage()-1,orderPageable.getLimit(),sort);
-       return  orderService.findAll(pageable);
+        if(orderPageable.getOrderTime() == null && (orderPageable.getInputOrder() == null
+                || orderPageable.getInputOrder() =="" )){
+            Sort sort = Sort.by("createdDate").descending();
+            Pageable pageable = PageRequest.of(orderPageable.getPage()-1,orderPageable.getLimit(),sort);
+            return  orderService.findAll(pageable);
+        }else {
+            return orderService.findByCodeAndCustomer(orderPageable);
+        }
+
     }
 
     /**
@@ -38,30 +46,16 @@ public class OrderController {
     public ResponseEntity save (@RequestBody OrderDto orderDto){
         List<OrderDetailDto> orderDetailDtos = orderDto.getOrderDetailDtos();
         if(orderDetailDtos.size()==0){
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new OrderResponse("message","không có sản phẩm"));
+            return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                    .body(new OrderResponse("không có sản phẩm hoặc sản phẩm không hợp lệ"));
         }
 
         if((orderDto=orderService.save(orderDto)) != null){
             return ResponseEntity.ok(orderDto);
         }
-        return ResponseEntity.status(HttpStatus.FORBIDDEN)
-                .body(new OrderResponse("message","không có sản phẩm"));
+      return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                .body(new OrderResponse("không có sản phẩm hoặc sản phẩm không hợp lệ"));
     }
 
-    /**
-     * search order by code, customer 's name and customer 's phone number
-     * @param input
-     * @return
-     */
-    @GetMapping("/orders/search-order/{input}")
-    public  ResponseEntity findByCodeAndCustomer(@PathVariable String input){
-        return ResponseEntity.ok(orderService.findByCodeAndCustomer(input));
-    }
-
-    @GetMapping ("/orders/filter-orders")
-    public ResponseEntity filterOrder(@RequestBody FilterOrder filterOrder){
-
-        return  null;
-    }
 
 }

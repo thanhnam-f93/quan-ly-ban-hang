@@ -50,4 +50,8 @@ public class CustomerEntity {
     @OneToMany(mappedBy = "customer")
     private List<OrderEntity> orderEntities = new ArrayList();
 
+    @OneToMany(mappedBy = "customerBill")
+    private List<BillEntity> billEntities = new ArrayList();
+
+
 }

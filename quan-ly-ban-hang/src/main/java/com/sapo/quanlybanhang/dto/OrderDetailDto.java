@@ -27,5 +27,9 @@ public class OrderDetailDto {
 
     private Integer orderId;
 
+    private Integer remainAmount;
 
+    private Integer amountPay;
+
+    private String productName;
 }

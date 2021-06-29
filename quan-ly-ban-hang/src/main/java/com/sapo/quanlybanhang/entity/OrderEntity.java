@@ -50,5 +50,8 @@ public class OrderEntity {
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderDetailEntity> orderDetailEntities = new ArrayList();
 
+    @OneToMany(mappedBy = "orderEntity", cascade = CascadeType.ALL)
+    private List<BillEntity> billEntities = new ArrayList();
+
 
 }
