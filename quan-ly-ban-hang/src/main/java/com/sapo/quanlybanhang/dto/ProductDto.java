@@ -16,7 +16,7 @@ public class ProductDto {
 
     private String name;
 
-    private int brandID;
+    private String brandID;
 
     private int numberProduct;
 
@@ -26,19 +26,20 @@ public class ProductDto {
 
     private float price;
 
-    private int supplierId;
+    private String supplierId;
 
     private String description;
+    private String state;
 
-    private int colorId;
+    private String colorId;
 
     private Date createdDate;
 
     private Date modifiedDate;
 
-    private Date sizeId;
+    private String sizeId;
 
-    private Date categoryId;
+    private String categoryId;
 
     private String createBy;
 

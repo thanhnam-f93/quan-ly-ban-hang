@@ -1,7 +1,8 @@
 package com.sapo.quanlybanhang.entity;
 
 import lombok.Data;
-
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -9,8 +10,10 @@ import java.util.Date;
 
 @Entity
 @Table(name = "products")
-@Data
-
+@Setter
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
 public class ProductEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,9 +35,6 @@ public class ProductEntity {
     @Column(name = "decription")
     private String description;
 
-    @Column(name = "status")
-    private String status;
-
     @Column(name ="created_date")
     private Date createdDate;
 
@@ -46,6 +46,8 @@ public class ProductEntity {
 
     @Column(name ="created_by")
     private String createdBy;
+    @Column(name ="state")
+    private String state;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
@@ -70,5 +72,5 @@ public class ProductEntity {
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private Collection<OrderDetailEntity> orderDetailEntities;
 
-
+  
 }

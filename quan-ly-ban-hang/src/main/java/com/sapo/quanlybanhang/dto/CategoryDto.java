@@ -7,6 +7,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.util.Date;
+import java.util.List;
+
 @Data
 public class CategoryDto {
 
@@ -23,4 +25,7 @@ public class CategoryDto {
     private String create_by;
 
     private String modified_by;
+
+    private List<ProductDto> productDtoList;
+
 }
