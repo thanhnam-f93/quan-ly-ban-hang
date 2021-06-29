@@ -58,5 +58,9 @@ public class SupplierController {
         return supplierService.findPaginated(page ,pageSize);
 
     }
+    @DeleteMapping(value = "/suppliers/{id}")
+    public void deleteProductById(@PathVariable int id) {
+        supplierService.deleteByID(id);
+    }
 
 }

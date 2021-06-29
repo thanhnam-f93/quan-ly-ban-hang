@@ -24,7 +24,7 @@ private SupplierRepository supplierRepository;
 
     @Override
     public List<SupplierDto> getAll() {
-        List<SupplierEntity> supplierEntities = supplierRepository.findAll();
+        List<SupplierEntity> supplierEntities = supplierRepository.findAllByStateIsNull();
         List<SupplierDto> supplierDtos = new ArrayList<>();
         Converter converter = new Converter();
         for (SupplierEntity item : supplierEntities) {
@@ -47,7 +47,6 @@ private SupplierRepository supplierRepository;
         supplierDto.setModifiedDate(supplierEntity.getModifiedDate());
         supplierDto.setCreatedBy(supplierEntity.getCreatedBy());
         supplierDto.setModifiedBy(supplierEntity.getModifiedBy());
-
         return supplierDto;
     }
 
@@ -78,6 +77,12 @@ private SupplierRepository supplierRepository;
 
     @Override
     public SupplierDto deleteByID(int id) {
+
+        SupplierEntity supplierEntity = supplierRepository.findByIdAndStateIsNull(id);
+        if (supplierEntity != null) {
+            supplierEntity.setState("Deleted");
+            supplierRepository.save(supplierEntity);
+        }
         return null;
     }
 

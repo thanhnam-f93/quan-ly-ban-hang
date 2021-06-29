@@ -19,4 +19,8 @@ public interface SupplierRepository extends JpaRepository<SupplierEntity,Integer
     @Query(value = " SELECT * FROM supplier where modified_by = ?1 ", nativeQuery = true)
     List<SupplierEntity> getALLByModified(String keyword);
 
+    SupplierEntity findByIdAndStateIsNotNull(int id);
+    SupplierEntity findByIdAndStateIsNull(int id);
+    List<SupplierEntity> findAllByStateIsNull();
+
 }
