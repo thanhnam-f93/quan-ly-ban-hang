@@ -27,8 +27,13 @@ public class ProductController {
     }
 
     @GetMapping(value = "/day")
-    public List<ProductDto> getAllByDay() {
+    public List<ProductDto> filterByDay() {
         return productService.getAllByDay();
+    }
+    @GetMapping(value = "/month")
+
+    public List<ProductDto> filterByMonth() {
+        return productService.getAllByMonth();
     }
 
     @GetMapping(value = "/products/name")
@@ -81,12 +86,12 @@ public class ProductController {
     }
 
     @GetMapping(value = "/product_searchByCategory/{keyword}")
-    public List<ProductDto> searchByCategory(@PathVariable int keyword) {
+    public List<ProductDto> filterByCategory(@PathVariable int keyword) {
         return productService.searchByCategory(keyword);
     }
 
     @GetMapping(value = "/product")
-    public List<ProductEntity> findPaginated(@RequestParam int pageNo) {
+    public List<ProductDto> findPaginated(@RequestParam int pageNo) {
         int pageSize = 3;
         return productService.findPaginated(pageNo, pageSize);
 

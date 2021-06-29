@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.util.Date;
 
 @Data
 public class SupplierDto {
@@ -21,4 +22,15 @@ public class SupplierDto {
     private String address;
 
     private String phone;
+
+    private String state;
+
+    private Date createdDate;
+
+    private Date modifiedDate;
+
+    private String createdBy;
+
+    private String modifiedBy;
+
 }

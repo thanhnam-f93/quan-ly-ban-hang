@@ -1,16 +1,18 @@
 package com.sapo.quanlybanhang.entity;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 @Entity
 @Table(name = "supplier")
-@Data
+@NoArgsConstructor
+@Getter
+@Setter
+@AllArgsConstructor
 public class SupplierEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,20 +27,21 @@ public class SupplierEntity {
     private String address;
     @Column(name = "phone")
     private String phone;
+    @Column(name = "state")
+    private String state;
+    @Column(name ="created_date")
+    private Date createdDate;
+    @Column(name ="modified_date")
+    private Date modifiedDate;
+    @Column(name = "created_by")
+    private String createdBy;
+    @Column(name = "modified_by")
+    private String modifiedBy;
+
 
     @OneToMany(mappedBy = "supplier", cascade = CascadeType.ALL)
     private List<ProductEntity> productEntities;
 
 
-    public SupplierEntity(int id, String code, String name, String email, String address, String phone) {
-        this.id = id;
-        this.code = code;
-        this.name = name;
-        this.email = email;
-        this.address = address;
-        this.phone = phone;
-    }
 
-    public SupplierEntity() {
-    }
 }

@@ -1,8 +1,10 @@
 package com.sapo.quanlybanhang.dto;
 
+import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 
 import java.util.Date;
 
@@ -10,6 +12,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class InputProductDto {
+
     private int id;
 
     private String code;

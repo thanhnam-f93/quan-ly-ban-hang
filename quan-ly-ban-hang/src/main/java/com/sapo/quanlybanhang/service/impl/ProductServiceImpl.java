@@ -97,7 +97,6 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ProductEntity update(int id, ProductEntity productEntity) {
         ProductEntity product = productRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Not found."));
-
         product.setCode(productEntity.getCode());
         product.setName(productEntity.getName());
         return productRepository.save(product);
@@ -129,16 +128,24 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public List getAllByMonth() {
+        List<ProductEntity> productEntities = productRepository.getALLByMonth();
+        List<ProductDto> productDtos = new ArrayList<>();
+        Converter converter = new Converter();
+        for (ProductEntity item : productEntities) {
+            productDtos.add(converter.ConverterToDtoProduct(item));
+        }
+        return productDtos;
+    }
+
+    @Override
     public List sortByName() {
         List<ProductEntity> productEntities = productRepository.sortByName();
         List<ProductDto> productDtos = new ArrayList<>();
         Converter converter = new Converter();
-
         for (ProductEntity item : productEntities) {
             productDtos.add(converter.ConverterToDtoProduct(item));
-
         }
-
         return productDtos;
     }
 
@@ -147,10 +154,8 @@ public class ProductServiceImpl implements ProductService {
         List<ProductEntity> productEntities = productRepository.findAllByIdIsNotNullOrderByPriceDesc();
         List<ProductDto> productDtos = new ArrayList<>();
         Converter converter = new Converter();
-
         for (ProductEntity item : productEntities) {
             productDtos.add(converter.ConverterToDtoProduct(item));
-
         }
         return productDtos;
     }
@@ -160,17 +165,14 @@ public class ProductServiceImpl implements ProductService {
         List<ProductEntity> productEntities = productRepository.sortByNumber();
         List<ProductDto> productDtos = new ArrayList<>();
         Converter converter = new Converter();
-
         for (ProductEntity item : productEntities) {
             productDtos.add(converter.ConverterToDtoProduct(item));
-
         }
-
         return productDtos;
     }
 
     @Override
-    public List searchByCategory(int keyword) {
+    public List<ProductDto> searchByCategory(int keyword) {
         if (keyword != 0) {
             List<ProductEntity> productEntities = productRepository.findByCategory_Id(keyword);
             List<ProductDto> productDtos = new ArrayList<>();
@@ -184,8 +186,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List findPaginated(int papeNo, int papeSize) {
-        Pageable pageable = PageRequest.of(papeNo - 1, papeSize);
+    public List findPaginated(int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
         Page<ProductEntity> productEntities = productRepository.findAll(pageable);
         List<ProductDto> productDtos = new ArrayList<>();
         Converter converter = new Converter();
@@ -208,25 +210,22 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ProductDto updateProduct(int id, UpdateDto updateDto) {
         ProductEntity product = productRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Not found."));
-
+        CategoryEntity categoryEntity = categoryRepository.getById(updateDto.getCategory_id());
+        BrandEntity brandEntity = brandRepository.getById((updateDto.getBrand_id()));
+        ColorEntity colorEntity = colorRepository.getById(updateDto.getColor_id());
+        SizeEntity sizeEntity = sizeRepository.getById(updateDto.getSize_id());
+        SupplierEntity supplierEntity = supplierRepository.getById(updateDto.getSupplier_id());
         product.setCode(updateDto.getCode());
         product.setName(updateDto.getName());
-
-        CategoryEntity categoryEntity = categoryRepository.getById(updateDto.getCategory_id());
         product.setCategory(categoryEntity);
 
-        BrandEntity brandEntity = brandRepository.getById((updateDto.getBrand_id()));
         product.setBrand(brandEntity);
 
-        ColorEntity colorEntity = colorRepository.getById(updateDto.getColor_id());
         product.setColor(colorEntity);
 
-        SizeEntity sizeEntity = sizeRepository.getById(updateDto.getSize_id());
         product.setSize(sizeEntity);
 
-        SupplierEntity supplierEntity = supplierRepository.getById(updateDto.getSupplier_id());
         product.setSupplier(supplierEntity);
-
 
         productRepository.save(product);
         Converter converter = new Converter();

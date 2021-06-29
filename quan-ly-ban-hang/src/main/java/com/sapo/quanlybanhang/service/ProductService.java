@@ -16,11 +16,12 @@ public interface ProductService <t>{
     ProductEntity update(int id, ProductEntity productEntity);
     List<t> findAll(String keyword);
     List<t> getAllByDay();
+    List<t> getAllByMonth();
     List<t> sortByName();
     List<t> sortByPrice();
     List<t> sortByNumber();
     List<t> searchByCategory(int keyword);
-    List<t> findPaginated(int papeNo, int papeSize);
+    List<t> findPaginated(int pageNo, int pageSize);
     ProductEntity deleteByID(int id);
 
     ProductDto updateProduct(int id, UpdateDto productDto);

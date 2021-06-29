@@ -29,6 +29,10 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Integer>
     @Query(value = "SELECT * FROM products as p where created_date>= now() - INTERVAL 7 day ", nativeQuery = true)
     List<ProductEntity> getALLByDay();
 
+    @Query(value = "SELECT * FROM products as p where created_date>= now() - INTERVAL 30 day; ", nativeQuery = true)
+    List<ProductEntity> getALLByMonth();
+
+
     @Query(value = "SELECT * FROM products as p order by p.price desc ", nativeQuery = true)
     List<ProductEntity> sortByPrice();
 

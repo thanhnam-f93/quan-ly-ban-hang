@@ -17,8 +17,6 @@ public class OrderEntity {
     private int id;
     @Column(name = "code")
     private String code;
-    @Column(name = "staff_id")
-    private String staffId;
     @Column(name ="created_date")
     private Date createdDate;
     @Column(name ="modified_date")
@@ -33,17 +31,17 @@ public class OrderEntity {
     private CustomerEntity customer;
 
     @ManyToOne
-    @JoinColumn(name = "staff")
+    @JoinColumn(name = "staff_id")
     private StaffEntity staff;
 
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private Collection<OrderDetailEntity> orderDetailEntities;
 
-    public OrderEntity(int id, String code, String staffId, Date createdDate, Date modifiedDate, String createBy, String modifiedBy) {
+    public OrderEntity(int id, String code,  Date createdDate, Date modifiedDate, String createBy, String modifiedBy) {
         this.id = id;
         this.code = code;
-        this.staffId = staffId;
+
         this.createdDate = createdDate;
         this.modifiedDate = modifiedDate;
         this.createBy = createBy;
@@ -69,14 +67,6 @@ public class OrderEntity {
         this.code = code;
     }
 
-
-    public String getStaffId() {
-        return staffId;
-    }
-
-    public void setStaffId(String staffId) {
-        this.staffId = staffId;
-    }
 
     public Date getCreatedDate() {
         return createdDate;
