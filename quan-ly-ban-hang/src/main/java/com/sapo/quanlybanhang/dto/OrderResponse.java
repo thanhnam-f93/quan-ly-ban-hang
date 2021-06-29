@@ -10,5 +10,4 @@ import lombok.Data;
 @Data
 public class OrderResponse {
     String message;
-    String content;
 }

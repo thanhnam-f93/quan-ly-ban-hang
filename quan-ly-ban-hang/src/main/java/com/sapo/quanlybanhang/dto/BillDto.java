@@ -1,18 +1,12 @@
 package com.sapo.quanlybanhang.dto;
 
-
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
 import java.util.List;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
-public class OrderDto {
-
+public class BillDto {
     private Integer id;
 
     private String code;
@@ -22,6 +16,8 @@ public class OrderDto {
     private Timestamp createdDate;
 
     private Timestamp modifiedDate;
+
+    private Integer orderId;
 
     private String createBy;
 

@@ -54,5 +54,10 @@ public class StaffEntity {
     @OneToMany(mappedBy = "staff")
     private List<OrderEntity> orderEntities = new ArrayList();
 
+ @OneToMany(mappedBy = "staffBill")
+ private List<BillEntity> billEntities = new ArrayList();
+
+
+
 
 }

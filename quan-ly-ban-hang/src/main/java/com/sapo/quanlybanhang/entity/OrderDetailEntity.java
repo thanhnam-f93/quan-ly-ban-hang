@@ -30,6 +30,12 @@ public class OrderDetailEntity implements Serializable {
     @JoinColumn(name = "order_id")
     private OrderEntity order;
 
+    @Column (name = "remain_amount")
+    private Integer remainAmount;
+
+    @Column (name = "price")
+    private Long price;
+
     @ManyToOne
     @JoinColumn(name = "product_id")
     private ProductEntity product;

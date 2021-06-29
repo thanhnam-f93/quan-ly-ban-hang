@@ -35,6 +35,7 @@ public class ProductEntity {
     @Column(name = "decription")
     private String description;
 
+
     @Column(name ="created_date")
     private Date createdDate;
 
@@ -72,5 +73,8 @@ public class ProductEntity {
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private Collection<OrderDetailEntity> orderDetailEntities;
 
-  
+    @OneToMany(mappedBy = "productBill", cascade = CascadeType.ALL)
+    private Collection<BillDetailEntity> billDetailEntities;
+
+
 }
