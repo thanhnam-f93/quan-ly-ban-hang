@@ -10,6 +10,8 @@ import java.io.Serializable;
 @Table(name = "oder_detail")
 @Data
 @EqualsAndHashCode
+@NoArgsConstructor
+@AllArgsConstructor
 public class OrderDetailEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;

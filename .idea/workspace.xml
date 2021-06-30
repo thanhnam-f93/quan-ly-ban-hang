@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="d7fef3f1-1564-46d0-b7c4-b85e01e57773" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/quan-ly-ban-hang/src/main/java/com/sapo/quanlybanhang/controller/OrderController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/quan-ly-ban-hang/src/main/java/com/sapo/quanlybanhang/converter/OrderConverter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/quan-ly-ban-hang/src/main/java/com/sapo/quanlybanhang/converter/OrderDetailConverter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/quan-ly-ban-hang/src/main/java/com/sapo/quanlybanhang/dto/OrderDetailDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/quan-ly-ban-hang/src/main/java/com/sapo/quanlybanhang/dto/OrderPageable.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/quan-ly-ban-hang/src/main/java/com/sapo/quanlybanhang/dto/OrderResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/quan-ly-ban-hang/src/main/java/com/sapo/quanlybanhang/repository/OrderRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/quan-ly-ban-hang/src/main/java/com/sapo/quanlybanhang/service/IOrderService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/quan-ly-ban-hang/src/main/java/com/sapo/quanlybanhang/service/impl/OrderService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/quan-ly-ban-hang/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/quan-ly-ban-hang/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/quan-ly-ban-hang/src/main/java/com/sapo/quanlybanhang/dto/OrderDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/quan-ly-ban-hang/src/main/java/com/sapo/quanlybanhang/dto/OrderDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/quan-ly-ban-hang/src/main/java/com/sapo/quanlybanhang/entity/CustomerEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/quan-ly-ban-hang/src/main/java/com/sapo/quanlybanhang/entity/CustomerEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/quan-ly-ban-hang/src/main/java/com/sapo/quanlybanhang/entity/OrderDetailEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/quan-ly-ban-hang/src/main/java/com/sapo/quanlybanhang/entity/OrderDetailEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/quan-ly-ban-hang/src/main/java/com/sapo/quanlybanhang/entity/OrderEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/quan-ly-ban-hang/src/main/java/com/sapo/quanlybanhang/entity/OrderEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/quan-ly-ban-hang/src/main/java/com/sapo/quanlybanhang/entity/ProductEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/quan-ly-ban-hang/src/main/java/com/sapo/quanlybanhang/entity/ProductEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/quan-ly-ban-hang/src/main/java/com/sapo/quanlybanhang/entity/StaffEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/quan-ly-ban-hang/src/main/java/com/sapo/quanlybanhang/entity/StaffEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/quan-ly-ban-hang/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/quan-ly-ban-hang/src/main/resources/application.properties" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CodeStyleSettingsInfer">
+    <option name="done" value="true" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectCodeStyleSettingsMigration">
+    <option name="version" value="1" />
+  </component>
+  <component name="ProjectId" id="1uUdfJPSf4jhF5uRPR1lTFCcLtW" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/quan-ly-ban-hang" />
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="d7fef3f1-1564-46d0-b7c4-b85e01e57773" name="Default Changelist" comment="" />
+      <created>1624724204840</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1624724204840</updated>
+    </task>
+    <servers />
+  </component>
+</project>
