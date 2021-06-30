@@ -29,6 +29,7 @@ public class ProductDto {
     private String supplierId;
 
     private String description;
+
     private String state;
 
     private String colorId;
@@ -44,4 +45,6 @@ public class ProductDto {
     private String createBy;
 
     private String modifiedBy;
+
+
 }

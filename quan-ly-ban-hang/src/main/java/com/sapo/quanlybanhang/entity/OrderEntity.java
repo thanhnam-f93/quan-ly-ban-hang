@@ -22,7 +22,6 @@ public class OrderEntity {
 
     @Column(name = "code")
     private String code;
-
     @Column(name ="created_date")
     private Timestamp createdDate;
 

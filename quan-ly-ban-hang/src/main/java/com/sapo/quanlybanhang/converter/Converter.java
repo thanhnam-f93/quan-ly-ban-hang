@@ -2,8 +2,10 @@ package com.sapo.quanlybanhang.converter;
 
 import com.sapo.quanlybanhang.dto.CategoryDto;
 import com.sapo.quanlybanhang.dto.ProductDto;
+import com.sapo.quanlybanhang.dto.SupplierDto;
 import com.sapo.quanlybanhang.entity.CategoryEntity;
 import com.sapo.quanlybanhang.entity.ProductEntity;
+import com.sapo.quanlybanhang.entity.SupplierEntity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,4 +53,22 @@ public class Converter {
         return dto;
 
     }
+    public SupplierDto ConverterToDtoSupplier(SupplierEntity item) {
+        SupplierDto dto = new SupplierDto();
+
+        dto.setId(item.getId());
+        dto.setCode(item.getCode());
+        dto.setName(item.getName());
+        dto.setEmail(item.getEmail());
+        dto.setPhone(item.getPhone());
+        dto.setAddress(item.getAddress());
+        dto.setState(item.getState());
+        dto.setCreatedDate(item.getCreatedDate());
+        dto.setModifiedDate(item.getModifiedDate());
+        dto.setCreatedBy(item.getCreatedBy());
+        dto.setModifiedBy(item.getModifiedBy());
+        return dto;
+
+    }
+
 }

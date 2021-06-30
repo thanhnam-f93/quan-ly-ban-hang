@@ -3,11 +3,15 @@ package com.sapo.quanlybanhang.service.impl;
 import com.sapo.quanlybanhang.converter.Converter;
 import com.sapo.quanlybanhang.dto.InputProductDto;
 import com.sapo.quanlybanhang.dto.ProductDto;
+import com.sapo.quanlybanhang.dto.UpdateDto;
 import com.sapo.quanlybanhang.entity.*;
 import com.sapo.quanlybanhang.repository.*;
 import com.sapo.quanlybanhang.service.ProductService;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.modelmapper.ModelMapper;
 
@@ -32,15 +36,12 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List getAll() {
-        List<ProductEntity> productEntities = productRepository.findAll();
+        List<ProductEntity> productEntities = productRepository.findAllByStateIsNull();
         List<ProductDto> productDtos = new ArrayList<>();
         Converter converter = new Converter();
-
         for (ProductEntity item : productEntities) {
             productDtos.add(converter.ConverterToDtoProduct(item));
-
         }
-
         return productDtos;
     }
 
@@ -96,10 +97,8 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ProductEntity update(int id, ProductEntity productEntity) {
         ProductEntity product = productRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Not found."));
-
         product.setCode(productEntity.getCode());
         product.setName(productEntity.getName());
-
         return productRepository.save(product);
     }
 
@@ -116,4 +115,123 @@ public class ProductServiceImpl implements ProductService {
         }
         return null;
     }
+
+    @Override
+    public List getAllByDay() {
+        List<ProductEntity> productEntities = productRepository.getALLByDay();
+        List<ProductDto> productDtos = new ArrayList<>();
+        Converter converter = new Converter();
+        for (ProductEntity item : productEntities) {
+            productDtos.add(converter.ConverterToDtoProduct(item));
+        }
+        return productDtos;
+    }
+
+    @Override
+    public List getAllByMonth() {
+        List<ProductEntity> productEntities = productRepository.getALLByMonth();
+        List<ProductDto> productDtos = new ArrayList<>();
+        Converter converter = new Converter();
+        for (ProductEntity item : productEntities) {
+            productDtos.add(converter.ConverterToDtoProduct(item));
+        }
+        return productDtos;
+    }
+
+    @Override
+    public List sortByName() {
+        List<ProductEntity> productEntities = productRepository.sortByName();
+        List<ProductDto> productDtos = new ArrayList<>();
+        Converter converter = new Converter();
+        for (ProductEntity item : productEntities) {
+            productDtos.add(converter.ConverterToDtoProduct(item));
+        }
+        return productDtos;
+    }
+
+    @Override
+    public List sortByPrice() {
+        List<ProductEntity> productEntities = productRepository.findAllByIdIsNotNullOrderByPriceDesc();
+        List<ProductDto> productDtos = new ArrayList<>();
+        Converter converter = new Converter();
+        for (ProductEntity item : productEntities) {
+            productDtos.add(converter.ConverterToDtoProduct(item));
+        }
+        return productDtos;
+    }
+
+    @Override
+    public List sortByNumber() {
+        List<ProductEntity> productEntities = productRepository.sortByNumber();
+        List<ProductDto> productDtos = new ArrayList<>();
+        Converter converter = new Converter();
+        for (ProductEntity item : productEntities) {
+            productDtos.add(converter.ConverterToDtoProduct(item));
+        }
+        return productDtos;
+    }
+
+    @Override
+    public List<ProductDto> searchByCategory(int keyword) {
+        if (keyword != 0) {
+            List<ProductEntity> productEntities = productRepository.findByCategory_Id(keyword);
+            List<ProductDto> productDtos = new ArrayList<>();
+            Converter converter = new Converter();
+            for (ProductEntity item : productEntities) {
+                productDtos.add(converter.ConverterToDtoProduct(item));
+            }
+            return productDtos;
+        }
+        return null;
+    }
+
+    @Override
+    public List findPaginated(int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+        Page<ProductEntity> productEntities = productRepository.findAll(pageable);
+        List<ProductDto> productDtos = new ArrayList<>();
+        Converter converter = new Converter();
+        for (ProductEntity item : productEntities) {
+            productDtos.add(converter.ConverterToDtoProduct(item));
+        }
+        return productDtos;
+    }
+
+    @Override
+    public ProductEntity deleteByID(int id) {
+        ProductEntity productEntity = productRepository.findByIdAndStateIsNotNull(id);
+        if (productEntity != null) {
+            productEntity.setState("Deleted");
+            productRepository.save(productEntity);
+        }
+        return null;
+    }
+
+    @Override
+    public ProductDto updateProduct(int id, UpdateDto updateDto) {
+        ProductEntity product = productRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Not found."));
+        CategoryEntity categoryEntity = categoryRepository.getById(updateDto.getCategory_id());
+        BrandEntity brandEntity = brandRepository.getById((updateDto.getBrand_id()));
+        ColorEntity colorEntity = colorRepository.getById(updateDto.getColor_id());
+        SizeEntity sizeEntity = sizeRepository.getById(updateDto.getSize_id());
+        SupplierEntity supplierEntity = supplierRepository.getById(updateDto.getSupplier_id());
+        product.setCode(updateDto.getCode());
+        product.setName(updateDto.getName());
+        product.setCategory(categoryEntity);
+
+        product.setBrand(brandEntity);
+
+        product.setColor(colorEntity);
+
+        product.setSize(sizeEntity);
+
+        product.setSupplier(supplierEntity);
+
+        productRepository.save(product);
+        Converter converter = new Converter();
+        return converter.ConverterToDtoProduct(product);
+
+
+    }
 }
+
