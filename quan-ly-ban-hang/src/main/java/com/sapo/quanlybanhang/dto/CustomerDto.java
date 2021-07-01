@@ -20,7 +20,7 @@ public class CustomerDto {
     private String email;
 
     private String gender;
-
+private String address;
     private Date dateOfBirth;
 
     private String note;
