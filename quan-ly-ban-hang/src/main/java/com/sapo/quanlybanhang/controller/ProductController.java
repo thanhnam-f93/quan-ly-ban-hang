@@ -5,15 +5,17 @@ import com.sapo.quanlybanhang.dto.ProductDto;
 import com.sapo.quanlybanhang.dto.UpdateDto;
 import com.sapo.quanlybanhang.entity.ProductEntity;
 import com.sapo.quanlybanhang.service.ProductService;
-import org.modelmapper.ModelMapper;
-import org.modelmapper.convention.MatchingStrategies;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping(value = "api/v1")
 public class ProductController {
@@ -64,25 +66,26 @@ public class ProductController {
         return productService.findById(id);
     }
 
-    @PutMapping(value = "/products/{id}")
-    public ResponseEntity<ProductDto> updateProduct(@PathVariable int id, @RequestBody ProductDto productDto) {
-        ModelMapper modelMapper = new ModelMapper();
-        modelMapper.getConfiguration()
-                .setMatchingStrategy(MatchingStrategies.STRICT);
-
-        ProductEntity productRequest = modelMapper.map(productDto, ProductEntity.class);
-
-        // convert DTO to Entity
-        ProductEntity product = productService.update(id, productRequest);
-        // entity to DTO
-        ProductDto productResponse = modelMapper.map(product, ProductDto.class);
-        return ResponseEntity.ok().body(productResponse);
-
-    }
+//    @PutMapping(value = "/products/{id}")
+//    public ResponseEntity<ProductDto> updateProduct(@PathVariable int id, @RequestBody ProductDto productDto) {
+//        ModelMapper modelMapper = new ModelMapper();
+//        modelMapper.getConfiguration()
+//                .setMatchingStrategy(MatchingStrategies.STRICT);
+//
+//        ProductEntity productRequest = modelMapper.map(productDto, ProductEntity.class);
+//
+//        // convert DTO to Entity
+//        ProductEntity product = productService.update(id, productRequest);
+//        // entity to DTO
+//        ProductDto productResponse = modelMapper.map(product, ProductDto.class);
+//        return ResponseEntity.ok().body(productResponse);
+//
+//    }
 
     @GetMapping(value = "/product_search/{keyword}")
-    public List<ProductDto> search(@PathVariable String keyword) {
-        return productService.findAll(keyword);
+    public List<ProductDto> search(@PathVariable String keyword,@RequestParam int pageNo,@RequestParam int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+        return productService.searchAll(keyword,pageable);
     }
 
     @GetMapping(value = "/product_searchByCategory/{keyword}")

@@ -8,7 +8,6 @@ import java.sql.Timestamp;
 import java.util.List;
 
 @Data
-@Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter

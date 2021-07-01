@@ -103,9 +103,9 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List findAll(String keyword) {
+    public List searchAll(String keyword,Pageable pageable) {
         if (keyword != null) {
-            List<ProductEntity> productEntities = productRepository.findAll(keyword);
+            List<ProductEntity> productEntities = productRepository.searchAll(keyword, pageable);
             List<ProductDto> productDtos = new ArrayList<>();
             Converter converter = new Converter();
             for (ProductEntity item : productEntities) {
