@@ -28,7 +28,8 @@ public class CustomerEntity {
 
     @Column(name = "gender")
     private String gender;
-
+@Column(name="address")
+private String address;
     @Column(name = "date_of_birth")
     private Date dateOfBirth;
 
