@@ -15,6 +15,6 @@ private IDashBoardService dashBoardService;
     @GetMapping("/dashboard")
     public ResponseEntity findAll(@RequestBody DashBoarDto dto){
          dto = dashBoardService.collectOrder(dto);
-        return null;
+        return ResponseEntity.ok(dto);
     }
 }

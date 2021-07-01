@@ -8,7 +8,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.time.LocalDate;
-import java.util.List;
 
 public interface OrderRepository extends JpaRepository<OrderEntity, Integer> {
 
@@ -17,5 +16,6 @@ public interface OrderRepository extends JpaRepository<OrderEntity, Integer> {
      @Query("select new com.sapo.quanlybanhang.dto.OrderItem(count (o), sum(o.price))  " +
              "from OrderEntity o where date(o.createdDate)= Date(?1)")
      public OrderItem findPrice(LocalDate optionTime);
+
 
 }
