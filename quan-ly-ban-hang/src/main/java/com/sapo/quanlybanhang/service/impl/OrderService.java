@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -95,6 +96,11 @@ public class OrderService implements IOrderService {
     @Transactional
     public List<OrderDto> findByCodeAndCustomer(OrderPageable orderPageable) {
         return orderDao.findByCodeAndCustomer( orderPageable).stream().map(item -> OrderConverter.toDto(item)).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Long> findPrice(LocalDate optionTime) {
+        return null;
     }
 
 }

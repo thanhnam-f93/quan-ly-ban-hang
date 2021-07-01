@@ -3,17 +3,12 @@ package com.sapo.quanlybanhang.dto;
 
 import lombok.*;
 
-import javax.persistence.Entity;
 import java.sql.Timestamp;
 import java.util.List;
 
 @Data
-@Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
-
 public class OrderDto {
 
     private Integer id;

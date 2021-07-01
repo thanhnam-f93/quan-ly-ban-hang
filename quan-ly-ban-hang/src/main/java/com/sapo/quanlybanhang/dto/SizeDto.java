@@ -10,7 +10,6 @@ import javax.persistence.Id;
 @Data
 public class SizeDto {
 
-
     private int id;
 
     private String size;
