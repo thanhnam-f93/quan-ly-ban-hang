@@ -1,5 +1,5 @@
 package com.sapo.quanlybanhang.dto;
 
 public enum OptionTime {
-    TODAY, YESTERDAY, THIS_WEEK, LAST_WEEK, THIS_MONTH, LAST_MONTH
+    TODAY, YESTERDAY, THIS_WEEK, THIS_MONTH, LAST_MONTH
 }
