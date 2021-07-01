@@ -95,7 +95,9 @@ public class OrderService implements IOrderService {
     @Override
     @Transactional
     public List<OrderDto> findByCodeAndCustomer(OrderPageable orderPageable) {
-        return orderDao.findByCodeAndCustomer( orderPageable).stream().map(item -> OrderConverter.toDto(item)).collect(Collectors.toList());
+            return orderDao.findByCodeAndCustomer( orderPageable).stream().
+                    map(item -> OrderConverter.toDto(item)).collect(Collectors.toList());
+
     }
 
     @Override

@@ -2,7 +2,9 @@ package com.sapo.quanlybanhang.dao.impl;
 
 import com.sapo.quanlybanhang.dao.IOrderDao;
 import com.sapo.quanlybanhang.dto.DashBoardItem;
+import com.sapo.quanlybanhang.dto.OrderDto;
 import com.sapo.quanlybanhang.dto.OrderPageable;
+import com.sapo.quanlybanhang.entity.BillEntity;
 import com.sapo.quanlybanhang.entity.OrderEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,6 +26,7 @@ public class OrderDao implements IOrderDao {
     private JdbcTemplate jdbcTemplate;
     @Override
     public List<OrderEntity> findByCodeAndCustomer(OrderPageable orderPageable) {
+
         StringBuilder sql = new StringBuilder("SELECT o FROM OrderEntity o ");
         if (orderPageable.getOrderTime() == null ) {
             sql.append("inner join CustomerEntity c on c.id = o.customer.id");

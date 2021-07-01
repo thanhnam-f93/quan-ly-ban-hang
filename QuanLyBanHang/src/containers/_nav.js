@@ -27,12 +27,12 @@ const _nav =  [
       {
         _tag: 'CSidebarNavItem',
         name: 'Tạo đơn hàng',
-        to: '/buttons/buttons',
+        to: '/order',
       },
       {
         _tag: 'CSidebarNavItem',
         name: 'Danh sách đơn hàng',
-        to: '/buttons/brand-buttons',
+        to: '/order',
       },
       {
         _tag: 'CSidebarNavItem',

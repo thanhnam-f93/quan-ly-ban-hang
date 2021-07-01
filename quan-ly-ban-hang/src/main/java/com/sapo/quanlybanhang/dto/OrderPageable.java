@@ -14,5 +14,6 @@ public class OrderPageable {
     private Integer limit;
     private LocalDate OrderTime;
     private String inputOrder;
+    String type;
 //    private String optionTime;
 }

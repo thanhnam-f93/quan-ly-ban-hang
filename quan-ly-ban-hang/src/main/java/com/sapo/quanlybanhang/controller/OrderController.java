@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 public class OrderController {
     @Autowired
     private IOrderService orderService;
@@ -24,7 +25,7 @@ public class OrderController {
     paging of order . sort descending, sortyby created date
     search and filter
  */
-    @GetMapping("/orders")
+    @PostMapping ("/order")
     public List<OrderDto> findAll(@RequestBody OrderPageable orderPageable){
         if(orderPageable.getOrderTime() == null && (orderPageable.getInputOrder() == null
                 || orderPageable.getInputOrder() =="" )){

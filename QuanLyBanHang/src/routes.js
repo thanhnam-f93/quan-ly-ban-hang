@@ -46,6 +46,7 @@ const User = React.lazy(() => import('./views/users/User'));
 /*================== Start code of Team - Quản lý bán hàng =================*/
 const Dashboard = React.lazy(() => import('./components/Dashboard/Dashboard'));
 const Staff = React.lazy(() => import('./components/Staff/Staff'));
+const Order = React.lazy(() => import('./components/Order/Order'));
 /*================== The End code of Team - Quản lý bán hàng =================*/
 
 const routes = [
@@ -96,7 +97,9 @@ const routes = [
 
 /*================== Start code of Team - Quản lý bán hàng =================*/
   { path: '/dashboard', exact: true,  name: 'Dashboard', component: Dashboard },
-  { path: '/staff', exact: true,  name: 'Staff', component: Staff }
+  { path: '/staff', exact: true,  name: 'Staff', component: Staff },
+  { path: '/order', exact: true,  name: 'danh-sach-don-hang', component: Order }
+  
 /*================== The End code of Team - Quản lý bán hàng =================*/
 ];
 
