@@ -51,4 +51,7 @@ public interface CustomerRepository extends JpaRepository<CustomerEntity, Intege
 
     @Procedure(procedureName = "StatisticsByTime")
     List<Object[]> getStatistics();
+
+
+    CustomerEntity findOneById(Integer customId);
 }
