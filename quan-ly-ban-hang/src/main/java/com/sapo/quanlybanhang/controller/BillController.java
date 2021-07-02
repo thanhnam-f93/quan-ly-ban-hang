@@ -1,11 +1,11 @@
 package com.sapo.quanlybanhang.controller;
 
-import com.sapo.quanlybanhang.dto.BillDto;
-import com.sapo.quanlybanhang.dto.OrderDetailDto;
-import com.sapo.quanlybanhang.dto.OrderDto;
-import com.sapo.quanlybanhang.dto.OrderResponse;
+import com.sapo.quanlybanhang.dto.*;
 import com.sapo.quanlybanhang.service.IBillService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,6 +31,23 @@ public class BillController {
         }
         return ResponseEntity.status(HttpStatus.FORBIDDEN)
                 .body(new OrderResponse("sản phẩm không hợp lệ hoặc quá thời hạn bảo hành"));
+
+    }
+
+    /**
+     paging of order . sort descending, sortyby created date
+     search and filter
+     */
+    @PostMapping ("/bill")
+    public List<BillDto> findAll(@RequestBody OrderPageable orderPageable){
+        if(orderPageable.getOrderTime() == null && (orderPageable.getInputOrder() == null
+                || orderPageable.getInputOrder() =="" )){
+            Sort sort = Sort.by("createdDate").descending();
+            Pageable pageable = PageRequest.of(orderPageable.getPage()-1,orderPageable.getLimit(),sort);
+            return  billService.findAll(pageable);
+        }else {
+            return billService.findByCodeAndCustomer(orderPageable);
+        }
 
     }
 

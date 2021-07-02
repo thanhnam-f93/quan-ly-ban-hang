@@ -7,7 +7,7 @@ import com.sapo.quanlybanhang.entity.OrderEntity;
 import java.time.LocalDate;
 import java.util.List;
 
-public interface IOrderDao {
+public interface IOrderDao extends GenericDao<OrderEntity> {
     public List <OrderEntity>findByCodeAndCustomer(OrderPageable orderPageable);
     public List<DashBoardItem> findAllByTime(LocalDate startTime, LocalDate endTime);
 }

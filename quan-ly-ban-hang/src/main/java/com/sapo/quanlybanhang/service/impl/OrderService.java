@@ -76,6 +76,7 @@ public class OrderService implements IOrderService {
             item.getProduct().setSellProduct(item.getQuanlity()+item.getProduct().getSellProduct());
             item.getProduct().setNumberProduct(item.getProduct().getNumberProduct()-item.getQuanlity());
             item.setRemainAmount(item.getQuanlity());
+            item.setPrice(item.getDiscount() * item.getQuanlity());
             index+=1;
         }
         orderEntity.setPrice(price);
