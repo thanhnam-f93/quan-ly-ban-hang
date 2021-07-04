@@ -1,27 +1,11 @@
 import React from "react";
 import "./scss/order.css";
-import { BrowserRouter as Router, Route, Link, NavLink } from "react-router-dom";
-import {
-  CButton,
-  CForm,
-  CCard,
-  CCardBody,
-  CCardHeader,
-  CCol,
-  CDropdown,
-  CDropdownDivider,
-  CDropdownHeader,
-  CDropdownItem,
-  CDropdownMenu,
-  CDropdownToggle,
-  CRow,
-  CFormGroup,
-  CLabel,
-  CInput,
-  CInputCheckbox,
-} from "@coreui/react";
+import DropDown from "./DropDown";
+import "./scss/DropDown.css";
 
-const OrderHeader = () => {
+const OrderHeader = (props) => {
+  let inputs = props.inputs;
+  let opDate = props.getDate;
   return (
     <div className="header-order">
       <div className="input-data">
@@ -30,30 +14,14 @@ const OrderHeader = () => {
             <i className="fas fa-search"></i>
           </span>
         </button>
-        <input
+        <input onChange={(e)=>inputs(e)}
           type="text"
-          // className="form-control"
-          name="userName"
+          name="inputOrder"
           id="userName"
           placeholder="Tìm kiếm theo mã đơn hàng, tên, SĐT khách hàng"
         />
       </div>
-      <div className="btn-data">
-        <CDropdown className="m-1" size="lg">
-          <CDropdownToggle color="white">Ngày tạo</CDropdownToggle>
-          <CDropdownMenu>
-            <div className="btn-dropdown">
-              <CDropdownItem header>
-                <Link to="#">About</Link>
-              </CDropdownItem>
-              <CDropdownItem>Action Disabled</CDropdownItem>
-              <CDropdownItem>Action</CDropdownItem>
-              <CDropdownDivider />
-              <CDropdownItem>Another Action</CDropdownItem>
-            </div>
-          </CDropdownMenu>
-        </CDropdown>
-      </div>
+      <DropDown opDate  = {opDate} />
     </div>
   );
 };

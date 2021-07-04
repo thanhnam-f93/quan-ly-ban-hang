@@ -32,6 +32,10 @@ public class BillConverter {
         dto.setCustomId(entity.getCustomerBill().getId());
         dto.setCustomerName(entity.getCustomerBill().getName());
         dto.setStaffName(entity.getStaffBill().getFullName());
+        dto.setCodeOrder(entity.getOrderEntity().getCode());
+        dto.setCustomerEmail(entity.getCustomerBill().getEmail());
+        dto.setCustomerPhone(entity.getCustomerBill().getPhone());
+        dto.setCodeOrder(entity.getOrderEntity().getCode());
         return dto;
     }
 

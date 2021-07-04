@@ -24,11 +24,11 @@ const _nav =  [
     route: '/buttons',
     icon: 'cil-print',
     _children: [
-      {
-        _tag: 'CSidebarNavItem',
-        name: 'Tạo đơn hàng',
-        to: '/order',
-      },
+      // {
+      //   _tag: 'CSidebarNavItem',
+      //   name: 'Tạo đơn hàng',
+      //   to: '/order',
+      // },
       {
         _tag: 'CSidebarNavItem',
         name: 'Danh sách đơn hàng',
@@ -37,7 +37,7 @@ const _nav =  [
       {
         _tag: 'CSidebarNavItem',
         name: 'Khách trả hàng',
-        to: '/buttons/button-groups',
+        to: '/order/return',
       }
     ],
   },

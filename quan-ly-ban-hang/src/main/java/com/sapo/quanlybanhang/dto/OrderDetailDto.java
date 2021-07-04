@@ -32,4 +32,5 @@ public class OrderDetailDto {
     private Integer amountPay;
 
     private String productName;
+    private Long price;
 }

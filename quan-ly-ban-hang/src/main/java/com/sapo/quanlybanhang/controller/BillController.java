@@ -1,5 +1,7 @@
 package com.sapo.quanlybanhang.controller;
 
+import com.sapo.quanlybanhang.converter.BillConverter;
+import com.sapo.quanlybanhang.converter.OrderConverter;
 import com.sapo.quanlybanhang.dto.*;
 import com.sapo.quanlybanhang.service.IBillService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,13 +10,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 public class BillController {
     @Autowired
     private IBillService billService;
@@ -41,7 +42,7 @@ public class BillController {
     @PostMapping ("/bill")
     public List<BillDto> findAll(@RequestBody OrderPageable orderPageable){
         if(orderPageable.getOrderTime() == null && (orderPageable.getInputOrder() == null
-                || orderPageable.getInputOrder() =="" )){
+                || orderPageable.getInputOrder() =="" ) && (orderPageable.getOptionTime() == null)){
             Sort sort = Sort.by("createdDate").descending();
             Pageable pageable = PageRequest.of(orderPageable.getPage()-1,orderPageable.getLimit(),sort);
             return  billService.findAll(pageable);
@@ -49,6 +50,10 @@ public class BillController {
             return billService.findByCodeAndCustomer(orderPageable);
         }
 
+    }
+    @GetMapping("/bill/{id}")
+    public  BillDto findById(@PathVariable (name = "id") Integer id){
+        return BillConverter.toDto(billService.findById(id));
     }
 
 }

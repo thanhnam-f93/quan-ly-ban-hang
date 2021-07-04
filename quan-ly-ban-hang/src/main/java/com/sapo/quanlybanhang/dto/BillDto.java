@@ -33,5 +33,11 @@ public class BillDto {
 
     private String StaffName;
 
+    private String codeOrder;
+
+    private String customerPhone;
+
+    private String customerEmail;
+
 
 }

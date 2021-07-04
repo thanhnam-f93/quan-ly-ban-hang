@@ -7,11 +7,8 @@ const OrderTable = (props) => {
   const elm = tasks.map((item, index) => {
     return (
       <TableItem
-        key={index}
-        code={item.code}
-        name={item.customerName}
-        price={item.price}
-        createdDate={item.createdDate}
+        key = {index}
+        item = {item}
       />
     );
   });

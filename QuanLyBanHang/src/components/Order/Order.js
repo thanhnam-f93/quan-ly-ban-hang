@@ -6,11 +6,12 @@ import OrderTable from './OrderTable';
 import './scss/order.css'
 
 
+
 const Order = () => {
 
   const [orderPageable, setOrderPageAble] = useState({
     page:1,
-    limit:5,
+    limit:10,
     inputOrder:"",
     orderTime:""
   });
@@ -18,9 +19,9 @@ const Order = () => {
   const [listOrder, setListOrder] = useState([]);
 
   useEffect(() => {
-    console.log(orderPageable);
+    console.log("useeffect:"+orderPageable);
     
-    callApi("order","POST",orderPageable)
+    callApi("order","post",orderPageable)
     .then(response=>{
       if (response.status !== 200) {
         alert("thao tác thất bại");
@@ -33,11 +34,31 @@ const Order = () => {
       });
     });
  
-}, [])
+}, [orderPageable])
+
+/**
+ * filter and search order
+ */
+
+const getInput = (e)=>{
+  let {name,value}= e.target;
+  console.log(name+value);
+    setOrderPageAble({...orderPageable,[name]:value});
+  console.log(orderPageable);
+
+}
+
+const getDate = (op, da) =>{
+  setOrderPageAble({
+    ...orderPageable,optionTime:op
+  })
+
+}
+console.log()
  
     return (
         <div className = "list-order">
-          <OrderHeader />   
+          <OrderHeader inputs  = {getInput} getDate = {getDate} />   
          <OrderTable lists = {listOrder}/>
         </div>
     );

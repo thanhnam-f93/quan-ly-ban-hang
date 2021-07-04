@@ -16,12 +16,15 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 public class BillService implements IBillService {
+    public static final String PREFIX = "HOA";
     public  static final Logger logger = LoggerFactory.getLogger(BillService.class);
     @Autowired
     private ProductRepository productRepository;
@@ -43,6 +46,7 @@ public class BillService implements IBillService {
     @Override
     public BillDto save(BillDto billDto) {
         Long price = 0L;
+        Long discount = 0L;
         Integer index =0;
         Integer amount = 0;
         List<BillDetailEntity> billDetailEntities = new ArrayList();
@@ -65,16 +69,16 @@ public class BillService implements IBillService {
             }
             item.setRemainAmount(item.getRemainAmount()-orderDetailDto.getAmountPay());
             item.getProduct().setNumberProduct(item.getProduct().getNumberProduct()+orderDetailDto.getAmountPay());
-            price += checkPrice(orderDetailDto, item,orderEntity);
+            discount = checkPrice(orderDetailDto, item,orderEntity);
+            price += discount*orderDetailDto.getAmountPay();
 //            price += orderDetailDto.getAmountPay() * orderDetailDto.getDiscount();
             BillDetailEntity billDetailEntity = new BillDetailEntity();
+            billDetailEntity.setDiscount(discount);
             billDetailEntity.setBill(billEntity);
-            billDetailEntity.setPrice(checkPrice(orderDetailDto, item,orderEntity));
-            billDetailEntity.setDiscount(orderDetailDto.getDiscount());
+            billDetailEntity.setPrice(discount*orderDetailDto.getAmountPay());
             billDetailEntity.setQuanlity(orderDetailDto.getAmountPay());
             billDetailEntity.setProductBill(item.getProduct());
             billDetailEntities.add(billDetailEntity);
-
             index +=1;
         }
         StaffEntity staffEntity =  staffRepository.findOneById(billDto.getStaffId());
@@ -84,6 +88,8 @@ public class BillService implements IBillService {
         billEntity.setOrderEntity(orderEntity);
         billEntity.setBillDetailEntities(billDetailEntities);
         billEntity.setCreatedDate(new Timestamp(System.currentTimeMillis()));
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyMMddHHmmss");
+        billEntity.setCode(this.PREFIX+LocalDateTime.now().format(formatter));
         billEntity = billRepository.save(billEntity);
 
         return BillConverter.toDto(billEntity);
@@ -91,13 +97,14 @@ public class BillService implements IBillService {
 
     @Override
     public Long checkPrice(OrderDetailDto dto, OrderDetailEntity entity, OrderEntity orderEntity) {
-        Long price = 0L;
+        Long discount = 0L;
         if(System.currentTimeMillis()<(orderEntity.getCreatedDate().getTime()+604800000L)){
-            price = dto.getAmountPay()*dto.getDiscount();
+            discount = dto.getDiscount();
         }else if(System.currentTimeMillis()<(orderEntity.getCreatedDate().getTime()+ 2592000000L)){
-            price = (dto.getAmountPay()*dto.getDiscount())*70/100;
+            discount = dto.getDiscount()*70/100;
         }
-        return price;
+
+        return discount;
     }
 
     @Override
@@ -110,5 +117,10 @@ public class BillService implements IBillService {
     public List<BillDto> findByCodeAndCustomer(OrderPageable orderPageable) {
         return billDao.findByCodeAndCustomer(orderPageable).stream()
                 .map(item ->BillConverter.toDto(item)).collect(Collectors.toList());
+    }
+
+    @Override
+    public BillEntity findById(Integer id) {
+        return billRepository.findOneById(id);
     }
 }
