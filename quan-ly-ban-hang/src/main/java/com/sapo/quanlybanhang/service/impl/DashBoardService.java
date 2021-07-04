@@ -32,6 +32,7 @@ public class DashBoardService implements IDashBoardService {
     @Override
     public DashBoarDto collectOrder(DashBoarDto dto) {
         LocalDate thisDay = LocalDate.now();
+
         OrderItem OrderItem = orderRepository.findPrice(LocalDate.now());
         OrderItem BillItem = billRepository.findPrice(LocalDate.now());
         List<DashBoardItem> dashBoardItems =new ArrayList();

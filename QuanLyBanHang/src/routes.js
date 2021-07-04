@@ -1,4 +1,8 @@
 import React from 'react';
+import Bill from './components/Bill/Bill';
+import BillDetail from './components/BillDetail/BillDetail';
+import DropDown from './components/Order/DropDown';
+import OrderDetail from './components/OrderDetail/OrderDetail';
 
 /*================== Of Template React =================*/
 const Toaster = React.lazy(() => import('./views/notifications/toaster/Toaster'));
@@ -46,6 +50,7 @@ const User = React.lazy(() => import('./views/users/User'));
 /*================== Start code of Team - Quản lý bán hàng =================*/
 const Dashboard = React.lazy(() => import('./components/Dashboard/Dashboard'));
 const Staff = React.lazy(() => import('./components/Staff/Staff'));
+const Order = React.lazy(() => import('./components/Order/Order'));
 /*================== The End code of Team - Quản lý bán hàng =================*/
 
 const routes = [
@@ -90,13 +95,21 @@ const routes = [
   { path: '/widgets', name: 'Widgets', component: Widgets },
   { path: '/users', exact: true,  name: 'Users', component: Users },
   { path: '/users/:id', exact: true, name: 'User Details', component: User },
+  
 /*================== The End Of Template React =================*/
 
 /*---------------------------------------------------------------------------------------*/
 
 /*================== Start code of Team - Quản lý bán hàng =================*/
   { path: '/dashboard', exact: true,  name: 'Dashboard', component: Dashboard },
-  { path: '/staff', exact: true,  name: 'Staff', component: Staff }
+  { path: '/staff', exact: true,  name: 'Staff', component: Staff },
+  { path: '/order', exact: true,  name: 'danh-sach-don-hang', component: Order },
+  { path: '/dropdown', exact: true,  name: 'danh-sach-don-hang', component: DropDown },
+  { path: '/order-detail', exact: true,  name: '', component: Order },
+  { path: '/order-detail/:id', exact: true,  name: 'chi-tiet-don-hang', component: OrderDetail },
+  { path: '/order/return', exact: true,  name: 'don-hang-tra-ve ', component: Bill },
+  { path: '/order/return/:id', exact: true,  name: '', component: BillDetail }
+  
 /*================== The End code of Team - Quản lý bán hàng =================*/
 ];
 

@@ -35,5 +35,11 @@ public class OrderDto {
 
     private String StaffName;
 
+    private String customerPhone;
+
+    private String customerEmail;
+
+
+
 
 }

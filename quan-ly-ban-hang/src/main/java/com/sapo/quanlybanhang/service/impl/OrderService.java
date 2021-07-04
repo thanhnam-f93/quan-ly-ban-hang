@@ -9,6 +9,8 @@ import com.sapo.quanlybanhang.dto.OrderPageable;
 import com.sapo.quanlybanhang.entity.*;
 import com.sapo.quanlybanhang.repository.*;
 import com.sapo.quanlybanhang.service.IOrderService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 
@@ -17,12 +19,16 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 @Transactional
 public class OrderService implements IOrderService {
+    public static final String PREFIX = "SON";
+    Logger logger = LoggerFactory.getLogger(OrderService.class);
     @Autowired
     private OrderRepository orderRepository;
 
@@ -54,6 +60,9 @@ public class OrderService implements IOrderService {
     @Override
     @Transactional
     public OrderDto save(OrderDto orderDto) {
+        LocalDateTime tStart = LocalDateTime.of(2021, 2, 13, 15, 56);
+
+       logger.info(String.valueOf(tStart.getSecond()));
         Long price = 0L;
         Integer index = 0;
         OrderEntity orderEntity = OrderConverter.toEntity(orderDto);
@@ -76,6 +85,7 @@ public class OrderService implements IOrderService {
             item.getProduct().setSellProduct(item.getQuanlity()+item.getProduct().getSellProduct());
             item.getProduct().setNumberProduct(item.getProduct().getNumberProduct()-item.getQuanlity());
             item.setRemainAmount(item.getQuanlity());
+            item.setPrice(item.getDiscount() * item.getQuanlity());
             index+=1;
         }
         orderEntity.setPrice(price);
@@ -86,6 +96,10 @@ public class OrderService implements IOrderService {
         orderEntity.setStaff(staffEntity);
         orderEntity.setCreatedDate(new Timestamp(System.currentTimeMillis()));
         orderEntity = orderRepository.save(orderEntity);
+        LocalDateTime tEnd = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyMMddHHmmss");
+        orderEntity.setCode(tEnd.format(formatter));
+        logger.info(String.valueOf(this.PREFIX+tEnd.format(formatter)));
          if(orderEntity != null){
              return OrderConverter.toDto(orderEntity);
          }
@@ -95,12 +109,20 @@ public class OrderService implements IOrderService {
     @Override
     @Transactional
     public List<OrderDto> findByCodeAndCustomer(OrderPageable orderPageable) {
-        return orderDao.findByCodeAndCustomer( orderPageable).stream().map(item -> OrderConverter.toDto(item)).collect(Collectors.toList());
+            return orderDao.findByCodeAndCustomer( orderPageable).stream().
+                    map(item -> OrderConverter.toDto(item)).collect(Collectors.toList());
+
     }
 
     @Override
     public List<Long> findPrice(LocalDate optionTime) {
         return null;
     }
+
+    @Override
+    public OrderEntity findById(Integer id) {
+        return orderRepository.findOneById(id);
+    }
+
 
 }

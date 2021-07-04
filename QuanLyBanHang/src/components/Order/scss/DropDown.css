@@ -1,0 +1,99 @@
+.drop-down {
+  margin-left: 20px;
+  max-width: 300px;
+  position: relative;
+}
+.drop-down .btn-change {
+  padding: 5px;
+  border-style: solid;
+  border-color: #e1e2e2;
+  border-radius: 3px;
+  border-width: 0.5px;
+}
+.drop-down .btn-change button {
+  background-color: transparent;
+  border: none;
+  outline: none;
+}
+.drop-down .content_dropdown {
+  visibility: hidden;
+  margin-top: 5px;
+  padding: 7px;
+  background-color: white;
+  border-style: solid;
+  border-color: #e1e2e2;
+  border-width: 1px;
+  min-width: 350px;
+  position: absolute;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+}
+.drop-down .content_dropdown .h-1 {
+  padding-bottom: 6px;
+  padding-top: 3px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+.drop-down .content_dropdown .h-1 button {
+  border-radius: 4px;
+  padding: 5px;
+  background-color: transparent;
+  border-radius: 5px;
+  border-width: 0.5px;
+  min-width: 165px;
+  border-color: #c4cdd5;
+}
+.drop-down .content_dropdown .h-1 button:focus {
+  outline: none;
+  background-color: #0e8bff;
+}
+.drop-down .content_dropdown .h-4 {
+  border-radius: 5px;
+  display: flex;
+  align-content: center;
+  border-style: solid;
+  border-color: #c4cdd5;
+  border-width: 0.5px;
+  width: 100%;
+}
+.drop-down .content_dropdown .h-4:focus {
+  background-color: #0e8bff;
+}
+.drop-down .content_dropdown .h-4 button {
+  border: none;
+  margin: auto;
+  background-color: transparent;
+}
+.drop-down .content_dropdown .h-4 button:focus {
+  border: none;
+  outline: none;
+}
+.drop-down .content_dropdown .date-picker {
+  margin-top: 5px;
+  display: flex;
+  align-content: center;
+  border-width: 0.5px;
+}
+.drop-down .content_dropdown .h-5 {
+  display: flex;
+  flex-direction: row-reverse;
+  border: none;
+  outline: none;
+  align-items: center;
+}
+.drop-down .content_dropdown .h-5 button {
+  margin-top: 2px;
+  border-style: solid;
+  border-color: #c4cdd5;
+  border-width: 0.5px;
+  background-color: #0e8bff;
+  align-content: center;
+  max-height: 100%;
+  border-radius: 4px;
+}
+.drop-down .content_dropdown .h-5 button:focus {
+  outline: none;
+  border: none;
+}/*# sourceMappingURL=DropDown.css.map */

@@ -3,6 +3,8 @@ package com.sapo.quanlybanhang.converter;
 import com.sapo.quanlybanhang.dto.OrderDto;
 import com.sapo.quanlybanhang.entity.OrderEntity;
 
+import java.util.stream.Collectors;
+
 public class OrderConverter {
     public static OrderEntity toEntity(OrderDto dto){
         OrderEntity entity = new OrderEntity();
@@ -29,6 +31,10 @@ public class OrderConverter {
         dto.setCustomId(entity.getCustomer().getId());
         dto.setCustomerName(entity.getCustomer().getName());
         dto.setStaffName(entity.getStaff().getFullName());
+        dto.setCustomerEmail(entity.getCustomer().getEmail());
+        dto.setCustomerPhone(entity.getCustomer().getPhone());
+//        dto.setOrderDetailDtos(entity.getOrderDetailEntities().stream()
+//                .map(item ->OrderDetailConverter.toDto(item)).collect(Collectors.toList()));
         return dto;
     }
 }

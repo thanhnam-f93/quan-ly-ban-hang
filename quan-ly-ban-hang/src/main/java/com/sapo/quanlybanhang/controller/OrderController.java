@@ -1,5 +1,6 @@
 package com.sapo.quanlybanhang.controller;
 
+import com.sapo.quanlybanhang.converter.OrderConverter;
 import com.sapo.quanlybanhang.dto.*;
 
 
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 public class OrderController {
     @Autowired
     private IOrderService orderService;
@@ -24,10 +26,10 @@ public class OrderController {
     paging of order . sort descending, sortyby created date
     search and filter
  */
-    @GetMapping("/orders")
+    @PostMapping ("/order")
     public List<OrderDto> findAll(@RequestBody OrderPageable orderPageable){
         if(orderPageable.getOrderTime() == null && (orderPageable.getInputOrder() == null
-                || orderPageable.getInputOrder() =="" )){
+                || orderPageable.getInputOrder() =="" ) && orderPageable.getOptionTime() == null){
             Sort sort = Sort.by("createdDate").descending();
             Pageable pageable = PageRequest.of(orderPageable.getPage()-1,orderPageable.getLimit(),sort);
             return  orderService.findAll(pageable);
@@ -55,6 +57,11 @@ public class OrderController {
         }
       return ResponseEntity.status(HttpStatus.FORBIDDEN)
                 .body(new OrderResponse("không có sản phẩm hoặc sản phẩm không hợp lệ"));
+    }
+
+    @GetMapping("/orders/{id}")
+    public  OrderDto findById(@PathVariable (name = "id") Integer id){
+        return OrderConverter.toDto(orderService.findById(id));
     }
 
 
