@@ -1,7 +1,6 @@
 package com.sapo.quanlybanhang.controller;
 
 import com.sapo.quanlybanhang.converter.BillConverter;
-import com.sapo.quanlybanhang.converter.OrderConverter;
 import com.sapo.quanlybanhang.dto.*;
 import com.sapo.quanlybanhang.service.IBillService;
 import org.springframework.beans.factory.annotation.Autowired;

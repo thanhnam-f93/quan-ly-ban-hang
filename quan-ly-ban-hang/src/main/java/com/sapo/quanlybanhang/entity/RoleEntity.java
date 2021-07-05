@@ -24,5 +24,8 @@ public class RoleEntity {
     @ManyToMany(mappedBy = "roles", fetch = FetchType.LAZY)
     private Collection<StaffEntity> staffEntities;
 
+    @Column( name = "code")
+    private String code;
+
 
 }
