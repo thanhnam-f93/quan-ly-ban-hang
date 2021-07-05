@@ -6,7 +6,11 @@ import {
   CFormGroup,
   CInput,
   CLabel,
+  CSelect,
+  CRow,
+ 
 } from "@coreui/react";
+import { DocsLink } from 'src/reusable'
 import { useEffect, useState } from "react";
 import {
   getCategoryByID,
@@ -67,6 +71,7 @@ function Update(props) {
       console.log(res.data);
     });
   }, []);
+
   useEffect(() => {
     getColor().then((res) => {
       setColor(res.data);
@@ -228,9 +233,9 @@ function Update(props) {
   return (
     <div>
       <div>
-        <div className="row">
-          <div className=" card col-lg-6">
-            <CCard>
+        <CRow>
+      <CCol  xs="12" sm="7">
+      <CCard>
               <CCardHeader>Sản phẩm</CCardHeader>
               <CCardBody>
                 <CFormGroup>
@@ -275,52 +280,17 @@ function Update(props) {
                 </CFormGroup>
               </CCardBody>
             </CCard>
-          </div>
-          <div className=" card col-lg-6 mx-auto">
-            <CCard>
-              <CCardHeader>Phân loại</CCardHeader>
-              <CCardBody>
-                <CFormGroup>
-                  <CLabel htmlFor="company">Nhãn hiệu</CLabel>
-                  <Select options={filterOptionBrand} onChange={changeBrand} />
-                </CFormGroup>
-                <CFormGroup>
-                  <CLabel htmlFor="vat">Loại: {categoryId}</CLabel>
-
-                  <Select
-                    options={filterCategory}
-                    defaultValue={categoryId}
-                    onChange={changeCate}
-                  />
-                </CFormGroup>
-                <CFormGroup>
-                  <CLabel htmlFor="vat">Người tạo</CLabel>
-                  <CInput
-                    name="createBy"
-                    placeholder="DE1234567890"
-                    onChange={changeCreateBy}
-                    value={createBy}
-                  />
-                </CFormGroup>
-                <CFormGroup>
-                  <CLabel htmlFor="vat">Nhà phân phối</CLabel>
-                  <Select options={filterSupplier} onChange={changeSupplier} />
-                </CFormGroup>
-              </CCardBody>
-            </CCard>
-          </div>
-        </div>
         <CCard>
           <CCardHeader>Thuộc tính</CCardHeader>
           <CCardBody>
             <CFormGroup row className="my-0">
-              <CCol xs="8">
+              <CCol xs="6">
                 <CFormGroup>
                   <CLabel htmlFor="city">Color</CLabel>
                   <Select options={filterOptionColor} onChange={changeColor} />
                 </CFormGroup>
               </CCol>
-              <CCol xs="4">
+              <CCol xs="6">
                 <CFormGroup>
                   <CLabel htmlFor="postal-code">Size {sizeId}</CLabel>
                   <Select options={filterOptionSize} onChange={changeSize} />
@@ -350,7 +320,51 @@ function Update(props) {
         >
           Delete
         </button>
+      </CCol>
+         <CCol xs="12" sm="5">   
+            <CCard>
+              <CCardHeader>Phân loại</CCardHeader>
+                    <CCol xs="12"> <CFormGroup>
+                  <CLabel htmlFor="company">Nhãn hiệu</CLabel>
+                  <Select options={filterOptionBrand} onChange={changeBrand} />
+                </CFormGroup>
+                <CFormGroup>
+                  <CLabel htmlFor="vat">Loại: {categoryId}</CLabel>
+                  <Select
+                    options={filterCategory}
+                    defaultValue={categoryId}
+                    onChange={changeCate}
+                  />
+                </CFormGroup>
+                <CFormGroup>
+                  <CLabel htmlFor="vat">Ngày tạo</CLabel>
+                  <CInput
+                    name="createBy"
+                    placeholder="DE1234567890"
+                    onChange={changeCreateBy}
+                    value={createBy}
+                  />
+                </CFormGroup>
+                    
+                <CFormGroup>
+                  <CLabel htmlFor="vat">Nhà phân phối</CLabel>
+                  <Select options={filterSupplier} onChange={changeSupplier} />
+                </CFormGroup>
+                </CCol>
+               
+            
+             
+            </CCard>
+            <CCard className=" p-4">
+               <img width="100%" height="400px" src={image}/>            
+
+            </CCard>
+        </CCol>
+        </CRow>
+      
+   
       </div>
+ 
     </div>
   );
 }

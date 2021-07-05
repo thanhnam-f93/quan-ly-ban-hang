@@ -87,8 +87,8 @@ public class ProductController {
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
         return productService.searchAll(keyword,pageable);
     }
-    @GetMapping(value = "/products/{keyword}")
-    public List<ProductDto> searchByName(@PathVariable String keyword) {
+    @GetMapping(value = "/productss")
+    public List<ProductDto> searchByName(@RequestParam String keyword) {
 
         return productService.searchAllName(keyword);
     }

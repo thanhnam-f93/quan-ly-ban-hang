@@ -6,6 +6,8 @@ const SUPPLIER="http://localhost:8080/api/v1/suppliers";
 const COLOR="http://localhost:8080/api/v1/colors";
 const SIZE ="http://localhost:8080/api/v1/Size";
 const BRAND="http://localhost:8080/api/v1/brands";
+const SEARCH = "http://localhost:8080/api/v1/productss";
+const FILTER="http://localhost:8080/api/v1/product_searchByCategory";
 // function getCategory() {
 //   return axios.get(CATEGORY_API_URL)
 // }
@@ -44,8 +46,12 @@ function DeleteCategory(categoryId) {
   return axios.delete(CATEGORY_API_URL + "/" + categoryId);
 }
 function Search(key) {
-  return axios.get(CATEGORY_API_URL + "?=" + key);
+  return axios.get(SEARCH + "?keyword=" + key);
 }
+function Filter(key) {
+  return axios.get(FILTER + "/" + key);
+}
+
 
 export {
   getCategory,
@@ -58,5 +64,6 @@ export {
   Search,
   getColor,
   getSize,
-  getBrand
+  getBrand,
+  Filter
 };

@@ -1,7 +1,7 @@
 import React, { useEffect, useState} from "react";
 
 
-import { getCategory,DeleteCategory ,Search} from "../../apis/Product";
+import { getCategory,DeleteCategory ,Search,getCate,Filter} from "../../apis/Product";
 import {
   CButton,
   CCardBody,
@@ -11,23 +11,24 @@ import {
   CFormGroup,
   CForm,
   CInputGroupPrepend,
-  CCard,
-  CCardHeader,
-  CPagination
+ CRow
 } from "@coreui/react";
 import { DocsLink } from 'src/reusable'
 
-
+import Select from "react-select";
 import CIcon from "@coreui/icons-react";
 import axios from "axios";
 
 function ListProduct(props) {
 
   const id = useState(props.match.params.id);
-
+  const [search,setSearch] = useState("");
   const [category, setCategory] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(4);
+  const [filterCategory, setFilterOptionCategory] = useState([]);
+  const [category_id, setCategory_Id] = useState("");
+  const [categories, setCategories] = useState([]);
  
 
  
@@ -36,7 +37,22 @@ useEffect(()=>{
     getCategory().then((item)=>{
         setCategory(item.data);
     }); 
-},[])
+},[]);
+
+useEffect(() => {
+  getCate().then((res) => {
+    setCategories(res.data);
+    console.log(res.data);
+  });
+}, []);
+useEffect(() => {
+  categories.map((item) => {
+    setFilterOptionCategory((filterOptions) => [
+      ...filterOptions,
+      { value: item.id, label: item.name },
+    ]);
+  });
+}, [categories]);
 
 
 
@@ -53,10 +69,34 @@ useEffect(()=>{
       setCategory(category.filter((item) => item.id !== id));
     });
   };
+  const changeCate = (event) => {
+    setCategory_Id(event.value);
+   Filter(event.value).then((item)=>{
+     setCategory(item.data);
+   })
+  };
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
   const currentPosts = category.slice(indexOfFirstPost, indexOfLastPost);
  const totalPages = Math.ceil( category.length/postsPerPage);
+
+
+
+const SearchByName=(e)=>{
+  e.preventDefault();
+ Search(search).then(item=>{
+   setCategory(item.data);
+ })
+}
+
+const changeSearch= (event)=>{
+  setSearch(event.target.value);
+  
+};
+
+
+
+ 
 
 
 
@@ -65,39 +105,39 @@ useEffect(()=>{
   return (
     <>
       <div>
-        <CCardBody>
-          <CForm action="" method="post" className="form-horizontal">
+        <CRow>
+    
             <CFormGroup row>
-              <CCol md="12">
+              <CCol  xs="12" sm="7">
                 <CInputGroup>
                   <CInputGroupPrepend>
-                    <CButton type="button" color="primary" >
+                    <CButton type="button" color="primary" onClick={SearchByName}>
                       <CIcon name="cil-magnifying-glass" /> Search
                     </CButton>
                   </CInputGroupPrepend>
                   <CInput
-                    id="input1-group2"
-                   
-                    name="input1-group2"
-                    placeholder="Username"
+              
+                    onChange={changeSearch}
+                    placeholder="Search"
                   />
                 </CInputGroup>
+              </CCol >
+              <CCol xs="12" sm="3">
+              <CFormGroup >
+                  <Select options={filterCategory} onChange={changeCate} />
+                </CFormGroup>
               </CCol>
+              <CCol xs="12" sm="4">
+              <CButton block color="success"   onClick={addCategory}>Thêm sản phẩm</CButton>
+            </CCol>
             </CFormGroup>
-          </CForm>
-        </CCardBody>
+     
+      
+        </CRow>
+   
 
         <div className="row">
-
-        <div className="row">
-         <button
-                      style={{ marginLeft: "10px" }}
-                     onClick={addCategory}
-                      className="btn btn-info"
-                    >
-                      Thêm sản phẩm
-                    </button>
-      </div>
+    
           <table className=" table table-striped table-bordered">
             <thead>
               <tr>
@@ -107,19 +147,21 @@ useEffect(()=>{
                 <th>Nhãn hiệu</th>
                 <th>Số lượng</th>
                 <th>Tùy chọn</th>
+                <th>Ngày tạo</th>
               </tr>
             </thead>
             <tbody>
               {currentPosts.map((item) => (
                 <tr key={item.id}>
                   <td>
-                    <img src="http://styleguru.vn/wp-content/uploads/2021/03/kieu-vay-dam-xoe-cong-chua-1.jpg" width="25px" height="25px" />
-                    {item.image}
+                    <img src={item.image} width="25px" height="25px" />
+                    
                     </td>
                   <td>{item.name}</td>
                   <td>{item.categoryId}</td>
                   <td>{item.brandID}</td>
                   <td>{item.numberProduct}</td>
+                  <td>{item.createdDate}</td>
                  
                   <td>
                     <button
@@ -127,7 +169,7 @@ useEffect(()=>{
                       onClick={() => updateCategory(item.id)}
                       className="btn btn-success"
                     >
-                      Update
+                      chi tiết
                     </button>
                   
                     {/* <button

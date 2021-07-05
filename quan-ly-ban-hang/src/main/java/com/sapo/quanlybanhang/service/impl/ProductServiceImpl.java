@@ -117,9 +117,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List searchAllName(String keyword) {
+        List<ProductEntity> productEntities = productRepository.searchAllName(keyword);
+        List<ProductDto> productDtos = new ArrayList<>();
         if (keyword != null) {
-            List<ProductEntity> productEntities = productRepository.searchAllName(keyword);
-            List<ProductDto> productDtos = new ArrayList<>();
             Converter converter = new Converter();
             for (ProductEntity item : productEntities) {
                 productDtos.add(converter.ConverterToDtoProduct(item));
