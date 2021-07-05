@@ -9,10 +9,12 @@ import com.sapo.quanlybanhang.dto.OrderPageable;
 import com.sapo.quanlybanhang.entity.*;
 import com.sapo.quanlybanhang.repository.*;
 import com.sapo.quanlybanhang.service.IBillService;
+import com.sapo.quanlybanhang.utils.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
@@ -81,8 +83,9 @@ public class BillService implements IBillService {
             billDetailEntities.add(billDetailEntity);
             index +=1;
         }
-        StaffEntity staffEntity =  staffRepository.findOneById(billDto.getStaffId());
+        StaffEntity staffEntity =  staffRepository.findOneByPhone(SecurityUtils.getPrincipal().getUsername());
         billEntity.setPrice(price);
+        billEntity.setCreatedBy(SecurityUtils.getPrincipal().getFullName());
         billEntity.setStaffBill(staffEntity);
         billEntity.setCustomerBill(orderEntity.getCustomer());
         billEntity.setOrderEntity(orderEntity);
