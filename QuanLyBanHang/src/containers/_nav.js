@@ -56,7 +56,7 @@ const _nav =  [
       {
         _tag: 'CSidebarNavItem',
         name: 'Danh sách sản phẩm',
-        to: '/base/breadcrumbs',
+        to: '/product',
       },
       {
         _tag: 'CSidebarNavItem',

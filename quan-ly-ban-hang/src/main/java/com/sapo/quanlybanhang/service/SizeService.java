@@ -1,4 +1,7 @@
 package com.sapo.quanlybanhang.service;
 
-public interface SizeService {
+import java.util.List;
+
+public interface SizeService <t>{
+    List<t> getAll();
 }

@@ -15,6 +15,9 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Integer>
 //    @Query(value = "SELECT * FROM products as p where p.category_id = ?1; ", nativeQuery = true)
 //    List<ProductEntity> findAllByCategory(String keyword);
 
+    @Query(value = "select * from products as p where p.state is null order by p.id desc ", nativeQuery = true)
+    List<ProductEntity> getAll();
+
     List<ProductEntity> findAllByStateIsNotNull();
 
     List<ProductEntity> findAllByStateIsNull();
@@ -43,6 +46,9 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Integer>
 
     @Query(value = "SELECT * FROM products as p order by p.number_product desc ", nativeQuery = true)
     List<ProductEntity> sortByNumber();
+
+    @Query(value = "select * from products as p where p.state is null and p.name LIKE %?1% ", nativeQuery = true)
+    List<ProductEntity> searchAllName(String keyword);
 
 
 }

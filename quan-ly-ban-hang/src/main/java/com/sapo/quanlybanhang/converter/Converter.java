@@ -1,11 +1,7 @@
 package com.sapo.quanlybanhang.converter;
 
-import com.sapo.quanlybanhang.dto.CategoryDto;
-import com.sapo.quanlybanhang.dto.ProductDto;
-import com.sapo.quanlybanhang.dto.SupplierDto;
-import com.sapo.quanlybanhang.entity.CategoryEntity;
-import com.sapo.quanlybanhang.entity.ProductEntity;
-import com.sapo.quanlybanhang.entity.SupplierEntity;
+import com.sapo.quanlybanhang.dto.*;
+import com.sapo.quanlybanhang.entity.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +14,7 @@ public class Converter {
         dto.setName(item.getName());
         dto.setNumberProduct(item.getNumberProduct());
         dto.setSellProduct(item.getSellProduct());
+        dto.setImage(item.getImage());
         dto.setPrice(item.getPrice());
         dto.setDescription(item.getDescription());
         dto.setCreatedDate(item.getCreatedDate());
@@ -67,6 +64,30 @@ public class Converter {
         dto.setModifiedDate(item.getModifiedDate());
         dto.setCreatedBy(item.getCreatedBy());
         dto.setModifiedBy(item.getModifiedBy());
+        return dto;
+
+    }
+    public SizeDto ConverterToDtoSize(SizeEntity item) {
+        SizeDto dto = new SizeDto();
+
+    dto.setId(item.getId());
+    dto.setSize(item.getSize());
+        return dto;
+
+    }
+    public BrandDto ConverterToDtoBrand(BrandEntity item) {
+        BrandDto dto = new BrandDto();
+          dto.setId(item.getId());
+          dto.setName(item.getName());
+        return dto;
+
+    }
+    public ColorDto ConverterToDtoColor(ColorEntity item) {
+        ColorDto dto = new ColorDto();
+
+           dto.setId(item.getId());
+           dto.setCode(item.getCode());
+           dto.setName(item.getName());
         return dto;
 
     }

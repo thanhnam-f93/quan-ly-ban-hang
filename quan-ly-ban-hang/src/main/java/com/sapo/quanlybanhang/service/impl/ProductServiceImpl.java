@@ -36,7 +36,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List getAll() {
-        List<ProductEntity> productEntities = productRepository.findAllByStateIsNull();
+        List<ProductEntity> productEntities = productRepository.getAll();
         List<ProductDto> productDtos = new ArrayList<>();
         Converter converter = new Converter();
         for (ProductEntity item : productEntities) {
@@ -65,7 +65,6 @@ public class ProductServiceImpl implements ProductService {
         productEntity.setSupplier(supplierEntity);
         productRepository.save(productEntity);
         ProductDto productsDTO = converter.ConverterToDtoProduct(productEntity);
-
         return productsDTO;
     }
 
@@ -106,6 +105,20 @@ public class ProductServiceImpl implements ProductService {
     public List searchAll(String keyword,Pageable pageable) {
         if (keyword != null) {
             List<ProductEntity> productEntities = productRepository.searchAll(keyword, pageable);
+            List<ProductDto> productDtos = new ArrayList<>();
+            Converter converter = new Converter();
+            for (ProductEntity item : productEntities) {
+                productDtos.add(converter.ConverterToDtoProduct(item));
+            }
+            return productDtos;
+        }
+        return null;
+    }
+
+    @Override
+    public List searchAllName(String keyword) {
+        if (keyword != null) {
+            List<ProductEntity> productEntities = productRepository.searchAllName(keyword);
             List<ProductDto> productDtos = new ArrayList<>();
             Converter converter = new Converter();
             for (ProductEntity item : productEntities) {
@@ -199,13 +212,24 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductEntity deleteByID(int id) {
-        ProductEntity productEntity = productRepository.findByIdAndStateIsNotNull(id);
+        ProductEntity productEntity = productRepository.findByIdAndStateIsNull(id);
         if (productEntity != null) {
             productEntity.setState("Deleted");
             productRepository.save(productEntity);
         }
         return null;
     }
+
+    @Override
+    public ProductEntity RevertByID(int id) {
+        ProductEntity productEntity = productRepository.findByIdAndStateIsNotNull(id);
+        if (productEntity != null) {
+            productEntity.setState(null);
+            productRepository.save(productEntity);
+        }
+        return null;
+    }
+
 
     @Override
     public ProductDto updateProduct(int id, UpdateDto updateDto) {

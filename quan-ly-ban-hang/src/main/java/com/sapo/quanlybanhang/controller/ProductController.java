@@ -87,6 +87,11 @@ public class ProductController {
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
         return productService.searchAll(keyword,pageable);
     }
+    @GetMapping(value = "/products/{keyword}")
+    public List<ProductDto> searchByName(@PathVariable String keyword) {
+
+        return productService.searchAllName(keyword);
+    }
 
     @GetMapping(value = "/product_searchByCategory/{keyword}")
     public List<ProductDto> filterByCategory(@PathVariable int keyword) {
@@ -106,7 +111,7 @@ public class ProductController {
         productService.deleteByID(id);
     }
 
-    @PutMapping(value = "/product/{id}")
+    @PutMapping(value = "/products/{id}")
     public ResponseEntity<UpdateDto> updateProduct(@PathVariable int id, @RequestBody UpdateDto updateDto) {
 
         productService.updateProduct(id, updateDto);

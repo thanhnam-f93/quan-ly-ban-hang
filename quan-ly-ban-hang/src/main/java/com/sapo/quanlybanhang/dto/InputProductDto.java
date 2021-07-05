@@ -15,14 +15,13 @@ public class InputProductDto {
 
     private int id;
 
-
     private String code;
 
     private String name;
 
     private int brand_id;
 
-    private int number_product;
+    private int numberProduct;
 
     private int sell_product;
 
