@@ -82,11 +82,17 @@ public class ProductController {
 //
 //    }
 
-    @GetMapping(value = "/product_search/{keyword}")
-    public List<ProductDto> search(@PathVariable String keyword,@RequestParam int pageNo,@RequestParam int pageSize) {
+    @GetMapping(value = "/product_search")
+    public List<ProductDto> search(@RequestParam String keyword,@RequestParam int pageNo,@RequestParam int pageSize) {
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
         return productService.searchAll(keyword,pageable);
     }
+    @GetMapping(value = "/product_searchh/{keyword}")
+    public List<ProductDto> searchAll(@PathVariable String keyword) {
+
+        return productService.searchAllName(keyword);
+    }
+
     @GetMapping(value = "/productss")
     public List<ProductDto> searchByName(@RequestParam String keyword) {
 
@@ -94,13 +100,19 @@ public class ProductController {
     }
 
     @GetMapping(value = "/product_searchByCategory/{keyword}")
-    public List<ProductDto> filterByCategory(@PathVariable int keyword) {
+    public List<ProductDto> filterByCategory(@PathVariable int keyword)
+    {
         return productService.searchByCategory(keyword);
+    }
+    @GetMapping(value = "/product_searchByCategories")
+    public List<ProductDto> filterByCategory(@RequestParam int keyword,@RequestParam int pageNo,@RequestParam int pageSize)
+    {
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+        return productService.searchByCategories(keyword,pageable);
     }
 
     @GetMapping(value = "/product")
-    public List<ProductDto> findPaginated(@RequestParam int pageNo) {
-        int pageSize = 3;
+    public List<ProductDto> findPaginated(@RequestParam int pageNo,@RequestParam int pageSize) {
         return productService.findPaginated(pageNo, pageSize);
 
 

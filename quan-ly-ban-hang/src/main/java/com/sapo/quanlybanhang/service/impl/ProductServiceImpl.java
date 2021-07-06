@@ -116,6 +116,11 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public List filterAll(int keyword, Pageable pageable) {
+        return null;
+    }
+
+    @Override
     public List searchAllName(String keyword) {
         List<ProductEntity> productEntities = productRepository.searchAllName(keyword);
         List<ProductDto> productDtos = new ArrayList<>();
@@ -187,7 +192,21 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<ProductDto> searchByCategory(int keyword) {
         if (keyword != 0) {
-            List<ProductEntity> productEntities = productRepository.findByCategory_Id(keyword);
+            List<ProductEntity> productEntities = productRepository.findByCategory_IdAndStateIsNull(keyword);
+            List<ProductDto> productDtos = new ArrayList<>();
+            Converter converter = new Converter();
+            for (ProductEntity item : productEntities) {
+                productDtos.add(converter.ConverterToDtoProduct(item));
+            }
+            return productDtos;
+        }
+        return null;
+    }
+
+    @Override
+    public List<ProductDto>  searchByCategories(int keyword, Pageable pageable) {
+        if (keyword != 0) {
+            List<ProductEntity> productEntities = productRepository.filterAll(keyword,pageable);
             List<ProductDto> productDtos = new ArrayList<>();
             Converter converter = new Converter();
             for (ProductEntity item : productEntities) {
@@ -201,7 +220,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List findPaginated(int pageNo, int pageSize) {
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
-        Page<ProductEntity> productEntities = productRepository.findAll(pageable);
+        List<ProductEntity> productEntities = productRepository.getAllPagination(pageable);
         List<ProductDto> productDtos = new ArrayList<>();
         Converter converter = new Converter();
         for (ProductEntity item : productEntities) {

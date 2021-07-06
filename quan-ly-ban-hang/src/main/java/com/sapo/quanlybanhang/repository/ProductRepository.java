@@ -1,6 +1,7 @@
 package com.sapo.quanlybanhang.repository;
 
 import com.sapo.quanlybanhang.entity.ProductEntity;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -14,15 +15,22 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Integer>
     List<ProductEntity> searchAll(String keyword, Pageable pageable);
 //    @Query(value = "SELECT * FROM products as p where p.category_id = ?1; ", nativeQuery = true)
 //    List<ProductEntity> findAllByCategory(String keyword);
-
+@Query(value = "select * from products as p where p.state is null and p.name LIKE %?1% ", nativeQuery = true)
+List<ProductEntity> searchName(String keyword);
     @Query(value = "select * from products as p where p.state is null order by p.id desc ", nativeQuery = true)
     List<ProductEntity> getAll();
+
+    @Query(value = "select * from products as p where p.state is null order by p.id desc ", nativeQuery = true)
+    List<ProductEntity> getAllPagination(Pageable pageable);
+
+    @Query(value = "select * from products as p where p.state is null and p.category_id=?1 ", nativeQuery = true)
+    List<ProductEntity> filterAll(int id, Pageable pageable);
 
     List<ProductEntity> findAllByStateIsNotNull();
 
     List<ProductEntity> findAllByStateIsNull();
 
-    List<ProductEntity> findByCategory_Id(int id);
+    List<ProductEntity> findByCategory_IdAndStateIsNull(int id);
 
     ProductEntity findByIdAndStateIsNull(int id);
 

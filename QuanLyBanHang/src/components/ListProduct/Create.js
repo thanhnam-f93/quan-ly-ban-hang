@@ -6,9 +6,18 @@ import {
   CFormGroup,
   CInput,
   CLabel,
+  CRow,
+  CInputFile
 } from "@coreui/react";
 import { useEffect, useState } from "react";
-import { createCategory,getBrand,getColor,getSize,getCate,getSupplier } from "src/apis/Product";
+import {
+  createCategory,
+  getBrand,
+  getColor,
+  getSize,
+  getCate,
+  getSupplier
+} from "src/apis/Product";
 import Select from "react-select";
 import axios from "axios";
 function Create(props) {
@@ -23,7 +32,7 @@ function Create(props) {
   const [color_id, setColorId] = useState("");
   const [size_id, setSizeId] = useState("");
   const [category_id, setCategoryId] = useState("");
-  const [createBy, setCreateBy] = useState("");
+  const [createdDate, setCreatedDate] = useState("");
   const [category, setCategory] = useState([]);
   const [color, setColor] = useState([]);
   const [size, setSize] = useState([]);
@@ -48,7 +57,7 @@ function Create(props) {
       color_id: color_id,
       size_id: size_id,
       category_id: category_id,
-      createBy: createBy,
+      createdDate: createdDate,
       supplier_id: supplier_id,
     };
     console.log(product);
@@ -64,7 +73,7 @@ function Create(props) {
   }, []);
 
   useEffect(() => {
-   getCate().then((res) => {
+    getCate().then((res) => {
       setCategory(res.data);
       console.log(res.data);
     });
@@ -76,7 +85,7 @@ function Create(props) {
     });
   }, []);
   useEffect(() => {
-   getSize().then((res) => {
+    getSize().then((res) => {
       setSize(res.data);
       console.log(res.data);
     });
@@ -149,8 +158,19 @@ function Create(props) {
   const changeNumber = (event) => {
     setNumber(event.target.value);
   };
-  const changeImage = (event) => {
-    setImage(event.target.value);
+  const changeImage = async e => {
+    const files = e.target.files;
+    const data = new FormData()
+    data.append("file-input",files[0])
+    data.append("upload_preset","kr4pkzdt")
+  const res = await fetch("https://api.cloudinary.com/v1_1/sapoaaaa/image/upload",{
+    method: "POST",
+    body: data
+  })               
+  const file = await res.json()
+  console.log(file)     
+  setImage(file.secure_url)    
+  
   };
   const changePrice = (event) => {
     setPrice(event.target.value);
@@ -168,18 +188,19 @@ function Create(props) {
   const changeCate = (event) => {
     setCategoryId(event.value);
   };
-  const changeCreateBy = (event) => {
-    setCreateBy(event.target.value);
+  const changeCreateDate = (event) => {
+    setCreatedDate(event.target.value);
   };
   const changeSuppliers = (event) => {
     setSupplierId(event.value);
   };
 
+
   return (
     <div>
       <div>
-        <div className="row">
-          <div className=" card col-lg-6">
+        <CRow>
+          <CCol xs="12" sm="7">
             <CCard>
               <CCardHeader>Sản phẩm</CCardHeader>
               <CCardBody>
@@ -225,17 +246,39 @@ function Create(props) {
                 </CFormGroup>
               </CCardBody>
             </CCard>
-          </div>
-          <div className=" card col-lg-6 mx-auto">
+            <CCard>
+              <CCardHeader>Thuộc tính</CCardHeader>
+              <CCardBody>
+                <CFormGroup row className="my-0">
+                  <CCol xs="6">
+                    <CFormGroup>
+                      <CLabel htmlFor="city">Color</CLabel>
+                      <Select
+                        options={filterOptionColor}
+                        onChange={changeColor}
+                      />
+                    </CFormGroup>
+                  </CCol>
+                  <CCol xs="6">
+                    <CFormGroup>
+                      <CLabel htmlFor="postal-code">Size</CLabel>
+                      <Select
+                        options={filterOptionSize}
+                        onChange={changeSize}
+                      />
+                    </CFormGroup>
+                  </CCol>
+                </CFormGroup>
+              </CCardBody>
+            </CCard>
+          </CCol>
+          <CCol xs="12" sm="5">
             <CCard>
               <CCardHeader>Phân loại</CCardHeader>
               <CCardBody>
                 <CFormGroup>
                   <CLabel htmlFor="company">Nhãn hiệu</CLabel>
-                  <Select
-                    options={filterOptionBrand}
-                    onChange={changeBrand}
-                  />
+                  <Select options={filterOptionBrand} onChange={changeBrand} />
                 </CFormGroup>
                 <CFormGroup>
                   <CLabel htmlFor="vat">Loại</CLabel>
@@ -246,8 +289,9 @@ function Create(props) {
                   />
                 </CFormGroup>
                 <CFormGroup>
-                  <CLabel htmlFor="vat">Người tạo</CLabel>
-                  <CInput id="vat" onChange={changeCreateBy} />
+                  <CLabel htmlFor="vat">Ngày tạo</CLabel>
+                  {/* <CInput id="vat" onChange={changeCreateDate} /> */}
+                  <CInput type="date" id="dob" name="dob"  placeholder="date" onChange={changeCreateDate} />
                 </CFormGroup>
                 <CFormGroup>
                   <CLabel htmlFor="vat">Nhà phân phối</CLabel>
@@ -257,27 +301,30 @@ function Create(props) {
                 </CFormGroup>
               </CCardBody>
             </CCard>
-          </div>
-        </div>
-        <CCard>
-          <CCardHeader>Thuộc tính</CCardHeader>
-          <CCardBody>
+            <CCard>
+            <CCardHeader>Ảnh</CCardHeader>
+            <CCardBody>
             <CFormGroup row className="my-0">
-              <CCol xs="8">
-                <CFormGroup>
-                  <CLabel htmlFor="city">Color</CLabel>
-                  <Select options={filterOptionColor} onChange={changeColor} />
+            <CFormGroup>
+                      <CLabel htmlFor="city">Chọn ảnh</CLabel>
+                   
+                      <CFormGroup row>
+               
+                  <CCol xs="12" md="9">
+                    <CInputFile id="file-input" name="file-input" onChange={changeImage}/>
+                  
+                  </CCol>
                 </CFormGroup>
-              </CCol>
-              <CCol xs="4">
-                <CFormGroup>
-                  <CLabel htmlFor="postal-code">Size</CLabel>
-                  <Select options={filterOptionSize} onChange={changeSize} />
-                </CFormGroup>
-              </CCol>
+             
+                    
+                    </CFormGroup>
             </CFormGroup>
-          </CCardBody>
-        </CCard>
+            </CCardBody>
+               </CCard>
+           
+          </CCol>
+        </CRow>
+
         <button
           className="btn btn-danger"
           onClick={cancel}

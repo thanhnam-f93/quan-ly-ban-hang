@@ -35,7 +35,7 @@ public class InputProductDto {
 
     private int color_id;
 
-    private Date created_date;
+    private Date createdDate;
 
     private Date modified_date;
 
