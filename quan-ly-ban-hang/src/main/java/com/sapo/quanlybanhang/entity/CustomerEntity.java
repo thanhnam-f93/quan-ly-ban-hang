@@ -48,6 +48,9 @@ private String address;
     @Column(name ="modified_by")
     private String modifiedBy;
 
+    @Column(name="status")
+    private String status;
+
 //    @OneToMany(mappedBy = "customer")
 //    private List<OrderEntity> orderEntities = new ArrayList();
 //

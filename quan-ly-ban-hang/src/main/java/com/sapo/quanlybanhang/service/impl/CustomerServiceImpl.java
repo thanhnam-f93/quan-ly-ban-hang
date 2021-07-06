@@ -22,6 +22,12 @@ public class CustomerServiceImpl implements CustomerService {
         this.customerRepository = customerRepository;
         this.valid = valid;
     }
+    @Override
+    public Page<CustomerDto> getPage(Pageable pageable) {
+        Page<CustomerEntity> entityPage = customerRepository.findAll(pageable);
+        Page<CustomerDto> dtoPage = entityPage.map(CustomerConvert::toDTO);
+        return entityPage.hasContent() ? dtoPage : null;
+    }
 
     @Override
     public CustomerDto findById(Integer id) {
@@ -34,7 +40,7 @@ public class CustomerServiceImpl implements CustomerService {
         if(valid.checkNumber(input)){
             return findByPhone(input,pageable);
         }else {
-            Page<CustomerEntity> entityPage = customerRepository.search(input, pageable);
+            Page<CustomerEntity> entityPage = customerRepository.searchByNameOrEmail(input, pageable);
             Page<CustomerDto> dtoPage = entityPage.map(CustomerConvert::toDTO);
             return entityPage.hasContent() ? dtoPage : null;
         }
@@ -76,8 +82,22 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
+    public Page<CustomerDto> findAgeUnder18optionGender(String gender,Pageable pageable) {
+        Page<CustomerEntity> entityPage = customerRepository.findByAgeUnder18optionGender(gender,pageable);
+        Page<CustomerDto> dtoPage = entityPage.map(CustomerConvert::toDTO);
+        return entityPage.hasContent() ? dtoPage : null;
+    }
+
+    @Override
     public Page<CustomerDto> findByAgeBetween18and35(Pageable pageable) {
         Page<CustomerEntity> entityPage = customerRepository.findByAgeBetween18and35(pageable);
+        Page<CustomerDto> dtoPage = entityPage.map(CustomerConvert::toDTO);
+        return entityPage.hasContent() ? dtoPage : null;
+    }
+
+    @Override
+    public Page<CustomerDto> findByAgeBetween18and35optionGender(String gender,Pageable pageable) {
+        Page<CustomerEntity> entityPage = customerRepository.findByAgeBetween18and35optionGender(gender,pageable);
         Page<CustomerDto> dtoPage = entityPage.map(CustomerConvert::toDTO);
         return entityPage.hasContent() ? dtoPage : null;
     }
@@ -89,10 +109,9 @@ public class CustomerServiceImpl implements CustomerService {
         return entityPage.hasContent() ? dtoPage : null;
     }
 
-
     @Override
-    public Page<CustomerDto> getPage(Pageable pageable) {
-        Page<CustomerEntity> entityPage = customerRepository.findAll(pageable);
+    public Page<CustomerDto> findByAgeOver35optionGender(String gender,Pageable pageable) {
+        Page<CustomerEntity> entityPage = customerRepository.findByAgeOver35optionGender(gender,pageable);
         Page<CustomerDto> dtoPage = entityPage.map(CustomerConvert::toDTO);
         return entityPage.hasContent() ? dtoPage : null;
     }
@@ -108,7 +127,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public void delete(Integer id) {
-        customerRepository.deleteById(id);
+        customerRepository.updateStatus(id);
     }
 
     @Override

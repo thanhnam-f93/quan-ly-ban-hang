@@ -41,8 +41,9 @@ public class CustomerDto implements Serializable {
     private Date modifiedDate;
     private String createBy;
     private String modifiedBy;
-
-    public CustomerDto(String name, String phone, String email, String gender,String address, Date dateOfBirth, String note, Date createdDate, Date modifiedDate, String createBy, String modifiedBy) {
+private String status;
+    public CustomerDto(String name, String phone, String email, String gender,String address, Date dateOfBirth,
+                       String note, Date createdDate, Date modifiedDate, String createBy, String modifiedBy,String status) {
         this.name = name;
         this.phone = phone;
         this.email = email;
@@ -54,6 +55,7 @@ public class CustomerDto implements Serializable {
         this.modifiedDate = modifiedDate;
         this.createBy = createBy;
         this.modifiedBy = modifiedBy;
+        this.status=status;
     }
 }
 
