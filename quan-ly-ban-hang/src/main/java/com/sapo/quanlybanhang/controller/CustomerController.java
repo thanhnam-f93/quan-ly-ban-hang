@@ -30,16 +30,16 @@ public class CustomerController {
     public CustomerController(CustomerService customerService) {
         this.customerService = customerService;
     }
-
     @GetMapping("customers/page")
     ResponseEntity<?> allPage(
-            @RequestParam(name = "pageNo", defaultValue = "0") String pageNo
+            @RequestParam(name = "pageNo", defaultValue = "0") String pageNo,
+            @RequestParam(name= "limit",defaultValue = "5") String limit
     ) {
         try {
-            PageRequest pageRequest = PageRequest.of(Integer.parseInt(pageNo), 2, Sort.by("id").descending());
+            PageRequest pageRequest = PageRequest.of(Integer.parseInt(pageNo), Integer.parseInt(limit), Sort.by("id").descending());
             Page<CustomerDto> dtoPage = customerService.getPage(pageRequest);
             if (dtoPage.hasContent()) {
-                return new ResponseEntity<>(dtoPage, new HttpHeaders(), HttpStatus.FOUND);
+                return new ResponseEntity<>(dtoPage, new HttpHeaders(), HttpStatus.OK);
             }
         } catch (Exception e) {
             logger.error("What the fuck: " + e.getMessage());
@@ -51,14 +51,14 @@ public class CustomerController {
     @GetMapping("customers/search")
     ResponseEntity<?> search(
             @RequestParam(name = "input") String input,
-            @RequestParam(name = "pageNo", defaultValue = "0",required = false) String pageNo
-
+            @RequestParam(name = "pageNo", defaultValue = "0",required = false) String pageNo,
+@RequestParam(name= "limit",defaultValue = "5",required = false) String limit
     ) {
         try {
-            PageRequest pageRequest = PageRequest.of(Integer.parseInt(pageNo), 2, Sort.by("id").descending());
+            PageRequest pageRequest = PageRequest.of(Integer.parseInt(pageNo), Integer.parseInt(limit), Sort.by("id").descending());
             Page<CustomerDto> dtoPage = customerService.search(input, pageRequest);
             if (dtoPage.hasContent()) {
-                return new ResponseEntity<>(dtoPage, new HttpHeaders(), HttpStatus.FOUND);
+                return new ResponseEntity<>(dtoPage, new HttpHeaders(), HttpStatus.OK);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -71,13 +71,14 @@ public class CustomerController {
     @GetMapping("customers/findGender")
     ResponseEntity<?> findGender(
             @RequestParam(name = "pageNo", defaultValue = "0") String pageNo,
-            @RequestParam(name = "gender") String gender
+            @RequestParam(name = "gender") String gender,
+            @RequestParam(name= "limit",defaultValue = "5",required = false) String limit
     ) {
         try {
-            PageRequest pageRequest = PageRequest.of(Integer.parseInt(pageNo), 2, Sort.by("id").descending());
+            PageRequest pageRequest = PageRequest.of(Integer.parseInt(pageNo), Integer.parseInt(limit), Sort.by("id").descending());
             Page<CustomerDto> dtoPage = customerService.findByGender(gender, pageRequest);
             if (dtoPage.hasContent()) {
-                return new ResponseEntity<>(dtoPage, new HttpHeaders(), HttpStatus.FOUND);
+                return new ResponseEntity<>(dtoPage, new HttpHeaders(), HttpStatus.OK);
             }
         } catch (Exception e) {
             logger.error("What the fuck: " + e.getMessage());
@@ -89,13 +90,14 @@ public class CustomerController {
     @GetMapping("customers/findAddress")
     ResponseEntity<?> findAddress(
             @RequestParam(name = "pageNo", defaultValue = "0") String pageNo,
-            @RequestParam(name = "address") String input
+            @RequestParam(name = "address") String input,
+             @RequestParam(name= "limit",defaultValue = "5",required = false) String limit
     ) {
         try {
-            PageRequest pageRequest = PageRequest.of(Integer.parseInt(pageNo), 2, Sort.by("id").descending());
+            PageRequest pageRequest = PageRequest.of(Integer.parseInt(pageNo), Integer.parseInt(limit), Sort.by("id").descending());
             Page<CustomerDto> dtoPage = customerService.findByAddress(input, pageRequest);
             if (dtoPage.hasContent()) {
-                return new ResponseEntity<>(dtoPage, new HttpHeaders(), HttpStatus.FOUND);
+                return new ResponseEntity<>(dtoPage, new HttpHeaders(), HttpStatus.OK);
             }
         } catch (Exception e) {
             logger.error("What the fuck: " + e.getMessage());
@@ -107,13 +109,14 @@ public class CustomerController {
     @GetMapping("customers/findStaff")
     ResponseEntity<?> findStaff(
             @RequestParam(name = "pageNo", defaultValue = "0") String pageNo,
-            @RequestParam(name = "input") String input
+            @RequestParam(name = "input") String input,
+            @RequestParam(name= "limit",defaultValue = "5",required = false) String limit
     ) {
         try {
-            PageRequest pageRequest = PageRequest.of(Integer.parseInt(pageNo), 2, Sort.by("id").descending());
+            PageRequest pageRequest = PageRequest.of(Integer.parseInt(pageNo), Integer.parseInt(limit), Sort.by("id").descending());
             Page<CustomerDto> dtoPage = customerService.findByStaff(input, pageRequest);
             if (dtoPage.hasContent()) {
-                return new ResponseEntity<>(dtoPage, new HttpHeaders(), HttpStatus.FOUND);
+                return new ResponseEntity<>(dtoPage, new HttpHeaders(), HttpStatus.OK);
             }
         } catch (Exception e) {
             logger.error("What the fuck: " + e.getMessage());
@@ -122,15 +125,22 @@ public class CustomerController {
         return null;
     }
 
-    @GetMapping("customers/under18")
+    @GetMapping("customers/under")
     ResponseEntity<?> under18(
-            @RequestParam(name = "pageNo", defaultValue = "0") String pageNo
+            @RequestParam(name = "pageNo", defaultValue = "0") String pageNo,
+            @RequestParam(name= "gender",required = false) String gender,
+            @RequestParam(name= "limit",defaultValue = "5",required = false) String limit
     ) {
         try {
-            PageRequest pageRequest = PageRequest.of(Integer.parseInt(pageNo), 2, Sort.by("id").descending());
-            Page<CustomerDto> dtoPage = customerService.findAgeUnder18(pageRequest);
+            PageRequest pageRequest = PageRequest.of(Integer.parseInt(pageNo), Integer.parseInt(limit), Sort.by("id").descending());
+            Page<CustomerDto> dtoPage=null;
+            if(gender==null){
+                 dtoPage = customerService.findAgeUnder18(pageRequest);
+            }else {
+                dtoPage = customerService.findAgeUnder18optionGender(gender,pageRequest);
+            }
             if (dtoPage.hasContent()) {
-                return new ResponseEntity<>(dtoPage, new HttpHeaders(), HttpStatus.FOUND);
+                return new ResponseEntity<>(dtoPage, new HttpHeaders(), HttpStatus.OK);
             }
         } catch (Exception e) {
             logger.error("What the fuck: " + e.getMessage());
@@ -141,13 +151,20 @@ public class CustomerController {
 
     @GetMapping("customers/between")
     ResponseEntity<?> between(
-            @RequestParam(name = "pageNo", defaultValue = "0") String pageNo
+            @RequestParam(name = "pageNo", defaultValue = "0") String pageNo,
+            @RequestParam(name= "gender",required = false) String gender,
+            @RequestParam(name= "limit",defaultValue = "5",required = false) String limit
     ) {
         try {
-            PageRequest pageRequest = PageRequest.of(Integer.parseInt(pageNo), 2, Sort.by("id").descending());
-            Page<CustomerDto> dtoPage = customerService.findByAgeBetween18and35(pageRequest);
+            PageRequest pageRequest = PageRequest.of(Integer.parseInt(pageNo), Integer.parseInt(limit), Sort.by("id").descending());
+            Page<CustomerDto> dtoPage=null;
+            if(gender==null){
+                dtoPage = customerService.findByAgeBetween18and35(pageRequest);
+            }else {
+                dtoPage = customerService.findByAgeBetween18and35optionGender(gender,pageRequest);
+            }
             if (dtoPage.hasContent()) {
-                return new ResponseEntity<>(dtoPage, new HttpHeaders(), HttpStatus.FOUND);
+                return new ResponseEntity<>(dtoPage, new HttpHeaders(), HttpStatus.OK);
             }
         } catch (Exception e) {
             logger.error("What the fuck: " + e.getMessage());
@@ -156,15 +173,22 @@ public class CustomerController {
         return null;
     }
 
-    @GetMapping("customers/over35")
+    @GetMapping("customers/over")
     ResponseEntity<?> over35(
-            @RequestParam(name = "pageNo", defaultValue = "0") String pageNo
+            @RequestParam(name = "pageNo", defaultValue = "0") String pageNo,
+            @RequestParam(name= "gender",required = false) String gender,
+            @RequestParam(name= "limit",defaultValue = "5",required = false) String limit
     ) {
         try {
-            PageRequest pageRequest = PageRequest.of(Integer.parseInt(pageNo), 2, Sort.by("id").descending());
-            Page<CustomerDto> dtoPage = customerService.findByAgeOver35(pageRequest);
+            PageRequest pageRequest = PageRequest.of(Integer.parseInt(pageNo), Integer.parseInt(limit), Sort.by("id").descending());
+            Page<CustomerDto> dtoPage=null;
+            if(gender==null){
+                dtoPage = customerService.findByAgeOver35(pageRequest);
+            }else {
+                dtoPage = customerService.findByAgeOver35optionGender(gender,pageRequest);
+            }
             if (dtoPage.hasContent()) {
-                return new ResponseEntity<>(dtoPage, new HttpHeaders(), HttpStatus.FOUND);
+                return new ResponseEntity<>(dtoPage, new HttpHeaders(), HttpStatus.OK);
             }
         } catch (Exception e) {
             logger.error("What the fuck: " + e.getMessage());
@@ -236,6 +260,7 @@ public class CustomerController {
             root.setNote(customerDto.getNote());
             root.setPhone(customerDto.getPhone());
             root.setDateOfBirth(customerDto.getDateOfBirth());
+            root.setStatus(customerDto.getStatus());
             return ResponseEntity.ok().body("Cập nhập thành công");
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

@@ -17,6 +17,7 @@ public class CustomerConvert {
         customerDto.setCreatedDate(customerEntity.getCreatedDate());
         customerDto.setModifiedBy(customerEntity.getModifiedBy());
         customerDto.setModifiedDate(customerEntity.getModifiedDate());
+        customerDto.setStatus(customerEntity.getStatus());
         customerDto.setId(customerEntity.getId());
         return customerDto;
     }
@@ -35,6 +36,7 @@ public class CustomerConvert {
         customerEntity.setId(customerDto.getId());
         customerEntity.setNote(customerDto.getNote());
         customerEntity.setDateOfBirth(customerDto.getDateOfBirth());
+        customerEntity.setStatus(customerDto.getStatus());
         return customerEntity;
     }
 }

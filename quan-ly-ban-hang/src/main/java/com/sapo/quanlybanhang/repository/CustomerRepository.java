@@ -12,39 +12,48 @@ import java.util.List;
 
 public interface CustomerRepository extends JpaRepository<CustomerEntity, Integer> {
 
-    @Query(value = "select c from CustomerEntity c  where c.email like %:input% or c.name like %:input%")
-    Page<CustomerEntity> search(@Param("input") String input, Pageable pageable);
+    @Query(value = "select c from CustomerEntity c  where c.email like %:input% or c.name like %:input% and c.status='on'")
+    Page<CustomerEntity> searchByNameOrEmail(@Param("input") String input, Pageable pageable);
 
-    @Query(value = "select c from CustomerEntity c where c.phone like %:phone%")
+    @Query(value = "select c from CustomerEntity c where c.phone like %:phone% and c.status='on'")
     Page<CustomerEntity> findByPhone(@Param("phone") String create, Pageable pageable);
 
-    @Query(value = "select * from customers where gender = :gender", nativeQuery = true)
+    @Query(value = "select c from CustomerEntity c where c.gender = :gender and c.status='on'")
     Page<CustomerEntity> findByGender(@Param("gender") String gender, Pageable pageable);
 
-    @Query(value = "select c from CustomerEntity c  where c.createBy like %:create%")
+    @Query(value = "select c from CustomerEntity c  where c.createBy like %:create% and c.status='on'")
     Page<CustomerEntity> findByCreateBy(@Param("create") String create, Pageable pageable);
 
-    @Query(value = "select c from CustomerEntity c  where c.address like %:address%")
+    @Query(value = "select c from CustomerEntity c  where c.address like %:address% and c.status='on'")
     Page<CustomerEntity> findByAddress(@Param("address") String address, Pageable pageable);
 
-    @Query(value = "select c from CustomerEntity c  where c.createBy like %:staff%")
+    @Query(value = "select c from CustomerEntity c  where c.createBy like %:staff% and c.status='on'")
     Page<CustomerEntity> findByStaff(@Param("staff") String address, Pageable pageable);
 
-    @Query(value = "select * from customers where ROUND(DATEDIFF(CURDATE(), date_of_birth) / 365, 0) < 18", nativeQuery = true)
+    @Query(value = "select * from customers where ROUND(DATEDIFF(CURDATE(), date_of_birth) / 365, 0) < 18 and status='on'", nativeQuery = true)
     Page<CustomerEntity> findByAgeUnder18(Pageable pageable);
+    @Query(value = "select * from customers where ROUND(DATEDIFF(CURDATE(), date_of_birth) / 365, 0) < 18 and gender = :gender and status='on'", nativeQuery = true)
+    Page<CustomerEntity> findByAgeUnder18optionGender(@Param("gender")String gender, Pageable pageable);
 
     @Query(value = "select * from customers where ROUND(DATEDIFF(CURDATE()," +
-            " date_of_birth) / 365, 0) between 18 and 35", nativeQuery = true)
+            " date_of_birth) / 365, 0) between 18 and 35 and status='on'", nativeQuery = true)
     Page<CustomerEntity> findByAgeBetween18and35(Pageable pageable);
+    @Query(value = "select * from customers where ROUND(DATEDIFF(CURDATE(), date_of_birth) / 365, 0) between  18 and 35 and gender = :gender and status='on'", nativeQuery = true)
+    Page<CustomerEntity> findByAgeBetween18and35optionGender(@Param("gender")String gender, Pageable pageable);
 
-    @Query(value = "select * from customers where ROUND(DATEDIFF(CURDATE(), date_of_birth) / 365, 0) > 35;", nativeQuery = true)
+    @Query(value = "select * from customers where ROUND(DATEDIFF(CURDATE(), date_of_birth) / 365, 0) > 35 and status='on'", nativeQuery = true)
     Page<CustomerEntity> findByAgeOver35(Pageable pageable);
+    @Query(value = "select * from customers where ROUND(DATEDIFF(CURDATE(), date_of_birth) / 365, 0) > 35 and gender = :gender and status='on'", nativeQuery = true)
+    Page<CustomerEntity> findByAgeOver35optionGender(@Param("gender")String gender, Pageable pageable);
 
-    @Query(value = "select * from customers", nativeQuery = true)
+    @Query(value = "select * from customers where status='on'", nativeQuery = true)
     Page<CustomerEntity> fillAll(Pageable pageable);
 
     @Query(value = "select * from customers", nativeQuery = true)
     List<CustomerEntity> All();
+
+    @Query(value = "update CustomerEntity c set c.status ='off' where c.id = :id")
+void updateStatus(@Param("id")Integer id);
 
     @Query(value = "call getNewCustomersByMonth(:m,:y)",nativeQuery = true)
     Integer getNew(Integer m, Integer y);
