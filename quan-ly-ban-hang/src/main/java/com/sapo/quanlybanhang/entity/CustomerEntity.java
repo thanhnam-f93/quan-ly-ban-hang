@@ -48,11 +48,11 @@ private String address;
     @Column(name ="modified_by")
     private String modifiedBy;
 
-    @OneToMany(mappedBy = "customer")
-    private List<OrderEntity> orderEntities = new ArrayList();
-
-    @OneToMany(mappedBy = "customerBill")
-    private List<BillEntity> billEntities = new ArrayList();
+//    @OneToMany(mappedBy = "customer")
+//    private List<OrderEntity> orderEntities = new ArrayList();
+//
+//    @OneToMany(mappedBy = "customerBill")
+//    private List<BillEntity> billEntities = new ArrayList();
 
 
 }
