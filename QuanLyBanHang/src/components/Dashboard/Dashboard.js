@@ -5,9 +5,10 @@ import "./scss/DashBoard.css";
 
 const Dashboard = () => {
   const { jwt } = useContext(JwtContext);
+  const [accColumn,setAccColumn] = useState(0);
   const [dto, setDto] = useState({
     optionTime: "LAST_WEEK",
-    dashBoardItems: [{}],
+    dashBoardItems: [],
     price:0,
     orderNumber:0,
     billNumber:0,
@@ -23,6 +24,8 @@ const Dashboard = () => {
       response.json().then((data) => {
         console.log("doanh thu:", data);
         setDto(data);
+        setAccColumn(data.length);
+        console.log("length:",data.dashBoardItems.length);
       });
     });
     
@@ -44,11 +47,11 @@ const Dashboard = () => {
     elm = "";
   } else {
     elm = dashBoardItems.map((item, index) => {
-      return (
-        <div className="char-layout__item" style={{ "--percent": "90%" }}>
-          90%
-        </div>
-      );
+      return (     
+        <div className="char-layout__item" style={{ "--percent": "90%", }}>
+        <span>{item.createdDate}</span>
+        </div>        
+      );  
     });
   }
   return (
