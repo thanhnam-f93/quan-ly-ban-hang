@@ -56,12 +56,12 @@ const _nav =  [
       {
         _tag: 'CSidebarNavItem',
         name: 'Danh sách sản phẩm',
-        to: '/base/breadcrumbs',
+        to: '/product',
       },
       {
         _tag: 'CSidebarNavItem',
         name: 'Nhà cung cấp',
-        to: '/base/cards',
+        to: '/supplier',
       },
       {
         _tag: 'CSidebarNavItem',

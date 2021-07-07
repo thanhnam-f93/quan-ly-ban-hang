@@ -50,6 +50,15 @@ const User = React.lazy(() => import('./views/users/User'));
 /*================== Start code of Team - Quản lý bán hàng =================*/
 const Dashboard = React.lazy(() => import('./components/Dashboard/Dashboard'));
 const Staff = React.lazy(() => import('./components/Staff/Staff'));
+const ListProduct = React.lazy(() => import('./components/ListProduct/ListProduct'));
+const Update = React.lazy(() => import('./components/ListProduct/Update'));
+const Create = React.lazy(() => import('./components/ListProduct/Create'));
+
+/*================== The End code of Team - Quản lý bán hàng =================*/
+
+const ListSupplier = React.lazy(() => import('./components/ListSupplier/ListSupplier'));
+
+
 const Order = React.lazy(() => import('./components/Order/Order'));
 /*================== The End code of Team - Quản lý bán hàng =================*/
 
@@ -108,8 +117,20 @@ const routes = [
   { path: '/order-detail', exact: true,  name: '', component: Order },
   { path: '/order-detail/:id', exact: true,  name: 'chi-tiet-don-hang', component: OrderDetail },
   { path: '/order/return', exact: true,  name: 'don-hang-tra-ve ', component: Bill },
-  { path: '/order/return/:id', exact: true,  name: '', component: BillDetail }
+  { path: '/order/return/:id', exact: true,  name: '', component: BillDetail },
   
+  { path: '/product', exact: true,  name: 'Product', component: ListProduct },
+  { path: '/category', exact: true,  name: 'Product', component: ListProduct },
+  { path: '/product/update-category/:id', exact: true,  name: 'update', component: Update },
+  { path: '/product/add-category', exact: true,  name: 'add', component: Create },
+  { path: '/supplier', exact: true,  name: 'Supplier', component: ListSupplier }
+
+
+
+
+
+
+
 /*================== The End code of Team - Quản lý bán hàng =================*/
 ];
 

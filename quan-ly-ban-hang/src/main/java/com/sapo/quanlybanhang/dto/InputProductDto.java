@@ -15,14 +15,13 @@ public class InputProductDto {
 
     private int id;
 
-
     private String code;
 
     private String name;
 
     private int brand_id;
 
-    private int number_product;
+    private int numberProduct;
 
     private int sell_product;
 
@@ -36,7 +35,7 @@ public class InputProductDto {
 
     private int color_id;
 
-    private Date created_date;
+    private Date createdDate;
 
     private Date modified_date;
 

@@ -1,4 +1,7 @@
 package com.sapo.quanlybanhang.service;
 
-public interface BrandService {
+import java.util.List;
+
+public interface BrandService <t>{
+    List<t> getAll();
 }

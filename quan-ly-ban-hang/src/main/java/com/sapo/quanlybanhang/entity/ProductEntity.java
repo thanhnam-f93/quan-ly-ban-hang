@@ -16,14 +16,19 @@ public class ProductEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
     @Column(name = "code")
     private String code;
+
     @Column(name = "name")
     private String name;
+
     @Column(name = "number_product")
     private int numberProduct;
+
     @Column(name = "sell_product")
     private int sellProduct;
+
     @Column(name = "image")
     private String image;
 
