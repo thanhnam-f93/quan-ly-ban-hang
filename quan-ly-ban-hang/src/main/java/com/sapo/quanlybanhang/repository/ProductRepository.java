@@ -1,6 +1,7 @@
 package com.sapo.quanlybanhang.repository;
 
 import com.sapo.quanlybanhang.entity.ProductEntity;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -42,6 +43,7 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Integer>
 
     @Query(value = "SELECT * FROM products as p order by p.number_product desc ", nativeQuery = true)
     List<ProductEntity> sortByNumber();
+
 
 
 }

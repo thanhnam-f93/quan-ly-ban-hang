@@ -58,4 +58,7 @@
 }
 .list-order .order-table .table-striped .table-row:hover {
   background-color: #c4cdd5;
+}
+.list-order .CCard {
+  border: none;
 }/*# sourceMappingURL=order.css.map */

@@ -2,24 +2,16 @@ import React, { useContext, useEffect, useState } from 'react';
 import { reactLocalStorage } from 'reactjs-localstorage';
 import { callApi } from 'src/apis/ApiCaller';
 import { JwtContext } from 'src/context/JwtContext';
-import OrderHeader from './OrderHeader';
+import ModalHeaders from './ModalHeaders';
 import OrderTable from './OrderTable';
-import './scss/order.css'
-import {
-  CPagination
-} from '@coreui/react'
 
-
-
-
-const Order = () => {
-  const [currentPage, setCurrentPage] = useState(1);
-  const {jwt}= useContext(JwtContext);
+const OrderModal = () => {
+    const {jwt}= useContext(JwtContext);
   const acc= reactLocalStorage.getObject("acc");
   console.log(acc);
   const [orderPageable, setOrderPageAble] = useState({
     page:1,
-    limit:7,
+    limit:10,
     inputOrder:"",
     orderTime:""
   });
@@ -36,9 +28,8 @@ const Order = () => {
         return;
       }
       response.json().then((data) => {     
-        console.log("size data:",data.length);
+        console.log(data);
         setListOrder(data);
-        
         // alert("thao tác thành công");       
       });
     });
@@ -58,33 +49,19 @@ const getInput = (e)=>{
 }
 
 const getDate = (op, da) =>{
-  console.log("kiểu:",typeof(op));
   setOrderPageAble({
     ...orderPageable,optionTime:op
   })
 
 }
-
-const getPage = (page) =>{
-  console.log("trang:",page);
-  setOrderPageAble({...orderPageable, page:page});
-}
-
+console.log()
+ 
     return (
         <div className = "list-order">
-          <OrderHeader inputs  = {getInput} getDate = {getDate} />   
+          <ModalHeaders inputs  = {getInput} getDate = {getDate} />   
          <OrderTable lists = {listOrder}/>
-         <CPagination
-            doubleArrows = {false}
-            activePage={orderPageable.page}
-            pages={10}
-            onActivePageChange={getPage}
-          />  
-          
         </div>
-
     );
 };
 
-
-export default Order;
+export default OrderModal;

@@ -1,11 +1,22 @@
-import React, { useEffect, useState } from "react";
-import { callApi } from "src/apis/ApiCaller";
+import React, { useContext, useEffect, useState } from "react";
+import { callApi, callApiNotJwt } from "src/apis/ApiCaller";
 import OrderHeader from "../Order/OrderHeader";
 import BillTable from "./BillTable";
 import "./../Order/scss/order.css";
-
+import { JwtContext } from "src/context/JwtContext";
+import { Dropdown, Modal } from "react-bootstrap";
+import Login from "src/views/pages/login/Login";
+import Order from "../Order/Order";
+import Logins from "../Login/Logins";
+import OrderModal from "../Order/OrderModal";
+import { CPagination } from "@coreui/react";
 
 const Bill = () => {
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+  const { jwt } = useContext(JwtContext);
+  const [totalPage, setTotalPage] = useState(6);
   const [orderPageable, setOrderPageAble] = useState({
     page: 1,
     limit: 10,
@@ -25,14 +36,18 @@ const Bill = () => {
   useEffect(() => {
     console.log("useeffect:" + orderPageable);
 
-    callApi("bill", "post", orderPageable).then((response) => {
+    callApi("bill", "post", orderPageable, jwt).then((response) => {
       if (response.status !== 200) {
         alert("thao tác thất bại");
         return;
       }
       response.json().then((data) => {
-        console.log(data);
+        console.log(data.length);
         setListOrder(data);
+        if(data.length<7){
+          var page = orderPageable.page;
+          setTotalPage({page});
+        }
         // alert("thao tác thành công");
       });
     });
@@ -49,22 +64,49 @@ const Bill = () => {
     console.log(orderPageable);
   };
 
+  const getPage = (page) =>{
+    console.log("trang:",page);
+    setOrderPageAble({...orderPageable, page:page});
+  }
+
   return (
     <div className="list-order">
       <div className="order-1 ">
         <OrderHeader inputs={getInput} getDate={getDate} />
-        <div className = "btn-create">
-          <button  data-toggle="modal" data-target="#btn-modal">Trả hàng</button>
+        <div className="btn-create">
+          <button onClick={handleShow}>
+            Trả hàng
+          </button>
         </div>
       </div>
       <BillTable lists={listOrder} />
-      <div className="modal fade bd-example-modal-lg" id = "btn-modal" tabIndex="-1" role="dialog"  aria-hidden="true">
-  <div className="modal-dialog modal-lg">
-    <div className="modal-content">
-      ...
-    </div>
-  </div>
-</div>
+      <CPagination
+            doubleArrows = {false}
+            activePage={orderPageable.page}
+            pages={6}
+            onActivePageChange={getPage}
+          />  
+      <Modal show={show}
+      scrollable = "true"
+       onHide={handleClose}
+       size="lg"
+       aria-labelledby="contained-modal-title-vcenter"
+       centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Chọn đơn để trả hàng</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <OrderModal />
+        </Modal.Body>
+        <Modal.Footer>
+          <button variant="secondary" onClick={handleClose}>
+            Close
+          </button>
+          <button onClick={handleClose}>
+            Save Changes
+          </button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 };

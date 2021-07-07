@@ -2,6 +2,7 @@
   margin-left: 20px;
   max-width: 300px;
   position: relative;
+  z-index: 1;
 }
 .drop-down .btn-change {
   padding: 5px;
@@ -16,6 +17,7 @@
   outline: none;
 }
 .drop-down .content_dropdown {
+  z-index: 2;
   visibility: hidden;
   margin-top: 5px;
   padding: 7px;

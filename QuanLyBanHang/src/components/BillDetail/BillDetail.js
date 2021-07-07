@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { reactLocalStorage } from 'reactjs-localstorage';
-import { callApi } from 'src/apis/ApiCaller';
+import { callApi, callApiNotJwt } from 'src/apis/ApiCaller';
+import { JwtContext } from 'src/context/JwtContext';
 import CustomerInfor from '../OrderDetail/CustomerInfor';
 import BillInfor from './BillInfor';
 
 const BillDetail = () => {
+  const {jwt}=useContext(JwtContext);
   const [orderDto, setOrderDto] = useState([]);
   const customerInfor = reactLocalStorage.getObject("infor");
   const param = useParams();
@@ -13,7 +15,7 @@ const BillDetail = () => {
   console.log("orderDetail:"+id);
   useEffect(() => {
       console.log("types:"+param.id);
-      callApi(`bill-details/${id}`,"GET")
+      callApiNotJwt(`bill-details/${id}`,"GET",jwt)
       .then(response=>{
         if (response.status !== 200) {
           alert("thao tác thất bại");

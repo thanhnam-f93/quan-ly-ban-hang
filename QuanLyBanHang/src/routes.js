@@ -1,8 +1,10 @@
 import React from 'react';
 import Bill from './components/Bill/Bill';
 import BillDetail from './components/BillDetail/BillDetail';
+import Logins from './components/Login/Logins';
 import DropDown from './components/Order/DropDown';
 import OrderDetail from './components/OrderDetail/OrderDetail';
+import Saler from './components/sale/Saler';
 
 /*================== Of Template React =================*/
 const Toaster = React.lazy(() => import('./views/notifications/toaster/Toaster'));
@@ -55,7 +57,7 @@ const Order = React.lazy(() => import('./components/Order/Order'));
 
 const routes = [
   /*================== Of Template React =================*/
-  { path: '/', exact: true, name: 'Home' },
+  { path: '/', exact: true, name: 'trang-chu' },
   // { path: '/dashboard', name: 'Dashboard', component: Dashboard },
   { path: '/theme', name: 'Theme', component: Colors, exact: true },
   { path: '/theme/colors', name: 'Colors', component: Colors },
@@ -106,9 +108,11 @@ const routes = [
   { path: '/order', exact: true,  name: 'danh-sach-don-hang', component: Order },
   { path: '/dropdown', exact: true,  name: 'danh-sach-don-hang', component: DropDown },
   { path: '/order-detail', exact: true,  name: '', component: Order },
-  { path: '/order-detail/:id', exact: true,  name: 'chi-tiet-don-hang', component: OrderDetail },
+  { path: '/order-detail/:id/:type', exact: true,  name: 'chi-tiet-don-hang', component: OrderDetail },
   { path: '/order/return', exact: true,  name: 'don-hang-tra-ve ', component: Bill },
-  { path: '/order/return/:id', exact: true,  name: '', component: BillDetail }
+  { path: '/order/return/:id', exact: true,  name: '', component: BillDetail },
+  { path: '/logins', exact: true,  name: '', component: Logins },
+  { path: '/saler', exact: true,  name: 'ban-hang', component: Saler }
   
 /*================== The End code of Team - Quản lý bán hàng =================*/
 ];

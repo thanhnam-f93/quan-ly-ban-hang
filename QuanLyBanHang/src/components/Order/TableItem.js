@@ -20,7 +20,7 @@ const TableItem = (props) => {
     console.log("customInf:",customerInfor);
     const redirectDetail = ()=>{
       const location = {
-        pathname: `/order-detail/${item.id}`, 
+        pathname: `/order-detail/${item.id}/1`, 
         state:{item:item}  
       }
     history.push (location);

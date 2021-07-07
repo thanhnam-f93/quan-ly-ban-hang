@@ -1,6 +1,7 @@
 package com.sapo.quanlybanhang.service.impl;
 
 import com.sapo.quanlybanhang.converter.Converter;
+import com.sapo.quanlybanhang.converter.ProductConverter;
 import com.sapo.quanlybanhang.dto.InputProductDto;
 import com.sapo.quanlybanhang.dto.ProductDto;
 import com.sapo.quanlybanhang.dto.UpdateDto;
@@ -17,6 +18,7 @@ import org.modelmapper.ModelMapper;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -232,6 +234,13 @@ public class ProductServiceImpl implements ProductService {
         return converter.ConverterToDtoProduct(product);
 
 
+    }
+
+    @Override
+    public List<ProductDto> findAll(Pageable pageable) {
+        return productRepository.
+                findAll(pageable).getContent().stream()
+                .map(item ->ProductConverter.toDto(item)).collect(Collectors.toList());
     }
 }
 

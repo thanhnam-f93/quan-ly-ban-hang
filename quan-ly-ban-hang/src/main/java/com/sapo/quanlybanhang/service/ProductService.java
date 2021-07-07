@@ -4,6 +4,7 @@ import com.sapo.quanlybanhang.dto.InputProductDto;
 import com.sapo.quanlybanhang.dto.ProductDto;
 import com.sapo.quanlybanhang.dto.UpdateDto;
 import com.sapo.quanlybanhang.entity.ProductEntity;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,6 +26,7 @@ public interface ProductService <t>{
     ProductEntity deleteByID(int id);
 
     ProductDto updateProduct(int id, UpdateDto productDto);
+    List<ProductDto> findAll(Pageable pageable);
 
 
 
