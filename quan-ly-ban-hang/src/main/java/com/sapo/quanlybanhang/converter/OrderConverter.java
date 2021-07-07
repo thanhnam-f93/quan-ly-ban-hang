@@ -28,13 +28,15 @@ public class OrderConverter {
         dto.setCreatedDate(entity.getCreatedDate());
         dto.setPrice(entity.getPrice());
         dto.setStaffId(entity.getStaff().getId());
-        dto.setCustomId(entity.getCustomer().getId());
-        dto.setCustomerName(entity.getCustomer().getName());
+        if(entity.getCustomer() != null) {
+            dto.setCustomId(entity.getCustomer().getId());
+            dto.setCustomerName(entity.getCustomer().getName());
+            dto.setCustomerEmail(entity.getCustomer().getEmail());
+            dto.setCustomerPhone(entity.getCustomer().getPhone());
+        }
         dto.setStaffName(entity.getStaff().getFullName());
-        dto.setCustomerEmail(entity.getCustomer().getEmail());
-        dto.setCustomerPhone(entity.getCustomer().getPhone());
-//        dto.setOrderDetailDtos(entity.getOrderDetailEntities().stream()
-//                .map(item ->OrderDetailConverter.toDto(item)).collect(Collectors.toList()));
+        dto.setOrderDetailDtos(entity.getOrderDetailEntities().stream()
+                .map(item ->OrderDetailConverter.toDto(item)).collect(Collectors.toList()));
         return dto;
     }
 }

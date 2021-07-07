@@ -163,4 +163,8 @@
   font-weight: bold;
   border: none;
   background-color: transparent;
+}
+.saler .row-2 .payment .payment-2 .payment-content .h-2-2 button:focus {
+  border: none;
+  outline: none;
 }/*# sourceMappingURL=saler.css.map */

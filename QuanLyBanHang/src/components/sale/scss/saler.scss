@@ -167,6 +167,10 @@
             border-style: solid;
             background-color: #1c8eff;
             button{
+              &:focus{
+                border:none;
+                outline: none;
+              }
               color: white;
               font-size: 17px;
               font-weight: bold;
