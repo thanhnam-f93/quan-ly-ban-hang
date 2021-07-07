@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import Select from "react-select";
+import Swal from "sweetalert2";
 import axios from "axios";
 import {
   CCol,
@@ -10,6 +11,7 @@ import {
   CFormGroup,
   CLabel,
   CInput,
+  CTextarea,
 } from "@coreui/react";
 function CustomerDetail() {
   const genders = [
@@ -18,32 +20,51 @@ function CustomerDetail() {
   ];
   const location = useLocation();
   var customer = location.state.customer;
+  var customerUpdate = {
+    createdDate: customer.createdDate,
+    modifiedDate: new Date().toISOString(),
+    createBy: customer.createBy,
+    modifiedBy: "will get By JWT",
+  };
   console.log("cus:  ", customer);
-  const handleChange = (e) => {
+  function handleChange(e) {
     const name = e.target.name;
     const value = e.target.value;
-    customer = { ...customer, [name]: value };
+    customerUpdate = { ...customerUpdate, [name]: value };
     console.log("customerUpdate:   ", customer);
-  };
-  const updateCustomer = () => {
+  }
+  function handleChangeGender(e) {
+    const value = e.value;
+    customer = { ...customerUpdate, gender: value };
+    console.log("customerUpdate:   ", customer);
+  }
+  function updateCustomer() {
     console.log("this", customer);
+
     const API = `http://localhost:8080/customers/${customer.id}`;
     axios
       .put(API, customer)
       .then((resp) => {
         if (resp.status === 200) {
-          alert("Update Succeed");
+          Swal.fire("Good job!", "Cập nhập thông tin thành công!", "success");
         } else {
           console.log("Status not 200", resp);
         }
       })
       .catch((error) => {
-        alert("Update Failure!");
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Cập nhập thất bại!",
+          footer: '<a href="">Why do I have this issue?</a>',
+        });
       });
-  };
+  }
   function resetForm() {
     const inputs = document.getElementsByTagName("input");
-    console.log("input", inputs);
+    const textare = document.getElementsByTagName("textarea");
+    textare.item.value = "";
+    console.log("input", textare);
     for (const input of inputs) {
       input.value = "";
     }
@@ -70,23 +91,35 @@ function CustomerDetail() {
                   name="gender"
                   options={genders}
                   defaultValue={{
-                    label: genders[0].label,
-                    value: genders[0].value,
+                    label: "Select Gender",
+                    value: "",
                   }}
-                  onChange={handleChange}
+                  onChange={handleChangeGender}
                 />
               </CFormGroup>
               <CFormGroup>
                 <CLabel htmlFor="phone">Số điện thoại</CLabel>
                 <CInput
                   name="phone"
+                  type="tel"
+                  pattern="[0]{1}[0-9]{9}"
                   placeholder="Phone Number"
                   defaultValue={customer.phone}
                   onChange={handleChange}
                 />
               </CFormGroup>
               <CFormGroup>
-                <CLabel htmlFor="vat">Địa chỉ</CLabel>
+                <CLabel htmlFor="vat">Email</CLabel>
+                <CInput
+                  name="email"
+                  type="mail"
+                  placeholder="Email"
+                  defaultValue={customer.email}
+                  onChange={handleChange}
+                />
+              </CFormGroup>
+              <CFormGroup>
+                <CLabel htmlFor="address">Địa chỉ</CLabel>
                 <CInput
                   name="address"
                   placeholder="Địa chỉ"
@@ -99,8 +132,11 @@ function CustomerDetail() {
                 <CInput
                   name="dateOfBirth"
                   type="date"
+                  max={new Date().toISOString()}
                   placeholder="Ngày sinh"
-                  defaultValue={customer.dateOfBirth}
+                  defaultValue={new Date(customer.dateOfBirth)
+                    .toISOString()
+                    .slice(0, 10)}
                   onChange={handleChange}
                 />
               </CFormGroup>
@@ -116,16 +152,18 @@ function CustomerDetail() {
                 <CInput
                   name="createdDate"
                   type="date"
+                  disabled
                   placeholder="Ngày tạo"
-                  defaultValue={new Date(
-                    customer.createdDate
-                  ).toLocaleDateString()}
+                  defaultValue={new Date(customer.createdDate)
+                    .toISOString()
+                    .slice(0, 10)}
                 />
               </CFormGroup>
               <CFormGroup>
                 <CLabel htmlFor="createBy">Người tạo</CLabel>
                 <CInput
                   name="createBy"
+                  disabled
                   placeholder="Người tạo"
                   defaultValue={customer.createBy}
                 />
@@ -135,41 +173,36 @@ function CustomerDetail() {
                 <CInput
                   name="modifiedDate"
                   type="date"
+                  disabled
                   placeholder="UpdateTime"
-                  defaultValue={new Date(
-                    customer.modifiedDate
-                  ).toLocaleDateString()}
+                  defaultValue={new Date(customer.modifiedDate)
+                    .toISOString()
+                    .slice(0, 10)}
                 />
               </CFormGroup>
               <CFormGroup>
                 <CLabel htmlFor="modifiedBy">Người chỉnh sửa gần nhất</CLabel>
                 <CInput
                   name="modifiedBy"
+                  disabled
                   placeholder="modifiedBy"
                   defaultValue={customer.modifiedBy}
+                />
+              </CFormGroup>
+              <CFormGroup>
+                <CLabel htmlFor="note">Thông tin bổ sung về khách hàng</CLabel>
+                <CTextarea
+                  style={{ height: "120px" }}
+                  name="note"
+                  placeholder="Ghi chú thông tin Khách hàng"
+                  defaultValue={customer.note}
+                  onChange={handleChange}
                 />
               </CFormGroup>
             </CCardBody>
           </CCard>
         </div>
       </div>
-      <CCard>
-        <CCardHeader>Ghi chú</CCardHeader>
-        <CCardBody>
-          <CFormGroup row className="my-0">
-            <CCol xs="12">
-              <CFormGroup>
-                <CLabel htmlFor="note">Thông tin bổ sung về khách hàng</CLabel>
-                <CInput
-                  id="note"
-                  placeholder="Ghi chú thông tin Khách hàng"
-                  defaultValue={customer.note}
-                />
-              </CFormGroup>
-            </CCol>
-          </CFormGroup>
-        </CCardBody>
-      </CCard>
       <button
         className="btn btn-danger"
         onClick={resetForm}

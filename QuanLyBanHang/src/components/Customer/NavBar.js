@@ -29,18 +29,19 @@ function NavBar({ setGender, setAge, setSearch }) {
     <div>
       <CCard>
         <CCardHeader>
-          CNavbar
+          Khách hàng
           <DocsLink name="CNavbar" />
         </CCardHeader>
         <CCardBody>
           <CNavbar expandable="sm" color="info">
             <CToggler inNavbar />
-            <CNavbarBrand>NavbarBrand</CNavbarBrand>
+            <CButton
+              onClick={() => history.goBack()}
+              style={{ backgroundColor: "orange", textAlign: "center" }}
+            >
+              Back
+            </CButton>
             <CCollapse navbar>
-              <CNavbarNav>
-                <CNavLink>Home</CNavLink>
-                <CNavLink>Link</CNavLink>
-              </CNavbarNav>
               <CNavbarNav className="m-auto">
                 <CForm inline>
                   <CInput
@@ -56,7 +57,7 @@ function NavBar({ setGender, setAge, setSearch }) {
                     <CDropdownItem onClick={() => setGender("")}>
                       All
                     </CDropdownItem>
-                    <CDropdownItem onClick={() => setGender("Nam")} color>
+                    <CDropdownItem onClick={() => setGender("Nam")}>
                       Nam
                     </CDropdownItem>
                     <CDropdownItem onClick={() => setGender("Nu")}>

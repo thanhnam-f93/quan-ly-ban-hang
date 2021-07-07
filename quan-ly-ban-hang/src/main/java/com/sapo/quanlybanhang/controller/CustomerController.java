@@ -57,15 +57,16 @@ public class CustomerController {
         try {
             PageRequest pageRequest = PageRequest.of(Integer.parseInt(pageNo), Integer.parseInt(limit), Sort.by("id").descending());
             Page<CustomerDto> dtoPage = customerService.search(input, pageRequest);
-            if (dtoPage.hasContent()) {
+            if (dtoPage!=null) {
                 return new ResponseEntity<>(dtoPage, new HttpHeaders(), HttpStatus.OK);
+            }else {
+                return new ResponseEntity<>("Khách hàng cần tìm không tồn tại", new HttpHeaders(), HttpStatus.NOT_FOUND);
             }
         } catch (Exception e) {
             e.printStackTrace();
             logger.error("What the fuck: " + e.getMessage());
             return ResponseEntity.badRequest().body("Page Empty");
         }
-        return null;
     }
 
     @GetMapping("customers/findGender")
@@ -267,7 +268,7 @@ public class CustomerController {
         }
     }
 
-    @DeleteMapping("customers/{id}")
+    @GetMapping("customers/off/{id}")
     ResponseEntity<?> delete(@PathVariable("id") Integer id) {
         CustomerDto root = customerService.findById(id);
         if (id != null) {

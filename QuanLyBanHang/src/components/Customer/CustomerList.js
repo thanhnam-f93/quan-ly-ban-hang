@@ -1,9 +1,9 @@
-import React, { useEffect, useState, createRef } from "react";
-import classNames from "classnames";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import CustomerItem from "./CustomerItem";
 import NavBar from "./NavBar";
 import Paginations from "src/views/base/paginations/Pagnations";
+import Swal from "sweetalert2";
 function CustomerList() {
   const [customers, setCustomers] = useState([]);
   const [totalPage, setTotalPage] = useState(0);
@@ -12,21 +12,22 @@ function CustomerList() {
   const [age, setAge] = useState({});
   const [search, setSearch] = useState({});
   const [page, setPage] = useState(0);
-
+  const [limit, setLimit] = useState(5);
+  const [status, setStatus] = useState(true);
   const getData = async () => {
     setIsLoading(true);
     setCustomers([]);
     var URL;
     if (search.length > 0) {
-      URL = `http://localhost:8080/customers/search?input=${search}&pageNo=${page}`;
+      URL = `http://localhost:8080/customers/search?input=${search}&pageNo=${page}&limit=${limit}`;
     } else if (age.length > 0 && gender.length > 0) {
-      URL = `http://localhost:8080/customers/${age}?gender=${gender}&pageNo=${page}`;
+      URL = `http://localhost:8080/customers/${age}?gender=${gender}&pageNo=${page}&limit=${limit}`;
     } else if (gender.length > 0) {
-      URL = `http://localhost:8080/customers/findGender?gender=${gender}&pageNo=${page}`;
+      URL = `http://localhost:8080/customers/findGender?gender=${gender}&pageNo=${page}&limit=${limit}`;
     } else if (age.length > 0) {
-      URL = `http://localhost:8080/customers/${age}?pageNo=${page}`;
+      URL = `http://localhost:8080/customers/${age}?pageNo=${page}&limit=${limit}`;
     } else {
-      URL = `http://localhost:8080/customers/page?pageNo=${page}`;
+      URL = `http://localhost:8080/customers/page?pageNo=${page}&limit=${limit}`;
     }
 
     console.log("this URL: ", URL);
@@ -34,7 +35,8 @@ function CustomerList() {
       .get(URL)
       .then((response) => {
         setCustomers(response.data.content);
-        // setTotalPage(response.data.totalPages);
+        setTotalPage(response.data.totalPages);
+        console.log("Total Page", totalPage);
         // setPage(response.data.pageNumber);
         setIsLoading(false);
       })
@@ -50,17 +52,19 @@ function CustomerList() {
         customer={customer}
         deleteC={deleteCustomer}
         index={index}
+        key={customer.id}
       ></CustomerItem>
     );
   });
   function deleteCustomer(id) {
-    const API = `http://localhost:8080/customers/${id}`;
+    const API = `http://localhost:8080/customers/off/${id}`;
     if (window.confirm("Xoa la mat day nhe")) {
       axios
-        .delete(API)
+        .get(API)
         .then(function (response) {
-          setCustomers(customers.filter((data) => data.id !== id));
-          alert("Delete succeed");
+          setCustomers(customers.filter((data) => data.status !== "off"));
+          setStatus(!status);
+          Swal.fire("Good job!", "Delete Complete!", "success");
         })
         .catch(function (error) {
           console.log(error);
@@ -68,9 +72,21 @@ function CustomerList() {
     }
   }
   useEffect(() => {
+    axios
+      .get(URL)
+      .then((response) => {
+        setTotalPage(response.data.totalPages);
+        console.log("Total Page", totalPage);
+        // setPage(response.data.pageNumber);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  });
+  useEffect(() => {
     getData();
     console.log("gender", gender);
-  }, [gender, page, search, age]);
+  }, [gender, page, search, age, status, limit]);
 
   return (
     <div>

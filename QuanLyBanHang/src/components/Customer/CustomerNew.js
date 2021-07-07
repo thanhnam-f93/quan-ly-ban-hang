@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Select from "react-select";
 import axios from "axios";
+import Swal from "sweetalert2";
 import { dataGender } from "./dataGender";
 import {
   CCol,
@@ -10,8 +11,11 @@ import {
   CFormGroup,
   CLabel,
   CInput,
+  CTextarea,
 } from "@coreui/react";
+import { useHistory } from "react-router-dom";
 function CustomerNew() {
+  const history = useHistory();
   const APIPost = "http://localhost:8080/customers";
 
   const [customer, setCustomer] = useState({
@@ -19,6 +23,7 @@ function CustomerNew() {
     modifiedDate: null,
     createBy: "Thanh Nam",
     modifiedBy: "",
+    status: "on",
   });
   const handleChange = (e) => {
     const name = e.target.name;
@@ -57,18 +62,24 @@ function CustomerNew() {
           for (const input of inputs) {
             input.value = "";
           }
+          Swal.fire("Good job!", "Delete Complete!", "success");
           alert("Tao moi thanh cong");
         },
         (error) => {
           console.log("error:  ", error);
-          alert("Tao moi that bai");
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Tạo mơi không thành công, vui lòng thử lại!',
+            footer: '<a href="">Why do I have this issue?</a>'
+          })
         }
       );
   };
   return (
     <div>
       <div className="row">
-        <div className=" card col-lg-6">
+        <div className=" card col-lg-8 align-center">
           <CCard>
             <CCardHeader>Thêm mới Khách hàng</CCardHeader>
             <CCardBody>
@@ -99,6 +110,14 @@ function CustomerNew() {
                 />
               </CFormGroup>
               <CFormGroup>
+                <CLabel htmlFor="phone">Email</CLabel>
+                <CInput
+                  name="email"
+                  placeholder="Email"
+                  onChange={handleChange}
+                />
+              </CFormGroup>
+              <CFormGroup>
                 <CLabel htmlFor="vat">Địa chỉ</CLabel>
                 <CInput
                   name="address"
@@ -115,60 +134,32 @@ function CustomerNew() {
                   onChange={handleChange}
                 />
               </CFormGroup>
+              <CFormGroup>
+                <CLabel htmlFor="note">Thông tin bổ sung về khách hàng</CLabel>
+                <CTextarea
+                  style={{ height: "100px" }}
+                  name="note"
+                  placeholder="Ghi chú thông tin Khách hàng"
+                />
+              </CFormGroup>
             </CCardBody>
           </CCard>
         </div>
-        <div className=" card col-lg-6 mx-auto">
-          {/* <CCard>
-            <CCardHeader>Lịch sử</CCardHeader>
-            <CCardBody>
-              <CFormGroup>
-                <CLabel htmlFor="createdDate">Ngày tạo</CLabel>
-                <CInput name="createdDate" type="date" placeholder="Ngày tạo" />
-              </CFormGroup>
-              <CFormGroup>
-                <CLabel htmlFor="createBy">Người tạo</CLabel>
-                <CInput name="createBy" placeholder="Người tạo" />
-              </CFormGroup>
-              <CFormGroup>
-                <CLabel htmlFor="modifiedDate">Ngày chỉnh sửa gần nhất</CLabel>
-                <CInput
-                  name="modifiedDate"
-                  type="date"
-                  placeholder="UpdateTime"
-                />
-              </CFormGroup>
-              <CFormGroup>
-                <CLabel htmlFor="modifiedBy">Người chỉnh sửa gần nhất</CLabel>
-                <CInput
-                  name="modifiedBy"
-                  type="date"
-                  placeholder="modifiedBy"
-                />
-              </CFormGroup>
-            </CCardBody>
-          </CCard> */}
-        </div>
+        <div className=" card col-lg-6 mx-auto"></div>
       </div>
-      <CCard>
-        <CCardHeader>Ghi chú</CCardHeader>
-        <CCardBody>
-          <CFormGroup row className="my-0">
-            <CCol xs="12">
-              <CFormGroup>
-                <CLabel htmlFor="note">Thông tin bổ sung về khách hàng</CLabel>
-                <CInput id="note" placeholder="Ghi chú thông tin Khách hàng" />
-              </CFormGroup>
-            </CCol>
-          </CFormGroup>
-        </CCardBody>
-      </CCard>
       <button
         className="btn btn-danger"
         onClick={ResetForm}
         style={{ marginLeft: "10px" }}
       >
-        Hủy
+        Reset
+      </button>
+      <button
+        className="btn btn-danger"
+        onClick={() => history.goBack()}
+        style={{ marginLeft: "10px" }}
+      >
+        Back
       </button>
       <button
         className="btn btn-success"
