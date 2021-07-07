@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import DayPickerInput from "react-day-picker/DayPickerInput";
-import { Link } from "react-router-dom";
 import "./scss/DropDown.css";
 import "react-day-picker/lib/style.css";
 
@@ -21,6 +20,7 @@ const DropDown = (props) => {
 
   const onChange = (e) => {
     console.log(e.target.value);
+    setOrderTime("");
     setOptionTime(e.target.value);
   };
 
@@ -28,7 +28,8 @@ const DropDown = (props) => {
     var option = {day:"2-digit",month:"2-digit",year:'numeric', hour:'2-digit',minute:'2-digit'};
     var date = new Date(e);
     const times=date.toLocaleDateString("ja-JP", option)
-    setOrderTime(times);
+    setOrderTime('2021-06-28');
+    setOptionTime("");
     console.log(times);
 
   };

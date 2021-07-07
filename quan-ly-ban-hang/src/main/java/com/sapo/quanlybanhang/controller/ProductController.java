@@ -1,14 +1,14 @@
 package com.sapo.quanlybanhang.controller;
 
-import com.sapo.quanlybanhang.dto.InputProductDto;
-import com.sapo.quanlybanhang.dto.ProductDto;
-import com.sapo.quanlybanhang.dto.UpdateDto;
+import com.sapo.quanlybanhang.dto.*;
 import com.sapo.quanlybanhang.entity.ProductEntity;
 import com.sapo.quanlybanhang.service.ProductService;
-
+import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -130,4 +130,13 @@ public class ProductController {
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @PostMapping ("/find-all")
+    public List<ProductDto> findAll(@RequestBody OrderPageable orderPageable){
+
+            Sort sort = Sort.by("createdDate").descending();
+            Pageable pageable = PageRequest.of(orderPageable.getPage()-1,orderPageable.getLimit(),sort);
+            return  productService.findAll(pageable);
+        }
+
 }

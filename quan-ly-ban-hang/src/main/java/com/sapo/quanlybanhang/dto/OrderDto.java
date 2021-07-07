@@ -6,7 +6,8 @@ import lombok.*;
 import java.sql.Timestamp;
 import java.util.List;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class OrderDto {

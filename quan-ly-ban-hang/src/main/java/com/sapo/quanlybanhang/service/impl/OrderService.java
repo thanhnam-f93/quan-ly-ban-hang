@@ -9,6 +9,7 @@ import com.sapo.quanlybanhang.dto.OrderPageable;
 import com.sapo.quanlybanhang.entity.*;
 import com.sapo.quanlybanhang.repository.*;
 import com.sapo.quanlybanhang.service.IOrderService;
+import com.sapo.quanlybanhang.utils.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -88,10 +89,11 @@ public class OrderService implements IOrderService {
             item.setPrice(item.getDiscount() * item.getQuanlity());
             index+=1;
         }
+        StaffEntity staffEntity =  staffRepository.findOneByPhone(SecurityUtils.getPrincipal().getUsername());
+        orderEntity.setCreateBy(SecurityUtils.getPrincipal().getFullName());
         orderEntity.setPrice(price);
         orderEntity.setOrderDetailEntities(orderDetailEntities);
         CustomerEntity customerEntity = customerRepository.findOneById(orderDto.getCustomId());
-        StaffEntity staffEntity =  staffRepository.findOneById(orderDto.getStaffId());
         orderEntity.setCustomer(customerEntity);
         orderEntity.setStaff(staffEntity);
         orderEntity.setCreatedDate(new Timestamp(System.currentTimeMillis()));

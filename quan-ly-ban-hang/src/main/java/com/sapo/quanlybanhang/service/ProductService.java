@@ -30,6 +30,7 @@ public interface ProductService <t>{
     ProductEntity RevertByID(int id);
 
     ProductDto updateProduct(int id, UpdateDto productDto);
+    List<ProductDto> findAll(Pageable pageable);
 
 
 

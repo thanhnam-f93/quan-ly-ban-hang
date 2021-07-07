@@ -1,0 +1,99 @@
+.dash-board {
+  .board-1 {
+    .sale-per-one {
+      background-color: white;
+      padding: 30px;
+      .label {
+        font-weight: bold;
+        font-size: 17px;
+        border-bottom-style: solid;
+        border-bottom-width: 0.5px;
+        border-bottom-color: #e8eaeb;
+      }
+      .content {
+        margin-top: 20px;
+        display: flex;
+        justify-content: space-evenly;
+        position: relative;
+        .content-1 {
+          // &:after {
+          //     content: "";
+          //     margin-right: 10px;
+          //     position: absolute;
+          //     background-color: #e8eaeb;
+          //     width: 0.5px;
+          //     height: 100%;
+          //     left:5;
+          // }
+          display: flex;
+          .icon {
+            i {
+              color: #269aff;
+            }
+          }
+          .text {
+            padding-bottom: 0px;
+            p {
+              margin: 5px;
+              font-weight: bold;
+              &:last-child {
+                font-weight: normal;
+                color: #269aff;
+              }
+            }
+          }
+        }
+      }
+    }
+    .chart {
+      background-color: white;
+      margin-top: 20px;
+
+      .label {
+        border-bottom-style: solid;
+        border-bottom-color: #e8eaeb;
+        border-bottom-width: 0.5px;
+        padding: 20px;
+        display: flex;
+        justify-content: space-between;
+        font-weight: bold;
+        font-size: 17px;
+        select {
+          border-color: #269aff;
+          border-radius: 3px;
+          padding: 4px;
+        }
+      }
+      .content {
+          align-items: flex-end;
+        .char-layout {
+          border-bottom-style: solid;
+          border-bottom-color: #e8eaeb;
+          border-bottom-width: 0.5px;
+          border-left-style: solid;
+          border-left-color: #e8eaeb;
+          border-left-width: 0.5px;
+          height: 320px;
+          display: flex;
+          justify-content: space-around;
+          align-items: flex-end;
+          .char-layout__item {
+              font-size: 14px;
+            width: 60px;
+            color: #fff;
+            text-align: center;
+            background-color: #ef5122;
+            height: var(--percent);
+          }
+        }
+      }
+      .count {
+          display: flex;
+          justify-content: center;
+        margin-top: 20px;
+        display: flex;
+        font-weight: bold;
+      }
+    }
+  }
+}

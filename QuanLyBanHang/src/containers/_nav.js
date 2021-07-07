@@ -15,7 +15,7 @@ const _nav =  [
   {
     _tag: 'CSidebarNavItem',
     name: 'Bán hàng',
-    to: '/staff',
+    to: '/saler',
     icon: 'cil-laptop',
   },
   {

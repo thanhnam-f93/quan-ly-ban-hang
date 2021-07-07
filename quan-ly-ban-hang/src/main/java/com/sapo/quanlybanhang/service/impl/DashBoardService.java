@@ -32,7 +32,7 @@ public class DashBoardService implements IDashBoardService {
     @Override
     public DashBoarDto collectOrder(DashBoarDto dto) {
         LocalDate thisDay = LocalDate.now();
-
+        Long count = 0L;
         OrderItem OrderItem = orderRepository.findPrice(LocalDate.now());
         OrderItem BillItem = billRepository.findPrice(LocalDate.now());
         List<DashBoardItem> dashBoardItems =new ArrayList();
@@ -59,8 +59,14 @@ public class DashBoardService implements IDashBoardService {
         dto.setOrderNumber(OrderItem.getCountOrder().intValue());
 
         switch (option){
+
             case TODAY:
                 dashBoardItems=orderDao.findAllByTime(thisDay,thisDay);
+                 count = 0L;
+                for(DashBoardItem item: dashBoardItems){
+                    count += item.getPrice();
+                }
+                dto.setTotalPrice(count);
                 dto.setDashBoardItems(dashBoardItems);
                 logger.info("hôm nay:"+thisDay);
                 break;
@@ -68,12 +74,22 @@ public class DashBoardService implements IDashBoardService {
                  getDay = thisDay.get(ChronoField.DAY_OF_WEEK);
                  logger.info("ngày trong tuần:"+getDay);
                 dashBoardItems = orderDao.findAllByTime(thisDay.minusDays(getDay-1),thisDay);
+                 count = 0L;
+                for(DashBoardItem item: dashBoardItems){
+                    count += item.getPrice();
+                }
+                dto.setTotalPrice(count);
                 logger.info("ngày đầu tuần :"+thisDay.minusDays(getDay-1));
                 dto.setDashBoardItems(dashBoardItems);
                 break;
             case YESTERDAY:
                 dashBoardItems=orderDao.findAllByTime(thisDay.minusDays(1),thisDay.minusDays(1));
                 dto.setDashBoardItems(dashBoardItems);
+                count = 0L;
+                for(DashBoardItem item: dashBoardItems){
+                    count += item.getPrice();
+                }
+                dto.setTotalPrice(count);
                 logger.info("hôm qua:"+thisDay.minusDays(1));
                 break;
             case LAST_MONTH:
@@ -81,11 +97,21 @@ public class DashBoardService implements IDashBoardService {
                 YearMonth month = YearMonth.from(thisDay);
                 logger.info("tháng trước :"+month+"/"+month.atDay(1)+"/"+month.atEndOfMonth());
                 dashBoardItems = orderDao.findAllByTime(month.atDay(1),month.atEndOfMonth());
+                count = 0L;
+                for(DashBoardItem item: dashBoardItems){
+                    count += item.getPrice();
+                }
+                dto.setTotalPrice(count);
                 dto.setDashBoardItems(dashBoardItems);
                 break;
             case THIS_MONTH:
                  getDay = thisDay.get(ChronoField.DAY_OF_MONTH);
                  dashBoardItems = orderDao.findAllByTime(thisDay.minusDays(getDay-1),thisDay);
+                count = 0L;
+                for(DashBoardItem item: dashBoardItems){
+                    count += item.getPrice();
+                }
+                dto.setTotalPrice(count);
                 logger.info("tháng nay :"+"/"+thisDay.minusDays(getDay-1)+"-"+thisDay);
                  dto.setDashBoardItems(dashBoardItems);
                 break;
