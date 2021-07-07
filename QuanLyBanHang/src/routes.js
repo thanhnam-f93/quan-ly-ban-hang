@@ -50,6 +50,9 @@ const ListProduct = React.lazy(() => import('./components/ListProduct/ListProduc
 const Update = React.lazy(() => import('./components/ListProduct/Update'));
 const Create = React.lazy(() => import('./components/ListProduct/Create'));
 
+/*================== The End code of Team - Quản lý bán hàng =================*/
+
+const ListSupplier = React.lazy(() => import('./components/ListSupplier/ListSupplier'));
 
 
 /*================== The End code of Team - Quản lý bán hàng =================*/
@@ -105,9 +108,9 @@ const routes = [
   { path: '/staff', exact: true,  name: 'Staff', component: Staff },
   { path: '/product', exact: true,  name: 'Product', component: ListProduct },
   { path: '/category', exact: true,  name: 'Product', component: ListProduct },
-  { path: '/update-category/:id', exact: true,  name: 'Product', component: Update },
-  { path: '/add-category', exact: true,  name: 'Product', component: Create },
-
+  { path: '/product/update-category/:id', exact: true,  name: 'update', component: Update },
+  { path: '/product/add-category', exact: true,  name: 'add', component: Create },
+  { path: '/supplier', exact: true,  name: 'Supplier', component: ListSupplier },
 
 
 

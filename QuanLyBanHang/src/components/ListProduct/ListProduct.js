@@ -37,7 +37,6 @@ function ListProduct(props) {
   // const [totalPage,setTotal]=useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage,setPageSize] = useState(5);
-
   const [filterCategory, setFilterOptionCategory] = useState([]);
   const [category_id, setCategory_Id] = useState("");
   const [categories, setCategories] = useState([]);
@@ -68,11 +67,11 @@ function ListProduct(props) {
   }, [categories]);
 
   const addCategory = () => {
-    props.history.push("/add-category");
+    props.history.push("product/add-category");
   };
 
   const updateCategory = (id) => {
-    props.history.push(`/update-category/${id}`);
+    props.history.push(`product/update-category/${id}`);
   };
 
   const deleteCategory = (id) => {
@@ -91,7 +90,7 @@ function ListProduct(props) {
   };
 
   const SearchByName = (e) => {
-    e.preventDefault();
+    // e.preventDefault();s
  Search(search).then((item) => {
       setCategory(item.data);
      
