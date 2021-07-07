@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
-import querystring from 'query-string'
+import querystring from 'query-string';
+import Pagination from "./Pagination";
+
 
 import {
   getCategory,
@@ -24,29 +26,31 @@ import { DocsLink } from "src/reusable";
 import Select from "react-select";
 import CIcon from "@coreui/icons-react";
 import axios from "axios";
-import Paginations from "../Pagination";
-import Pagination from "../Pagination";
+
 
 function ListProduct(props) {
   const id = useState(props.match.params.id);
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState([]);
-  const [pageNo, setPageNo] = useState(1);
-  const [pageSize,setPageSize]= useState(3);
-  const [totalPage,setTotal]=useState(0);
+  // const [pageNo, setPageNo] = useState(1);
+  // const [pageSize,setPageSize]= useState(3);
+  // const [totalPage,setTotal]=useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [postsPerPage,setPageSize] = useState(5);
+
   const [filterCategory, setFilterOptionCategory] = useState([]);
   const [category_id, setCategory_Id] = useState("");
   const [categories, setCategories] = useState([]);
 
-const total = Math.ceil(totalPage/pageSize)
+// const total = Math.ceil(totalPage/pageSize)
 
   useEffect(() => {
-    axios.get(`http://localhost:8080/api/v1/product?pageNo=${pageNo}&pageSize=${pageSize}`)
+    getCategory()
       .then((item) => {
         setCategory(item.data);
         console.log(item)
       });
-  }, [pageNo,pageSize]);
+  }, []);
 
   useEffect(() => {
     getCate().then((res) => {
@@ -88,11 +92,9 @@ const total = Math.ceil(totalPage/pageSize)
 
   const SearchByName = (e) => {
     e.preventDefault();
-    axios.get(`http://localhost:8080/api/v1/product_search?keyword=${search}&pageNo=${pageNo}&pageSize=${pageSize}`).then((item) => {
-     if(search != null){
-
+ Search(search).then((item) => {
       setCategory(item.data);
-     }
+     
 
     });
   };
@@ -101,13 +103,28 @@ const total = Math.ceil(totalPage/pageSize)
     setSearch(event.target.value)
   };
 
- const changeNext =()=>{
-   console.log("111111111111111111")
-   setPageNo(pageNo+1);
- }
- const changePrev =()=>{
-  setPageNo(pageNo-1);
-}
+//  const changeNext =()=>{
+//    console.log("111111111111111111")
+//    setPageNo(pageNo+1);
+//  }
+//  const changePrev =()=>{
+//   setPageNo(pageNo-1);
+// }
+
+const indexOfLastPost = currentPage * postsPerPage;
+const indexOfFirstPost = indexOfLastPost - postsPerPage;
+const currentPosts = category.slice(indexOfFirstPost, indexOfLastPost);
+
+const paginate = (page) => setCurrentPage(page);
+
+console.log(currentPage);
+
+const handnext = () => {
+  setCurrentPage(currentPage + 1);
+};
+const handprev = () => {
+  setCurrentPage(currentPage - 1);
+};
 
   return (
     <>
@@ -151,7 +168,7 @@ const total = Math.ceil(totalPage/pageSize)
               </tr>
             </thead>
             <tbody>
-              {category.map((item) => (
+              {currentPosts.map((item) => (
                 <tr key={item.id}>
                   <td>
                     <img src={item.image} width="25px" height="25px" />
@@ -183,22 +200,48 @@ const total = Math.ceil(totalPage/pageSize)
               ))}
             </tbody>
           </table>
-          {/* <p>Show Page {currentPage} of {totalPages}</p> */}
-          <div>
-          <button onClick={changePrev}    >
-         Prev
-       </button>
-       <button onClick={changeNext}  >
-         next
-       </button>
+          
+       
+        </div>
+        <div className="row">    <div className="pagination">
+          <div className="page-item">
+            <button
+              className="btn btn-primary"
+              onClick={handprev}
+              disabled={currentPage == 1 ? true : false}
+            >
+              prev
+            </button>
           </div>
         </div>
-       
-
         {/* <Pagination
-         pagination={pagination}
-         onPageChange={handlePageChane}
-         /> */}
+          postsPerPage={postsPerPage}
+          totalPosts={category.length}
+          paginate={paginate}
+        /> */}
+        <Pagination 
+        postsPerPage={postsPerPage}
+        totalPosts={category.length}
+        paginate={paginate}/>
+
+      
+         <div className="pagination">
+          <div className="page-item">
+            <button
+              className="btn btn-primary"
+              onClick={handnext}
+              disabled={
+                currentPage == Math.ceil(category.length / postsPerPage)
+                  ? true
+                  : false
+              }
+            >
+              next
+            </button>
+          </div>
+        </div>
+        </div>
+    
       </div>
     </>
   );

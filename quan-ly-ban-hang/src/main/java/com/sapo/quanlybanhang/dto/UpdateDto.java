@@ -18,7 +18,7 @@ public class UpdateDto {
 
     private int brand_id;
 
-    private int number_product;
+    private int numberProduct;
 
     private int sell_product;
 

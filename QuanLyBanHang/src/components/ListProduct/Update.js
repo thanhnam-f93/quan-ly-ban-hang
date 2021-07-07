@@ -29,6 +29,13 @@ import { values } from "regenerator-runtime";
 
 function Update(props) {
   const [id] = useState(props.match.params.id);
+  const [message,setMesage] =useState({
+    code : "",
+    name : "",
+    numberProduct:"",
+    price:"",
+
+  });
   const [code, setCode] = useState("");
   const [name, setName] = useState("");
   const [brandID, setBrandID] = useState("");
@@ -41,6 +48,7 @@ function Update(props) {
   const [sizeId, setSizeId] = useState("");
   const [categoryId, setCategoryId] = useState("");
   const [createBy, setCreateBy] = useState("");
+  const [createdDate, setCreatedDate] = useState("");
   const [category, setCategory] = useState([]);
   const [supplier, setSupplier] = useState([]);
   const [color, setColor] = useState([]);
@@ -167,7 +175,7 @@ function Update(props) {
       setSizeId(res.data.sizeId);
       setPrice(res.data.price);
       setCategoryId(res.data.categoryId);
-      setCreateBy(res.data.createBy);
+      setCreatedDate(res.data.createdDate);
     });
   }, []);
   const updateCategory = (e) => {
@@ -184,7 +192,7 @@ function Update(props) {
       size_id: size_id,
       price: price,
       supplier_id: supplier_id,
-      createBy: createBy,
+      createdDate: createdDate,
     };
     UpdateCategory(category, id).then((res) => {
       props.history.push("/category");
@@ -227,20 +235,92 @@ function Update(props) {
     console.log(event);
   };
   const changeCreateBy = (event) => {
-    setCreateBy(event.target.value);
+    setCreatedDate(event.target.value);
   };
+
+  const changeonBlur = (event)=>{
+ if( /((\r\n|\n|\r)$)|(^(\r\n|\n|\r))|^\s*$/.test(event.target.value)!=false){
+      setMesage({
+        code:" * Mã không được để trống"
+      })
+    }
+    else{
+      setMesage({
+        code:""
+      })
+    }
+  }
+  
+  const changeonBlurName = (event)=>{
+ if( /((\r\n|\n|\r)$)|(^(\r\n|\n|\r))|^\s*$/.test(event.target.value)!=false){
+      setMesage({
+        name:" Tên sản phẩm không được để trống"
+      })
+    }
+    else{
+      setMesage({
+        name:""
+      })
+    }
+  }
+  
+  const changeonBlurNumber = (event)=>{
+    var a = new RegExp("^[0-9]*$")
+    
+    if((a.test(event.target.value)==false)){
+      setMesage({
+        numberProduct:"Số lượng không được nhập kí tự"
+      })
+    }
+    else if( /((\r\n|\n|\r)$)|(^(\r\n|\n|\r))|^\s*$/.test(event.target.value)!=false){
+      setMesage({
+        numberProduct:" Số lượng sản phẩm không được để trống"
+      })
+    }
+    else{
+      setMesage({
+        numberProduct:""
+      })
+    }
+  }
+  
+  const changeonBlurPrice = (event)=>{
+    var a = new RegExp("^[0-9]*$")
+    
+    if((a.test(event.target.value)==false)){
+      setMesage({
+        price:"Giá không được nhập kí tự"
+      })
+    }
+    else if( /((\r\n|\n|\r)$)|(^(\r\n|\n|\r))|^\s*$/.test(event.target.value)!=false){
+      setMesage({
+        price:" Giá sản phẩm không được để trống"
+      })
+    }
+    else{
+      setMesage({
+        price:""
+      })
+    }
+  }
+
 
   return (
     <div>
       <div>
+      <h1>{name}</h1>
         <CRow>
+          
       <CCol  xs="12" sm="7">
+      
       <CCard>
+       
               <CCardHeader>Sản phẩm</CCardHeader>
               <CCardBody>
                 <CFormGroup>
                   <CLabel htmlFor="company">Mã</CLabel>
-                  <CInput name="code" onChange={changeCode} value={code} />
+                  <CInput name="code" onChange={changeCode} value={code} onBlur={changeonBlur}/>
+                  <span style={{color:"red"}}> {message.code}</span>
                 </CFormGroup>
                 <CFormGroup>
                   <CLabel htmlFor="vat">Tên</CLabel>
@@ -249,7 +329,9 @@ function Update(props) {
                     placeholder="DE1234567890"
                     onChange={changeName}
                     value={name}
+                    onBlur={changeonBlurName}
                   />
+                   <span style={{color:"red"}}> {message.name}</span>
                 </CFormGroup>
                 <CFormGroup>
                   <CLabel htmlFor="vat">Số lượng</CLabel>
@@ -258,7 +340,9 @@ function Update(props) {
                     placeholder="DE1234567890"
                     onChange={changeNumber}
                     value={numberProduct}
+                    onBlur={changeonBlurNumber}
                   />
+                   <span style={{color:"red"}}> {message.numberProduct}</span>
                 </CFormGroup>
                 <CFormGroup>
                   <CLabel htmlFor="vat">Mô tả</CLabel>
@@ -276,7 +360,9 @@ function Update(props) {
                     placeholder="DE1234567890"
                     onChange={changePrice}
                     value={price}
+                    onBlur={changeonBlurPrice}
                   />
+                   <span style={{color:"red"}}> {message.price}</span>
                 </CFormGroup>
               </CCardBody>
             </CCard>
@@ -286,13 +372,13 @@ function Update(props) {
             <CFormGroup row className="my-0">
               <CCol xs="6">
                 <CFormGroup>
-                  <CLabel htmlFor="city">Color</CLabel>
+                  <CLabel htmlFor="city">Color: {colorId}</CLabel>
                   <Select options={filterOptionColor} onChange={changeColor} />
                 </CFormGroup>
               </CCol>
               <CCol xs="6">
                 <CFormGroup>
-                  <CLabel htmlFor="postal-code">Size {sizeId}</CLabel>
+                  <CLabel htmlFor="postal-code">Size: {sizeId}</CLabel>
                   <Select options={filterOptionSize} onChange={changeSize} />
                 </CFormGroup>
               </CCol>
@@ -300,11 +386,11 @@ function Update(props) {
           </CCardBody>
         </CCard>
         <button
-          className="btn btn-danger"
+          className="btn btn-secondary"
           onClick={cancel}
           style={{ marginLeft: "10px" }}
         >
-          Hủy
+          Quay Lại
         </button>
         <button
           className="btn btn-success"
@@ -325,7 +411,7 @@ function Update(props) {
             <CCard>
               <CCardHeader>Phân loại</CCardHeader>
                     <CCol xs="12"> <CFormGroup>
-                  <CLabel htmlFor="company">Nhãn hiệu</CLabel>
+                  <CLabel htmlFor="company">Nhãn hiệu: {brandID}</CLabel>
                   <Select options={filterOptionBrand} onChange={changeBrand} />
                 </CFormGroup>
                 <CFormGroup>
@@ -338,33 +424,28 @@ function Update(props) {
                 </CFormGroup>
                 <CFormGroup>
                   <CLabel htmlFor="vat">Ngày tạo</CLabel>
-                  <CInput
+                  {/* <CInput
                     name="createBy"
                     placeholder="DE1234567890"
                     onChange={changeCreateBy}
-                    value={createBy}
-                  />
+                    value={createdDate}
+                  /> */}
+                    <CInput type="date" id="dob" name="dob"  placeholder="date"  value={createdDate} onChange={changeCreateBy} />
+                
                 </CFormGroup>
                     
                 <CFormGroup>
-                  <CLabel htmlFor="vat">Nhà phân phối</CLabel>
+                  <CLabel htmlFor="vat">Nhà phân phối: {supplierId}</CLabel>
                   <Select options={filterSupplier} onChange={changeSupplier} />
                 </CFormGroup>
                 </CCol>
-               
-            
-             
             </CCard>
             <CCard className=" p-4">
                <img width="100%" height="400px" src={image}/>            
-
             </CCard>
         </CCol>
         </CRow>
-      
-   
       </div>
- 
     </div>
   );
 }

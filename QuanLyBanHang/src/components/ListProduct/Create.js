@@ -7,7 +7,8 @@ import {
   CInput,
   CLabel,
   CRow,
-  CInputFile
+  CInputFile,
+  CValidFeedback
 } from "@coreui/react";
 import { useEffect, useState } from "react";
 import {
@@ -21,8 +22,15 @@ import {
 import Select from "react-select";
 import axios from "axios";
 function Create(props) {
-  const [code, setCode] = useState("");
+  const [code, setCode] = useState("1");
   const [name, setName] = useState("");
+  const [message,setMesage] =useState({
+    code : "",
+    name : "",
+    numberProduct:"",
+    price:"",
+
+  });
   const [brand_id, setBrandID] = useState("");
   const [numberProduct, setNumber] = useState("");
   const [image, setImage] = useState("");
@@ -62,7 +70,9 @@ function Create(props) {
     };
     console.log(product);
     createCategory(product).then((item) => {
-      props.history.push("/category");
+
+        props.history.push("/category");
+     
     });
   };
   useEffect(() => {
@@ -146,32 +156,93 @@ function Create(props) {
     props.history.push("/category");
   };
 
-  const changeCode = (event) => {
-    setCode(event.target.value);
+
+const changeonBlur = (event)=>{
+if( /((\r\n|\n|\r)$)|(^(\r\n|\n|\r))|^\s*$/.test(event.target.value)!=false){
+    setMesage({
+      code:" * Mã không được để trống"
+    })
+  }
+  else{
+    setMesage({
+      code:""
+    })
+  }
+}
+
+const changeonBlurName = (event)=>{
+ if( /((\r\n|\n|\r)$)|(^(\r\n|\n|\r))|^\s*$/.test(event.target.value)!=false){
+    setMesage({
+      name:" Tên sản phẩm không được để trống"
+    })
+  }
+  else{
+    setMesage({
+      name:""
+    })
+  }
+}
+
+const changeonBlurNumber = (event)=>{
+  var a = new RegExp("^[0-9]*$")
+  
+  if((a.test(event.target.value)==false)){
+    setMesage({
+      numberProduct:"Số lượng không được nhập kí tự"
+    })
+  }
+  else if( /((\r\n|\n|\r)$)|(^(\r\n|\n|\r))|^\s*$/.test(event.target.value)!=false){
+    setMesage({
+      numberProduct:" Số lượng sản phẩm không được để trống"
+    })
+  }
+  else{
+    setMesage({
+      numberProduct:""
+    })
+  }
+}
+
+const changeonBlurPrice = (event)=>{
+  var a = new RegExp("^[0-9]*$")
+  
+  if((a.test(event.target.value)==false)){
+    setMesage({
+      price:"Số lượng không được nhập kí tự"
+    })
+  }
+  else if( /((\r\n|\n|\r)$)|(^(\r\n|\n|\r))|^\s*$/.test(event.target.value)!=false){
+    setMesage({
+      price:" Số lượng sản phẩm không được để trống"
+    })
+  }
+  else{
+    setMesage({
+      price:""
+    })
+  }
+}
+
+const changeCode= (event) => {
+ setCode(event.target.value)
   };
+
   const changeName = (event) => {
     setName(event.target.value);
   };
   const changeBrand = (event) => {
     setBrandID(event.value);
   };
+
   const changeNumber = (event) => {
     setNumber(event.target.value);
   };
-  const changeImage = async e => {
-    const files = e.target.files;
-    const data = new FormData()
-    data.append("file-input",files[0])
-    data.append("upload_preset","kr4pkzdt")
-  const res = await fetch("https://api.cloudinary.com/v1_1/sapoaaaa/image/upload",{
-    method: "POST",
-    body: data
-  })               
-  const file = await res.json()
-  console.log(file)     
-  setImage(file.secure_url)    
+  const changeImage = (event) => {
+     setImage(event.target.value)
+    
   
   };
+ 
   const changePrice = (event) => {
     setPrice(event.target.value);
   };
@@ -210,7 +281,9 @@ function Create(props) {
                     name="code"
                     placeholder="Nhập Mã"
                     onChange={changeCode}
+                    onBlur={changeonBlur}
                   />
+                  <span style={{color:"red"}}> {message.code}</span>
                 </CFormGroup>
                 <CFormGroup>
                   <CLabel htmlFor="vat">Tên</CLabel>
@@ -218,15 +291,26 @@ function Create(props) {
                     name="name"
                     placeholder="Nhập tên sản phẩm"
                     onChange={changeName}
+                    onBlur={changeonBlurName}
                   />
+                  <span style={{color:"red"}}> {message.name}</span>
                 </CFormGroup>
                 <CFormGroup>
                   <CLabel htmlFor="vat">Số lượng</CLabel>
-                  <CInput
+                  {/* <CInput
                     id="vat"
                     placeholder="Số lượng"
                     onChange={changeNumber}
+                  /> */}
+                  <CInput
+               
+                    id="vat"
+                    placeholder="Số lượng"
+                    onChange={changeNumber}
+                    onBlur={changeonBlurNumber}
                   />
+                   <span style={{color:"red"}}> {message.numberProduct}</span>
+
                 </CFormGroup>
                 <CFormGroup>
                   <CLabel htmlFor="vat">Mô tả</CLabel>
@@ -242,7 +326,9 @@ function Create(props) {
                     id="vat"
                     placeholder="nhập giá"
                     onChange={changePrice}
+                    onBlur={changeonBlurPrice}
                   />
+                   <span style={{color:"red"}}> {message.price}</span>
                 </CFormGroup>
               </CCardBody>
             </CCard>
@@ -256,7 +342,9 @@ function Create(props) {
                       <Select
                         options={filterOptionColor}
                         onChange={changeColor}
+                    
                       />
+                    
                     </CFormGroup>
                   </CCol>
                   <CCol xs="6">
@@ -306,15 +394,21 @@ function Create(props) {
             <CCardBody>
             <CFormGroup row className="my-0">
             <CFormGroup>
-                      <CLabel htmlFor="city">Chọn ảnh</CLabel>
-                   
+                      {/* <CLabel htmlFor="city">Chọn ảnh</CLabel>
+                    */}
                       <CFormGroup row>
                
                   <CCol xs="12" md="9">
-                    <CInputFile id="file-input" name="file-input" onChange={changeImage}/>
+                  
+                    {/* <CInputFile id="file-input" name="file-input"  onChange={changeImage}/> */}
                   
                   </CCol>
                 </CFormGroup>
+                   <CInput
+                    id="vat"
+                    placeholder="link anh"
+                    onChange={changeImage}
+                  />
              
                     
                     </CFormGroup>
@@ -326,11 +420,11 @@ function Create(props) {
         </CRow>
 
         <button
-          className="btn btn-danger"
+          className="btn btn-secondary"
           onClick={cancel}
           style={{ marginLeft: "10px" }}
         >
-          Hủy
+          Quay lại
         </button>
         <button
           className="btn btn-success"

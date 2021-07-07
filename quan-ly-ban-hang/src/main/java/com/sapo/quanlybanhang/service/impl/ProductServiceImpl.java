@@ -261,15 +261,13 @@ public class ProductServiceImpl implements ProductService {
         product.setCode(updateDto.getCode());
         product.setName(updateDto.getName());
         product.setCategory(categoryEntity);
-
+        product.setNumberProduct(updateDto.getNumberProduct());
+        product.setPrice(updateDto.getPrice());
+        product.setDescription(updateDto.getDescription());
         product.setBrand(brandEntity);
-
         product.setColor(colorEntity);
-
         product.setSize(sizeEntity);
-
         product.setSupplier(supplierEntity);
-
         productRepository.save(product);
         Converter converter = new Converter();
         return converter.ConverterToDtoProduct(product);
