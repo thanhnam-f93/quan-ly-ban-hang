@@ -4,7 +4,6 @@ import Select from "react-select";
 import Swal from "sweetalert2";
 import axios from "axios";
 import {
-  CCol,
   CCard,
   CCardHeader,
   CCardBody,

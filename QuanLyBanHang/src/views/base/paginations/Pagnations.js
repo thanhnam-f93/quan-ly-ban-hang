@@ -1,18 +1,17 @@
 import React, { useState } from "react";
-import { CCard, CCardBody,CPagination } from "@coreui/react";
+import { CCard, CCardBody, CPagination } from "@coreui/react";
 
-const Paginations = () => {
-  const [currentPage, setCurrentPage] = useState(2);
-
+const Paginations = ({ totalPages, currentPage, setCurrentPage }) => {
   return (
     <>
+      <h1>hello:{totalPages}</h1>
       <CCard>
         <CCardBody>
           <CPagination
             align="center"
             addListClass="some-class"
             activePage={currentPage}
-            pages={5}
+            pages={totalPages - 1}
             onActivePageChange={setCurrentPage}
           />
         </CCardBody>

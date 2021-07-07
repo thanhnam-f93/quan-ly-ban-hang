@@ -149,19 +149,19 @@ const routes = [
   {
     path: "/CustomerDetail",
     exact: true,
-    name: "CustomerDetail",
+    name: "Detail",
     component: CustomerDetail,
   },
   {
     path: "/CustomerNew",
     exact: true,
-    name: "CustomerNew",
+    name: "New",
     component: CustomerNew,
   },
   {
     path: "/CustomerList",
     exact: true,
-    name: "StaCustomerListff",
+    name: "List",
     component: CustomerList,
   },
   /*================== The End code of Team - Quản lý bán hàng =================*/

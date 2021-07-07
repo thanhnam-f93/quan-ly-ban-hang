@@ -10,9 +10,7 @@ import {
   CDropdownToggle,
   CNavbar,
   CNavbarNav,
-  CNavbarBrand,
   CToggler,
-  CNavLink,
   CDropdown,
   CForm,
   CInput,
@@ -43,15 +41,15 @@ function NavBar({ setGender, setAge, setSearch }) {
             </CButton>
             <CCollapse navbar>
               <CNavbarNav className="m-auto">
-                <CForm inline>
+                <CForm style={{ width: "380px", paddingRight: "50px" }}>
                   <CInput
                     className="mr-sm-6"
-                    placeholder="Tìm kiếm theo tên, email, SĐT khách hàng..."
+                    placeholder="Tìm kiếm theo Tên, Email, Số ĐT của khách hàng..."
                     size="md"
                     onKeyPress={handleChange}
                   />
                 </CForm>
-                <CDropdown inNav>
+                <CDropdown inNav style={{ paddingRight: "50px" }}>
                   <CDropdownToggle>Giới tính</CDropdownToggle>
                   <CDropdownMenu>
                     <CDropdownItem onClick={() => setGender("")}>
@@ -65,7 +63,7 @@ function NavBar({ setGender, setAge, setSearch }) {
                     </CDropdownItem>
                   </CDropdownMenu>
                 </CDropdown>
-                <CDropdown inNav>
+                <CDropdown inNav style={{ paddingRight: "50px" }}>
                   <CDropdownToggle>Độ tuổi</CDropdownToggle>
                   <CDropdownMenu>
                     <CDropdownItem

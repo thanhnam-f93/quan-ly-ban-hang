@@ -14,6 +14,7 @@ function CustomerList() {
   const [page, setPage] = useState(0);
   const [limit, setLimit] = useState(5);
   const [status, setStatus] = useState(true);
+  const [response, setResponse] = useState([]);
   const getData = async () => {
     setIsLoading(true);
     setCustomers([]);
@@ -31,13 +32,23 @@ function CustomerList() {
     }
 
     console.log("this URL: ", URL);
-    axios
+    await axios
       .get(URL)
       .then((response) => {
-        setCustomers(response.data.content);
+        const result = response.data;
+
+        // const totalPage = response.data.totalPage;
         setTotalPage(response.data.totalPages);
-        console.log("Total Page", totalPage);
-        // setPage(response.data.pageNumber);
+        // console.log("totalPage", totalPage);
+
+        const currentPage = result.pageable.pageNumber;
+        setPage(currentPage);
+        console.log("currentPage", currentPage);
+
+        const cus = result.content;
+        setCustomers(cus);
+        console.log("cus", customers);
+
         setIsLoading(false);
       })
       .catch((error) => {
@@ -45,7 +56,7 @@ function CustomerList() {
         console.log(error);
       });
   };
-
+  console.log("totalPage", totalPage);
   const renderTodo = customers.map((customer, index) => {
     return (
       <CustomerItem
@@ -71,18 +82,6 @@ function CustomerList() {
         });
     }
   }
-  useEffect(() => {
-    axios
-      .get(URL)
-      .then((response) => {
-        setTotalPage(response.data.totalPages);
-        console.log("Total Page", totalPage);
-        // setPage(response.data.pageNumber);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  });
   useEffect(() => {
     getData();
     console.log("gender", gender);
@@ -126,7 +125,11 @@ function CustomerList() {
           {renderTodo}
         </tbody>
       </table>
-      <Paginations totalPages={totalPage} setPage={setPage}></Paginations>
+      <Paginations
+        totalPages={totalPage}
+        currentPage={page}
+        setCurrentPage={setPage}
+      ></Paginations>
     </div>
   );
 }
