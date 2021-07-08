@@ -1,1 +1,9 @@
-{"version":3,"sources":["OrderInfor.scss"],"names":[],"mappings":"AACI;EACE,yBAAA;AAAN","file":"OrderInfor.css"}
+{
+    "version": 3,
+    "mappings": "AAAA,AACI,gBADY,AACX,MAAM,CAAC;EACN,gBAAgB,EAAE,OAAO;CAC1B",
+    "sources": [
+        "OrderInfor.scss"
+    ],
+    "names": [],
+    "file": "OrderInfor.css"
+}

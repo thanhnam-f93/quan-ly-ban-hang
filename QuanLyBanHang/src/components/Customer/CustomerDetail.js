@@ -3,6 +3,7 @@ import { useHistory, useLocation } from "react-router-dom";
 import Select from "react-select";
 import Swal from "sweetalert2";
 import axios from "axios";
+import { reactLocalStorage } from "reactjs-localstorage";
 import {
   CCard,
   CCardHeader,
@@ -13,36 +14,41 @@ import {
   CTextarea,
 } from "@coreui/react";
 function CustomerDetail() {
+  const location = useLocation();
+  var customer = location.state.customer;
+  const headers = {
+    Authorization: "Bearer " + reactLocalStorage.get("token"),
+  };
   const genders = [
     { value: "Nam", label: "Nam" },
     { value: "Nu", label: "Nu" },
   ];
-  const location = useLocation();
-  var customer = location.state.customer;
+
   var customerUpdate = {
     createdDate: customer.createdDate,
     modifiedDate: new Date().toISOString(),
     createBy: customer.createBy,
-    modifiedBy: "will get By JWT",
+    modifiedBy: reactLocalStorage.get("name"),
+    status: customer.status,
   };
-  console.log("cus:  ", customer);
   function handleChange(e) {
     const name = e.target.name;
     const value = e.target.value;
     customerUpdate = { ...customerUpdate, [name]: value };
-    console.log("customerUpdate:   ", customer);
+    console.log("customerUpdate", customerUpdate);
   }
   function handleChangeGender(e) {
+    alert("dddd");
     const value = e.value;
-    customer = { ...customerUpdate, gender: value };
-    console.log("customerUpdate:   ", customer);
+    customerUpdate = { ...customerUpdate, gender: value };
+    console.log("customerUpdate", customerUpdate);
   }
   function updateCustomer() {
-    console.log("this", customer);
-
     const API = `http://localhost:8080/customers/${customer.id}`;
+    console.log("this", customer);
+    console.log("objectApI: ", API);
     axios
-      .put(API, customer)
+      .put(API, customerUpdate, { headers })
       .then((resp) => {
         if (resp.status === 200) {
           Swal.fire("Good job!", "Cập nhập thông tin thành công!", "success");
@@ -98,7 +104,7 @@ function CustomerDetail() {
                     label: "Select Gender",
                     value: "",
                   }}
-                  onChange={handleChangeGender}
+                  onClick={handleChangeGender}
                 />
               </CFormGroup>
               <CFormGroup>

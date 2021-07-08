@@ -29,7 +29,7 @@ public class CustomerDto implements Serializable {
     private String phone;
     @Size(min = 5, max = 250, message = "Data Length must between 5 and 250")
     private String email;
-    @NotNull(message = "Khong duoc de trong")
+    @NotNull(message = "Email Khong duoc de trong")
     private String gender;
     @Size(min = 5, max = 250, message = "Data Length must between 5 and 250")
     private String address;

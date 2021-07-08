@@ -2,6 +2,7 @@
   background-color: white;
   min-height: 500px;
 }
+
 .saler .row-1 {
   min-height: 500px;
   border-right-style: solid;
@@ -9,51 +10,67 @@
   border-right-width: 5px;
   position: relative;
 }
+
 .saler .row-1 .header-order {
   margin: 20px;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
 }
+
 .saler .row-1 .header-order .input-data {
   border-style: solid;
   border-color: #c4cdd5;
   border-width: 1px;
   border-radius: 4px;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
   padding: 4px;
 }
+
 .saler .row-1 .header-order .input-data:hover {
   border-style: solid;
   border-color: #0088ff;
 }
+
 .saler .row-1 .header-order .input-data button {
   background-color: transparent;
   border: none;
   background-color: white;
 }
+
 .saler .row-1 .header-order .input-data button:focus {
   outline: none;
   border: none;
 }
+
 .saler .row-1 .header-order .input-data button i {
   color: #95a7b7;
 }
+
 .saler .row-1 .header-order .input-data input {
   border: none;
   min-width: 400px;
 }
+
 .saler .row-1 .header-order .input-data input:focus {
   border: none;
   outline: none;
 }
+
 .saler .row-1 .order-table {
   padding-left: 20px;
 }
+
 .saler .row-2 {
   padding: 0;
 }
+
 .saler .row-2 .payment {
   padding-left: 0;
 }
+
 .saler .row-2 .payment .customer .search-customer {
   margin-right: 20px;
   padding-right: 20px;
@@ -61,53 +78,69 @@
   outline: none;
   border-bottom-style: solid;
   border-bottom-width: 0.5px;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: space-between;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
   padding-top: 20px;
   outline: none;
 }
+
 .saler .row-2 .payment .customer .search-customer .input-customer {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
   padding: 4px;
 }
+
 .saler .row-2 .payment .customer .search-customer .input-customer:hover {
   border: none;
   outline: none;
   border-bottom-style: solid;
   border-bottom-width: 0.5px;
 }
+
 .saler .row-2 .payment .customer .search-customer .input-customer button {
   background-color: transparent;
   border: none;
   background-color: white;
 }
+
 .saler .row-2 .payment .customer .search-customer .input-customer button:focus {
   outline: none;
   border: none;
 }
+
 .saler .row-2 .payment .customer .search-customer .input-customer button i {
   color: #95a7b7;
 }
+
 .saler .row-2 .payment .customer .search-customer .input-customer input {
   border: none;
   outline: none;
   min-width: 100px;
 }
+
 .saler .row-2 .payment .customer .search-customer .input-customer input:focus {
   border: none;
   outline: none;
 }
+
 .saler .row-2 .payment .customer .infor-customer {
   margin-left: 5px;
   margin-top: 10px;
   color: #3c4b64;
   font-family: Arial, Helvetica, sans-serif;
 }
+
 .saler .row-2 .payment .payment-2 {
   margin-top: 30px;
   margin-right: 15px;
   background-color: white;
 }
+
 .saler .row-2 .payment .payment-2 .payment__label {
   padding-top: 10px;
   border-style: solid;
@@ -117,18 +150,30 @@
   font-weight: bold;
   background-color: #ebedef;
 }
+
 .saler .row-2 .payment .payment-2 .payment-content {
   margin-left: 5px;
 }
+
 .saler .row-2 .payment .payment-2 .payment-content .h-1 {
   margin-bottom: 20px;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: space-between;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
 }
+
 .saler .row-2 .payment .payment-2 .payment-content .h-1-1 {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: flex-end;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
 }
+
 .saler .row-2 .payment .payment-2 .payment-content .h-1-1 input {
   padding: 5px;
   border-style: solid;
@@ -136,27 +181,35 @@
   border-width: 0.5px;
   border-radius: 3px;
 }
+
 .saler .row-2 .payment .payment-2 .payment-content .h-1-1 input:focus {
   border-color: #c0b1b1;
   border-width: 0.5px;
   border-radius: 3px;
   outline: none;
 }
+
 .saler .row-2 .payment .payment-2 .payment-content .h-1-2 {
   font-weight: bold;
 }
+
 .saler .row-2 .payment .payment-2 .payment-content .h-2-2 {
   margin-right: 30px;
   margin-left: 30px;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
   padding: 20px;
   border-radius: 5px;
   border-color: #086aca;
-  justify-content: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   width: 80%;
   border-style: solid;
   background-color: #1c8eff;
 }
+
 .saler .row-2 .payment .payment-2 .payment-content .h-2-2 button {
   color: white;
   font-size: 17px;
@@ -164,7 +217,9 @@
   border: none;
   background-color: transparent;
 }
+
 .saler .row-2 .payment .payment-2 .payment-content .h-2-2 button:focus {
   border: none;
   outline: none;
-}/*# sourceMappingURL=saler.css.map */
+}
+/*# sourceMappingURL=saler.css.map */

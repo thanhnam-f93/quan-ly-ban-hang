@@ -1,7 +1,9 @@
 package com.sapo.quanlybanhang.controller;
 
 
+import com.sapo.quanlybanhang.converter.CustomerConvert;
 import com.sapo.quanlybanhang.dto.CustomerDto;
+import com.sapo.quanlybanhang.entity.CustomerEntity;
 import com.sapo.quanlybanhang.service.CustomerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -249,7 +251,7 @@ public class CustomerController {
 
     @PutMapping("customers/{id}")
     ResponseEntity<?> update(@Valid @RequestBody CustomerDto customerDto, @PathVariable("id") Integer id) {
-        CustomerDto root = customerService.findById(id);
+        CustomerEntity root = CustomerConvert.toEntity(customerService.findById(id));
         try {
             root.setModifiedDate(customerDto.getModifiedDate());
             root.setModifiedBy(customerDto.getModifiedBy());
@@ -262,6 +264,7 @@ public class CustomerController {
             root.setPhone(customerDto.getPhone());
             root.setDateOfBirth(customerDto.getDateOfBirth());
             root.setStatus(customerDto.getStatus());
+            customerService.save(CustomerConvert.toDTO(root));
             return ResponseEntity.ok().body("Cập nhập thành công");
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

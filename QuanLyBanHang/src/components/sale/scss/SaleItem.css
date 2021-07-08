@@ -3,9 +3,12 @@
   border: none;
   outline: none;
 }
+
 .table-row td input {
   border: none;
   max-width: 50px;
-  align-content: center;
+  -ms-flex-line-pack: center;
+      align-content: center;
   border-radius: 2px;
-}/*# sourceMappingURL=SaleItem.css.map */
+}
+/*# sourceMappingURL=SaleItem.css.map */

@@ -2,9 +2,14 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import CustomerItem from "./CustomerItem";
 import NavBar from "./NavBar";
+import { reactLocalStorage } from "reactjs-localstorage";
 import Paginations from "src/views/base/paginations/Pagnations";
 import Swal from "sweetalert2";
+import ApiCustomer from "src/apis/ApiCustomer";
 function CustomerList() {
+  const headers = {
+    Authorization: "Bearer " + reactLocalStorage.get("token"),
+  };
   const [customers, setCustomers] = useState([]);
   const [totalPage, setTotalPage] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
@@ -33,7 +38,7 @@ function CustomerList() {
 
     console.log("this URL: ", URL);
     await axios
-      .get(URL)
+      .get(URL, { headers })
       .then((response) => {
         const result = response.data;
 
@@ -55,7 +60,37 @@ function CustomerList() {
         setIsLoading(true);
         console.log(error);
       });
+
+    // try {
+    //   var rs = null;
+    //   if (search.length > 0) {
+    //     //  rs = getPageBySearch(search, page, limit);
+    //   } else if (age.length > 0 && gender.length > 0) {
+    //     //   rs = getPageByAgeAndGender(age, gender, page, limit);
+    //   } else if (gender.length > 0) {
+    //     //  rs = setResponse(getPageByGender(gender, page, limit));
+    //   } else if (age.length > 0) {
+    //     //  rs = setResponse(getPageByAge(age, page, limit));
+    //   } else {
+    //     console.log("ahihihihihi");
+    //     ApiCustomer.getBasePage(page, limit)
+    //       .then((result) => {
+    //         setResponse(result);
+    //       })
+    //       .catch((err) => console.log(err));
+    //     console.log("Rs is :    " + response);
+    //   }
+    //   console.log("object tra ve customer:   " + rs);
+    //   setCustomers(response.data.content);
+    //   setTotalPage(response.data.totalPages);
+    //   setPage(response.pageable.pageNumber);
+    //   setIsLoading(false);
+    // } catch (error) {
+    //   setIsLoading(true);
+    //   console.log(error);
+    // }
   };
+
   console.log("totalPage", totalPage);
   const renderTodo = customers.map((customer, index) => {
     return (
@@ -71,7 +106,7 @@ function CustomerList() {
     const API = `http://localhost:8080/customers/off/${id}`;
     if (window.confirm("Xoa la mat day nhe")) {
       axios
-        .get(API)
+        .get(API, { headers })
         .then(function (response) {
           setCustomers(customers.filter((data) => data.status !== "off"));
           setStatus(!status);

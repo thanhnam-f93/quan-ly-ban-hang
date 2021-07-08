@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Select from "react-select";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { reactLocalStorage } from "reactjs-localstorage";
 import { dataGender } from "./dataGender";
 import {
   CCol,
@@ -15,13 +16,16 @@ import {
 } from "@coreui/react";
 import { useHistory } from "react-router-dom";
 function CustomerNew() {
+  const headers = {
+    Authorization: "Bearer " + reactLocalStorage.get("token"),
+  };
   const history = useHistory();
   const APIPost = "http://localhost:8080/customers";
 
   const [customer, setCustomer] = useState({
     createdDate: new Date(),
     modifiedDate: null,
-    createBy: "Thanh Nam",
+    createBy: reactLocalStorage.get("name"),
     modifiedBy: "",
     status: "on",
   });
@@ -48,11 +52,8 @@ function CustomerNew() {
     axios
       .post(
         APIPost,
-        customer
-        // , {
-        // headers: {
-        //   Authorization: "Bearer " + context.jwt,
-        // },}
+        customer,
+        { headers }
       )
       .then(
         (response) => {
