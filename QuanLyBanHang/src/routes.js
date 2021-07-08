@@ -84,8 +84,7 @@ const CustomerList = React.lazy(() =>
   import("./components/Customer/CustomerList")
 );
 
-const Dashboard = React.lazy(() => import('./components/Dashboard/Dashboard'));
-const Staff = React.lazy(() => import('./components/Staff/Staff'));
+
 const ListProduct = React.lazy(() => import('./components/ListProduct/ListProduct'));
 const Update = React.lazy(() => import('./components/ListProduct/Update'));
 const Create = React.lazy(() => import('./components/ListProduct/Create'));
