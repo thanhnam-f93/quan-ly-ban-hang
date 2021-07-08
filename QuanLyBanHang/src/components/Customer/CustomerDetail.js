@@ -71,6 +71,11 @@ function CustomerDetail() {
   return (
     <div>
       <div className="row">
+        <CCardHeader style={{ fontWeight: "bolder" }}>
+          Thông tin Khách hàng
+        </CCardHeader>
+      </div>
+      <div className="row">
         <div className=" card col-lg-6">
           <CCard>
             <CCardHeader>Thông tin Khách hàng</CCardHeader>

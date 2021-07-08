@@ -63,7 +63,7 @@ function CustomerNew() {
             input.value = "";
           }
           Swal.fire("Good job!", "Delete Complete!", "success");
-          alert("Tao moi thanh cong");
+          Swal.fire("Good job!", "Thêm mới thành công", "success");
         },
         (error) => {
           console.log("error:  ", error);
@@ -106,6 +106,14 @@ function CustomerNew() {
                 <CInput
                   name="phone"
                   placeholder="Phone Number"
+                  onChange={handleChange}
+                />
+              </CFormGroup>
+              <CFormGroup>
+                <CLabel htmlFor="phone">Email</CLabel>
+                <CInput
+                  name="email"
+                  placeholder="Email"
                   onChange={handleChange}
                 />
               </CFormGroup>
