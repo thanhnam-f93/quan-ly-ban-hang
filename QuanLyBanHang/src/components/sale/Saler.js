@@ -91,15 +91,21 @@ const Saler = () => {
   };
 
   const getCount = (e, item) => {
-    console.log("getCount:", e.target.value);
+    var count = e.target.value;
+    console.log("getCount:",count);
     console.log("product:", item);
-    item["amount"] = e.target.value;
-    setCount(e.target.value);
+    if(count>=0){
+      item["amount"] = count;
+      setCount(e.target.value);
+    }else{
+
+    }
+    
   };
 
   var products = productOption.map((item, index) => {
     console.log("map:", item);
-    return <SalerItem item={item} key={index} />;
+    return <SalerItem item={item} key={index} index = {index} />;
   });
 
   useEffect(() => {
@@ -123,6 +129,7 @@ const Saler = () => {
 
   const getMoney = (e) => {
     var m = e.target.value;
+    console.log(e);
     setMoney(m);
     setReturnMoney(m - total);
   };
@@ -258,11 +265,11 @@ const Saler = () => {
                     <span>Tổng tiền</span>
                     <span>{total}</span>
                   </div>
-                  <div className="h-1 ">
-                    <span>chiết khấu</span>
+                  <div className="h-1  h-1-1">
+                    <span>Chiết khấu</span>
                     <span>   <input
                       type="number"
-                      onChange={getMoney}
+                      // onChange={getMoney}  
                       placeholder=""
                     /></span>
                   </div>
@@ -275,19 +282,22 @@ const Saler = () => {
                     <input
                       type="number"
                       onChange={getMoney}
-                      placeholder="nhập tiền khách gửi"
+                      placeholder=""
                     />
                   </div>
                   <div className="h-1">
                     <span>Tiền thừa</span>
-                    <span>{returnMoney < 0 ? 0 : returnMoney}</span>
+                    <span style = {returnMoney<0?{color:"red"}:{color:"blue"}}>{returnMoney}</span>
                   </div>
-                  <div className="h-1 h-2-2">
+                
+                </div>       
+            </div>
+              </div>
+              <div className="h-1 h-2-2">
                     <button onClick={payment}>Thanh toán</button>
                   </div>
-                </div>
-              </div>
-            </div>
+
+
           </div>
         </div>
       </ProductContext.Provider>

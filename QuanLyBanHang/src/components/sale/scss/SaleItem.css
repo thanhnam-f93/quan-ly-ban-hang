@@ -2,10 +2,12 @@
   margin: 4px;
   border: none;
   outline: none;
+  background-color: transparent;
 }
 .table-row td input {
   border: none;
   max-width: 50px;
   align-content: center;
   border-radius: 2px;
+  text-align: right;
 }/*# sourceMappingURL=SaleItem.css.map */

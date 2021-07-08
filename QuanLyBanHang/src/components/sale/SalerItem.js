@@ -4,9 +4,17 @@ import "./scss/SaleItem.css";
 const SalerItem = (props) => {
   const { deleteItemOfList, getCount } = useContext(ProductContext);
   const [total,setTotal]= useState(0);
-  const { item } = props;
+  const { item,index } = props;
+  console.log("key",index);
 
-
+const checkNavigation =(e) =>{
+  var x=e.keyCode;
+  console.log("giá trị:",x);
+  if(x==189){
+    var c = document.getElementById(index);
+    c.value = 0;
+  }
+}
   return (
     <tr className="table-row">
       <th scope="row">
@@ -18,12 +26,14 @@ const SalerItem = (props) => {
       <td>{item.name}</td>
       <td>
         <input
-          id="countId"
+          id={index}
           type="number"
-          defaultValue={item.amount}
+          defaultValue= "1"
           min="0"
           max={item.numberProduct}
           onChange={(e)=>getCount(e,item)}
+          onKeyUp = {(e)=>checkNavigation(e)}
+          pattern ="\d+"
         />
       </td>
       <td>{item.price}</td>
