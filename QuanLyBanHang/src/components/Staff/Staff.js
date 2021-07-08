@@ -5,10 +5,15 @@ import axios from 'axios';
 import { ApiStaff } from '../../apis/Apis';
 import StaffItem from './StaffItem/StaffItem';
 import { Link } from 'react-router-dom';
+import {
+  CPagination
+} from '@coreui/react'
+
 
 const Staff = () => {
 
   const [staffs, setStaffs] = useState([]);
+  const [currentPage, setCurrentPage] = useState(2)
 
   useEffect(() => {
     axios(ApiStaff)
@@ -63,6 +68,15 @@ const Staff = () => {
         </tbody>
 
       </table>
+
+
+      <CPagination
+            activePage={currentPage}
+            pages={10}
+            onActivePageChange={setCurrentPage}
+          />
+          <br></br>
+
     </div>
   )
 }

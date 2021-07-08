@@ -32,24 +32,25 @@ const StaffDetail = (props) => {
   const [staff, setStaff] = useState({
     id: staffDetail.id,
     fullName: staffDetail.fullName,
+    passWord: staffDetail.passWord,
     address: staffDetail.address,
     mail: staffDetail.mail,
     phone: staffDetail.phone,
-    passWord: staffDetail.passWord,
     dateOfBirth: staffDetail.dateOfBirth,
     status: staffDetail.status,
-    roleId: [staffDetail.roleID],
+    roleId: staffDetail.roleId,
     createDate: staffDetail.createDate,
     createBy: staffDetail.createBy,
     modifiedDate: new Date(),
     modifiedBy: localStorage.getItem("user")
   });
 
+  const roleEdit = roles.filter(item => item.id != staffDetail.roleId);
 
   const onHandleChange = (e) => {
     const { name, value } = e.target;
     setStaff({ ...staff, [name]: value });
-    console.log(staff)
+    console.log('staff ',staff)
   }
 
 
@@ -58,11 +59,19 @@ const StaffDetail = (props) => {
     method: 'put',
     url: `http://localhost:8080/admin/staffs/${staffDetail.id}`,
     headers: {
-      // 'Authorization': `Bearer ${localStorage.getItem("accessToken")}`,
+      'Authorization': `Bearer ${localStorage.getItem("token")}`,
       'Content-Type': 'application/json'
     },
     data: data
   };
+
+  
+  const getValueSelect = () => {
+    var select = document.getElementById('select')
+    setStaff({ ...staff, roleId: [Number(select.value)] })
+    console.log('select ', select.value)
+    console.log('staff ở selct ', staff)
+  }
 
   const updateStaff = () => {
     axios(config)
@@ -119,6 +128,7 @@ const StaffDetail = (props) => {
                 <CFormGroup>
                   <CLabel htmlFor="company">Ngày sinh</CLabel>
                   <CInput
+               
                     defaultValue={staffDetail.dateOfBirth}
                     name="dateOfBirth"
                     placeholder="Nhập ngày sinh"
@@ -143,8 +153,9 @@ const StaffDetail = (props) => {
 
                 <CFormGroup>
                   <CLabel htmlFor="vat">Vai trò</CLabel>
-                  <select className="custom-select">
-                    {roles.map(item => {
+                  <select className="custom-select" id="select" onClick={getValueSelect}>
+                  <option value={staffDetail.roleId} key={staffDetail.roleId}>{staffDetail.roleName}</option>
+                    {roleEdit.map(item => {
                       return (
                         <option value={item.id} key={item.id}>{item.name}</option>
                       )
@@ -187,20 +198,6 @@ const StaffDetail = (props) => {
             </CCard>
           </div>
         </div>
-        {/* <button
-            type="reset"
-            className="btn btn-light"
-            style={{ marginLeft: "10px" }}
-          >
-            Hủy
-          </button>
-          <button
-            className="btn btn-success"
-            onClick={updateStaff}
-            style={{ marginLeft: "10px" }}
-          >
-            Lưu
-          </button> */}
 
         <div style={{ marginLeft: "950px", padding: "20px 0px" }}>
           <button

@@ -10,6 +10,7 @@ public class StaffConverter {
         StaffDto staffDto = new StaffDto();
         staffDto.setId(staffEntity.getId());
         staffDto.setFullName(staffEntity.getFullName());
+        staffDto.setPassWord(staffEntity.getPassWord());
         staffDto.setAddress(staffEntity.getAddress());
         staffDto.setMail(staffEntity.getMail());
         staffDto.setPhone(staffEntity.getPhone());
@@ -38,7 +39,7 @@ public class StaffConverter {
         staffEntity.setModifiedDate(staffDto.getModifiedDate());
         staffEntity.setCreateBy(staffDto.getCreateBy());
         staffEntity.setModifiedBy(staffDto.getModifiedBy());
-//        staffEntity.setRoles(staffDto.getRoles());
+        staffEntity.setRoles(staffDto.getRoleEntity());
         return staffEntity;
     }
 }

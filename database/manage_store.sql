@@ -3,7 +3,7 @@
 -- Host: localhost    Database: quan_ly
 -- ------------------------------------------------------
 -- Server version	8.0.21
-create database manage_store;
+
 use manage_store;
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;

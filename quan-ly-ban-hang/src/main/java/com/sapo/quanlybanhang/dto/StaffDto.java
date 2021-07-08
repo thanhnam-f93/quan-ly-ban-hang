@@ -2,13 +2,6 @@ package com.sapo.quanlybanhang.dto;
 
 import com.sapo.quanlybanhang.entity.RoleEntity;
 import lombok.Data;
-import org.aspectj.bridge.IMessage;
-import org.springframework.format.annotation.DateTimeFormat;
-
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.validation.constraints.*;
 import java.util.*;
 
@@ -20,8 +13,8 @@ public class StaffDto {
     @NotBlank(message = "FullName is mandatory")
     private String fullName;
 
-    @NotBlank(message = "PassWord is mandatory")
-    @Size(min = 6, max = 30, message = "Password must be 6-20 characters ")
+//    @NotBlank(message = "PassWord is mandatory")
+//    @Size(min = 6, max = 30, message = "Password must be 6-20 characters ")
     private String passWord;
 
     @NotBlank(message = "Address is mandatory")
@@ -46,14 +39,14 @@ public class StaffDto {
 
     private String status;
 
-    @NotNull(message = "CreatedDate is mandatory")
-    @Past(message = "Date input is invalid for created Date.")
+//    @NotNull(message = "CreatedDate is mandatory")
+//    @Past(message = "Date input is invalid for created Date.")
     private Date createdDate;
 
-    @Past(message = "Date input is invalid for modified Date.")
+//    @Past(message = "Date input is invalid for modified Date.")
     private Date modifiedDate;
 
-    @NotBlank(message = "CreateBy is mandatory")
+//    @NotBlank(message = "CreateBy is mandatory")
     private String createBy;
 
     private String modifiedBy;
@@ -61,5 +54,7 @@ public class StaffDto {
     private List<Integer> roleId;
 
     private  List<String> roleName= new ArrayList();
+
+    private List<RoleEntity> roleEntity = new ArrayList<>();
 
 }

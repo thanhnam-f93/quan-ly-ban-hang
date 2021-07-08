@@ -6,7 +6,7 @@ const ApiStaff = {
     method: 'get',
     url: `${API}/staffs`,
     headers: {
-        // 'Authorization': `Bearer ${localStorage.getItem("accessToken")}`,
+        'Authorization': `Bearer ${localStorage.getItem("token")}`,
         'Content-Type': 'application/json'
     }
 };
@@ -16,7 +16,7 @@ const ApiRole = {
     method: 'get',
     url: `${API}/roles`,
     headers: {
-        // 'Authorization': `Bearer ${localStorage.getItem("accessToken")}`,
+        'Authorization': `Bearer ${localStorage.getItem("token")}`,
         'Content-Type': 'application/json'
     }
 };
@@ -27,7 +27,7 @@ const apiAddRole = {
     url: `${API}/roles`,
     data: null,
     headers: {
-        // 'Authorization': `Bearer ${localStorage.getItem("accessToken")}`,
+        'Authorization': `Bearer ${localStorage.getItem("token")}`,
         'Content-Type': 'application/json'
     }
 };

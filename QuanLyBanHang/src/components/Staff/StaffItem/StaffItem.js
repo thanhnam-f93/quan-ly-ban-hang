@@ -22,7 +22,6 @@ const StaffItem = ({staff}) => {
 
               <td>
                 <button
-                style={{ marginLeft: "10px" }}
                 onClick={() => updateStaff(staff)}
                 className="btn btn-success"
                 >

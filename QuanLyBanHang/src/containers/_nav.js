@@ -110,7 +110,7 @@ const _nav =  [
   {
     _tag: 'CSidebarNavItem',
     name: 'Cấu hình',
-    to: '/theme/colors',
+    to: '/settings',
     icon: 'cil-settings',
   },
   {

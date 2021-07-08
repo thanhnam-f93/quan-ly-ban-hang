@@ -26,13 +26,7 @@ const AddStaff = () => {
 
   let history = useHistory();
 
-  const [staff, setStaff] = useState({ createdDate: new Date(), createBy: localStorage.getItem("user"), roleId: [], status: "Đang làm việc" })
-
-  const onHandleChange = (e) => {
-    const { name, value } = e.target;
-    setStaff({ ...staff, [name]: value });
-    console.log('data ', staff)
-  }
+  const [staff, setStaff] = useState({ createdDate: new Date(), createBy: localStorage.getItem("user"), roleId: [1], status: "Đang làm việc" })
 
   const getValueSelect = () => {
     var select = document.getElementById('select')
@@ -41,12 +35,18 @@ const AddStaff = () => {
     console.log('staff ở selct ', staff)
   }
 
+  const onHandleChange = (e) => {
+    const { name, value } = e.target;
+    setStaff({ ...staff, [name]: value });
+    console.log('data ', staff)
+  }
+
   var data = JSON.stringify(staff);
   var config = {
     method: 'post',
     url: `http://localhost:8080/admin/staffs`,
     headers: {
-      // 'Authorization': `Bearer ${localStorage.getItem("accessToken")}`,
+      'Authorization': `Bearer ${localStorage.getItem("token")}`,
       'Content-Type': 'application/json'
     },
     data: data

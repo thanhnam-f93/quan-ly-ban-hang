@@ -1,9 +1,18 @@
 package com.sapo.quanlybanhang.service;
 
-import com.sapo.quanlybanhang.entity.RoleEntity;
+import com.sapo.quanlybanhang.dto.RoleDto;
+
 
 import java.util.List;
 
 public interface RoleService {
-    public List<RoleEntity> findAll();
+ 
+    //Lấy danh sách Role
+    public List<RoleDto> findAll();
+
+    //Tạo mới một Role
+    public RoleDto createRole(RoleDto roleDto);
+
+    //Cập nhật một Role
+    public RoleDto updateRole(int id , RoleDto roleDto);
 }

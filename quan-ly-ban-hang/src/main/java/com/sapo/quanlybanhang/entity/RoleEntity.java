@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.Date;
 
 @Entity
 @Table(name = "roles")
@@ -21,11 +22,26 @@ public class RoleEntity {
     @Column(name = "name")
     private String name;
 
+    @Column( name = "code")
+    private String code;
+
+    @Column(name="notes")
+    private String notes;
+
+    @Column(name ="created_date")
+    private Date createdDate;
+
+    @Column(name ="created_by")
+    private String createBy;
+
+    @Column(name ="modified_date")
+    private Date modifiedDate;
+
+    @Column(name ="modified_by")
+    private String modifiedBy;
     @ManyToMany(mappedBy = "roles", fetch = FetchType.LAZY)
     private Collection<StaffEntity> staffEntities;
 
-    @Column( name = "code")
-    private String code;
 
 
 }
