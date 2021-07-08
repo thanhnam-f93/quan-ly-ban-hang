@@ -37,15 +37,13 @@ const Order = () => {
       }
       response.json().then((data) => {     
         console.log("size data:",data.length);
-        setListOrder(data);
-        
-        // alert("thao tác thành công");       
+        setListOrder(data);  
       });
     });
  
 }, [orderPageable])
 
-/**
+/**-------------------------------------------------
  * filter and search order
  */
 

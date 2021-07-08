@@ -19,7 +19,7 @@ const Saler = () => {
   const [count, setCount] = useState(0);
   const [orderPageable, setOrderPageAble] = useState({
     page: 1,
-    limit: 7,
+    limit: 10,
     inputOrder: "",
     orderTime: "",
   });
@@ -214,7 +214,7 @@ const Saler = () => {
                   <th scope="col">Tên sản phẩm</th>
                   <th scope="col">Số lượng</th>
                   <th scope="col">Đơn giá </th>
-                  <th scope="col">thành tiền</th>
+                  <th scope="col">Thành tiền</th>
                 </tr>
               </thead>
               <tbody>{products}</tbody>
@@ -229,9 +229,7 @@ const Saler = () => {
                 <div className="search-customer">
                   <div className="input-customer">
                     <button type="button">
-                      <span>
-                        <i className="fas fa-search"></i>
-                      </span>
+                        <i className="fas fa-search"></i>            
                     </button>
                     <input
                       autoComplete="off"
@@ -241,26 +239,39 @@ const Saler = () => {
                       placeholder="Tìm kiếm thông tin khách hàng"
                     />
                   </div>
-                  <div>
+                  <button>
                     <i className="fas fa-plus fa-1x"></i>
-                  </div>
+                  </button>
                 </div>
                 <div className="infor-customer">
-                  <p> khách hàng:</p>
+                  <p> Tên khách hàng:</p>
                   <p>Điện thoại:</p>
                   <p>Địa chỉ:</p>
                 </div>
               </div>
               <div className="payment-2">
-                <div className="payment__label">
+                {/* <div className="payment__label">
                   <p>Thanh toán</p>
-                </div>
+                </div> */}
                 <div className="payment-content">
-                  <div className="h-1 h-1-2">
+                  <div className="h-1">
                     <span>Tổng tiền</span>
                     <span>{total}</span>
                   </div>
+                  <div className="h-1 ">
+                    <span>chiết khấu</span>
+                    <span>   <input
+                      type="number"
+                      onChange={getMoney}
+                      placeholder=""
+                    /></span>
+                  </div>
+                  <div className="h-1  h-1-2">
+                    <span>Khách phải trả</span>
+                    <span>0</span>
+                  </div>
                   <div className="h-1 h-1-1">
+                    <span>Tiền khách đưa</span>   
                     <input
                       type="number"
                       onChange={getMoney}

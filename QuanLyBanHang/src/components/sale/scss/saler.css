@@ -1,8 +1,11 @@
 .saler {
   background-color: white;
-  min-height: 500px;
+  min-height: 400px;
+  font-size: 17px;
 }
 .saler .row-1 {
+  padding-top: 20px;
+  background-color: white;
   min-height: 500px;
   border-right-style: solid;
   border-right-color: #e5e5e5;
@@ -10,7 +13,7 @@
   position: relative;
 }
 .saler .row-1 .header-order {
-  margin: 20px;
+  padding-bottom: 20px;
   display: flex;
 }
 .saler .row-1 .header-order .input-data {
@@ -45,36 +48,25 @@
   border: none;
   outline: none;
 }
-.saler .row-1 .order-table {
-  padding-left: 20px;
-}
 .saler .row-2 {
-  padding: 0;
-}
-.saler .row-2 .payment {
-  padding-left: 0;
+  padding-top: 20px;
+  background-color: white;
 }
 .saler .row-2 .payment .customer .search-customer {
-  margin-right: 20px;
-  padding-right: 20px;
   border: none;
   outline: none;
   border-bottom-style: solid;
   border-bottom-width: 0.5px;
   display: flex;
   justify-content: space-between;
-  padding-top: 20px;
   outline: none;
 }
 .saler .row-2 .payment .customer .search-customer .input-customer {
   display: flex;
-  padding: 4px;
 }
 .saler .row-2 .payment .customer .search-customer .input-customer:hover {
   border: none;
   outline: none;
-  border-bottom-style: solid;
-  border-bottom-width: 0.5px;
 }
 .saler .row-2 .payment .customer .search-customer .input-customer button {
   background-color: transparent;
@@ -97,19 +89,22 @@
   border: none;
   outline: none;
 }
+.saler .row-2 .payment .customer .search-customer button {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  display: flex;
+}
+.saler .row-2 .payment .customer .search-customer button i {
+  margin: auto;
+}
 .saler .row-2 .payment .customer .infor-customer {
-  margin-left: 5px;
-  margin-top: 10px;
   color: #3c4b64;
-  font-family: Arial, Helvetica, sans-serif;
 }
 .saler .row-2 .payment .payment-2 {
-  margin-top: 30px;
-  margin-right: 15px;
   background-color: white;
 }
 .saler .row-2 .payment .payment-2 .payment__label {
-  padding-top: 10px;
   border-style: solid;
   border-width: 0.5px;
   border-color: #f3f4f7;
@@ -117,20 +112,15 @@
   font-weight: bold;
   background-color: #ebedef;
 }
-.saler .row-2 .payment .payment-2 .payment-content {
-  margin-left: 5px;
-}
 .saler .row-2 .payment .payment-2 .payment-content .h-1 {
-  margin-bottom: 20px;
   display: flex;
   justify-content: space-between;
 }
 .saler .row-2 .payment .payment-2 .payment-content .h-1-1 {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
 }
 .saler .row-2 .payment .payment-2 .payment-content .h-1-1 input {
-  padding: 5px;
   border-style: solid;
   border-color: #c0b1b1;
   border-width: 0.5px;

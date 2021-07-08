@@ -1,11 +1,16 @@
 .product-list{
+    border-radius: 100px;
     position: absolute;
     min-width:80%;
     background-color: white;
-    padding-left: 20px;
+    // padding-left: 3px;
+    top:56px;
     .product-item{
         &:hover{
-            background-color: yellow;
+            background-color: #e6effa;
+            &:first-child{
+                border-top-right-radius: 5px;
+            }
         }
       
         font-size: 15px;
