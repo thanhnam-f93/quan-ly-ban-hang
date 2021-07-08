@@ -1,4 +1,10 @@
-import React from "react";
+import React from 'react';
+import Bill from './components/Bill/Bill';
+import BillDetail from './components/BillDetail/BillDetail';
+import Logins from './components/Login/Logins';
+import DropDown from './components/Order/DropDown';
+import OrderDetail from './components/OrderDetail/OrderDetail';
+import Saler from './components/sale/Saler';
 
 /*================== Of Template React =================*/
 const Toaster = React.lazy(() =>
@@ -78,6 +84,18 @@ const CustomerList = React.lazy(() =>
   import("./components/Customer/CustomerList")
 );
 
+const Dashboard = React.lazy(() => import('./components/Dashboard/Dashboard'));
+const Staff = React.lazy(() => import('./components/Staff/Staff'));
+const ListProduct = React.lazy(() => import('./components/ListProduct/ListProduct'));
+const Update = React.lazy(() => import('./components/ListProduct/Update'));
+const Create = React.lazy(() => import('./components/ListProduct/Create'));
+
+/*================== The End code of Team - Quản lý bán hàng =================*/
+
+const ListSupplier = React.lazy(() => import('./components/ListSupplier/ListSupplier'));
+
+
+const Order = React.lazy(() => import('./components/Order/Order'));
 /*================== The End code of Team - Quản lý bán hàng =================*/
 
 const routes = [
@@ -140,6 +158,48 @@ const routes = [
   { path: "/users", exact: true, name: "Users", component: Users },
   { path: "/users/:id", exact: true, name: "User Details", component: User },
   /*================== The End Of Template React =================*/
+  { path: '/', exact: true, name: 'trang-chu' },
+  // { path: '/dashboard', name: 'Dashboard', component: Dashboard },
+  { path: '/theme', name: 'Theme', component: Colors, exact: true },
+  { path: '/theme/colors', name: 'Colors', component: Colors },
+  { path: '/theme/typography', name: 'Typography', component: Typography },
+  { path: '/base', name: 'Base', component: Cards, exact: true },
+  { path: '/base/breadcrumbs', name: 'Breadcrumbs', component: Breadcrumbs },
+  { path: '/base/cards', name: 'Cards', component: Cards },
+  { path: '/base/carousels', name: 'Carousel', component: Carousels },
+  { path: '/base/collapses', name: 'Collapse', component: Collapses },
+  { path: '/base/forms', name: 'Forms', component: BasicForms },
+  { path: '/base/jumbotrons', name: 'Jumbotrons', component: Jumbotrons },
+  { path: '/base/list-groups', name: 'List Groups', component: ListGroups },
+  { path: '/base/navbars', name: 'Navbars', component: Navbars },
+  { path: '/base/navs', name: 'Navs', component: Navs },
+  { path: '/base/paginations', name: 'Paginations', component: Paginations },
+  { path: '/base/popovers', name: 'Popovers', component: Popovers },
+  { path: '/base/progress-bar', name: 'Progress Bar', component: ProgressBar },
+  { path: '/base/switches', name: 'Switches', component: Switches },
+  { path: '/base/tables', name: 'Tables', component: Tables },
+  { path: '/base/tabs', name: 'Tabs', component: Tabs },
+  { path: '/base/tooltips', name: 'Tooltips', component: Tooltips },
+  { path: '/buttons', name: 'Buttons', component: Buttons, exact: true },
+  { path: '/buttons/buttons', name: 'Buttons', component: Buttons },
+  { path: '/buttons/button-dropdowns', name: 'Dropdowns', component: ButtonDropdowns },
+  { path: '/buttons/button-groups', name: 'Button Groups', component: ButtonGroups },
+  { path: '/buttons/brand-buttons', name: 'Brand Buttons', component: BrandButtons },
+  { path: '/charts', name: 'Charts', component: Charts },
+  { path: '/icons', exact: true, name: 'Icons', component: CoreUIIcons },
+  { path: '/icons/coreui-icons', name: 'CoreUI Icons', component: CoreUIIcons },
+  { path: '/icons/flags', name: 'Flags', component: Flags },
+  { path: '/icons/brands', name: 'Brands', component: Brands },
+  { path: '/notifications', name: 'Notifications', component: Alerts, exact: true },
+  { path: '/notifications/alerts', name: 'Alerts', component: Alerts },
+  { path: '/notifications/badges', name: 'Badges', component: Badges },
+  { path: '/notifications/modals', name: 'Modals', component: Modals },
+  { path: '/notifications/toaster', name: 'Toaster', component: Toaster },
+  { path: '/widgets', name: 'Widgets', component: Widgets },
+  { path: '/users', exact: true,  name: 'Users', component: Users },
+  { path: '/users/:id', exact: true, name: 'User Details', component: User },
+
+/*================== The End Of Template React =================*/
 
   /*---------------------------------------------------------------------------------------*/
 
@@ -165,6 +225,32 @@ const routes = [
     component: CustomerList,
   },
   /*================== The End code of Team - Quản lý bán hàng =================*/
+/*================== Start code of Team - Quản lý bán hàng =================*/
+  { path: '/dashboard', exact: true,  name: 'Dashboard', component: Dashboard },
+  { path: '/staff', exact: true,  name: 'Staff', component: Staff },
+  { path: '/order', exact: true,  name: 'danh-sach-don-hang', component: Order },
+  { path: '/dropdown', exact: true,  name: 'danh-sach-don-hang', component: DropDown },
+  { path: '/order-detail', exact: true,  name: '', component: Order },
+  { path: '/order-detail/:id/:type', exact: true,  name: 'chi-tiet-don-hang', component: OrderDetail },
+  { path: '/order/return', exact: true,  name: 'don-hang-tra-ve ', component: Bill },
+  { path: '/order/return/:id', exact: true,  name: '', component: BillDetail },
+
+  { path: '/product', exact: true,  name: 'Product', component: ListProduct },
+  { path: '/category', exact: true,  name: 'Product', component: ListProduct },
+  { path: '/product/update-category/:id', exact: true,  name: 'update', component: Update },
+  { path: '/product/add-category', exact: true,  name: 'add', component: Create },
+  { path: '/supplier', exact: true,  name: 'Supplier', component: ListSupplier },
+
+
+
+
+
+
+
+  { path: '/logins', exact: true,  name: '', component: Logins },
+  { path: '/saler', exact: true,  name: 'ban-hang', component: Saler }
+
+/*================== The End code of Team - Quản lý bán hàng =================*/
 ];
 
 export default routes;

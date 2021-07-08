@@ -1,6 +1,7 @@
 package com.sapo.quanlybanhang.entity;
 
 import lombok.*;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -23,6 +24,7 @@ public class OrderEntity implements Serializable {
 
     @Column(name = "code")
     private String code;
+
     @Column(name ="created_date")
     private Timestamp createdDate;
 

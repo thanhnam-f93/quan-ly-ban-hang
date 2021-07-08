@@ -17,6 +17,10 @@ const _nav = [
     name: "Bán hàng",
     to: "/staff",
     icon: "cil-laptop",
+    _tag: 'CSidebarNavItem',
+    name: 'Bán hàng',
+    to: '/saler',
+    icon: 'cil-laptop',
   },
   {
     _tag: "CSidebarNavDropdown",
@@ -54,14 +58,14 @@ const _nav = [
     icon: "cil-basket",
     _children: [
       {
-        _tag: "CSidebarNavItem",
-        name: "Danh sách sản phẩm",
-        to: "/base/breadcrumbs",
+        _tag: 'CSidebarNavItem',
+        name: 'Danh sách sản phẩm',
+        to: '/product',
       },
       {
-        _tag: "CSidebarNavItem",
-        name: "Nhà cung cấp",
-        to: "/base/cards",
+        _tag: 'CSidebarNavItem',
+        name: 'Nhà cung cấp',
+        to: '/supplier',
       },
       {
         _tag: "CSidebarNavItem",

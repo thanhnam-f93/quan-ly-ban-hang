@@ -1,19 +1,21 @@
 package com.sapo.quanlybanhang.controller;
 
-import com.sapo.quanlybanhang.dto.InputProductDto;
-import com.sapo.quanlybanhang.dto.ProductDto;
-import com.sapo.quanlybanhang.dto.UpdateDto;
+import com.sapo.quanlybanhang.dto.*;
 import com.sapo.quanlybanhang.entity.ProductEntity;
 import com.sapo.quanlybanhang.service.ProductService;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping(value = "api/v1")
 public class ProductController {
@@ -64,35 +66,53 @@ public class ProductController {
         return productService.findById(id);
     }
 
-    @PutMapping(value = "/products/{id}")
-    public ResponseEntity<ProductDto> updateProduct(@PathVariable int id, @RequestBody ProductDto productDto) {
-        ModelMapper modelMapper = new ModelMapper();
-        modelMapper.getConfiguration()
-                .setMatchingStrategy(MatchingStrategies.STRICT);
+//    @PutMapping(value = "/products/{id}")
+//    public ResponseEntity<ProductDto> updateProduct(@PathVariable int id, @RequestBody ProductDto productDto) {
+//        ModelMapper modelMapper = new ModelMapper();
+//        modelMapper.getConfiguration()
+//                .setMatchingStrategy(MatchingStrategies.STRICT);
+//
+//        ProductEntity productRequest = modelMapper.map(productDto, ProductEntity.class);
+//
+//        // convert DTO to Entity
+//        ProductEntity product = productService.update(id, productRequest);
+//        // entity to DTO
+//        ProductDto productResponse = modelMapper.map(product, ProductDto.class);
+//        return ResponseEntity.ok().body(productResponse);
+//
+//    }
 
-        ProductEntity productRequest = modelMapper.map(productDto, ProductEntity.class);
+    @GetMapping(value = "/product_search")
+    public List<ProductDto> search(@RequestParam String keyword,@RequestParam int pageNo,@RequestParam int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+        return productService.searchAll(keyword,pageable);
+    }
+    @GetMapping(value = "/product_searchh")
+    public List<ProductDto> searchAll(@RequestParam String keyword) {
 
-        // convert DTO to Entity
-        ProductEntity product = productService.update(id, productRequest);
-        // entity to DTO
-        ProductDto productResponse = modelMapper.map(product, ProductDto.class);
-        return ResponseEntity.ok().body(productResponse);
-
+        return productService.searchAllName(keyword);
     }
 
-    @GetMapping(value = "/product_search/{keyword}")
-    public List<ProductDto> search(@PathVariable String keyword) {
-        return productService.findAll(keyword);
+    @GetMapping(value = "/productss")
+    public List<ProductDto> searchByName(@RequestParam String keyword) {
+
+        return productService.searchAllName(keyword);
     }
 
     @GetMapping(value = "/product_searchByCategory/{keyword}")
-    public List<ProductDto> filterByCategory(@PathVariable int keyword) {
+    public List<ProductDto> filterByCategory(@PathVariable int keyword)
+    {
         return productService.searchByCategory(keyword);
+    }
+    @GetMapping(value = "/product_searchByCategories")
+    public List<ProductDto> filterByCategory(@RequestParam int keyword,@RequestParam int pageNo,@RequestParam int pageSize)
+    {
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+        return productService.searchByCategories(keyword,pageable);
     }
 
     @GetMapping(value = "/product")
-    public List<ProductDto> findPaginated(@RequestParam int pageNo) {
-        int pageSize = 3;
+    public List<ProductDto> findPaginated(@RequestParam int pageNo,@RequestParam int pageSize) {
         return productService.findPaginated(pageNo, pageSize);
 
 
@@ -103,11 +123,20 @@ public class ProductController {
         productService.deleteByID(id);
     }
 
-    @PutMapping(value = "/product/{id}")
+    @PutMapping(value = "/products/{id}")
     public ResponseEntity<UpdateDto> updateProduct(@PathVariable int id, @RequestBody UpdateDto updateDto) {
 
         productService.updateProduct(id, updateDto);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @PostMapping ("/find-all")
+    public List<ProductDto> findAll(@RequestBody OrderPageable orderPageable){
+
+            Sort sort = Sort.by("createdDate").descending();
+            Pageable pageable = PageRequest.of(orderPageable.getPage()-1,orderPageable.getLimit(),sort);
+            return  productService.findAll(pageable);
+        }
+
 }

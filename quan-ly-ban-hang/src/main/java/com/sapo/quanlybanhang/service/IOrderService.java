@@ -14,4 +14,5 @@ public interface IOrderService {
     public OrderDto save (OrderDto orderDto);
     List<OrderDto> findByCodeAndCustomer(OrderPageable orderPageable);
     public List<Long> findPrice(LocalDate optionTime);
+    public  OrderEntity findById(Integer id);
 }

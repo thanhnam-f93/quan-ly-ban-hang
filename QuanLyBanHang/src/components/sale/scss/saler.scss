@@ -1,0 +1,185 @@
+.saler {
+  background-color: white;
+  min-height: 500px;
+  .row-1 {
+    min-height: 500px;
+    border-right-style: solid;
+    border-right-color: #e5e5e5;
+    border-right-width: 5px;
+    position: relative;
+    .header-order {
+      margin: 20px;
+      display: flex;
+      .input-data {
+        border-style: solid;
+        border-color: #c4cdd5;
+        border-width: 1px;
+        border-radius: 4px;
+        display: flex;
+        padding: 4px;
+        &:hover {
+          border-style: solid;
+          border-color: #0088ff;
+        }
+        button {
+          background-color: transparent;
+          border: none;
+          background-color: white;
+          &:focus {
+            outline: none;
+            border: none;
+          }
+          i {
+            color: #95a7b7;
+          }
+        }
+        input {
+          border: none;
+          min-width: 400px;
+          &:focus {
+            border: none;
+            outline: none;
+          }
+        }
+      }
+    }
+    .order-table {
+      padding-left: 20px;
+    }
+  }
+  .row-2{
+    padding:0;
+    .payment {
+      padding-left: 0;
+      .customer {
+        // padding-top:20px;
+  
+        .search-customer {
+          margin-right: 20px;
+          padding-right: 20px;
+          border: none;
+          outline: none;
+          border-bottom-style: solid;
+          border-bottom-width: 0.5px;
+          display: flex;
+          justify-content: space-between;
+          padding-top: 20px;
+          outline: none;
+          .input-customer {    
+            display: flex;
+            padding: 4px;
+            &:hover {
+              border:none;
+              outline: none;
+              border-bottom-style: solid;
+              border-bottom-width: 0.5px;
+  
+            }
+            button {
+              background-color: transparent;
+              border: none;
+              background-color: white;
+              &:focus {
+                outline: none;
+                border: none;
+              }
+              i {
+                color: #95a7b7;
+              }
+            }
+            input {
+              border: none;
+              outline: none;
+              min-width: 100px;
+              &:focus {
+                border: none;
+                outline: none;
+              }
+            }
+          }
+        }
+        .infor-customer {
+          margin-left:5px;
+          margin-top:10px;
+          color: #3c4b64;
+          font-family: Arial, Helvetica, sans-serif;
+          
+        }
+      }
+      .payment-2{
+        margin-top:30px;
+    
+        margin-right: 15px;
+        background-color: white;
+        
+        .payment__label{
+          padding-top:10px;
+          border-style: solid;
+          border-width: 0.5px;
+          border-color: #f3f4f7;
+          color: #1c8eff;
+          font-weight: bold;
+          background-color: #ebedef;
+        }
+        .payment-content{
+          margin-left: 5px;
+          .h-1{
+            margin-bottom:20px;
+            display: flex;
+            justify-content: space-between;
+
+          }
+          .h-1-1{
+            
+            display: flex;
+            justify-content: flex-end;
+           
+            input{
+
+              padding:5px;
+              border-style: solid;
+              border-color: #c0b1b1;
+              border-width: 0.5px;
+              border-radius: 3px;
+              &:focus{
+                border-color: #c0b1b1;
+                border-width: 0.5px;
+                border-radius: 3px;
+                outline: none;
+              }
+           
+            }
+           
+
+          }
+          .h-1-2{
+            font-weight: bold;
+          }
+          .h-2-2{
+            margin-right: 30px;
+            margin-left: 30px;
+            display: flex;
+            padding:20px;
+            border-radius: 5px;
+            border-color: #086aca;
+            justify-content: center;
+            width: 80%;
+            border-style: solid;
+            background-color: #1c8eff;
+            button{
+              &:focus{
+                border:none;
+                outline: none;
+              }
+              color: white;
+              font-size: 17px;
+              font-weight: bold;
+              border:none;
+              background-color: transparent;
+            }
+          }
+        }
+      }
+    }
+  }
+}

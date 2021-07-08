@@ -13,6 +13,7 @@ private LocalDate optionDate;
 private Long price;
 private Integer orderNumber;
 private Integer billNumber;
+private Long totalPrice;
 List<DashBoardItem> dashBoardItems = new ArrayList();
 OptionTime optionTime;
 }

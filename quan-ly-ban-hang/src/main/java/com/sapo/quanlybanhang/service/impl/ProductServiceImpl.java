@@ -1,6 +1,7 @@
 package com.sapo.quanlybanhang.service.impl;
 
 import com.sapo.quanlybanhang.converter.Converter;
+import com.sapo.quanlybanhang.converter.ProductConverter;
 import com.sapo.quanlybanhang.dto.InputProductDto;
 import com.sapo.quanlybanhang.dto.ProductDto;
 import com.sapo.quanlybanhang.dto.UpdateDto;
@@ -17,6 +18,7 @@ import org.modelmapper.ModelMapper;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -36,7 +38,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List getAll() {
-        List<ProductEntity> productEntities = productRepository.findAllByStateIsNull();
+        List<ProductEntity> productEntities = productRepository.getAll();
         List<ProductDto> productDtos = new ArrayList<>();
         Converter converter = new Converter();
         for (ProductEntity item : productEntities) {
@@ -65,7 +67,6 @@ public class ProductServiceImpl implements ProductService {
         productEntity.setSupplier(supplierEntity);
         productRepository.save(productEntity);
         ProductDto productsDTO = converter.ConverterToDtoProduct(productEntity);
-
         return productsDTO;
     }
 
@@ -103,10 +104,29 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List findAll(String keyword) {
+    public List searchAll(String keyword,Pageable pageable) {
         if (keyword != null) {
-            List<ProductEntity> productEntities = productRepository.findAll(keyword);
+            List<ProductEntity> productEntities = productRepository.searchAll(keyword, pageable);
             List<ProductDto> productDtos = new ArrayList<>();
+            Converter converter = new Converter();
+            for (ProductEntity item : productEntities) {
+                productDtos.add(converter.ConverterToDtoProduct(item));
+            }
+            return productDtos;
+        }
+        return null;
+    }
+
+    @Override
+    public List filterAll(int keyword, Pageable pageable) {
+        return null;
+    }
+
+    @Override
+    public List searchAllName(String keyword) {
+        List<ProductEntity> productEntities = productRepository.searchAllName(keyword);
+        List<ProductDto> productDtos = new ArrayList<>();
+        if (keyword != null) {
             Converter converter = new Converter();
             for (ProductEntity item : productEntities) {
                 productDtos.add(converter.ConverterToDtoProduct(item));
@@ -174,7 +194,21 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<ProductDto> searchByCategory(int keyword) {
         if (keyword != 0) {
-            List<ProductEntity> productEntities = productRepository.findByCategory_Id(keyword);
+            List<ProductEntity> productEntities = productRepository.findByCategory_IdAndStateIsNull(keyword);
+            List<ProductDto> productDtos = new ArrayList<>();
+            Converter converter = new Converter();
+            for (ProductEntity item : productEntities) {
+                productDtos.add(converter.ConverterToDtoProduct(item));
+            }
+            return productDtos;
+        }
+        return null;
+    }
+
+    @Override
+    public List<ProductDto>  searchByCategories(int keyword, Pageable pageable) {
+        if (keyword != 0) {
+            List<ProductEntity> productEntities = productRepository.filterAll(keyword,pageable);
             List<ProductDto> productDtos = new ArrayList<>();
             Converter converter = new Converter();
             for (ProductEntity item : productEntities) {
@@ -188,7 +222,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List findPaginated(int pageNo, int pageSize) {
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
-        Page<ProductEntity> productEntities = productRepository.findAll(pageable);
+        List<ProductEntity> productEntities = productRepository.getAllPagination(pageable);
         List<ProductDto> productDtos = new ArrayList<>();
         Converter converter = new Converter();
         for (ProductEntity item : productEntities) {
@@ -199,13 +233,24 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductEntity deleteByID(int id) {
-        ProductEntity productEntity = productRepository.findByIdAndStateIsNotNull(id);
+        ProductEntity productEntity = productRepository.findByIdAndStateIsNull(id);
         if (productEntity != null) {
             productEntity.setState("Deleted");
             productRepository.save(productEntity);
         }
         return null;
     }
+
+    @Override
+    public ProductEntity RevertByID(int id) {
+        ProductEntity productEntity = productRepository.findByIdAndStateIsNotNull(id);
+        if (productEntity != null) {
+            productEntity.setState(null);
+            productRepository.save(productEntity);
+        }
+        return null;
+    }
+
 
     @Override
     public ProductDto updateProduct(int id, UpdateDto updateDto) {
@@ -218,20 +263,25 @@ public class ProductServiceImpl implements ProductService {
         product.setCode(updateDto.getCode());
         product.setName(updateDto.getName());
         product.setCategory(categoryEntity);
-
+        product.setNumberProduct(updateDto.getNumberProduct());
+        product.setPrice(updateDto.getPrice());
+        product.setDescription(updateDto.getDescription());
         product.setBrand(brandEntity);
-
         product.setColor(colorEntity);
-
         product.setSize(sizeEntity);
-
         product.setSupplier(supplierEntity);
-
         productRepository.save(product);
         Converter converter = new Converter();
         return converter.ConverterToDtoProduct(product);
 
 
+    }
+
+    @Override
+    public List<ProductDto> findAll(Pageable pageable) {
+        return productRepository.
+                findAll(pageable).getContent().stream()
+                .map(item ->ProductConverter.toDto(item)).collect(Collectors.toList());
     }
 }
 

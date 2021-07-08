@@ -54,7 +54,7 @@ public class StaffEntity {
     @Column(name ="modifed_by")
     private String modifiedBy;
 
-   @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+   @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
    @JoinTable(name = "staff_role",
               joinColumns = @JoinColumn(name = "staff_id"),
               inverseJoinColumns = @JoinColumn(name = "role_id"))

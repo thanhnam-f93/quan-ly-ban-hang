@@ -1,4 +1,7 @@
 package com.sapo.quanlybanhang.service;
 
-public interface ColorService {
+import java.util.List;
+
+public interface ColorService <t>{
+    List<t> getAll();
 }
