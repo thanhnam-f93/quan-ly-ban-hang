@@ -72,7 +72,7 @@ const Order = React.lazy(() => import('./components/Order/Order'));
 
 const routes = [
   /*================== Of Template React =================*/
-  { path: '/', exact: true, name: 'trang-chu' },
+  { path: '/', exact: true, name: 'Tổng quan' },
   // { path: '/dashboard', name: 'Dashboard', component: Dashboard },
   { path: '/theme', name: 'Theme', component: Colors, exact: true },
   { path: '/theme/colors', name: 'Colors', component: Colors },
@@ -135,13 +135,13 @@ const routes = [
   { path: '/saler', exact: true,  name: 'ban-hang', component: Saler },
 
   
-  { path: '/settings', exact: true,  name: 'Setting', component: Setting },
-  { path: '/settings/staffs', exact: true,  name: 'Staff', component: Staff },
-  { path: '/settings/staffs/new-staff', exact: true,  name: 'new-staff', component: AddStaff },
-  { path: '/settings/staffs/:id', exact: true,  name: 'StaffDetail', component: StaffDetail },
-  { path: '/settings/roles', exact: true,  name: 'Role', component: Role },
-  { path: '/settings/roles/new-role', exact: true,  name: 'new-role', component: AddRole },
-  { path: '/settings/roles/:id', exact: true,  name: 'RoleDetail', component: RoleDetail },
+  { path: '/settings', exact: true,  name: 'Cấu hình', component: Setting },
+  { path: '/settings/staffs', exact: true,  name: 'Nhân viên', component: Staff },
+  { path: '/settings/staffs/new-staff', exact: true,  name: 'Thêm mới', component: AddStaff },
+  { path: '/settings/staffs/:id', exact: true,  name: 'Chỉnh sửa', component: StaffDetail },
+  { path: '/settings/roles', exact: true,  name: 'Vai trò', component: Role },
+  { path: '/settings/roles/new-role', exact: true,  name: 'Thêm mới', component: AddRole },
+  { path: '/settings/roles/:id', exact: true,  name: 'Chỉnh sửa', component: RoleDetail },
 
 
   
