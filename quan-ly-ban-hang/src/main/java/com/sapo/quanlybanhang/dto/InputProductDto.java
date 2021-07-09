@@ -19,7 +19,7 @@ public class InputProductDto {
 
     private String name;
 
-    private int brand_id;
+    private String brandName;
 
     private int numberProduct;
 
@@ -29,19 +29,19 @@ public class InputProductDto {
 
     private float price;
 
-    private int supplier_id;
+    private String supplierName;
 
     private String description;
 
-    private int color_id;
+    private String color;
 
     private Date createdDate;
 
     private Date modified_date;
 
-    private int size_id;
+    private String size;
 
-    private int category_id;
+    private String categoryName;
 
     private String modified_by;
 

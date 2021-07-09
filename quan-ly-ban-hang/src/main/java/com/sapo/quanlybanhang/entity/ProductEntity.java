@@ -1,6 +1,8 @@
 package com.sapo.quanlybanhang.entity;
 
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -19,7 +21,6 @@ public class ProductEntity {
 
     @Column(name = "code")
     private String code;
-
     @Column(name = "name")
     private String name;
 
@@ -32,17 +33,24 @@ public class ProductEntity {
     @Column(name = "image")
     private String image;
 
+    @Column(name = "color")
+    private String color;
+
+    @Column(name = "size")
+    private String size;
+
     @Column(name = "price")
     private float price;
 
     @Column(name = "decription")
     private String description;
-
-
     @Column(name ="created_date")
+    @CreationTimestamp
     private Date createdDate;
 
+
     @Column(name ="modified_date")
+    @UpdateTimestamp
     private Date modifiedDate;
 
     @Column(name ="modified_by")
@@ -60,14 +68,6 @@ public class ProductEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "brand_id")
     private BrandEntity brand;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "color_id")
-    private ColorEntity color;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "size_id")
-    private SizeEntity size;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "supplier_id")

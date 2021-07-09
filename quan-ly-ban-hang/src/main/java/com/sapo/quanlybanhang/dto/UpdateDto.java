@@ -3,6 +3,7 @@ package com.sapo.quanlybanhang.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.util.Date;
 
@@ -16,7 +17,7 @@ public class UpdateDto {
 
     private String name;
 
-    private int brand_id;
+    private String brandName;
 
     private int numberProduct;
 
@@ -26,19 +27,19 @@ public class UpdateDto {
 
     private float price;
 
-    private int supplier_id;
+    private String supplierName;
 
     private String description;
 
-    private int color_id;
+    private String color;
 
     private Date created_date;
 
-    private Date modified_date;
+    private Date modifiedDate;
 
-    private int size_id;
+    private String size;
 
-    private int category_id;
+    private String categoryName;
 
     private String modified_by;
 

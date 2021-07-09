@@ -8,8 +8,11 @@ import {
   CLabel,
   CSelect,
   CRow,
+  CTextarea
  
 } from "@coreui/react";
+import swal from 'sweetalert';
+import Swal from 'sweetalert2'
 import { DocsLink } from 'src/reusable'
 import { useEffect, useState } from "react";
 import {
@@ -44,26 +47,22 @@ function Update(props) {
   const [price, setPrice] = useState("");
   const [supplierId, setSupplierId] = useState("");
   const [description, setDescription] = useState("");
-  const [colorId, setColorId] = useState("");
-  const [sizeId, setSizeId] = useState("");
-  const [categoryId, setCategoryId] = useState("");
+  const [color, setColor] = useState("");
+  const [size, setSize] = useState("");
+  const [categoryName, setCategoryName] = useState("");
   const [createBy, setCreateBy] = useState("");
   const [createdDate, setCreatedDate] = useState("");
   const [category, setCategory] = useState([]);
   const [supplier, setSupplier] = useState([]);
-  const [color, setColor] = useState([]);
-  const [size, setSize] = useState([]);
   const [brand, setBrand] = useState([]);
   const [filterCategory, setFilterOptionCategory] = useState([]);
   const [filterSupplier, setFilterOptionSupplier] = useState([]);
   const [filterOptionColor, setFilterOptionColor] = useState([]);
   const [filterOptionBrand, setFilterOptionBrand] = useState([]);
   const [filterOptionSize, setFilterOptionSize] = useState([]);
-  const [category_id, setCategory_Id] = useState("");
-  const [supplier_id, setSupplier_Id] = useState("");
-  const [brand_id, setBrand_Id] = useState("");
-  const [color_id, setColor_Id] = useState("");
-  const [size_id, setSize_Id] = useState("");
+  const [categoryId, setCategoryId] = useState("");
+  const [supplierName, setSupplierName] = useState("");
+  const [brandName, setBrandName] = useState("");
   const [product, setProduct] = useState([]);
 
   useEffect(() => {
@@ -80,18 +79,7 @@ function Update(props) {
     });
   }, []);
 
-  useEffect(() => {
-    getColor().then((res) => {
-      setColor(res.data);
-      console.log(res.data);
-    });
-  }, []);
-  useEffect(() => {
-    getSize().then((res) => {
-      setSize(res.data);
-      console.log(res.data);
-    });
-  }, []);
+
   useEffect(() => {
     getBrand().then((res) => {
       setBrand(res.data);
@@ -109,12 +97,30 @@ function Update(props) {
       console.log(item);
     });
   }, []);
+  
   const deleteCategory = (id) => {
-    DeleteCategory(id).then(() => {
-      setProduct(product.filter((item) => item.id !== id))
-      props.history.push("/category");
+    swal({
+      title: "bạn có muốn xóa sản phẩm?",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
+    .then((willDelete) => {
+      if (willDelete) {
+        DeleteCategory(id).then(() => {
+          setProduct(product.filter((item) => item.id !== id))
+          props.history.push("/category");
+        });
+       
+        swal("xóa thành công!", {
+          icon: "success",
+        });
+      } else {
+        swal("sản phẩm chưa được xóa!");
+      }
     });
-   
+
+
   };
 
   useEffect(() => {
@@ -135,23 +141,8 @@ function Update(props) {
     });
   }, [supplier]);
 
-  useEffect(() => {
-    color.map((item) => {
-      setFilterOptionColor((filterOptions) => [
-        ...filterOptions,
-        { value: item.id, label: item.name },
-      ]);
-    });
-  }, [color]);
 
-  useEffect(() => {
-    size.map((item) => {
-      setFilterOptionSize((filterOptions) => [
-        ...filterOptions,
-        { value: item.id, label: item.size },
-      ]);
-    });
-  }, [size]);
+
 
   useEffect(() => {
     brand.map((item) => {
@@ -166,15 +157,15 @@ function Update(props) {
     getCategoryByID(id).then((res) => {
       setCode(res.data.code);
       setName(res.data.name);
-      setBrandID(res.data.brandID);
+      setBrandName(res.data.brandID);
       setNumber(res.data.numberProduct);
       setImage(res.data.image);
-      setSupplierId(res.data.supplierId);
+      setSupplierName(res.data.supplierId);
       setDescription(res.data.description);
-      setColorId(res.data.colorId);
-      setSizeId(res.data.sizeId);
+      setColor(res.data.color);
+      setSize(res.data.size);
       setPrice(res.data.price);
-      setCategoryId(res.data.categoryId);
+      setCategoryName(res.data.categoryId);
       setCreatedDate(res.data.createdDate);
     });
   }, []);
@@ -183,21 +174,38 @@ function Update(props) {
     let category = {
       code: code,
       name: name,
-      brand_id: brand_id,
+      brandName: brandName,
       numberProduct: numberProduct,
       image: image,
-      category_id: category_id,
+      categoryName: categoryName,
       description: description,
-      color_id: color_id,
-      size_id: size_id,
+      color: color,
+      size: size,
       price: price,
-      supplier_id: supplier_id,
+      supplierName: supplierName,
       createdDate: createdDate,
     };
-    UpdateCategory(category, id).then((res) => {
-      props.history.push("/category");
-    });
-    console.log(category);
+
+    Swal.fire({
+      title: 'bạn có muốn thay đổi sản phẩm?',
+      showDenyButton: true,
+      showCancelButton: true,
+      confirmButtonText: `lưu`,
+      denyButtonText: `hủy bỏ thao tác`,
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        UpdateCategory(category, id).then((res) => {
+          // props.history.push("/category");
+          console.log(category);
+        });
+        Swal.fire('đã lưu!', '', 'success')
+      } else if (result.isDenied) {
+        Swal.fire('Sản phẩm vẫn chưa được thay đổi', '', 'info')
+      }
+    })
+    
+    
   };
 
   const changeCode = (event) => {
@@ -207,7 +215,7 @@ function Update(props) {
     setName(event.target.value);
   };
   const changeBrand = (event) => {
-    setBrand_Id(event.value);
+    setBrandName(event.label);
   };
   const changeNumber = (event) => {
     setNumber(event.target.value);
@@ -216,22 +224,22 @@ function Update(props) {
     setImage(event.target.value);
   };
   const changeSupplier = (event) => {
-    setSupplier_Id(event.value);
+    setSupplierName(event.label);
   };
   const changeDescription = (event) => {
     setDescription(event.target.value);
   };
   const changeColor = (event) => {
-    setColor_Id(event.value);
+    setColor(event.target.value);
   };
   const changeSize = (event) => {
-    setSize_Id(event.value);
+    setSize(event.target.value);
   };
   const changePrice = (event) => {
     setPrice(event.target.value);
   };
   const changeCate = (event) => {
-    setCategory_Id(event.value);
+    setCategoryName(event.label);
     console.log(event);
   };
   const changeCreateBy = (event) => {
@@ -346,11 +354,12 @@ function Update(props) {
                 </CFormGroup>
                 <CFormGroup>
                   <CLabel htmlFor="vat">Mô tả</CLabel>
-                  <CInput
-                    name="description"
-                    placeholder="DE1234567890"
+                  <CTextarea
+                    name="textarea-input"
+                    id="textarea-input"
+                    rows="3"
+                    placeholder="mô tả"
                     onChange={changeDescription}
-                    value={description}
                   />
                 </CFormGroup>
                 <CFormGroup>
@@ -372,14 +381,26 @@ function Update(props) {
             <CFormGroup row className="my-0">
               <CCol xs="6">
                 <CFormGroup>
-                  <CLabel htmlFor="city">Color: {colorId}</CLabel>
-                  <Select options={filterOptionColor} onChange={changeColor} />
+                  <CLabel htmlFor="city">Màu sắc</CLabel>
+                  <CInput
+                    name="color"
+                    placeholder="nhập màu sắc"
+                    onChange={changeColor}
+                    value={color}
+                   
+                  />
                 </CFormGroup>
               </CCol>
               <CCol xs="6">
                 <CFormGroup>
-                  <CLabel htmlFor="postal-code">Size: {sizeId}</CLabel>
-                  <Select options={filterOptionSize} onChange={changeSize} />
+                  <CLabel htmlFor="postal-code">Kích cỡ</CLabel>
+                  <CInput
+                    name="size"
+                    placeholder="nhập kích cỡ"
+                    onChange={changeSize}
+                    value={size}
+                   
+                  />
                 </CFormGroup>
               </CCol>
             </CFormGroup>
@@ -404,44 +425,40 @@ function Update(props) {
           onClick={() => deleteCategory(id)}
           className="btn btn-danger"
         >
-          Delete
+          Xóa
         </button>
       </CCol>
          <CCol xs="12" sm="5">   
             <CCard>
               <CCardHeader>Phân loại</CCardHeader>
                     <CCol xs="12"> <CFormGroup>
-                  <CLabel htmlFor="company">Nhãn hiệu: {brandID}</CLabel>
-                  <Select options={filterOptionBrand} onChange={changeBrand} />
+                  <CLabel htmlFor="company">Nhãn hiệu</CLabel>
+                  <Select placeholder={brandName} options={filterOptionBrand} onChange={changeBrand} />
                 </CFormGroup>
                 <CFormGroup>
-                  <CLabel htmlFor="vat">Loại: {categoryId}</CLabel>
+                  <CLabel htmlFor="vat">Loại</CLabel>
                   <Select
+                  placeholder={categoryName}
                     options={filterCategory}
-                    defaultValue={categoryId}
                     onChange={changeCate}
                   />
                 </CFormGroup>
-                <CFormGroup>
-                  <CLabel htmlFor="vat">Ngày tạo</CLabel>
-                  {/* <CInput
-                    name="createBy"
-                    placeholder="DE1234567890"
-                    onChange={changeCreateBy}
-                    value={createdDate}
-                  /> */}
-                    <CInput type="date" id="dob" name="dob"  placeholder="date"  value={createdDate} onChange={changeCreateBy} />
-                
-                </CFormGroup>
                     
                 <CFormGroup>
-                  <CLabel htmlFor="vat">Nhà phân phối: {supplierId}</CLabel>
-                  <Select options={filterSupplier} onChange={changeSupplier} />
+                  <CLabel htmlFor="vat">Nhà phân phối</CLabel>
+                  <Select placeholder={supplierName} 
+                  options={filterSupplier} onChange={changeSupplier} />
                 </CFormGroup>
                 </CCol>
             </CCard>
             <CCard className=" p-4">
-               <img width="100%" height="400px" src={image}/>            
+               <img width="100%" height="400px" src={image}/>    
+               <CInput
+                    name="price"
+                    placeholder="thay đổi link ảnh"
+                    onChange={changeImage}
+                   
+                  />        
             </CCard>
         </CCol>
         </CRow>

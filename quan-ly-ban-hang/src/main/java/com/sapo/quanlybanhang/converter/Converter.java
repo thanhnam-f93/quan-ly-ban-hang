@@ -21,10 +21,10 @@ public class Converter {
         dto.setModifiedDate(item.getModifiedDate());
         dto.setCreateBy(item.getCreatedBy());
         dto.setModifiedBy(item.getModifiedBy());
-        dto.setSizeId(item.getSize().getSize());
+        dto.setSize(item.getSize());
         dto.setCategoryId(item.getCategory().getName());
         dto.setSupplierId(item.getSupplier().getName());
-        dto.setColorId(item.getColor().getName());
+        dto.setColor(item.getColor());
         dto.setBrandID(item.getBrand().getName());
         return dto;
 
@@ -67,14 +67,7 @@ public class Converter {
         return dto;
 
     }
-    public SizeDto ConverterToDtoSize(SizeEntity item) {
-        SizeDto dto = new SizeDto();
 
-    dto.setId(item.getId());
-    dto.setSize(item.getSize());
-        return dto;
-
-    }
     public BrandDto ConverterToDtoBrand(BrandEntity item) {
         BrandDto dto = new BrandDto();
           dto.setId(item.getId());
@@ -82,14 +75,6 @@ public class Converter {
         return dto;
 
     }
-    public ColorDto ConverterToDtoColor(ColorEntity item) {
-        ColorDto dto = new ColorDto();
 
-           dto.setId(item.getId());
-           dto.setCode(item.getCode());
-           dto.setName(item.getName());
-        return dto;
-
-    }
 
 }

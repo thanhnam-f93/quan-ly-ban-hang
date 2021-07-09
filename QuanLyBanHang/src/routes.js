@@ -89,16 +89,11 @@ const ListProduct = React.lazy(() => import('./components/ListProduct/ListProduc
 const Update = React.lazy(() => import('./components/ListProduct/Update'));
 const Create = React.lazy(() => import('./components/ListProduct/Create'));
 
-const Setting = React.lazy(() => import('./components/Setting/Setting'));
-const Staff = React.lazy(() => import('./components/Staff/Staff'));
-const StaffDetail = React.lazy(() => import('./components/Staff/StaffDetail/StaffDetail'));
-const AddStaff = React.lazy(() => import('./components/Staff/AddStaff/AddStaff'));
-const Role = React.lazy(() => import('./components/Role/Role'));
-const RoleDetail = React.lazy(() => import('./components/Role/RoleDetail/RoleDetail'));
-const AddRole = React.lazy(() => import('./components/Role/AddRole/AddRole'));
 /*================== The End code of Team - Quản lý bán hàng =================*/
 
 const ListSupplier = React.lazy(() => import('./components/ListSupplier/ListSupplier'));
+const UpdateSupplier = React.lazy(() => import('./components/ListSupplier/UpdateSupplier'));
+const CreateSupplier = React.lazy(() => import('./components/ListSupplier/CreateSupplier'));
 
 
 const Order = React.lazy(() => import('./components/Order/Order'));
@@ -256,6 +251,10 @@ const routes = [
   { path: '/settings/roles', exact: true,  name: 'Vai trò', component: Role },
   { path: '/settings/roles/new-role', exact: true,  name: 'Thêm mới', component: AddRole },
   { path: '/settings/roles/:id', exact: true,  name: 'Chỉnh sửa', component: RoleDetail },
+  { path: '/update-supplier/:id', exact: true,  name: 'update', component: UpdateSupplier },
+  { path: '/add-supplier', exact: true,  name: 'add', component: CreateSupplier }
+ 
+
 
 
 

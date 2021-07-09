@@ -1,6 +1,7 @@
 package com.sapo.quanlybanhang.entity;
 
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -30,6 +31,7 @@ public class SupplierEntity {
     @Column(name = "state")
     private String state;
     @Column(name ="created_date")
+    @CreationTimestamp
     private Date createdDate;
     @Column(name ="modified_date")
     private Date modifiedDate;

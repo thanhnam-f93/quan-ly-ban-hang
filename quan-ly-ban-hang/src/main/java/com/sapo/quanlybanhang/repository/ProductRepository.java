@@ -11,15 +11,16 @@ import java.util.List;
 
 @Repository
 public interface ProductRepository extends JpaRepository<ProductEntity, Integer> {
-    @Query(value = "select * from products as p where p.state is null and p.name LIKE %?1% ", nativeQuery = true)
-    List<ProductEntity> searchAll(String keyword, Pageable pageable);
+    @Query(value = "select * from products as p where p.state is null and (p.code LIKE %?1% or p.name like %?1%)", nativeQuery = true)
+    List<ProductEntity> searchByNameAndCode(String keyword, Pageable pageable);
 //    @Query(value = "SELECT * FROM products as p where p.category_id = ?1; ", nativeQuery = true)
 //    List<ProductEntity> findAllByCategory(String keyword);
-@Query(value = "select * from products as p where p.state is null and p.name LIKE %?1% ", nativeQuery = true)
-List<ProductEntity> searchName(String keyword);
+@Query(value = "select * from products as p where p.state is null and (p.code LIKE %?1% or p.name like %?1%)", nativeQuery = true)
+List<ProductEntity> searchByKey(String keyword);
     @Query(value = "select * from products as p where p.state is null order by p.id desc ", nativeQuery = true)
     List<ProductEntity> getAll();
-
+   ProductEntity findFirstByOrderByIdDesc();
+   Boolean existsByCode(String code);
     @Query(value = "select * from products as p where p.state is null order by p.id desc ", nativeQuery = true)
     List<ProductEntity> getAllPagination(Pageable pageable);
 
@@ -48,7 +49,6 @@ List<ProductEntity> searchName(String keyword);
     @Query(value = "SELECT * FROM products as p order by p.price desc ", nativeQuery = true)
     List<ProductEntity> sortByPrice();
 
-
     @Query(value = "SELECT * FROM products as p order by p.name desc ", nativeQuery = true)
     List<ProductEntity> sortByName();
 
@@ -59,5 +59,10 @@ List<ProductEntity> searchName(String keyword);
     List<ProductEntity> searchAllName(String keyword);
 
 
+    @Query(value = "select * from products as p where p.state is null and  p.category_id =?1", nativeQuery = true)
+    List<ProductEntity> searchByCategory(String keyword);
+
+    @Query(value = "select * from products as p where p.state is null and  p.category_id =?1", nativeQuery = true)
+    List<ProductEntity> searchByCategoryPagination(String keyword,Pageable pageable);
 
 }

@@ -1,6 +1,6 @@
 package com.sapo.quanlybanhang.controller;
 
-import com.sapo.quanlybanhang.dto.ColorDto;
+import com.sapo.quanlybanhang.dto.BrandDto;
 import com.sapo.quanlybanhang.service.BrandService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -18,7 +18,7 @@ public class BrandController {
     private BrandService brandService;
 
     @GetMapping(value = "/brands")
-    public List<ColorDto> getAll(){
+    public List<BrandDto> getAll(){
         return brandService.getAll();
     }
 }
