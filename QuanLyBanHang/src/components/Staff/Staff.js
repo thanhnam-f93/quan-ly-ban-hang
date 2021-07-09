@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { ApiStaff } from '../../apis/Apis';
 import StaffItem from './StaffItem/StaffItem';
+import Search from './Search/Search';
 import { Link } from 'react-router-dom';
 import {
   CPagination,
@@ -19,44 +20,80 @@ import {
 
 const Staff = () => {
 
+
+  const [clickSearch, setClickSearch] = useState(0);
+
+  const [keySearch, setKeySearch] = useState("");
+
+  const getKeySearch = (e) => {
+      const value = e.target.value;
+      setKeySearch(value);
+      console.log("keySearch ", keySearch);
+  }
+
+//   const searchStaffByName = () => {
+//     axios(apiSeachStaff)
+//       .then(response => {
+//           setStaffSearch(response.data.content);
+//           console.log('data search ', response.data)
+//       })
+//       .catch(error => console.log('error'))
+// }
+
+const searchStaffByName = () => {
+    setClickSearch(clickSearch + 1);
+  }
+
+
   const [staffs, setStaffs] = useState([]);
-  const [currentPage, setCurrentPage] = useState(7)
-  const [totalPages, setTotalPages] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1)
+  const [totalPages, setTotalPages] = useState(0);
+
+
+  var URL = ""
+  if(clickSearch > 0) {
+    URL = `http://localhost:8080/admin/staffs/search?name=${keySearch}`
+  }else {
+    URL = `http://localhost:8080/admin/staffs/?page=${currentPage - 1}`
+  }
+
+  const ApiStaff = {
+    method: 'get',
+    url: URL,
+    headers: {
+      'Authorization': `Bearer ${localStorage.getItem("token")}`,
+      'Content-Type': 'application/json'
+    }
+  };
 
   useEffect(() => {
     axios(ApiStaff)
-      .then(response => { setStaffs(response.data.content);
-         setTotalPages(response.data.totalPages); 
-        //  setCurrentPage(response.data.pageable.pageSize)
-        console.log('data bình ', response); console.log("totalPages ", totalPages) })
+      .then(response => {
+        setStaffs(response.data.content);
+        setTotalPages(response.data.totalPages);
+      })
       .catch(error => console.log('error'))
-  }, []);
-  console.log("totalPages lần 2 ", totalPages)
+  }, [currentPage, clickSearch]);
+
   return (
     <div>
-
       <div style={{ display: "flex" }}>
         <div >
           <h3>Quản lý nhân viên</h3>
         </div>
+    
+    {/* Search */}
+        <div style={{ marginLeft: "500px", marginRight: "10px" }}>
+                <input onChange={getKeySearch} 
+                    type="text" placeholder="Search" style={{ height: "34px", width: "289px", padding: "10px 15px 10px 15px", border: "none" }} />
+                <button onClick={searchStaffByName}
+                    style={{ padding: "1px 10px 0px 10px", height: "34px", border: "none", backgroundColor: "white" }}>
+                    <i class="fas fa-search" style={{ color: "green", fontSize: "19px" }}></i>
+                </button>
+            </div>
+    
+    {/*End -  Search */}
 
-        
-          {/* <CNavbar light color="light"> */}
-            {/* <CForm inline>
-              <CInput
-                className="mr-sm-2"
-                placeholder="Search"
-                size="md"
-              />
-              <CButton color="outline-success" className="my-2 my-sm-0" type="submit">Search</CButton>
-            </CForm> */}
-          {/* </CNavbar> */}
-     
-          <div style = {{marginLeft: "505px", marginRight: "20px"}}>
-          <input type="text" placeholder ="Search" style = {{height: "34px", width:"289px", padding: "10px 15px 10px 15px", border: "none"}} />
-          <button style = {{padding: "1px 10px 0px 10px", height: "34px", border: "none", backgroundColor: "white"}}><i class="fas fa-search" style = {{ color: "green", fontSize: "19px"}}></i></button>
-        </div>
-     
         <div style={{ margin: "0px" }} >
           <Link to='/settings/staffs/new-staff'>
             <button
@@ -75,10 +112,6 @@ const Staff = () => {
         </div>
       </div>
       <hr />
-
-
-  
-          
       <table className=" table table-striped table-bordered" style={{ backgroundColor: "white" }}>
         <thead>
           <tr>
@@ -98,17 +131,14 @@ const Staff = () => {
           })}
 
         </tbody>
-
       </table>
 
-
       <CPagination
-            activePage={currentPage}
-            pages={totalPages}
-            onActivePageChange={setCurrentPage}
-          />
-          <br></br>
-
+        activePage={currentPage}
+        pages={totalPages}
+        onActivePageChange={setCurrentPage}
+      />
+      <br></br>
     </div>
   )
 }

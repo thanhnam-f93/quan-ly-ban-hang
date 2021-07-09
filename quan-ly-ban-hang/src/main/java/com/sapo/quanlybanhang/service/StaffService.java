@@ -21,5 +21,9 @@ public interface StaffService {
     //Cập nhật một Staff
     public StaffDto updateStaff(int id , StaffDto staffDto);
 
+    //Phân trang danh sách staff
     public Page<StaffDto> getAllStaff(Pageable pageable);
+
+    //Tìm kiếm staff theo tên
+    public Page<StaffDto> getAllStaffByName(String name,Pageable pageable);
 }

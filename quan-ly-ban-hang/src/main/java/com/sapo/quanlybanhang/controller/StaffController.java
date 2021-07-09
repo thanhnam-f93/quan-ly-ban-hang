@@ -75,6 +75,20 @@ public class StaffController {
         return new ResponseEntity(dto, HttpStatus.OK);
     }
 
+    //Tìm kiếm staff theo tên
+    @GetMapping("/staffs/search")
+    public ResponseEntity getAllStaffsByName(
+            @RequestParam(name = "name",required = true) String name,
+            @RequestParam(name = "page", defaultValue = "0") Integer page,
+            @RequestParam(name = "limit", defaultValue = "5") Integer limit,
+            @RequestParam(name = "sortBy", defaultValue = "id") String sortBy
+    ){
+        PageRequest pageResult = PageRequest.of(page,limit,Sort.by("id").descending());
+     Page<StaffDto> list = staffService.getAllStaffByName(name,pageResult);
+     ResponseEntity responseEntity = new ResponseEntity<>(list , HttpStatus.OK);
+        return responseEntity;
+    }
+
     //Thông báo lỗi trả về cho validate
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
