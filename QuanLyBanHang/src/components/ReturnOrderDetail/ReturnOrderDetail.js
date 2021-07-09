@@ -4,9 +4,9 @@ import { reactLocalStorage } from 'reactjs-localstorage';
 import { callApi, callApiNotJwt } from 'src/apis/ApiCaller';
 import { JwtContext } from 'src/context/JwtContext';
 import CustomerInfor from '../OrderDetail/CustomerInfor';
-import BillInfor from './BillInfor';
+import ReturnOrderDetailInfor from './ReturnOrderDetailInfor';
 
-const BillDetail = () => {
+const ReturnOrderDetail = () => {
   const {jwt}=useContext(JwtContext);
   const [orderDto, setOrderDto] = useState([]);
   const customerInfor = reactLocalStorage.getObject("infor");
@@ -35,7 +35,7 @@ const BillDetail = () => {
       <div className="order-detail">
         <div className="row">
           <div className = "col-lg-8 order-infor">
-              <BillInfor order = {orderDto} />
+              <ReturnOrderDetailInfor order = {orderDto} />
               <div className = "total-bill"> 
               
               </div>
@@ -50,4 +50,4 @@ const BillDetail = () => {
   );
 }
 
-export default BillDetail;
+export default ReturnOrderDetail;

@@ -1,6 +1,6 @@
 import React from 'react';
-import Bill from './components/Bill/Bill';
-import BillDetail from './components/BillDetail/BillDetail';
+import Bill from './components/OrderReturn/ReturnOrder';
+import BillDetail from './components/ReturnOrderDetail/ReturnOrderDetail';
 import Logins from './components/Login/Logins';
 import DropDown from './components/Order/DropDown';
 import OrderDetail from './components/OrderDetail/OrderDetail';
@@ -11,6 +11,7 @@ import Saler from './components/sale/Saler';
 import Setting from './components/Setting/Setting';
 import AddStaff from './components/Staff/AddStaff/AddStaff';
 import StaffDetail from './components/Staff/StaffDetail/StaffDetail';
+import ReturnOrder from './components/OrderReturn/ReturnOrder';
 
 /*================== Of Template React =================*/
 const Toaster = React.lazy(() =>
@@ -238,7 +239,7 @@ const routes = [
   { path: '/dropdown', exact: true,  name: 'danh-sach-don-hang', component: DropDown },
   { path: '/order-detail', exact: true,  name: '', component: Order },
   { path: '/order-detail/:id/:type', exact: true,  name: 'chi-tiet-don-hang', component: OrderDetail },
-  { path: '/order/return', exact: true,  name: 'don-hang-tra-ve ', component: Bill },
+  { path: '/order/return', exact: true,  name: 'don-hang-tra-ve ', component: ReturnOrder },
   { path: '/order/return/:id', exact: true,  name: '', component: BillDetail },
 
   { path: '/product', exact: true,  name: 'Product', component: ListProduct },
@@ -258,16 +259,8 @@ const routes = [
   { path: '/settings/roles/new-role', exact: true,  name: 'Thêm mới', component: AddRole },
   { path: '/settings/roles/:id', exact: true,  name: 'Chỉnh sửa', component: RoleDetail },
   { path: '/update-supplier/:id', exact: true,  name: 'update', component: UpdateSupplier },
-  { path: '/add-supplier', exact: true,  name: 'add', component: CreateSupplier },
+  { path: '/add-supplier', exact: true,  name: 'add', component: CreateSupplier }
  
-
-
-
-
-
-
-  { path: '/logins', exact: true,  name: '', component: Logins },
-  { path: '/saler', exact: true,  name: 'ban-hang', component: Saler }
 
 /*================== The End code of Team - Quản lý bán hàng =================*/
 ];

@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { ProductContext } from 'src/context/JwtContext';
-import "./scss/Emptycontent.css"
+import "./scss/Emptycontent.scss"
 
 const EmptyContent = () => {
     const{getFocusInput} = useContext(ProductContext);

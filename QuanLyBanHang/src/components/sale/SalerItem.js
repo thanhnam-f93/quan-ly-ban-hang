@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { ProductContext } from "src/context/JwtContext";
-import "./scss/SaleItem.css";
+import "./scss/SaleItem.scss";
 const SalerItem = (props) => {
   const { deleteItemOfList, getCount } = useContext(ProductContext);
   const [total,setTotal]= useState(0);

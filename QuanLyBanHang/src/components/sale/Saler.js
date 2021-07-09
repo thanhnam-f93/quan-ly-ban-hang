@@ -4,11 +4,10 @@ import { JwtContext, ProductContext } from "src/context/JwtContext";
 import { FormatMoney } from "src/helpers/FormatMoney";
 import swal from "sweetalert";
 import ModalHeaders from "../Order/ModalHeaders";
-import DiscountOrder from "./DiscountOrder";
 import EmptyContent from "./EmptyContent";
 import ProductList from "./ProductList";
 import SalerItem from "./SalerItem";
-import "./scss/saler.css";
+import "./scss/saler.scss";
 
 const Saler = () => {
   const [orderDto, setOrderDto] = useState({});
@@ -335,7 +334,6 @@ const Saler = () => {
                   </div>
           </div>
         </div>
-        <DiscountOrder isShow = {{isDiscount, setIsDiscount}} />
       </ProductContext.Provider>
     </div>
   );
