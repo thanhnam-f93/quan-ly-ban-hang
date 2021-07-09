@@ -48,11 +48,11 @@ function CustomerList() {
 
         const currentPage = result.pageable.pageNumber;
         setPage(currentPage);
-        console.log("currentPage", currentPage);
+        //   console.log("currentPage", currentPage);
 
         const cus = result.content;
         setCustomers(cus);
-        console.log("cus", customers);
+        //    console.log("cus", customers);
 
         setIsLoading(false);
       })
@@ -168,5 +168,4 @@ function CustomerList() {
     </div>
   );
 }
-
 export default CustomerList;

@@ -16,6 +16,7 @@ import {
 function CustomerDetail() {
   const location = useLocation();
   var customer = location.state.customer;
+  console.log("customer_init:         ", customer);
   const headers = {
     Authorization: "Bearer " + reactLocalStorage.get("token"),
   };
@@ -23,32 +24,28 @@ function CustomerDetail() {
     { value: "Nam", label: "Nam" },
     { value: "Nu", label: "Nu" },
   ];
-
-  var customerUpdate = {
-    createdDate: customer.createdDate,
-    modifiedDate: new Date().toISOString(),
-    createBy: customer.createBy,
-    modifiedBy: reactLocalStorage.get("name"),
-    status: customer.status,
-  };
   function handleChange(e) {
     const name = e.target.name;
     const value = e.target.value;
-    customerUpdate = { ...customerUpdate, [name]: value };
-    console.log("customerUpdate", customerUpdate);
+    customer = { ...customer, [name]: value };
+    console.log("customerUpdate", customer);
   }
   function handleChangeGender(e) {
-    alert("dddd");
     const value = e.value;
-    customerUpdate = { ...customerUpdate, gender: value };
-    console.log("customerUpdate", customerUpdate);
+    customer = { ...customer, gender: value };
+    console.log("customerUpdate", customer);
   }
   function updateCustomer() {
+    customer = {
+      ...customer,
+      modifiedDate: new Date().toISOString(),
+      modifiedBy: reactLocalStorage.get("name"),
+    };
     const API = `http://localhost:8080/customers/${customer.id}`;
-    console.log("this", customer);
-    console.log("objectApI: ", API);
+    console.log("Object Update:   ", customer);
+    console.log("Url_ApI: ", API);
     axios
-      .put(API, customerUpdate, { headers })
+      .put(API, customer, { headers })
       .then((resp) => {
         if (resp.status === 200) {
           Swal.fire("Good job!", "Cập nhập thông tin thành công!", "success");
@@ -104,7 +101,7 @@ function CustomerDetail() {
                     label: "Select Gender",
                     value: "",
                   }}
-                  onClick={handleChangeGender}
+                  onChange={handleChangeGender}
                 />
               </CFormGroup>
               <CFormGroup>
