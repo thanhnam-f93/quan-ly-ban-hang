@@ -54,14 +54,14 @@ const TheHeader = () => {
       </CHeaderBrand>
 
       <CHeaderNav className="d-md-down-none mr-auto">
-        {/* <CHeaderNavItem className="px-3" >
-          <CHeaderNavLink to="/dashboard">Dashboard</CHeaderNavLink>
-        </CHeaderNavItem> */}
+        <CHeaderNavItem className="px-3" >
+          <CHeaderNavLink to="/dashboard">Tổng quan</CHeaderNavLink>
+        </CHeaderNavItem>
         <CHeaderNavItem  className="px-3">
-          <CHeaderNavLink to="/users">Users</CHeaderNavLink>
+          <CHeaderNavLink to="/order">Bán hàng</CHeaderNavLink>
         </CHeaderNavItem>
         <CHeaderNavItem className="px-3">
-          <CHeaderNavLink>Settings</CHeaderNavLink>
+          <CHeaderNavLink to="/settings">Cấu hình</CHeaderNavLink>
         </CHeaderNavItem>
       </CHeaderNav>
 
@@ -72,7 +72,7 @@ const TheHeader = () => {
         <TheHeaderDropdown/>
       </CHeaderNav>
 
-      {/* <CSubheader className="px-3 justify-content-between">
+      <CSubheader className="px-3 justify-content-between">
         <CBreadcrumbRouter 
           className="border-0 c-subheader-nav m-0 px-0 px-md-3" 
           routes={routes} 
@@ -86,13 +86,13 @@ const TheHeader = () => {
               aria-current="page" 
               to="/dashboard"
             >
-              <CIcon name="cil-graph" alt="Dashboard" />&nbsp;Dashboard
+              <CIcon name="cil-graph" alt="Dashboard" />&nbsp;Tổng quan
             </CLink>
-            <CLink className="c-subheader-nav-link" href="#">
-              <CIcon name="cil-settings" alt="Settings" />&nbsp;Settings
+            <CLink className="c-subheader-nav-link" href="/settings">
+              <CIcon name="cil-settings" alt="Settings" />&nbsp;Cấu hình
             </CLink>
           </div>
-      </CSubheader> */}
+      </CSubheader>
     </CHeader>
   )
 }

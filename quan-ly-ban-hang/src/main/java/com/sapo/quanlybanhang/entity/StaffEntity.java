@@ -51,14 +51,14 @@ public class StaffEntity {
     @Column(name ="created_by")
     private String createBy;
 
-    @Column(name ="modifed_by")
+    @Column(name ="modified_by")
     private String modifiedBy;
 
    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
    @JoinTable(name = "staff_role",
               joinColumns = @JoinColumn(name = "staff_id"),
               inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Collection<RoleEntity> roles;
+    private List<RoleEntity> roles;
 
  @OneToMany(mappedBy = "staffBill")
  private List<BillEntity> billEntities = new ArrayList();

@@ -12,16 +12,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
 public class StaffServiceImpl implements StaffService {
 
-//    @Autowired
-//    private StaffRepository staffRepository;
+
     @Autowired
     private RoleRepository roleRepository;
 
@@ -73,5 +70,15 @@ public class StaffServiceImpl implements StaffService {
         Page<StaffEntity> staffEntityPage = staffRepository.findAll(pageable);
         Page<StaffDto> staffDtoPage = staffEntityPage.map(item->StaffConverter.toDto(item));
         return staffDtoPage;
+    }
+
+
+
+    @Override
+    public Page<StaffDto> getAllStaffByName(String name,Pageable pageable) {
+      Page<StaffEntity> listStaffEntity =  staffRepository.findAllStaffByName(name,pageable);
+//        return listStaffEntity.stream().map(item -> StaffConverter.toDto(item)).collect(Collectors.toList());
+        Page<StaffDto> staffDtoPage = listStaffEntity.map(item->StaffConverter.toDto(item));
+        return  staffDtoPage;
     }
 }

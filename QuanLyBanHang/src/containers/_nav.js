@@ -112,10 +112,10 @@ const _nav = [
     _children: ["Hỗ trợ"],
   },
   {
-    _tag: "CSidebarNavItem",
-    name: "Cấu hình",
-    to: "/theme/colors",
-    icon: "cil-settings",
+    _tag: 'CSidebarNavItem',
+    name: 'Cấu hình',
+    to: '/settings',
+    icon: 'cil-settings',
   },
   {
     _tag: "CSidebarNavItem",

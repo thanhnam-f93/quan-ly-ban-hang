@@ -89,6 +89,13 @@ const ListProduct = React.lazy(() => import('./components/ListProduct/ListProduc
 const Update = React.lazy(() => import('./components/ListProduct/Update'));
 const Create = React.lazy(() => import('./components/ListProduct/Create'));
 
+const Setting = React.lazy(() => import('./components/Setting/Setting'));
+const Staff = React.lazy(() => import('./components/Staff/Staff'));
+const StaffDetail = React.lazy(() => import('./components/Staff/StaffDetail/StaffDetail'));
+const AddStaff = React.lazy(() => import('./components/Staff/AddStaff/AddStaff'));
+const Role = React.lazy(() => import('./components/Role/Role'));
+const RoleDetail = React.lazy(() => import('./components/Role/RoleDetail/RoleDetail'));
+const AddRole = React.lazy(() => import('./components/Role/AddRole/AddRole'));
 /*================== The End code of Team - Quản lý bán hàng =================*/
 
 const ListSupplier = React.lazy(() => import('./components/ListSupplier/ListSupplier'));
@@ -226,7 +233,6 @@ const routes = [
   /*================== The End code of Team - Quản lý bán hàng =================*/
 /*================== Start code of Team - Quản lý bán hàng =================*/
   { path: '/dashboard', exact: true,  name: 'Dashboard', component: Dashboard },
-  { path: '/staff', exact: true,  name: 'Staff', component: Staff },
   { path: '/order', exact: true,  name: 'danh-sach-don-hang', component: Order },
   { path: '/dropdown', exact: true,  name: 'danh-sach-don-hang', component: DropDown },
   { path: '/order-detail', exact: true,  name: '', component: Order },
@@ -239,8 +245,17 @@ const routes = [
   { path: '/product/update-category/:id', exact: true,  name: 'update', component: Update },
   { path: '/product/add-category', exact: true,  name: 'add', component: Create },
   { path: '/supplier', exact: true,  name: 'Supplier', component: ListSupplier },
+  { path: '/logins', exact: true,  name: '', component: Logins },
+  { path: '/saler', exact: true,  name: 'ban-hang', component: Saler },
 
-
+  
+  { path: '/settings', exact: true,  name: 'Cấu hình', component: Setting },
+  { path: '/settings/staffs', exact: true,  name: 'Nhân viên', component: Staff },
+  { path: '/settings/staffs/new-staff', exact: true,  name: 'Thêm mới', component: AddStaff },
+  { path: '/settings/staffs/:id', exact: true,  name: 'Chỉnh sửa', component: StaffDetail },
+  { path: '/settings/roles', exact: true,  name: 'Vai trò', component: Role },
+  { path: '/settings/roles/new-role', exact: true,  name: 'Thêm mới', component: AddRole },
+  { path: '/settings/roles/:id', exact: true,  name: 'Chỉnh sửa', component: RoleDetail },
 
 
 

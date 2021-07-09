@@ -23,6 +23,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/admin")
 public class StaffController {
@@ -72,6 +73,20 @@ public class StaffController {
     public ResponseEntity updateStaff(@PathVariable ("id") int id, @Valid @RequestBody StaffDto staffDto){
         StaffDto dto = staffService.updateStaff(id, staffDto);
         return new ResponseEntity(dto, HttpStatus.OK);
+    }
+
+    //Tìm kiếm staff theo tên
+    @GetMapping("/staffs/search")
+    public ResponseEntity getAllStaffsByName(
+            @RequestParam(name = "name",required = true) String name,
+            @RequestParam(name = "page", defaultValue = "0") Integer page,
+            @RequestParam(name = "limit", defaultValue = "5") Integer limit,
+            @RequestParam(name = "sortBy", defaultValue = "id") String sortBy
+    ){
+        PageRequest pageResult = PageRequest.of(page,limit,Sort.by("id").descending());
+     Page<StaffDto> list = staffService.getAllStaffByName(name,pageResult);
+     ResponseEntity responseEntity = new ResponseEntity<>(list , HttpStatus.OK);
+        return responseEntity;
     }
 
     //Thông báo lỗi trả về cho validate
