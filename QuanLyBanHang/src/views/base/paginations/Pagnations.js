@@ -4,7 +4,6 @@ import { CCard, CCardBody, CPagination } from "@coreui/react";
 const Paginations = ({ totalPages, currentPage, setCurrentPage }) => {
   return (
     <>
-      <h1>hello:{totalPages}</h1>
       <CCard>
         <CCardBody>
           <CPagination

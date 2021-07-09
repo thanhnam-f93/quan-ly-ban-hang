@@ -3,6 +3,7 @@ import { useHistory, useLocation } from "react-router-dom";
 import Select from "react-select";
 import Swal from "sweetalert2";
 import axios from "axios";
+import { useForm } from "react-hook-form";
 import { reactLocalStorage } from "reactjs-localstorage";
 import {
   CCard,
@@ -71,6 +72,20 @@ function CustomerDetail() {
       input.value = "";
     }
   }
+  // const {
+  //   register,
+  //   handleSubmit,
+  //   watch,
+  //   formState: { errors },
+  // } = useForm();
+
+  // const onSubmit = (data) => {
+  //   alert(JSON.stringify(data));
+  // };
+  // your form submit function which will invoke after successful validation
+
+  //console.log(watch("example")); // you can watch individual input by pass the name of the input
+
   return (
     <div>
       <div className="row">
@@ -90,7 +105,23 @@ function CustomerDetail() {
                   placeholder="Tên khách hàng"
                   defaultValue={customer.name}
                   onChange={handleChange}
+                  // {...register("name", {
+                  //   required: true,
+                  //   maxLength: 20,
+                  //   minLength: 3,
+                  //   pattern: /^[A-Za-z]+$/i,
+                  // })}
                 />
+                {/* {errors?.name?.type === "required" && (
+                  <p>Không được để trống</p>
+                )}
+                {errors?.name?.type === "maxLength" && (
+                  <p>Độ dài không được vượt quá 20 kí tự</p>
+                )}
+                {errors?.name?.type === "minLength" && (
+                  <p>Độ dài không được ít hơn 3 kí tự</p>
+                )}
+                {errors?.name?.type === "pattern" && <p>Tên phải là chữ</p>} */}
               </CFormGroup>
               <CFormGroup>
                 <CLabel htmlFor="gender">Giới tính</CLabel>
@@ -113,7 +144,25 @@ function CustomerDetail() {
                   placeholder="Phone Number"
                   defaultValue={customer.phone}
                   onChange={handleChange}
+                  // {...register("phone", {
+                  //   required: true,
+                  //   maxLength: 11,
+                  //   minLength: 10,
+                  //   valueAsNumber: true,
+                  // })}
                 />
+                {/* {errors?.phone?.type === "required" && (
+                  <p>Không được để trống</p>
+                )}
+                {errors?.phone?.type === "maxLength" && (
+                  <p>Độ dài không được vượt quá 11 kí tự</p>
+                )}
+                {errors?.phone?.type === "minLength" && (
+                  <p>Độ dài không được ít hơn 10 kí tự</p>
+                )}
+                {errors?.phone?.type === "valueAsNumber" && (
+                  <p>Yêu cầu phải nhập vào là số</p>
+                )} */}
               </CFormGroup>
               <CFormGroup>
                 <CLabel htmlFor="vat">Email</CLabel>
@@ -123,7 +172,25 @@ function CustomerDetail() {
                   placeholder="Email"
                   defaultValue={customer.email}
                   onChange={handleChange}
+                  // {...register("email", {
+                  //   required: true,
+                  //   maxLength: 50,
+                  //   minLength: 5,
+                  //   pattern: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/,
+                  // })}
                 />
+                {/* {errors?.email?.type === "required" && (
+                  <p>Không được để trống</p>
+                )}
+                {errors?.email?.type === "maxLength" && (
+                  <p>Độ dài không được vượt quá 50 kí tự</p>
+                )}
+                {errors?.email?.type === "minLength" && (
+                  <p>Độ dài không được ít hơn 5 kí tự</p>
+                )}
+                {errors?.email?.type === "pattern" && (
+                  <p>Email Không đúng định dạng</p>
+                )} */}
               </CFormGroup>
               <CFormGroup>
                 <CLabel htmlFor="address">Địa chỉ</CLabel>
@@ -132,7 +199,21 @@ function CustomerDetail() {
                   placeholder="Địa chỉ"
                   defaultValue={customer.address}
                   onChange={handleChange}
+                  // {...register("address", {
+                  //   required: true,
+                  //   maxLength: 50,
+                  //   minLength: 5,
+                  // })}
                 />
+                {/* {errors?.address?.type === "required" && (
+                  <p>Không được để trống</p>
+                )}
+                {errors?.address?.type === "maxLength" && (
+                  <p>Độ dài không được vượt quá 50 kí tự</p>
+                )}
+                {errors?.address?.type === "minLength" && (
+                  <p>Độ dài không được ít hơn 5 kí tự</p>
+                )} */}
               </CFormGroup>
               <CFormGroup>
                 <CLabel htmlFor="birthday">Ngày sinh</CLabel>
@@ -204,7 +285,21 @@ function CustomerDetail() {
                   placeholder="Ghi chú thông tin Khách hàng"
                   defaultValue={customer.note}
                   onChange={handleChange}
+                  // {...register("phone", {
+                  //   required: true,
+                  //   maxLength: 250,
+                  //   minLength: 5,
+                  // })}
                 />
+                {/* {errors?.name?.type === "required" && (
+                  <p>Không được để trống</p>
+                )}
+                {errors?.name?.type === "maxLength" && (
+                  <p>Độ dài không được vượt quá 250 kí tự</p>
+                )}
+                {errors?.name?.type === "minLength" && (
+                  <p>Độ dài không được ít hơn 5 kí tự</p>
+                )} */}
               </CFormGroup>
             </CCardBody>
           </CCard>

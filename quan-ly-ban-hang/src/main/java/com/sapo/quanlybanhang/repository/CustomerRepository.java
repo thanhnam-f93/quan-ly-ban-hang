@@ -48,7 +48,6 @@ public interface CustomerRepository extends JpaRepository<CustomerEntity, Intege
     @Query(value = "select * from customers where ROUND(DATEDIFF(CURDATE(), date_of_birth) / 365, 0) > 35 and gender = :gender and status='on'", nativeQuery = true)
     Page<CustomerEntity> findByAgeOver35optionGender(@Param("gender")String gender, Pageable pageable);
 
-
     @Query(value = "select * from customers  where status ='on'",nativeQuery = true)
     Page<CustomerEntity> All(Pageable pageable);
 
