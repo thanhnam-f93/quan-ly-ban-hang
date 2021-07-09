@@ -4,23 +4,16 @@ import { JwtContext, ProductContext } from "src/context/JwtContext";
 import { FormatMoney } from "src/helpers/FormatMoney";
 import swal from "sweetalert";
 import ModalHeaders from "../Order/ModalHeaders";
-import DiscountOrder from "./DiscountOrder";
 import EmptyContent from "./EmptyContent";
 import ProductList from "./ProductList";
 import SalerItem from "./SalerItem";
-import "./scss/saler.css";
+import "./scss/saler.scss";
 
 const Saler = () => {
   const [orderDto, setOrderDto] = useState({});
   const [isShow, setIsShow] = useState(false);
-  const [money, setMoney] = useState(0);
-  const [returnMoney, setReturnMoney] = useState(0);
   const { jwt } = useContext(JwtContext);
   const [productOption, setProductOption] = useState([]);
-  const [total, setTotal] = useState(0);
-  const [count, setCount] = useState(0);
-  const [isDiscount, setIsDiscount] = useState(false);
-  const [discount,setDiscount] = useState(0);
   const [discountMoney,setDiscountMoney] = useState(0);
   const [customerPay, setCustomerPay] = useState(0);
   const [orderPageable, setOrderPageAble] = useState({
@@ -30,12 +23,10 @@ const Saler = () => {
     orderTime: "",
   });
   const [productList, setProductList] = useState([]);
-  var data = [{}];
   /**
    * call api get product
    */
-  const showOption = () => {
-    console.log("input", data);
+  const showProductList = () => {
     callApi("api/v1/find-all", "post", orderPageable, jwt).then((response) => {
       if (response.status !== 200) {
         alert("thao tác thất bại");
@@ -71,41 +62,6 @@ const Saler = () => {
     );
   };
 
-  const getListProduct = (item) => {
-    console.log("vòa get list");
-    item.amount = 1;
-    if (productOption.length == 0) {
-      console.log("hêllo");
-      setProductOption([...productOption, item]);
-    } else {
-      var check = false;
-      for (const ob of productOption) {
-        console.log(ob["id"]);
-        if (ob["id"] === item.id) {
-          check = true;
-          setCount(ob["amount"]);
-        }
-      }
-
-      if (check === false) {
-        setProductOption([...productOption, item]);
-      }
-    }
-    // setTotal(productOption.reduce())
-
-    setIsShow(false);
-  };
-
-  const getCount = (e, item) => {
-      item["amount"] = e;
-      setCount(e); 
-   
-  };
-
-  var products = productOption.map((item, index) => {
-    console.log("map:", item);
-    return <SalerItem item={item} key={index} index = {index} />;
-  });
 
   useEffect(() => {
     var count = 0;
@@ -120,35 +76,11 @@ const Saler = () => {
         discount: item.price,
       };
     });
-    setTotal(count);
-    setOrderDto({});
-    console.log("bill-order:", orderDetailDtos);
-    setOrderDto({ customId: "", orderDetailDtos: orderDetailDtos });
-    setDiscountMoney(total*discount/100);
-    setCustomerPay(total-discountMoney);
-  }, [productOption, money, returnMoney, total, count, discount]);
+    
+  }, []);
 
-  const getMoney = (e) => {
-    var m = e.target.value;
-    const regexp = /^\d+$/;
-    const checkingResult  = regexp.test(m);
-    console.log("checking:",checkingResult);
-    if(checkingResult== true){
-      // let mn = parseInt(mn,10);
-      
-      setMoney(m);
-      setReturnMoney(m - total);
-      var d= document.getElementById("moneyOfCustomerId");
-      // d.value = mn.toLocaleString('vn-VN');
-
-    }else{
-      var d= document.getElementById("moneyOfCustomerId");
-      d.value=0;
-
-    }
+ 
    
-  };
-
   /**
    * create bill------------------
    */
@@ -179,48 +111,11 @@ const Saler = () => {
     });
   };
 
-  const deleteItemOfList = (id) => {
-    console.log("delete:", id);
-    var list = productOption;
-    list = list.filter(function (obj) {
-      return obj.id !== id;
-    });
-    setProductOption(list);
-  };
 
-  const getFocusInput = ()=>{
-    document.getElementById("userName").focus();
-  }
-
-  /**
-   * check navigation of input money of customer send
-   * @param {*} e 
-   */
-  const checkNavigation = (e)=>{
-    var a = e.keyCode;
-    console.log("customer send:",a);
-    if(a===189){
-      document.getElementById("moneyOfCustomerId").value = 0;
-    }
-  }
- 
-  /**
-   * show hide discount
-   */
-  const isShowDiscount = ()=>{
-    setIsDiscount(!isDiscount);
-    console.log("discount:",isDiscount);
-  }
-
-  const getDiscountOrder = (value)=>{
-    console.log("discount:",value);
-    setDiscount(value);
-  }
 
   return (
-    <div className="saler">
-      <ProductContext.Provider
-    value={{ getListProduct, deleteItemOfList, getCount,getFocusInput,isDiscount,setIsDiscount, getDiscountOrder}} >
+    <div className="saler ">
+      <ProductContext.Provider>
         <div className="row">
           <div className="col-lg-8 row-1">
             <div className="header-order">
@@ -233,7 +128,7 @@ const Saler = () => {
                 <input
                   autoComplete="off"
                   onChange={getInput}
-                  onFocus={showOption}
+                  onFocus={showProductList}
                   type="text"
                   name="inputOrder"
                   id="userName"
@@ -241,11 +136,6 @@ const Saler = () => {
                 />
               </div>
             </div>
-            {isShow ? (
-              <ProductList listProduct={productList} list={getListProduct} />
-            ) : (
-              ""
-            )}
             <div
               className="order-table"
               tabIndex="0"
@@ -263,7 +153,7 @@ const Saler = () => {
                   <th scope="col"> </th>
                 </tr>
               </thead>
-              <tbody>{products}</tbody>
+              <tbody></tbody>
             </table>
             }
              
@@ -296,46 +186,42 @@ const Saler = () => {
                 </div>
               </div>
               <div className="payment-2">
-                {/* <div className="payment__label">
-                  <p>Thanh toán</p>
-                </div> */}
                 <div className="payment-content">
                   <div className="h-1">
                     <span>Tổng tiền</span>
-                    <span>{FormatMoney(total)}</span>
+                    <span>0</span>
                   </div>
                   <div className="h-1  h-1-1">
                     <span>Chiết khấu</span>
-                    <div className = "moneyDiscount" onClick = {isShowDiscount}>{FormatMoney(discountMoney)}</div>
+                    <div className = "moneyDiscount" ></div>
                    
                   </div>
                   <div className="h-1  h-1-2">
                     <span>Khách phải trả</span>
-                    <span>{FormatMoney(customerPay)} </span>
+                    <span> </span>
                   </div>
                   <div className="h-1 h-1-1">
                     <span>Tiền khách đưa</span>     
                     <input
                     id = "moneyOfCustomerId"
-                      onChange={getMoney}
+                      // onChange={getMoney}
                       placeholder=""
                       defaultValue ="0"
                     />
                   </div>
                   <div className="h-1">
                     <span>Tiền thừa</span>
-                    <span style = {returnMoney<0?{color:"red"}:{color:"blue"}}>{FormatMoney(returnMoney)}</span>
+                    <span></span>
                   </div>
                 
                 </div>       
             </div>
               </div>
               <div className="h-1 h-2-2">
-                    <button onClick={payment}>Thanh toán</button>
+                    <button >Thanh toán</button>
                   </div>
           </div>
         </div>
-        <DiscountOrder isShow = {{isDiscount, setIsDiscount}} />
       </ProductContext.Provider>
     </div>
   );

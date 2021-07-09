@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
 import { callApi, callApiNotJwt } from "src/apis/ApiCaller";
 import OrderHeader from "../Order/OrderHeader";
-import BillTable from "./BillTable";
-import "./../Order/scss/order.css";
+import ReturnOrderList from "./ReturnOrderList";
+import "./../Order/scss/order.scss";
 import { JwtContext } from "src/context/JwtContext";
 import { Dropdown, Modal } from "react-bootstrap";
 import Login from "src/views/pages/login/Login";
@@ -11,7 +11,7 @@ import Logins from "../Login/Logins";
 import OrderModal from "../Order/OrderModal";
 import { CPagination } from "@coreui/react";
 
-const Bill = () => {
+const ReturnOrder = () => {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -79,7 +79,7 @@ const Bill = () => {
           </button>
         </div>
       </div>
-      <BillTable lists={listOrder} />
+      <ReturnOrderList lists={listOrder} />
       <CPagination
             doubleArrows = {false}
             activePage={orderPageable.page}
@@ -111,4 +111,4 @@ const Bill = () => {
   );
 };
 
-export default Bill;
+export default ReturnOrder;

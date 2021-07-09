@@ -1,11 +1,18 @@
 .saler {
   background-color: white;
-  min-height: 450px;
-  font-size: 17px;
+  position:absolute ;
+  height: 100%;
+  width: 100%;
+  overflow:hidden;
+  top:0;
+  bottom: 0;
+  left: 0;
+  right:0;
+  font-size: 14px;
+  padding:50px;
   .row-1 {
     padding-top: 20px;
     background-color: white;
-    // min-height: 500px;
     border-right-style: solid;
     border-right-color: #e5e5e5;
     border-right-width: 5px;

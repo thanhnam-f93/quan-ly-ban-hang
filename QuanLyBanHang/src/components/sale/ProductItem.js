@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { ProductContext } from "src/context/JwtContext";
-import "./scss/ProductItem.css"
+import "./scss/ProductItem.scss"
 
 const ProductItem = (props) => {
     const {item,list} = props;
@@ -8,7 +8,6 @@ const ProductItem = (props) => {
   return (
     <div className="product-item"
 
-        // onClick = { ()=> list(item)}
               onClick = {()=>getListProduct(item)}
      >
       <div className="image">
