@@ -3,15 +3,19 @@ package com.sapo.quanlybanhang.service.impl;
 import com.sapo.quanlybanhang.converter.Converter;
 import com.sapo.quanlybanhang.dto.InputProductDto;
 import com.sapo.quanlybanhang.dto.ProductDto;
+
 import com.sapo.quanlybanhang.dto.UpdateDto;
 import com.sapo.quanlybanhang.entity.*;
 import com.sapo.quanlybanhang.repository.*;
 import com.sapo.quanlybanhang.service.ProductService;
+import org.aspectj.bridge.Message;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
+
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.Repository;
+import org.springframework.http.RequestEntity;
 import org.springframework.stereotype.Service;
 import org.modelmapper.ModelMapper;
 
@@ -26,10 +30,6 @@ public class ProductServiceImpl implements ProductService {
     private BrandRepository brandRepository;
     @Autowired
     private CategoryRepository categoryRepository;
-    @Autowired
-    private ColorRepository colorRepository;
-    @Autowired
-    private SizeRepository sizeRepository;
     @Autowired
     private SupplierRepository supplierRepository;
 
@@ -48,20 +48,26 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ProductDto create(InputProductDto inputProductDTO) {
         Converter converter = new Converter();
-        CategoryEntity categoriesEntity = categoryRepository.getById(inputProductDTO.getCategory_id());
-        BrandEntity brandEntity = brandRepository.getById(inputProductDTO.getBrand_id());
-        ColorEntity colorEntity = colorRepository.getById(inputProductDTO.getColor_id());
-        SizeEntity sizeEntity = sizeRepository.getById(inputProductDTO.getSize_id());
-        SupplierEntity supplierEntity = supplierRepository.getById(inputProductDTO.getSupplier_id());
+        CategoryEntity categoriesEntity = categoryRepository.findByName(inputProductDTO.getCategoryName());
+        BrandEntity brandEntity = brandRepository.findByName(inputProductDTO.getBrandName());
+        SupplierEntity supplierEntity = supplierRepository.findByName(inputProductDTO.getSupplierName());
         ModelMapper modelMapper = new ModelMapper();
         modelMapper.getConfiguration()
                 .setMatchingStrategy(MatchingStrategies.STRICT);
-
         ProductEntity productEntity = modelMapper.map(inputProductDTO, ProductEntity.class);
+//        if(inputProductDTO.getCode()==""){
+//            ProductEntity productEntity1 = productRepository.findFirstByOrderByIdDesc();
+//            productEntity.setCode("#SKU" + String.valueOf(productEntity1.getId()+1));
+//        }
+//        else {
+//            if(productRepository.existsByCode(inputProductDTO.getCode())){
+//                  return RequestEntit
+//
+//            }
+//
+//        }
         productEntity.setCategory(categoriesEntity);
         productEntity.setBrand(brandEntity);
-        productEntity.setColor(colorEntity);
-        productEntity.setSize(sizeEntity);
         productEntity.setSupplier(supplierEntity);
         productRepository.save(productEntity);
         ProductDto productsDTO = converter.ConverterToDtoProduct(productEntity);
@@ -82,10 +88,10 @@ public class ProductServiceImpl implements ProductService {
         productDto.setPrice(productEntity.getPrice());
         productDto.setSupplierId(productEntity.getSupplier().getName());
         productDto.setDescription(productEntity.getDescription());
-        productDto.setColorId(productEntity.getColor().getName());
+        productDto.setColor(productEntity.getColor());
         productDto.setCreatedDate(productEntity.getCreatedDate());
         productDto.setModifiedDate(productEntity.getModifiedDate());
-        productDto.setSizeId(productEntity.getSize().getSize());
+        productDto.setSize(productEntity.getSize());
         productDto.setCategoryId(productEntity.getCategory().getName());
         productDto.setCreateBy(productEntity.getCreatedBy());
         productDto.setModifiedBy(productEntity.getModifiedBy());
@@ -102,9 +108,10 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List searchAll(String keyword,Pageable pageable) {
+    public List<ProductDto> searchByNameAndCode(String keyword, int pageNo, int pageSize) {
         if (keyword != null) {
-            List<ProductEntity> productEntities = productRepository.searchAll(keyword, pageable);
+            Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+            List<ProductEntity> productEntities = productRepository.searchByNameAndCode(keyword, pageable);
             List<ProductDto> productDtos = new ArrayList<>();
             Converter converter = new Converter();
             for (ProductEntity item : productEntities) {
@@ -115,14 +122,15 @@ public class ProductServiceImpl implements ProductService {
         return null;
     }
 
+
     @Override
     public List filterAll(int keyword, Pageable pageable) {
         return null;
     }
 
     @Override
-    public List searchAllName(String keyword) {
-        List<ProductEntity> productEntities = productRepository.searchAllName(keyword);
+    public List<ProductDto> searchByKey(String keyword) {
+        List<ProductEntity> productEntities = productRepository.searchByKey(keyword);
         List<ProductDto> productDtos = new ArrayList<>();
         if (keyword != null) {
             Converter converter = new Converter();
@@ -204,6 +212,35 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public List<ProductDto> searchByCate(String keyword) {
+        if (keyword != null) {
+            List<ProductEntity> productEntities = productRepository.searchByCategory(keyword);
+            List<ProductDto> productDtos = new ArrayList<>();
+            Converter converter = new Converter();
+            for (ProductEntity item : productEntities) {
+                productDtos.add(converter.ConverterToDtoProduct(item));
+            }
+            return productDtos;
+        }
+        return null;
+    }
+
+    @Override
+    public List<ProductDto> searchByCatePagination(String keyword, int pageNo, int pageSize) {
+        if (keyword != null) {
+            Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+            List<ProductEntity> productEntities = productRepository.searchByCategoryPagination(keyword, pageable);
+            List<ProductDto> productDtos = new ArrayList<>();
+            Converter converter = new Converter();
+            for (ProductEntity item : productEntities) {
+                productDtos.add(converter.ConverterToDtoProduct(item));
+            }
+            return productDtos;
+        }
+        return null;
+    }
+
+    @Override
     public List<ProductDto>  searchByCategories(int keyword, Pageable pageable) {
         if (keyword != 0) {
             List<ProductEntity> productEntities = productRepository.filterAll(keyword,pageable);
@@ -253,11 +290,9 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ProductDto updateProduct(int id, UpdateDto updateDto) {
         ProductEntity product = productRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Not found."));
-        CategoryEntity categoryEntity = categoryRepository.getById(updateDto.getCategory_id());
-        BrandEntity brandEntity = brandRepository.getById((updateDto.getBrand_id()));
-        ColorEntity colorEntity = colorRepository.getById(updateDto.getColor_id());
-        SizeEntity sizeEntity = sizeRepository.getById(updateDto.getSize_id());
-        SupplierEntity supplierEntity = supplierRepository.getById(updateDto.getSupplier_id());
+        CategoryEntity categoryEntity = categoryRepository.findByName(updateDto.getCategoryName());
+        BrandEntity brandEntity = brandRepository.findByName((updateDto.getBrandName()));
+        SupplierEntity supplierEntity = supplierRepository.findByName(updateDto.getSupplierName());
         product.setCode(updateDto.getCode());
         product.setName(updateDto.getName());
         product.setCategory(categoryEntity);
@@ -265,9 +300,10 @@ public class ProductServiceImpl implements ProductService {
         product.setPrice(updateDto.getPrice());
         product.setDescription(updateDto.getDescription());
         product.setBrand(brandEntity);
-        product.setColor(colorEntity);
-        product.setSize(sizeEntity);
+        product.setColor(updateDto.getColor());
+        product.setSize(updateDto.getSize());
         product.setSupplier(supplierEntity);
+        product.setImage(updateDto.getImage());
         productRepository.save(product);
         Converter converter = new Converter();
         return converter.ConverterToDtoProduct(product);

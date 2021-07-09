@@ -19,12 +19,12 @@ import java.util.List;
 
 @Service
 public class SupplierServiceImpl implements SupplierService {
-@Autowired
-private SupplierRepository supplierRepository;
+    @Autowired
+    private SupplierRepository supplierRepository;
 
     @Override
     public List<SupplierDto> getAll() {
-        List<SupplierEntity> supplierEntities = supplierRepository.findAllByStateIsNull();
+        List<SupplierEntity> supplierEntities = supplierRepository.getAll();
         List<SupplierDto> supplierDtos = new ArrayList<>();
         Converter converter = new Converter();
         for (SupplierEntity item : supplierEntities) {
@@ -53,7 +53,7 @@ private SupplierRepository supplierRepository;
     @Override
     public List<SupplierDto> findAll(String keyword) {
         if (keyword != null) {
-          List<SupplierEntity> supplierEntities = supplierRepository.findAll(keyword);
+            List<SupplierEntity> supplierEntities = supplierRepository.findAll(keyword);
             List<SupplierDto> supplierDtos = new ArrayList<>();
             Converter converter = new Converter();
             for (SupplierEntity item : supplierEntities) {
@@ -128,12 +128,27 @@ private SupplierRepository supplierRepository;
     @Override
     public List<SupplierDto> findPaginated(int pageNo, int pageSize) {
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
-        Page<SupplierEntity> supplierEntities = supplierRepository.findAll(pageable);
+        List<SupplierEntity> supplierEntities = supplierRepository.getAllPagination(pageable);
         List<SupplierDto> supplierDtos = new ArrayList<>();
         Converter converter = new Converter();
         for (SupplierEntity item : supplierEntities) {
             supplierDtos.add(converter.ConverterToDtoSupplier(item));
         }
         return supplierDtos;
+    }
+
+    @Override
+    public List<SupplierDto> findAllPagination(String keyword, int pageNo, int pageSize) {
+        if (keyword != null) {
+            Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+            List<SupplierEntity> supplierEntities = supplierRepository.findAllPagination(keyword, pageable);
+            List<SupplierDto> supplierDtos = new ArrayList<>();
+            Converter converter = new Converter();
+            for (SupplierEntity item : supplierEntities) {
+                supplierDtos.add(converter.ConverterToDtoSupplier(item));
+            }
+            return supplierDtos;
+        }
+        return null;
     }
 }

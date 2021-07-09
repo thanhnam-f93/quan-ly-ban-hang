@@ -82,29 +82,49 @@ public class ProductController {
 //
 //    }
 
-    @GetMapping(value = "/product_search")
+    @GetMapping(value = "/productSearch")
     public List<ProductDto> search(@RequestParam String keyword,@RequestParam int pageNo,@RequestParam int pageSize) {
-        Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
-        return productService.searchAll(keyword,pageable);
+       if( keyword ==""){
+           return productService.findPaginated(pageNo, pageSize);
+       }
+       else{
+           return productService.searchByNameAndCode(keyword,pageNo,pageSize);
+       }
     }
-    @GetMapping(value = "/product_searchh")
+    @GetMapping(value = "/productSearchByKey")
     public List<ProductDto> searchAll(@RequestParam String keyword) {
-
-        return productService.searchAllName(keyword);
+        if( keyword == ""){
+            return productService.getAll();
+        }
+        else {
+            return productService.searchByKey(keyword);
+        }
     }
 
-    @GetMapping(value = "/productss")
-    public List<ProductDto> searchByName(@RequestParam String keyword) {
-
-        return productService.searchAllName(keyword);
-    }
+//    @GetMapping(value = "/productss")
+//    public List<ProductDto> searchByName(@RequestParam String keyword) {
+//
+//        return productService.searchAllName(keyword);
+//    }
 
     @GetMapping(value = "/product_searchByCategory/{keyword}")
     public List<ProductDto> filterByCategory(@PathVariable int keyword)
     {
         return productService.searchByCategory(keyword);
     }
+    @GetMapping(value = "/productsearchByCategory")
+    public List<ProductDto> filterByCategory(@RequestParam String keyword)
+    {
+        return productService.searchByCate(keyword);
+    }
+
     @GetMapping(value = "/product_searchByCategories")
+    public List<ProductDto> searchCatePagination(@RequestParam String keyword,@RequestParam int pageNo,@RequestParam int pageSize)
+    {
+
+        return productService.searchByCatePagination(keyword,pageNo,pageSize);
+    }
+    @GetMapping(value = "/productsearchByCategories")
     public List<ProductDto> filterByCategory(@RequestParam int keyword,@RequestParam int pageNo,@RequestParam int pageSize)
     {
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
