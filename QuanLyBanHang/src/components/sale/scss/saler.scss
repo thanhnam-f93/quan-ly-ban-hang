@@ -47,6 +47,14 @@
       }
     }
     .order-table {
+      thead{
+        font-size: 10px;
+        tr{
+          font-size: 15px;
+          height: 20px;
+        }
+      }
+
     }
   }
   .row-2{
@@ -145,9 +153,16 @@
             border:none;
             display: flex;
             justify-content: space-between;
+            .moneyDiscount{
+              border-bottom-style: solid;
+              width: 50%;
+              text-align: right;
+              border-bottom-width: 0.3px;
+              border-bottom-color: #c0b1b1;
+            }
            
             input{
-             
+             width: 50%;
               border:none;
               outline:none;
               text-align: right;

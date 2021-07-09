@@ -1,0 +1,29 @@
+.valueDiscount {
+  display: flex;
+  justify-content: space-between;
+}
+.valueDiscount span {
+  color: black;
+}
+.valueDiscount input {
+  width: 40%;
+  border: none;
+  outline: none;
+  text-align: right;
+  border-bottom-style: solid;
+  border-bottom-color: #cfd5df;
+  border-bottom-width: 0.3px;
+}
+
+.h-1 button {
+  color: black;
+  font-weight: bold;
+  border-style: solid;
+  border-color: #ebedf1;
+  border-radius: 10px;
+  background-color: transparent;
+}
+.h-1 button:last-child {
+  background-color: #0964cf;
+  color: white;
+}/*# sourceMappingURL=DiscountOrder.css.map */

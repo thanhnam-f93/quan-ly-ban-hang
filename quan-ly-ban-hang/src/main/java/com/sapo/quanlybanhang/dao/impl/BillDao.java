@@ -12,7 +12,7 @@ public class BillDao extends AbstractDao<BillEntity> implements IBillDao {
 
     @Override
     public List<BillEntity> findByCodeAndCustomer(OrderPageable orderPageable) {
-        String sql1 = "select o FROM BillEntity o ";
+        String sql1 = "select o  FROM BillEntity o ";
         String sql2 = "inner join CustomerEntity c on c.id = o.customerBill.id";
         return this.query(orderPageable,sql1,sql2);
     }

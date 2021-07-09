@@ -19,7 +19,6 @@ const ModalHeaders = (props) => {
             placeholder="Tìm kiếm theo mã đơn hàng, tên, SĐT khách hàng"
           />
         </div>
-        {/* <DropDown opDate  = {opDate} /> */}
       </div>
     );
 }

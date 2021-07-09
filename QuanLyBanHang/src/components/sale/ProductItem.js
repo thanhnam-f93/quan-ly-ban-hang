@@ -9,7 +9,7 @@ const ProductItem = (props) => {
     <div className="product-item"
 
         // onClick = { ()=> list(item)}
-          onClick = {()=>getListProduct(item)}
+              onClick = {()=>getListProduct(item)}
      >
       <div className="image">
           <div className ="image-size">
@@ -23,7 +23,7 @@ const ProductItem = (props) => {
         </div>
         <div className="content-2">
           <span>{item.code}</span>
-          <span>có thể bán:{item.numberProduct}</span>
+          <span>Có thể bán: {item.numberProduct}</span>
         </div>
       </div>
     </div>

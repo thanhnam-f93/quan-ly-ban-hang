@@ -26,7 +26,7 @@ public class OrderDao extends AbstractDao<OrderEntity>implements IOrderDao {
     private JdbcTemplate jdbcTemplate;
     @Override
     public List<OrderEntity> findByCodeAndCustomer(OrderPageable orderPageable) {
-        String sql1 = "SELECT o FROM OrderEntity o ";
+        String sql1 = "SELECT o, sum(0) FROM OrderEntity o ";
         String sql2 = "inner join CustomerEntity c on c.id = o.customer.id";
         return this.query(orderPageable,sql1,sql2);
 
@@ -38,7 +38,7 @@ public class OrderDao extends AbstractDao<OrderEntity>implements IOrderDao {
         List<Object[]> results = this.entityManager.createQuery("select sum(o.price) as price, " +
                 "o.createdDate from OrderEntity  o\n" +
                 "where Date(created_date) between Date(?1) and Date(?2)\n" +
-                " group by Date(o.createdDate)").setParameter(1,startTime).setParameter(2,endTime)
+                " group by Date(o.createdDate) order by o.createdDate").setParameter(1,startTime).setParameter(2,endTime)
                 .getResultList();
         results.stream().forEach((item) ->{
             DashBoardItem boardItem = new DashBoardItem();
