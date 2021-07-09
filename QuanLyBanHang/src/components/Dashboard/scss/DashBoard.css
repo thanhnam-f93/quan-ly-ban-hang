@@ -7,7 +7,6 @@
   background-color: white;
   padding: 30px;
 }
-
 .dash-board .board-1 .sale-per-one .label {
   font-weight: bold;
   font-size: 17px;
@@ -15,11 +14,8 @@
   border-bottom-width: 0.5px;
   border-bottom-color: #e8eaeb;
 }
-
 .dash-board .board-1 .sale-per-one .content {
   margin-top: 20px;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
   justify-content: space-around;
   position: relative;
@@ -81,12 +77,10 @@
   font-weight: bold;
   color: #269aff;
 }
-
 .dash-board .board-1 .chart {
   background-color: white;
   margin-top: 20px;
 }
-
 .dash-board .board-1 .chart .label {
   border-bottom-style: solid;
   border-bottom-color: #e8eaeb;
@@ -97,19 +91,14 @@
   font-weight: bold;
   font-size: 17px;
 }
-
 .dash-board .board-1 .chart .label select {
   border-color: #269aff;
   border-radius: 3px;
   padding: 4px;
 }
-
 .dash-board .board-1 .chart .content {
-  -webkit-box-align: end;
-      -ms-flex-align: end;
-          align-items: flex-end;
+  align-items: flex-end;
 }
-
 .dash-board .board-1 .chart .content .char-layout {
   border-bottom-style: solid;
   border-bottom-color: #e8eaeb;
@@ -119,13 +108,9 @@
   border-left-width: 0.5px;
   min-height: 320px;
   display: flex;
-  -ms-flex-pack: distribute;
-      justify-content: space-around;
-  -webkit-box-align: end;
-      -ms-flex-align: end;
-          align-items: flex-end;
+  justify-content: space-around;
+  align-items: flex-end;
 }
-
 .dash-board .board-1 .chart .content .char-layout .char-layout__item {
   font-size: 14px;
   width: 60px;
@@ -134,12 +119,10 @@
   background-color: #ef5122;
   height: var(--percent);
 }
-
 .dash-board .board-1 .chart .count {
   display: flex;
   justify-content: center;
   margin-top: 20px;
   display: flex;
   font-weight: bold;
-}
-/*# sourceMappingURL=DashBoard.css.map */
+}/*# sourceMappingURL=DashBoard.css.map */

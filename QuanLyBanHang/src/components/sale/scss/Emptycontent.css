@@ -1,36 +1,23 @@
 .empty-content {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
   min-height: 500px;
 }
-
 .empty-content .content-1-2 {
   text-align: center;
   margin: auto;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
+  flex-direction: column;
+  justify-content: space-between;
 }
-
 .empty-content .content-1-2 .image-content-1 i {
   background-color: transparent;
   color: #ebedef;
 }
-
 .empty-content .content-1-2 .btn-content {
   margin-top: 20px;
   border-style: solid;
   border: none;
 }
-
 .empty-content .content-1-2 .btn-content button {
   padding-right: 40px;
   padding-left: 50px;
@@ -40,13 +27,10 @@
   outline-color: none;
   padding: 10px 60px 10px 60px;
 }
-
 .empty-content .content-1-2 .btn-content button:focus {
   border-color: #ebedef;
   outline: none;
 }
-
 .empty-content .content-1-2 .btn-content button:hover {
   background-color: #ebedef;
-}
-/*# sourceMappingURL=Emptycontent.css.map */
+}/*# sourceMappingURL=Emptycontent.css.map */

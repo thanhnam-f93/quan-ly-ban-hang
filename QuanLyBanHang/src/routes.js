@@ -4,7 +4,13 @@ import BillDetail from './components/BillDetail/BillDetail';
 import Logins from './components/Login/Logins';
 import DropDown from './components/Order/DropDown';
 import OrderDetail from './components/OrderDetail/OrderDetail';
+import AddRole from './components/Role/AddRole/AddRole';
+import Role from './components/Role/Role';
+import RoleDetail from './components/Role/RoleDetail/RoleDetail';
 import Saler from './components/sale/Saler';
+import Setting from './components/Setting/Setting';
+import AddStaff from './components/Staff/AddStaff/AddStaff';
+import StaffDetail from './components/Staff/StaffDetail/StaffDetail';
 
 /*================== Of Template React =================*/
 const Toaster = React.lazy(() =>
@@ -252,7 +258,7 @@ const routes = [
   { path: '/settings/roles/new-role', exact: true,  name: 'Thêm mới', component: AddRole },
   { path: '/settings/roles/:id', exact: true,  name: 'Chỉnh sửa', component: RoleDetail },
   { path: '/update-supplier/:id', exact: true,  name: 'update', component: UpdateSupplier },
-  { path: '/add-supplier', exact: true,  name: 'add', component: CreateSupplier }
+  { path: '/add-supplier', exact: true,  name: 'add', component: CreateSupplier },
  
 
 
