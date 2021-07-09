@@ -3,6 +3,7 @@
   display: flex;
   min-height: 500px;
   .content-1-2 {
+    text-align: center;
     margin: auto;
     display: flex;
     flex-direction: column;
@@ -14,17 +15,18 @@
      }
     }
     .btn-content {
-        margin-top:20px;
+     
+      margin-top:20px;
       border-style: solid;
       border:none;
       button{
+        padding-right:40px;
+        padding-left: 50px;
           background-color: transparent;
-        //   border-color: #ebedef;
         border:solid 0.5px #ebedef;
           border-radius: 10px;
           outline-color: none;
-          min-width: 80%;
-          padding:10px;
+          padding: 10px 60px 10px 60px;
           &:focus{
             border-color: #ebedef;
               outline: none;

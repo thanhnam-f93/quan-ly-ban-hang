@@ -1,8 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
 import { callApi, callApiNotJwt } from "src/apis/ApiCaller";
 import { JwtContext, ProductContext } from "src/context/JwtContext";
+import { FormatMoney } from "src/helpers/FormatMoney";
 import swal from "sweetalert";
 import ModalHeaders from "../Order/ModalHeaders";
+import DiscountOrder from "./DiscountOrder";
 import EmptyContent from "./EmptyContent";
 import ProductList from "./ProductList";
 import SalerItem from "./SalerItem";
@@ -17,9 +19,13 @@ const Saler = () => {
   const [productOption, setProductOption] = useState([]);
   const [total, setTotal] = useState(0);
   const [count, setCount] = useState(0);
+  const [isDiscount, setIsDiscount] = useState(false);
+  const [discount,setDiscount] = useState(0);
+  const [discountMoney,setDiscountMoney] = useState(0);
+  const [customerPay, setCustomerPay] = useState(0);
   const [orderPageable, setOrderPageAble] = useState({
     page: 1,
-    limit: 7,
+    limit: 10,
     inputOrder: "",
     orderTime: "",
   });
@@ -91,15 +97,14 @@ const Saler = () => {
   };
 
   const getCount = (e, item) => {
-    console.log("getCount:", e.target.value);
-    console.log("product:", item);
-    item["amount"] = e.target.value;
-    setCount(e.target.value);
+      item["amount"] = e;
+      setCount(e); 
+   
   };
 
   var products = productOption.map((item, index) => {
     console.log("map:", item);
-    return <SalerItem item={item} key={index} />;
+    return <SalerItem item={item} key={index} index = {index} />;
   });
 
   useEffect(() => {
@@ -119,12 +124,29 @@ const Saler = () => {
     setOrderDto({});
     console.log("bill-order:", orderDetailDtos);
     setOrderDto({ customId: "", orderDetailDtos: orderDetailDtos });
-  }, [productOption, money, returnMoney, total, count]);
+    setDiscountMoney(total*discount/100);
+    setCustomerPay(total-discountMoney);
+  }, [productOption, money, returnMoney, total, count, discount]);
 
   const getMoney = (e) => {
     var m = e.target.value;
-    setMoney(m);
-    setReturnMoney(m - total);
+    const regexp = /^\d+$/;
+    const checkingResult  = regexp.test(m);
+    console.log("checking:",checkingResult);
+    if(checkingResult== true){
+      // let mn = parseInt(mn,10);
+      
+      setMoney(m);
+      setReturnMoney(m - total);
+      var d= document.getElementById("moneyOfCustomerId");
+      // d.value = mn.toLocaleString('vn-VN');
+
+    }else{
+      var d= document.getElementById("moneyOfCustomerId");
+      d.value=0;
+
+    }
+   
   };
 
   /**
@@ -170,11 +192,35 @@ const Saler = () => {
     document.getElementById("userName").focus();
   }
 
+  /**
+   * check navigation of input money of customer send
+   * @param {*} e 
+   */
+  const checkNavigation = (e)=>{
+    var a = e.keyCode;
+    console.log("customer send:",a);
+    if(a===189){
+      document.getElementById("moneyOfCustomerId").value = 0;
+    }
+  }
+ 
+  /**
+   * show hide discount
+   */
+  const isShowDiscount = ()=>{
+    setIsDiscount(!isDiscount);
+    console.log("discount:",isDiscount);
+  }
+
+  const getDiscountOrder = (value)=>{
+    console.log("discount:",value);
+    setDiscount(value);
+  }
+
   return (
     <div className="saler">
       <ProductContext.Provider
-        value={{ getListProduct, deleteItemOfList, getCount,getFocusInput }}
-      >
+    value={{ getListProduct, deleteItemOfList, getCount,getFocusInput,isDiscount,setIsDiscount, getDiscountOrder}} >
         <div className="row">
           <div className="col-lg-8 row-1">
             <div className="header-order">
@@ -208,13 +254,13 @@ const Saler = () => {
               productOption.length===0? <EmptyContent />:
               <table className="table table-striped">
               <thead>
-                <tr>
-                  <th scope="col"> </th>
+                <tr>  
                   <th scope="col">Mã sản phẩm </th>
                   <th scope="col">Tên sản phẩm</th>
                   <th scope="col">Số lượng</th>
                   <th scope="col">Đơn giá </th>
-                  <th scope="col">thành tiền</th>
+                  <th scope="col">Thành tiền</th>
+                  <th scope="col"> </th>
                 </tr>
               </thead>
               <tbody>{products}</tbody>
@@ -229,9 +275,7 @@ const Saler = () => {
                 <div className="search-customer">
                   <div className="input-customer">
                     <button type="button">
-                      <span>
-                        <i className="fas fa-search"></i>
-                      </span>
+                        <i className="fas fa-search"></i>            
                     </button>
                     <input
                       autoComplete="off"
@@ -241,44 +285,57 @@ const Saler = () => {
                       placeholder="Tìm kiếm thông tin khách hàng"
                     />
                   </div>
-                  <div>
+                  <button>
                     <i className="fas fa-plus fa-1x"></i>
-                  </div>
+                  </button>
                 </div>
                 <div className="infor-customer">
-                  <p> khách hàng:</p>
+                  <p> Tên khách hàng:</p>
                   <p>Điện thoại:</p>
                   <p>Địa chỉ:</p>
                 </div>
               </div>
               <div className="payment-2">
-                <div className="payment__label">
+                {/* <div className="payment__label">
                   <p>Thanh toán</p>
-                </div>
+                </div> */}
                 <div className="payment-content">
-                  <div className="h-1 h-1-2">
+                  <div className="h-1">
                     <span>Tổng tiền</span>
-                    <span>{total}</span>
+                    <span>{FormatMoney(total)}</span>
+                  </div>
+                  <div className="h-1  h-1-1">
+                    <span>Chiết khấu</span>
+                    <div className = "moneyDiscount" onClick = {isShowDiscount}>{FormatMoney(discountMoney)}</div>
+                   
+                  </div>
+                  <div className="h-1  h-1-2">
+                    <span>Khách phải trả</span>
+                    <span>{FormatMoney(customerPay)} </span>
                   </div>
                   <div className="h-1 h-1-1">
+                    <span>Tiền khách đưa</span>     
                     <input
-                      type="number"
+                    id = "moneyOfCustomerId"
                       onChange={getMoney}
-                      placeholder="nhập tiền khách gửi"
+                      placeholder=""
+                      defaultValue ="0"
                     />
                   </div>
                   <div className="h-1">
                     <span>Tiền thừa</span>
-                    <span>{returnMoney < 0 ? 0 : returnMoney}</span>
+                    <span style = {returnMoney<0?{color:"red"}:{color:"blue"}}>{FormatMoney(returnMoney)}</span>
                   </div>
-                  <div className="h-1 h-2-2">
+                
+                </div>       
+            </div>
+              </div>
+              <div className="h-1 h-2-2">
                     <button onClick={payment}>Thanh toán</button>
                   </div>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
+        <DiscountOrder isShow = {{isDiscount, setIsDiscount}} />
       </ProductContext.Provider>
     </div>
   );
