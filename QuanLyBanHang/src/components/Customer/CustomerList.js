@@ -1,10 +1,15 @@
-import React, { useEffect, useState, createRef } from "react";
-import classNames from "classnames";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import CustomerItem from "./CustomerItem";
 import NavBar from "./NavBar";
+import { reactLocalStorage } from "reactjs-localstorage";
 import Paginations from "src/views/base/paginations/Pagnations";
+import Swal from "sweetalert2";
+import ApiCustomer from "src/apis/ApiCustomer";
 function CustomerList() {
+  const headers = {
+    Authorization: "Bearer " + reactLocalStorage.get("token"),
+  };
   const [customers, setCustomers] = useState([]);
   const [totalPage, setTotalPage] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
@@ -12,55 +17,101 @@ function CustomerList() {
   const [age, setAge] = useState({});
   const [search, setSearch] = useState({});
   const [page, setPage] = useState(0);
-
+  const [limit, setLimit] = useState(5);
+  const [status, setStatus] = useState(true);
+  const [response, setResponse] = useState([]);
   const getData = async () => {
     setIsLoading(true);
     setCustomers([]);
+    
     var URL;
     if (search.length > 0) {
-      URL = `http://localhost:8080/customers/search?input=${search}&pageNo=${page}`;
+      URL = `http://localhost:8080/customers/search?input=${search}&pageNo=${page}&limit=${limit}`;
     } else if (age.length > 0 && gender.length > 0) {
-      URL = `http://localhost:8080/customers/${age}?gender=${gender}&pageNo=${page}`;
+      URL = `http://localhost:8080/customers/${age}?gender=${gender}&pageNo=${page}&limit=${limit}`;
     } else if (gender.length > 0) {
-      URL = `http://localhost:8080/customers/findGender?gender=${gender}&pageNo=${page}`;
+      URL = `http://localhost:8080/customers/findGender?gender=${gender}&pageNo=${page}&limit=${limit}`;
     } else if (age.length > 0) {
-      URL = `http://localhost:8080/customers/${age}?pageNo=${page}`;
+      URL = `http://localhost:8080/customers/${age}?pageNo=${page}&limit=${limit}`;
     } else {
-      URL = `http://localhost:8080/customers/page?pageNo=${page}`;
+      URL = `http://localhost:8080/customers/page?pageNo=${page}&limit=${limit}`;
     }
 
     console.log("this URL: ", URL);
-    axios
-      .get(URL)
+    await axios
+      .get(URL, { headers })
       .then((response) => {
-        setCustomers(response.data.content);
-        // setTotalPage(response.data.totalPages);
-        // setPage(response.data.pageNumber);
+        const result = response.data;
+
+        // const totalPage = response.data.totalPage;
+        setTotalPage(response.data.totalPages);
+        // console.log("totalPage", totalPage);
+
+        const currentPage = result.pageable.pageNumber;
+        setPage(currentPage);
+        //   console.log("currentPage", currentPage);
+
+        const cus = result.content;
+        setCustomers(cus);
+        //    console.log("cus", customers);
+
         setIsLoading(false);
       })
       .catch((error) => {
         setIsLoading(true);
         console.log(error);
       });
+
+    // try {
+    //   var rs = null;
+    //   if (search.length > 0) {
+    //     //  rs = getPageBySearch(search, page, limit);
+    //   } else if (age.length > 0 && gender.length > 0) {
+    //     //   rs = getPageByAgeAndGender(age, gender, page, limit);
+    //   } else if (gender.length > 0) {
+    //     //  rs = setResponse(getPageByGender(gender, page, limit));
+    //   } else if (age.length > 0) {
+    //     //  rs = setResponse(getPageByAge(age, page, limit));
+    //   } else {
+    //     console.log("ahihihihihi");
+    //     ApiCustomer.getBasePage(page, limit)
+    //       .then((result) => {
+    //         setResponse(result);
+    //       })
+    //       .catch((err) => console.log(err));
+    //     console.log("Rs is :    " + response);
+    //   }
+    //   console.log("object tra ve customer:   " + rs);
+    //   setCustomers(response.data.content);
+    //   setTotalPage(response.data.totalPages);
+    //   setPage(response.pageable.pageNumber);
+    //   setIsLoading(false);
+    // } catch (error) {
+    //   setIsLoading(true);
+    //   console.log(error);
+    // }
   };
 
+  console.log("totalPage", totalPage);
   const renderTodo = customers.map((customer, index) => {
     return (
       <CustomerItem
         customer={customer}
         deleteC={deleteCustomer}
         index={index}
+        key={customer.id}
       ></CustomerItem>
     );
   });
   function deleteCustomer(id) {
-    const API = `http://localhost:8080/customers/${id}`;
+    const API = `http://localhost:8080/customers/off/${id}`;
     if (window.confirm("Xoa la mat day nhe")) {
       axios
-        .delete(API)
+        .get(API, { headers })
         .then(function (response) {
-          setCustomers(customers.filter((data) => data.id !== id));
-          alert("Delete succeed");
+          setCustomers(customers.filter((data) => data.status !== "off"));
+          setStatus(!status);
+          Swal.fire("Good job!", "Delete Complete!", "success");
         })
         .catch(function (error) {
           console.log(error);
@@ -69,8 +120,7 @@ function CustomerList() {
   }
   useEffect(() => {
     getData();
-    console.log("gender", gender);
-  }, [gender, page, search, age]);
+  }, [gender, page, search, age, status, limit]);
 
   return (
     <div>
@@ -110,9 +160,12 @@ function CustomerList() {
           {renderTodo}
         </tbody>
       </table>
-      <Paginations totalPages={totalPage} setPage={setPage}></Paginations>
+      <Paginations
+        totalPages={totalPage}
+        currentPage={page}
+        setCurrentPage={setPage}
+      ></Paginations>
     </div>
   );
 }
-
 export default CustomerList;

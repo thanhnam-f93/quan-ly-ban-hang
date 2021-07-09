@@ -1,7 +1,9 @@
 package com.sapo.quanlybanhang.controller;
 
 
+import com.sapo.quanlybanhang.converter.CustomerConvert;
 import com.sapo.quanlybanhang.dto.CustomerDto;
+import com.sapo.quanlybanhang.entity.CustomerEntity;
 import com.sapo.quanlybanhang.service.CustomerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -57,15 +59,16 @@ public class CustomerController {
         try {
             PageRequest pageRequest = PageRequest.of(Integer.parseInt(pageNo), Integer.parseInt(limit), Sort.by("id").descending());
             Page<CustomerDto> dtoPage = customerService.search(input, pageRequest);
-            if (dtoPage.hasContent()) {
+            if (dtoPage!=null) {
                 return new ResponseEntity<>(dtoPage, new HttpHeaders(), HttpStatus.OK);
+            }else {
+                return new ResponseEntity<>("Khách hàng cần tìm không tồn tại", new HttpHeaders(), HttpStatus.NOT_FOUND);
             }
         } catch (Exception e) {
             e.printStackTrace();
             logger.error("What the fuck: " + e.getMessage());
             return ResponseEntity.badRequest().body("Page Empty");
         }
-        return null;
     }
 
     @GetMapping("customers/findGender")
@@ -248,7 +251,7 @@ public class CustomerController {
 
     @PutMapping("customers/{id}")
     ResponseEntity<?> update(@Valid @RequestBody CustomerDto customerDto, @PathVariable("id") Integer id) {
-        CustomerDto root = customerService.findById(id);
+        CustomerEntity root = CustomerConvert.toEntity(customerService.findById(id));
         try {
             root.setModifiedDate(customerDto.getModifiedDate());
             root.setModifiedBy(customerDto.getModifiedBy());
@@ -261,13 +264,14 @@ public class CustomerController {
             root.setPhone(customerDto.getPhone());
             root.setDateOfBirth(customerDto.getDateOfBirth());
             root.setStatus(customerDto.getStatus());
+            customerService.save(CustomerConvert.toDTO(root));
             return ResponseEntity.ok().body("Cập nhập thành công");
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
-    @DeleteMapping("customers/{id}")
+    @GetMapping("customers/off/{id}")
     ResponseEntity<?> delete(@PathVariable("id") Integer id) {
         CustomerDto root = customerService.findById(id);
         if (id != null) {
