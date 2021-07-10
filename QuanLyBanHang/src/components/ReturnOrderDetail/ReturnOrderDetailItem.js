@@ -1,6 +1,6 @@
 import React from 'react';
 
-const BillInforItem = (props) => {
+const ReturnOrderDetailItem = (props) => {
     const item = props.item;
   return (
       <tr className = "order-infor-row">
@@ -13,4 +13,4 @@ const BillInforItem = (props) => {
   );
 }
 
-export default BillInforItem;
+export default ReturnOrderDetailItem;

@@ -1,13 +1,13 @@
 import React from 'react';
 import OrderInforItem from '../OrderDetail/OrderInforItem';
-import BillInforItem from './BillInforItem';
+import ReturnOrderDetailItem from './ReturnOrderDetailItem';
 
-const BillInfor = (props) => {
+const ReturnOrderDetailInfor = (props) => {
     const products = props.order;
   console.log("productssss:", products);
   const elm = products.map((item, index) => {
     return (
-      <BillInforItem
+      <ReturnOrderDetailItem
         key = {index}
         item = {item}
       />
@@ -34,4 +34,4 @@ const BillInfor = (props) => {
   );
 }
 
-export default BillInfor;
+export default ReturnOrderDetailInfor;

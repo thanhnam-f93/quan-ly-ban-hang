@@ -27,14 +27,22 @@ public class OrderController {
     search and filter
  */
     @PostMapping ("/order")
-    public List<OrderDto> findAll(@RequestBody OrderPageable orderPageable){
+    public OrderListDto findAll(@RequestBody OrderPageable orderPageable){
+        Integer totalItem = 0;
+        OrderListDto listDto = new OrderListDto();
         if(orderPageable.getOrderTime() == null && (orderPageable.getInputOrder() == null
                 || orderPageable.getInputOrder() =="" ) && orderPageable.getOptionTime() == null){
             Sort sort = Sort.by("createdDate").descending();
             Pageable pageable = PageRequest.of(orderPageable.getPage()-1,orderPageable.getLimit(),sort);
-            return  orderService.findAll(pageable);
+            listDto.setTotalItem(orderService.getTotalItem());
+            listDto.setResultItem(orderService.findAll(pageable));
+            return  listDto;
         }else {
-            return orderService.findByCodeAndCustomer(orderPageable);
+            listDto = orderService.findByCodeAndCustomer(orderPageable);
+            if(listDto.getResultItem().size()==0){
+                listDto.setTotalItem(0);
+            }
+            return listDto;
         }
 
     }

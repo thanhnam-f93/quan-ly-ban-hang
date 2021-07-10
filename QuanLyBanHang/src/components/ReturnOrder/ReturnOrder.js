@@ -16,10 +16,10 @@ const ReturnOrder = () => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const { jwt } = useContext(JwtContext);
-  const [totalPage, setTotalPage] = useState(6);
+  const [totalPage, setTotalPage] = useState();
   const [orderPageable, setOrderPageAble] = useState({
     page: 1,
-    limit: 10,
+    limit: 20,
     inputOrder: "",
     orderTime: "",
   });
@@ -42,13 +42,11 @@ const ReturnOrder = () => {
         return;
       }
       response.json().then((data) => {
+        console.log(data);
         console.log(data.length);
-        setListOrder(data);
-        if(data.length<7){
-          var page = orderPageable.page;
-          setTotalPage({page});
-        }
-        // alert("thao tác thành công");
+        setListOrder(data.resultList);
+        setTotalPage(Math.ceil(data.totalItem/orderPageable.limit));
+      
       });
     });
   }, [orderPageable]);
@@ -81,9 +79,9 @@ const ReturnOrder = () => {
       </div>
       <ReturnOrderList lists={listOrder} />
       <CPagination
-            doubleArrows = {false}
+            doubleArrows = {true}
             activePage={orderPageable.page}
-            pages={6}
+            pages={totalPage}
             onActivePageChange={getPage}
           />  
       <Modal show={show}

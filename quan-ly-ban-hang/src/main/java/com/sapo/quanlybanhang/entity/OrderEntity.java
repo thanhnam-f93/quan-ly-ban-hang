@@ -11,13 +11,12 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-@AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @Table(name = "orders")
 
-public class OrderEntity implements Serializable {
+public class OrderEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
