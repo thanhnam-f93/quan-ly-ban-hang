@@ -1,7 +1,6 @@
 package com.sapo.quanlybanhang.repository;
 
 import com.sapo.quanlybanhang.entity.OrderDetailEntity;
-import com.sapo.quanlybanhang.entity.OrderEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

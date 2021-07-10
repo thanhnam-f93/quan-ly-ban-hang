@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -39,12 +40,16 @@ public class BillController {
      search and filter
      */
     @PostMapping ("/bill")
-    public List<BillDto> findAll(@RequestBody OrderPageable orderPageable){
+    public BillListDto findAll(@RequestBody OrderPageable orderPageable){
+        Integer totalItem = 0;
+        BillListDto listDto = new BillListDto();
         if(orderPageable.getOrderTime() == null && (orderPageable.getInputOrder() == null
                 || orderPageable.getInputOrder() =="" ) && (orderPageable.getOptionTime() == null)){
             Sort sort = Sort.by("createdDate").descending();
             Pageable pageable = PageRequest.of(orderPageable.getPage()-1,orderPageable.getLimit(),sort);
-            return  billService.findAll(pageable);
+            listDto.setTotalItem(billService.getTotalItem());
+            listDto.setResultList(billService.findAll(pageable));
+            return listDto;
         }else {
             return billService.findByCodeAndCustomer(orderPageable);
         }

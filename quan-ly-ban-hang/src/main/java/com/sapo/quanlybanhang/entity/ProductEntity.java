@@ -78,6 +78,6 @@ public class ProductEntity {
 
     @OneToMany(mappedBy = "productBill", cascade = CascadeType.ALL)
     private Collection<BillDetailEntity> billDetailEntities;
-
+    
 
 }

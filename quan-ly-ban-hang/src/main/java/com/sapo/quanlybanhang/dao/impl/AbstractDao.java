@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import javax.persistence.QueryHint;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.YearMonth;
@@ -24,10 +25,8 @@ public class AbstractDao<T> implements GenericDao<T> {
     List<LocalDate> list = new ArrayList();
     Integer totalPage = 0;
     @Override
-    public <T> List<T> query( OrderPageable orderPageable, String sql1, String sql2) {
-//    List<Object[]> lists = new ArrayList();
+    public Query query(OrderPageable orderPageable, String sql1, String sql2) {
         Query query = null;
-        List <T> listOb = new ArrayList();
         StringBuilder sql = new StringBuilder(sql1);
         System.out.println("chuỗi:"+sql1);
         if (orderPageable.getOrderTime() == null && orderPageable.getOptionTime() == null ) {
@@ -38,21 +37,21 @@ public class AbstractDao<T> implements GenericDao<T> {
                     .setParameter(1, "%" + orderPageable.getInputOrder() + "%")
                     .setParameter(2, "%" + orderPageable.getInputOrder() + "%")
                     .setParameter(3, "%" + orderPageable.getInputOrder() + "%");
-            totalPage = query.getMaxResults();
-            listOb = query.setFirstResult((orderPageable.getPage()-1)*orderPageable.getLimit())
-                          .setMaxResults(orderPageable.getLimit()).getResultList();
+//            totalPage = query.getMaxResults();
+//            listOb = query.setFirstResult((orderPageable.getPage()-1)*orderPageable.getLimit())
+//                          .setMaxResults(orderPageable.getLimit()).getResultList();
 
         }else if ((orderPageable.getInputOrder() == null || orderPageable.getInputOrder() == "")){
             list = getTime(orderPageable);
             sql.append("where ( DATE(o.createdDate) between Date (?1) and Date(?2)) order By o.createdDate DESC");
-            query = entityManager.createQuery(sql.toString());
-            totalPage = query.getMaxResults();
-            listOb = query
+            query = entityManager.createQuery(sql.toString())
                     .setParameter(1, list.get(0))
-                    .setParameter(2, list.get(1))
-                    .setFirstResult((orderPageable.getPage()-1)*orderPageable.getLimit())
-                    .setMaxResults(orderPageable.getLimit())
-                    .getResultList();
+                    .setParameter(2, list.get(1));
+//            totalPage = query.getMaxResults();
+//            listOb = query
+//                    .setFirstResult((orderPageable.getPage()-1)*orderPageable.getLimit())
+//                    .setMaxResults(orderPageable.getLimit())
+//                    .getResultList();
         }else {
             list = getTime(orderPageable);
             sql.append(sql2);
@@ -60,19 +59,24 @@ public class AbstractDao<T> implements GenericDao<T> {
                     "or (c.phone like ?2 AND DATE (o.createdDate) between Date (?4) and Date(?5))  " +
                     "or (o.code like ?3 AND DATE (o.createdDate) between Date (?4) and Date(?5)) " +
                     " order By o.createdDate DESC");
-             query = entityManager.createQuery(sql.toString());
-             totalPage = query.getMaxResults();
-             listOb = query
-                    .setParameter(1, "%" + orderPageable.getInputOrder() + "%")
-                    .setParameter(2, "%" + orderPageable.getInputOrder() + "%")
-                    .setParameter(3, "%" + orderPageable.getInputOrder() + "%")
-                    .setParameter(4, list.get(0))
-                    .setParameter(5, list.get(1))
-                    .setFirstResult((orderPageable.getPage()-1)*orderPageable.getLimit())
-                    .setMaxResults(orderPageable.getLimit())
-                    .getResultList();
+             query = entityManager.createQuery(sql.toString())
+                     .setParameter(1, "%" + orderPageable.getInputOrder() + "%")
+                     .setParameter(2, "%" + orderPageable.getInputOrder() + "%")
+                     .setParameter(3, "%" + orderPageable.getInputOrder() + "%")
+                     .setParameter(4, list.get(0))
+                     .setParameter(5, list.get(1));
+//             totalPage = query.getMaxResults();
+//             listOb = query
+//                    .setParameter(1, "%" + orderPageable.getInputOrder() + "%")
+//                    .setParameter(2, "%" + orderPageable.getInputOrder() + "%")
+//                    .setParameter(3, "%" + orderPageable.getInputOrder() + "%")
+//                    .setParameter(4, list.get(0))
+//                    .setParameter(5, list.get(1))
+//                    .setFirstResult((orderPageable.getPage()-1)*orderPageable.getLimit())
+//                    .setMaxResults(orderPageable.getLimit())
+//                    .getResultList();
         }
-        return listOb;
+        return query;
 
     }
 

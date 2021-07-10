@@ -1,9 +1,9 @@
 package com.sapo.quanlybanhang.service.impl;
 
 import com.sapo.quanlybanhang.converter.BillConverter;
-import com.sapo.quanlybanhang.converter.OrderConverter;
 import com.sapo.quanlybanhang.dao.IBillDao;
 import com.sapo.quanlybanhang.dto.BillDto;
+import com.sapo.quanlybanhang.dto.BillListDto;
 import com.sapo.quanlybanhang.dto.OrderDetailDto;
 import com.sapo.quanlybanhang.dto.OrderPageable;
 import com.sapo.quanlybanhang.entity.*;
@@ -14,7 +14,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
@@ -117,13 +116,18 @@ public class BillService implements IBillService {
     }
 
     @Override
-    public List<BillDto> findByCodeAndCustomer(OrderPageable orderPageable) {
-        return billDao.findByCodeAndCustomer(orderPageable).stream()
-                .map(item ->BillConverter.toDto(item)).collect(Collectors.toList());
+    public BillListDto findByCodeAndCustomer(OrderPageable orderPageable) {
+        return billDao.findByCodeAndCustomer(orderPageable);
+
     }
 
     @Override
     public BillEntity findById(Integer id) {
         return billRepository.findOneById(id);
+    }
+
+    @Override
+    public Integer getTotalItem() {
+        return (int)billRepository.count();
     }
 }

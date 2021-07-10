@@ -1,0 +1,18 @@
+.wrap-content{
+    position: absolute;
+    height: calc(100%-50px);
+    background-color: white;
+    width: calc(100% - 460px);
+    top:50px;
+    
+    left:0;
+    right: 0;
+    bottom: 0;
+    .content-right{
+        width: calc(100%-460px);
+    }
+    .content-left{
+        width: 460px;
+    }
+    
+}
