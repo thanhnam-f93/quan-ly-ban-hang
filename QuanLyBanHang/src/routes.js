@@ -1,5 +1,5 @@
 import React from 'react';
-import Bill from './components/OrderReturn/ReturnOrder';
+import Bill from './components/ReturnOrder/ReturnOrder';
 import BillDetail from './components/ReturnOrderDetail/ReturnOrderDetail';
 import Logins from './components/Login/Logins';
 import DropDown from './components/Order/DropDown';
@@ -11,7 +11,7 @@ import Saler from './components/sale/Saler';
 import Setting from './components/Setting/Setting';
 import AddStaff from './components/Staff/AddStaff/AddStaff';
 import StaffDetail from './components/Staff/StaffDetail/StaffDetail';
-import ReturnOrder from './components/OrderReturn/ReturnOrder';
+import ReturnOrder from './components/ReturnOrder/ReturnOrder';
 
 /*================== Of Template React =================*/
 const Toaster = React.lazy(() =>
