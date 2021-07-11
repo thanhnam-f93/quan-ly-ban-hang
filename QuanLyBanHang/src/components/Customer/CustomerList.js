@@ -23,7 +23,7 @@ function CustomerList() {
   const getData = async () => {
     setIsLoading(true);
     setCustomers([]);
-    
+
     var URL;
     if (search.length > 0) {
       URL = `http://localhost:8080/customers/search?input=${search}&pageNo=${page}&limit=${limit}`;
@@ -118,6 +118,7 @@ function CustomerList() {
         });
     }
   }
+
   useEffect(() => {
     getData();
   }, [gender, page, search, age, status, limit]);

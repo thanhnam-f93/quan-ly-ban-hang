@@ -72,19 +72,19 @@ function CustomerDetail() {
       input.value = "";
     }
   }
-  // const {
-  //   register,
-  //   handleSubmit,
-  //   watch,
-  //   formState: { errors },
-  // } = useForm();
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm();
 
   // const onSubmit = (data) => {
   //   alert(JSON.stringify(data));
   // };
   // your form submit function which will invoke after successful validation
 
-  //console.log(watch("example")); // you can watch individual input by pass the name of the input
+  console.log(watch("example")); // you can watch individual input by pass the name of the input
 
   return (
     <div>
@@ -101,18 +101,18 @@ function CustomerDetail() {
               <CFormGroup>
                 <CLabel htmlFor="vat">Tên</CLabel>
                 <CInput
+                  {...register("name", {
+                    required: true,
+                    maxLength: 20,
+                    minLength: 3,
+                    //   pattern: /^[A-Za-z]+$/i,
+                  })}
                   name="name"
                   placeholder="Tên khách hàng"
                   defaultValue={customer.name}
                   onChange={handleChange}
-                  // {...register("name", {
-                  //   required: true,
-                  //   maxLength: 20,
-                  //   minLength: 3,
-                  //   pattern: /^[A-Za-z]+$/i,
-                  // })}
                 />
-                {/* {errors?.name?.type === "required" && (
+                {errors?.name?.type === "required" && (
                   <p>Không được để trống</p>
                 )}
                 {errors?.name?.type === "maxLength" && (
@@ -121,7 +121,7 @@ function CustomerDetail() {
                 {errors?.name?.type === "minLength" && (
                   <p>Độ dài không được ít hơn 3 kí tự</p>
                 )}
-                {errors?.name?.type === "pattern" && <p>Tên phải là chữ</p>} */}
+                {errors?.name?.type === "pattern" && <p>Tên phải là chữ</p>}
               </CFormGroup>
               <CFormGroup>
                 <CLabel htmlFor="gender">Giới tính</CLabel>
@@ -138,20 +138,20 @@ function CustomerDetail() {
               <CFormGroup>
                 <CLabel htmlFor="phone">Số điện thoại</CLabel>
                 <CInput
+                  {...register("phone", {
+                    required: true,
+                    maxLength: 11,
+                    minLength: 10,
+                    valueAsNumber: true,
+                  })}
                   name="phone"
                   type="tel"
                   pattern="[0]{1}[0-9]{9}"
                   placeholder="Phone Number"
                   defaultValue={customer.phone}
                   onChange={handleChange}
-                  // {...register("phone", {
-                  //   required: true,
-                  //   maxLength: 11,
-                  //   minLength: 10,
-                  //   valueAsNumber: true,
-                  // })}
                 />
-                {/* {errors?.phone?.type === "required" && (
+                {errors?.phone?.type === "required" && (
                   <p>Không được để trống</p>
                 )}
                 {errors?.phone?.type === "maxLength" && (
@@ -162,24 +162,24 @@ function CustomerDetail() {
                 )}
                 {errors?.phone?.type === "valueAsNumber" && (
                   <p>Yêu cầu phải nhập vào là số</p>
-                )} */}
+                )}
               </CFormGroup>
               <CFormGroup>
                 <CLabel htmlFor="vat">Email</CLabel>
                 <CInput
+                  {...register("email", {
+                    required: true,
+                    maxLength: 50,
+                    minLength: 5,
+                    pattern: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/,
+                  })}
                   name="email"
                   type="mail"
                   placeholder="Email"
                   defaultValue={customer.email}
                   onChange={handleChange}
-                  // {...register("email", {
-                  //   required: true,
-                  //   maxLength: 50,
-                  //   minLength: 5,
-                  //   pattern: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/,
-                  // })}
                 />
-                {/* {errors?.email?.type === "required" && (
+                {errors?.email?.type === "required" && (
                   <p>Không được để trống</p>
                 )}
                 {errors?.email?.type === "maxLength" && (
@@ -190,22 +190,22 @@ function CustomerDetail() {
                 )}
                 {errors?.email?.type === "pattern" && (
                   <p>Email Không đúng định dạng</p>
-                )} */}
+                )}
               </CFormGroup>
               <CFormGroup>
                 <CLabel htmlFor="address">Địa chỉ</CLabel>
                 <CInput
+                  {...register("address", {
+                    required: true,
+                    maxLength: 50,
+                    minLength: 5,
+                  })}
                   name="address"
                   placeholder="Địa chỉ"
                   defaultValue={customer.address}
                   onChange={handleChange}
-                  // {...register("address", {
-                  //   required: true,
-                  //   maxLength: 50,
-                  //   minLength: 5,
-                  // })}
                 />
-                {/* {errors?.address?.type === "required" && (
+                {errors?.address?.type === "required" && (
                   <p>Không được để trống</p>
                 )}
                 {errors?.address?.type === "maxLength" && (
@@ -213,14 +213,14 @@ function CustomerDetail() {
                 )}
                 {errors?.address?.type === "minLength" && (
                   <p>Độ dài không được ít hơn 5 kí tự</p>
-                )} */}
+                )}
               </CFormGroup>
               <CFormGroup>
                 <CLabel htmlFor="birthday">Ngày sinh</CLabel>
                 <CInput
                   name="dateOfBirth"
                   type="date"
-                  max={new Date().toISOString()}
+                  max={new Date().toISOString().slice(0, 10)}
                   placeholder="Ngày sinh"
                   defaultValue={new Date(customer.dateOfBirth)
                     .toISOString()
@@ -280,26 +280,19 @@ function CustomerDetail() {
               <CFormGroup>
                 <CLabel htmlFor="note">Thông tin bổ sung về khách hàng</CLabel>
                 <CTextarea
+                  {...register("note", {
+                    maxLength: 250,
+                  })}
                   style={{ height: "120px" }}
                   name="note"
                   placeholder="Ghi chú thông tin Khách hàng"
                   defaultValue={customer.note}
                   onChange={handleChange}
-                  // {...register("phone", {
-                  //   required: true,
-                  //   maxLength: 250,
-                  //   minLength: 5,
-                  // })}
                 />
-                {/* {errors?.name?.type === "required" && (
-                  <p>Không được để trống</p>
-                )}
-                {errors?.name?.type === "maxLength" && (
+
+                {errors?.note?.type === "maxLength" && (
                   <p>Độ dài không được vượt quá 250 kí tự</p>
                 )}
-                {errors?.name?.type === "minLength" && (
-                  <p>Độ dài không được ít hơn 5 kí tự</p>
-                )} */}
               </CFormGroup>
             </CCardBody>
           </CCard>
