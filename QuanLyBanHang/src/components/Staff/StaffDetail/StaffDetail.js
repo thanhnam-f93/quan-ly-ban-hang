@@ -1,12 +1,9 @@
 
 import React, { useState, useEffect } from 'react'
-import Select from 'react-select'
-import { ApiRole } from 'src/apis/Apis';
+import { callApi } from 'src/apis/Apis';
 import {
   CCard,
   CCardBody,
-  CCardHeader,
-  CCol,
   CFormGroup,
   CLabel,
   CInput,
@@ -14,13 +11,15 @@ import {
 } from '@coreui/react'
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
+// import {useForm} from 'react-hook-form';
 
 const StaffDetail = (props) => {
 
+  /* Code */
   const [roles, setRoles] = useState([]);
 
   useEffect(() => {
-    axios(ApiRole)
+   callApi('get', 'roles')
       .then(response => { setRoles(response.data) })
       .catch(error => console.log('error'))
   }, []);
@@ -39,7 +38,7 @@ const StaffDetail = (props) => {
     dateOfBirth: staffDetail.dateOfBirth,
     status: staffDetail.status,
     roleId: staffDetail.roleId,
-    createDate: staffDetail.createDate,
+    createdDate: staffDetail.createdDate,
     createBy: staffDetail.createBy,
     modifiedDate: new Date(),
     modifiedBy: localStorage.getItem("user")
@@ -53,7 +52,6 @@ const StaffDetail = (props) => {
     console.log('staff ',staff)
   }
 
-
   var data = JSON.stringify(staff);
   var config = {
     method: 'put',
@@ -65,7 +63,6 @@ const StaffDetail = (props) => {
     data: data
   };
 
-  
   const getValueSelect = () => {
     var select = document.getElementById('select')
     setStaff({ ...staff, roleId: [Number(select.value)] })
@@ -78,6 +75,18 @@ const StaffDetail = (props) => {
       .then(response => { history.goBack() })
       .catch(error => { console.log(error) })
   }
+  /* End - Code */
+
+  /* Validation */
+
+// const { register, handleSubmit, formState: { errors } } = useForm();
+// const tagViewError = (messageError) => {
+//   return(
+//     <p style = {{color: "red"}}><i class="fas fa-exclamation-triangle" style = {{color: "#b40404", marginRight: "10px"}}></i><span>{messageError}</span></p>
+//     )
+//   }
+
+/* End - Validation */
 
   return (
     <div>
@@ -165,8 +174,8 @@ const StaffDetail = (props) => {
                 <CFormGroup>
                   <CLabel htmlFor="company">Ngày tạo</CLabel>
                   <CInput
-                    defaultValue={staffDetail.createDate}
-                    name="createDate"
+                    defaultValue={staffDetail.createdDate}
+                    name="createdDate"
                     onChange={onHandleChange}
                   />
                 </CFormGroup>
@@ -201,7 +210,7 @@ const StaffDetail = (props) => {
 
         <div style={{ marginLeft: "950px", padding: "20px 0px" }}>
           <button
-            type="reset"
+            onClick={() => {history.goBack()}}
             className="btn btn-light"
             style={{ marginLeft: "10px", padding: "7px 20px" }}
           >

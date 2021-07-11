@@ -1,7 +1,6 @@
 import React from 'react'
 import { useHistory } from 'react-router-dom'
 
-
 const StaffItem = ({staff}) => {
   let history = useHistory();
 
@@ -11,6 +10,7 @@ const StaffItem = ({staff}) => {
       state: { staff: staff }
     })
   }
+  
   return (
     <>
        <tr >

@@ -1,23 +1,17 @@
 import React, { useState } from 'react'
-import { apiAddRole } from 'src/apis/Apis';
+import { callApi } from 'src/apis/Apis';
 import {
-    CCard,
     CCardBody,
-    CCardHeader,
-    CCol,
     CFormGroup,
     CLabel,
     CInput,
     CTextarea
   } from '@coreui/react'
-  import axios from 'axios';
 import { useHistory } from 'react-router-dom';
-
 
 const AddRole = () => {
 
     let history = useHistory();
-
 
     const [role, setRole] = useState({createdDate: new Date(), createBy: localStorage.getItem('user')})
 
@@ -27,11 +21,10 @@ const AddRole = () => {
     }
 
     const addRole = (e) => {
-        e.preventDefault();
-        apiAddRole.data = role;
-        axios(apiAddRole)
-        .then(response => {history.goBack()})
-    }
+      e.preventDefault();
+      callApi('post', 'roles', role)
+      .then(response => {history.goBack()})
+  }
 
   return (
     <div>

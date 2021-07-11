@@ -1,8 +1,7 @@
 
 import React from 'react'
 import { useState, useEffect } from 'react';
-import axios from 'axios';
-import { ApiRole } from 'src/apis/Apis';
+import { callApi } from 'src/apis/Apis';
 import RoleItem from './RoleItem/RoleItem';
 import {Link} from 'react-router-dom';
 
@@ -11,7 +10,7 @@ const Role = () => {
   const [roles, setRoles] = useState([]);
 
   useEffect(() => {
-    axios(ApiRole)
+    callApi('get', 'roles')
       .then(response => { setRoles(response.data); console.log('data role ', response); })
       .catch(error => console.log('error'))
   }, []);
