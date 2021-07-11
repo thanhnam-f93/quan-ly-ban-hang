@@ -34,7 +34,7 @@ useEffect(() => {
           <SalerHeader />
       </div>
       <div className = "body">
-        {isShowProducts ?   <SaleProductOption  /> : ""}
+        {isShowProducts ?   <SaleProductOption products = {products}  /> : ""}
         <SalerContent />
       </div>
       </SalerContext.Provider>

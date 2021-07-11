@@ -1,7 +1,8 @@
 import React, { useContext } from "react";
 import { SalerContext } from "src/context/JwtContext";
 import "./scss/SaleProductOptionItem.scss";
-const SaleProductOptionItem = ({item}) => {
+const SaleProductOptionItem = (props) => {
+  const {item}=props;
     console.log("item:hello",item);
   return (
     <div className="Sale-product-option-item">
@@ -10,7 +11,7 @@ const SaleProductOptionItem = ({item}) => {
       <div className="option-item-content">
         <div className="option-item-right">
           <div className="item-1">
-            <span>{item.name}</span>
+            {/* <span>{item.name}</span> */}
             <span>{item.price}</span>
           </div>
           <div className="item-1">
