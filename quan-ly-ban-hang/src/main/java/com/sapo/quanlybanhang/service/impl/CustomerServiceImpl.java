@@ -24,7 +24,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
     @Override
     public Page<CustomerDto> getPage(Pageable pageable) {
-        Page<CustomerEntity> entityPage = customerRepository.findAll(pageable);
+        Page<CustomerEntity> entityPage = customerRepository.All(pageable);
         Page<CustomerDto> dtoPage = entityPage.map(CustomerConvert::toDTO);
         return entityPage.hasContent() ? dtoPage : null;
     }
@@ -118,7 +118,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public List<CustomerDto> getAll(){
-        return customerRepository.All().stream().map(item->CustomerConvert.toDTO(item)).collect(Collectors.toList());
+        return customerRepository.findAll().stream().map(item->CustomerConvert.toDTO(item)).collect(Collectors.toList());
     }
     @Override
     public void save(CustomerDto customerDto) {

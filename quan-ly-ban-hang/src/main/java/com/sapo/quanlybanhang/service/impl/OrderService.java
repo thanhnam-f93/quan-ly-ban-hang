@@ -5,6 +5,7 @@ import com.sapo.quanlybanhang.converter.OrderDetailConverter;
 import com.sapo.quanlybanhang.dao.IOrderDao;
 import com.sapo.quanlybanhang.dto.OrderDetailDto;
 import com.sapo.quanlybanhang.dto.OrderDto;
+import com.sapo.quanlybanhang.dto.OrderListDto;
 import com.sapo.quanlybanhang.dto.OrderPageable;
 import com.sapo.quanlybanhang.entity.*;
 import com.sapo.quanlybanhang.repository.*;
@@ -110,9 +111,9 @@ public class OrderService implements IOrderService {
 
     @Override
     @Transactional
-    public List<OrderDto> findByCodeAndCustomer(OrderPageable orderPageable) {
-            return orderDao.findByCodeAndCustomer( orderPageable).stream().
-                    map(item -> OrderConverter.toDto(item)).collect(Collectors.toList());
+    public OrderListDto findByCodeAndCustomer(OrderPageable orderPageable) {
+            return orderDao.findByCodeAndCustomer( orderPageable);
+
 
     }
 
@@ -124,6 +125,11 @@ public class OrderService implements IOrderService {
     @Override
     public OrderEntity findById(Integer id) {
         return orderRepository.findOneById(id);
+    }
+
+    @Override
+    public Integer getTotalItem() {
+        return (int) orderRepository.count();
     }
 
 

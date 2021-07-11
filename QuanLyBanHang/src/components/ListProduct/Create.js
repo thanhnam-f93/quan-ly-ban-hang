@@ -7,17 +7,18 @@ import {
   CInput,
   CLabel,
   CRow,
+  CTextarea,
   CInputFile,
   CValidFeedback
 } from "@coreui/react";
+import Swal from 'sweetalert2'
 import { useEffect, useState } from "react";
+import swal from 'sweetalert';
 import {
-  createCategory,
   getBrand,
-  getColor,
-  getSize,
   getCate,
-  getSupplier
+  getSupplier,
+  createProduct
 } from "src/apis/Product";
 import Select from "react-select";
 import axios from "axios";
@@ -31,50 +32,51 @@ function Create(props) {
     price:"",
 
   });
-  const [brand_id, setBrandID] = useState("");
+  const [brandName, setBrandName] = useState("");
   const [numberProduct, setNumber] = useState("");
   const [image, setImage] = useState("");
   const [price, setPrice] = useState("");
-  const [supplier_id, setSupplierId] = useState("");
+  const [supplierName, setSupplierName] = useState("");
   const [description, setDescription] = useState("");
-  const [color_id, setColorId] = useState("");
-  const [size_id, setSizeId] = useState("");
-  const [category_id, setCategoryId] = useState("");
+  const [color, setColorId] = useState("");
+  const [size, setSizeId] = useState("");
+  const [categoryName, setCategoryName] = useState("");
   const [createdDate, setCreatedDate] = useState("");
   const [category, setCategory] = useState([]);
-  const [color, setColor] = useState([]);
-  const [size, setSize] = useState([]);
   const [brand, setBrand] = useState([]);
   const [supplier, setSupplier] = useState([]);
   const [filterOptions, setFilterOptions] = useState([]);
   const [filterOptionCategory, setFilterOptionCategory] = useState([]);
-  const [filterOptionColor, setFilterOptionColor] = useState([]);
-  const [filterOptionSize, setFilterOptionSize] = useState([]);
   const [filterOptionBrand, setFilterOptionBrand] = useState([]);
 
-  const saveCategory = (e) => {
+  const saveProduct = (e) => {
     e.preventDefault();
     let product = {
-      code: code,
-      name: name,
-      brand_id: brand_id,
-      numberProduct: numberProduct,
-      image: image,
-      price: price,
-      description: description,
-      color_id: color_id,
-      size_id: size_id,
-      category_id: category_id,
-      createdDate: createdDate,
-      supplier_id: supplier_id,
+          code: code,
+          name: name,
+          brandName: brandName,
+          numberProduct: numberProduct,
+          image: image,
+          price: price,
+          description: description,
+          color: color,
+          size: size,
+          categoryName: categoryName,
+          createdDate: createdDate,
+          supplierName: supplierName,
     };
-    console.log(product);
-    createCategory(product).then((item) => {
-
-        props.history.push("/category");
-     
+  console.log(product);
+    createProduct(product).then((item) => {  
+    Swal.fire({
+      icon: 'success',
+      title: 'đã đạo thêm nhà cung cấp',
+      showConfirmButton: false,
+      timer: 1500
+    })
+      props.history.push("/product");
     });
   };
+
   useEffect(() => {
     getSupplier().then((res) => {
       setSupplier(res.data);
@@ -88,18 +90,7 @@ function Create(props) {
       console.log(res.data);
     });
   }, []);
-  useEffect(() => {
-    getColor().then((res) => {
-      setColor(res.data);
-      console.log(res.data);
-    });
-  }, []);
-  useEffect(() => {
-    getSize().then((res) => {
-      setSize(res.data);
-      console.log(res.data);
-    });
-  }, []);
+
   useEffect(() => {
     getBrand().then((res) => {
       setBrand(res.data);
@@ -124,24 +115,6 @@ function Create(props) {
       ]);
     });
   }, [category]);
-
-  useEffect(() => {
-    color.map((item) => {
-      setFilterOptionColor((filterOptions) => [
-        ...filterOptions,
-        { value: item.id, label: item.name },
-      ]);
-    });
-  }, [color]);
-
-  useEffect(() => {
-    size.map((item) => {
-      setFilterOptionSize((filterOptions) => [
-        ...filterOptions,
-        { value: item.id, label: item.size },
-      ]);
-    });
-  }, [size]);
 
   useEffect(() => {
     brand.map((item) => {
@@ -231,7 +204,8 @@ const changeCode= (event) => {
     setName(event.target.value);
   };
   const changeBrand = (event) => {
-    setBrandID(event.value);
+    setBrandName(event.label);
+    console.log(event)
   };
 
   const changeNumber = (event) => {
@@ -246,24 +220,20 @@ const changeCode= (event) => {
   const changePrice = (event) => {
     setPrice(event.target.value);
   };
-
   const changeDescription = (event) => {
     setDescription(event.target.value);
   };
   const changeColor = (event) => {
-    setColorId(event.value);
+    setColorId(event.target.value);
   };
   const changeSize = (event) => {
-    setSizeId(event.value);
+    setSizeId(event.target.value);
   };
   const changeCate = (event) => {
-    setCategoryId(event.value);
-  };
-  const changeCreateDate = (event) => {
-    setCreatedDate(event.target.value);
+    setCategoryName(event.label);
   };
   const changeSuppliers = (event) => {
-    setSupplierId(event.value);
+    setSupplierName(event.label);
   };
 
 
@@ -297,11 +267,6 @@ const changeCode= (event) => {
                 </CFormGroup>
                 <CFormGroup>
                   <CLabel htmlFor="vat">Số lượng</CLabel>
-                  {/* <CInput
-                    id="vat"
-                    placeholder="Số lượng"
-                    onChange={changeNumber}
-                  /> */}
                   <CInput
                
                     id="vat"
@@ -314,8 +279,10 @@ const changeCode= (event) => {
                 </CFormGroup>
                 <CFormGroup>
                   <CLabel htmlFor="vat">Mô tả</CLabel>
-                  <CInput
-                    id="vat"
+                  <CTextarea
+                    name="textarea-input"
+                    id="textarea-input"
+                    rows="3"
                     placeholder="mô tả"
                     onChange={changeDescription}
                   />
@@ -338,22 +305,23 @@ const changeCode= (event) => {
                 <CFormGroup row className="my-0">
                   <CCol xs="6">
                     <CFormGroup>
-                      <CLabel htmlFor="city">Color</CLabel>
-                      <Select
-                        options={filterOptionColor}
-                        onChange={changeColor}
-                    
-                      />
+                      <CLabel htmlFor="city">Màu sắc</CLabel>
+                      <CInput
+                    name="color"
+                    placeholder="Nhập tên màu sắc"
+                    onChange={changeColor}                  
+                  />
                     
                     </CFormGroup>
                   </CCol>
                   <CCol xs="6">
                     <CFormGroup>
-                      <CLabel htmlFor="postal-code">Size</CLabel>
-                      <Select
-                        options={filterOptionSize}
-                        onChange={changeSize}
-                      />
+                      <CLabel htmlFor="postal-code">Kích cỡ</CLabel>
+                      <CInput
+                    name="color"
+                    placeholder="Nhập kích cỡ"
+                    onChange={changeSize}
+                  />
                     </CFormGroup>
                   </CCol>
                 </CFormGroup>
@@ -370,29 +338,30 @@ const changeCode= (event) => {
                 </CFormGroup>
                 <CFormGroup>
                   <CLabel htmlFor="vat">Loại</CLabel>
-
                   <Select
                     options={filterOptionCategory}
                     onChange={changeCate}
                   />
+                       {/* <CInput
+                    name="color"
+                    placeholder="Nhập kích cỡ"
+                    onChange={changeCate}
+                  /> */}
+                  
                 </CFormGroup>
                 <CFormGroup>
-                  <CLabel htmlFor="vat">Ngày tạo</CLabel>
-                  {/* <CInput id="vat" onChange={changeCreateDate} /> */}
-                  <CInput type="date" id="dob" name="dob"  placeholder="date" onChange={changeCreateDate} />
-                </CFormGroup>
-                <CFormGroup>
-                  <CLabel htmlFor="vat">Nhà phân phối</CLabel>
+                  <CLabel htmlFor="vat">Nhà cung cấp</CLabel>
                   {/* <CInput id="vat" placeholder="nguồn hàng" onChange={changeSupplier} /> */}
 
                   <Select options={filterOptions} onChange={changeSuppliers} />
                 </CFormGroup>
               </CCardBody>
             </CCard>
+
             <CCard>
             <CCardHeader>Ảnh</CCardHeader>
             <CCardBody>
-            <CFormGroup row className="my-0">
+            <CFormGroup >
             <CFormGroup>
                       {/* <CLabel htmlFor="city">Chọn ảnh</CLabel>
                     */}
@@ -428,7 +397,7 @@ const changeCode= (event) => {
         </button>
         <button
           className="btn btn-success"
-          onClick={saveCategory}
+          onClick={saveProduct}
           style={{ marginLeft: "10px" }}
         >
           Thêm sản phẩm

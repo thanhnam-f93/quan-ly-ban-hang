@@ -1,4 +1,5 @@
 import React from 'react';
+import { Dropdown } from 'react-bootstrap';
 import DropDown from './DropDown';
 
 const ModalHeaders = (props) => {
@@ -19,7 +20,7 @@ const ModalHeaders = (props) => {
             placeholder="Tìm kiếm theo mã đơn hàng, tên, SĐT khách hàng"
           />
         </div>
-        {/* <DropDown opDate  = {opDate} /> */}
+        <Dropdown />
       </div>
     );
 }

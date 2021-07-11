@@ -1,10 +1,9 @@
 import axios from "axios";
 import React from "react";
-import { useHistory, useLocation, useParams } from "react-router-dom";
-import { Link, NavLink } from "react-router-dom";
-function CustomerItem({ customer, deleteC, index}) {
+import Swal from "sweetalert2";
+import { useHistory } from "react-router-dom";
+function CustomerItem({ customer, deleteC, index }) {
   const history = useHistory();
-  console.log("key", deleteC);
   return (
     // <NavLink
     //   to={{ pathname: "/customerDetail", state: { customer } }}
@@ -18,7 +17,7 @@ function CustomerItem({ customer, deleteC, index}) {
       className="row"
       style={{ backgroundColor: "white", hover: { backgroundColor: "red" } }}
     >
-      <td className="col-1">{index}</td>
+      <td className="col-1">{index + 1}</td>
       <td className="col-3">{customer.name}</td>
       {/* <td className="col-2">{customer.email}</td> */}
       <td className="col-2">{customer.phone}</td>

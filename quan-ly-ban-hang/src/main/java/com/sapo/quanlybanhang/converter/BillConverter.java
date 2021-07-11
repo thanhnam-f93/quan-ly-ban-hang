@@ -1,9 +1,7 @@
 package com.sapo.quanlybanhang.converter;
 
 import com.sapo.quanlybanhang.dto.BillDto;
-import com.sapo.quanlybanhang.dto.OrderDto;
 import com.sapo.quanlybanhang.entity.BillEntity;
-import com.sapo.quanlybanhang.entity.OrderEntity;
 
 public class BillConverter {
     public static BillEntity toEntity(BillDto dto){

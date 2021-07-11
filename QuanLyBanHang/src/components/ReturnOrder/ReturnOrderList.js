@@ -1,12 +1,12 @@
 import React from 'react';
-import BillItem from './BillItem';
+import ReturnOrderItem from './ReturnOrderItem';
 
-const BillTable = (props) => {
+const ReturnOrderList = (props) => {
     let tasks = props.lists;
     //    console.log(tasks);
     const elm = tasks.map((item, index) => {
       return (
-        <BillItem
+        <ReturnOrderItem
           key = {index}
           item = {item}
         />
@@ -32,4 +32,4 @@ const BillTable = (props) => {
     );
 };
 
-export default BillTable;
+export default ReturnOrderList;

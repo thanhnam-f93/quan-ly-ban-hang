@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import querystring from 'query-string';
 import Pagination from "./Pagination";
-
+import {Link} from 'react-router-dom'
+import "../../apis/css.scss"
 
 import {
   getCategory,
@@ -9,6 +10,7 @@ import {
   Search,
   getCate,
   Filter,
+
 } from "../../apis/Product";
 import {
   CButton,
@@ -20,9 +22,11 @@ import {
   CForm,
   CInputGroupPrepend,
   CRow,
+  CPagination,
+  CCard
 } from "@coreui/react";
+import swal from 'sweetalert';
 import { DocsLink } from "src/reusable";
-
 import Select from "react-select";
 import CIcon from "@coreui/icons-react";
 import axios from "axios";
@@ -31,25 +35,31 @@ import axios from "axios";
 function ListProduct(props) {
   const id = useState(props.match.params.id);
   const [search, setSearch] = useState("");
-  const [category, setCategory] = useState([]);
-  // const [pageNo, setPageNo] = useState(1);
-  // const [pageSize,setPageSize]= useState(3);
-  // const [totalPage,setTotal]=useState(0);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [postsPerPage,setPageSize] = useState(5);
+  const [product,setProduct] = useState([]);
+  const [pageNo, setPageNo] = useState(1);
+  const [pageSize,setPageSize]= useState(5);
+  const [total,setTotal] = useState(1);
   const [filterCategory, setFilterOptionCategory] = useState([]);
-  const [category_id, setCategory_Id] = useState("");
   const [categories, setCategories] = useState([]);
+  
 
-// const total = Math.ceil(totalPage/pageSize)
+ useEffect(() => {
+  axios.get(`http://localhost:8080/api/v1/productSearch?keyword=${search}&pageNo=${pageNo}&pageSize=${pageSize}`)
+    .then((item) => {
+      setProduct(item.data);
+      console.log(item)
+    });
+}, [search,pageNo,pageSize]);
 
-  useEffect(() => {
-    getCategory()
-      .then((item) => {
-        setCategory(item.data);
-        console.log(item)
-      });
-  }, []);
+
+useEffect(() => {
+  axios.get(`http://localhost:8080/api/v1/productSearchByKey?keyword=${search}`)
+     .then((item) => {
+       setTotal(Math.ceil(item.data.length/pageSize));
+     });
+ }, [search]);
+
+
 
   useEffect(() => {
     getCate().then((res) => {
@@ -57,6 +67,8 @@ function ListProduct(props) {
       console.log(res.data);
     });
   }, []);
+
+
   useEffect(() => {
     categories.map((item) => {
       setFilterOptionCategory((filterOptions) => [
@@ -74,171 +86,99 @@ function ListProduct(props) {
     props.history.push(`product/update-category/${id}`);
   };
 
-  const deleteCategory = (id) => {
-    DeleteCategory(id).then(() => {
-      setCategory(category.filter((item) => item.id !== id));
-    });
-  };
 
   const changeCate = (event) => {
     // setCategory_Id(event.value);
    Filter(event.value).then((item) => {
-      setCategory(item.data);
-      console.log(item)
+      setProduct(item.data);
+      console.log(event.value)
     });
    
-  };
-
-  const SearchByName = (e) => {
-    // e.preventDefault();s
- Search(search).then((item) => {
-      setCategory(item.data);
-     
-
-    });
   };
 
   const changeSearch = (event) => {
     setSearch(event.target.value)
   };
 
-//  const changeNext =()=>{
-//    console.log("111111111111111111")
-//    setPageNo(pageNo+1);
-//  }
-//  const changePrev =()=>{
-//   setPageNo(pageNo-1);
-// }
-
-const indexOfLastPost = currentPage * postsPerPage;
-const indexOfFirstPost = indexOfLastPost - postsPerPage;
-const currentPosts = category.slice(indexOfFirstPost, indexOfLastPost);
-
-const paginate = (page) => setCurrentPage(page);
-
-console.log(currentPage);
-
-const handnext = () => {
-  setCurrentPage(currentPage + 1);
-};
-const handprev = () => {
-  setCurrentPage(currentPage - 1);
-};
-
   return (
+    
     <>
       <div>
+      <CRow>
+          <CCol xs="7" className="px-0" sm="7">
+            <CFormGroup >
+              <CInput
+                name="name"
+                placeholder="tìm kiếm mã, tên"
+                onChange={changeSearch}
+              />  
+          
+               
+            </CFormGroup>
+          </CCol>
+          <CCol xs="3"  sm="3">
+         <Select placeholder="loại sản phẩm" options={filterCategory} onChange={changeCate} />  
+          </CCol>
+        </CRow>
         <CRow>
+        <CCol xs="1">
           <CFormGroup row>
-            <CCol xs="12" sm="7">
-              <CInputGroup>
-                <CInputGroupPrepend>
-                  <CButton type="button" color="primary" onClick={SearchByName}>
-                    <CIcon name="cil-magnifying-glass" /> Search
-                  </CButton>
-                </CInputGroupPrepend>
-                <CInput onChange={changeSearch} placeholder="Search" />
-              </CInputGroup>
-            </CCol>
-            <CCol xs="12" sm="3">
-              <CFormGroup>
-                <Select options={filterCategory} onChange={changeCate} />
-              </CFormGroup>
-            </CCol>
-            <CCol xs="12" sm="4">
-              <CButton block color="success" onClick={addCategory}>
-                Thêm sản phẩm
-              </CButton>
-            </CCol>
+          <CButton block color="success" onClick={addCategory}>
+              Tạo
+            </CButton>
           </CFormGroup>
+          </CCol>
         </CRow>
 
         <div className="row">
-          <table className=" table table-striped table-bordered">
+          <table className=" table" >
+              
             <thead>
               <tr>
+                <th>Mã</th>
                 <th>Ảnh</th>
                 <th>Sản phẩm</th>
                 <th>Loại</th>
                 <th>Nhãn hiệu</th>
                 <th>Số lượng</th>
                 <th>Ngày tạo</th>
-                <th>Tùy chọn</th>
               </tr>
             </thead>
-            <tbody>
-              {currentPosts.map((item) => (
-                <tr key={item.id}>
-                  <td>
-                    <img src={item.image} width="25px" height="25px" />
+            <tbody >
+            {/* {currentPosts.map((item)  */}
+              {product.map((item) => (
+              
+                 <tr key={item.id} onClick={() => updateCategory(item.id)} className="lits">
+             
+                   <td>
+                    {item.code}
                   </td>
-                  <td>{item.name}</td>
+                <td><img src={item.image} width="40px" height="40px" />  </td>
+                  <td style={{color:"blue"}} > {item.name}</td>
                   <td>{item.categoryId}</td>
                   <td>{item.brandID}</td>
                   <td>{item.numberProduct}</td>
                   <td>{item.createdDate}</td>
-
                   <td>
-                    <button
-                      style={{ marginLeft: "10px" }}
-                      onClick={() => updateCategory(item.id)}
-                      className="btn btn-success"
-                    >
-                      chi tiết
-                    </button>
-
-                    {/* <button
-                      style={{ marginLeft: "10px" }}
-                      onClick={() => deleteCategory(item.id)}
-                      className="btn btn-danger"
-                    >
-                      Delete
-                    </button> */}
                   </td>
+
                 </tr>
+              
+               
               ))}
             </tbody>
           </table>
           
        
         </div>
-        <div className="row">    <div className="pagination">
-          <div className="page-item">
-            <button
-              className="btn btn-primary"
-              onClick={handprev}
-              disabled={currentPage == 1 ? true : false}
-            >
-              prev
-            </button>
-          </div>
-        </div>
-        {/* <Pagination
-          postsPerPage={postsPerPage}
-          totalPosts={category.length}
-          paginate={paginate}
-        /> */}
-        <Pagination 
-        postsPerPage={postsPerPage}
-        totalPosts={category.length}
-        paginate={paginate}/>
+        <div className="row"> 
 
-      
-         <div className="pagination">
-          <div className="page-item">
-            <button
-              className="btn btn-primary"
-              onClick={handnext}
-              disabled={
-                currentPage == Math.ceil(category.length / postsPerPage)
-                  ? true
-                  : false
-              }
-            >
-              next
-            </button>
-          </div>
-        </div>
+        <CPagination
+            activePage={pageNo}
+            pages={total}
+            onActivePageChange={setPageNo}
+          />
+
         </div>
     
       </div>

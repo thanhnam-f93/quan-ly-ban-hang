@@ -2,12 +2,10 @@ package com.sapo.quanlybanhang.repository;
 
 import com.sapo.quanlybanhang.dto.OrderItem;
 import com.sapo.quanlybanhang.entity.BillEntity;
-import com.sapo.quanlybanhang.entity.OrderEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.time.LocalDate;
-import java.util.List;
 
 public interface BillRepository extends JpaRepository<BillEntity, Integer> {
     @Query("select new com.sapo.quanlybanhang.dto.OrderItem(count (b), sum(b.price)) " +

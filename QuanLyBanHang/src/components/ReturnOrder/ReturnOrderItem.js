@@ -2,7 +2,7 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { reactLocalStorage } from 'reactjs-localstorage';
 
-const BillItem = (props) => {
+const ReturnOrderItem = (props) => {
     const history = useHistory();
     const item = props.item;
     const d = new Date(item.createdDate);
@@ -33,4 +33,4 @@ const BillItem = (props) => {
     );
 }
 
-export default BillItem;
+export default ReturnOrderItem;

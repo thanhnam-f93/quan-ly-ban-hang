@@ -32,13 +32,13 @@ public class ProductDto {
 
     private String state;
 
-    private String colorId;
+    private String color;
 
     private Date createdDate;
 
     private Date modifiedDate;
 
-    private String sizeId;
+    private String size;
 
     private String categoryId;
 

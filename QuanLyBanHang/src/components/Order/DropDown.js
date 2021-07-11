@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import DayPickerInput from "react-day-picker/DayPickerInput";
-import "./scss/DropDown.css";
+import "./scss/DropDown.scss";
 import "react-day-picker/lib/style.css";
 
 const DropDown = (props) => {

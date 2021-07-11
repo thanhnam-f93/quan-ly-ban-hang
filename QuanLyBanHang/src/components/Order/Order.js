@@ -4,22 +4,21 @@ import { callApi } from 'src/apis/ApiCaller';
 import { JwtContext } from 'src/context/JwtContext';
 import OrderHeader from './OrderHeader';
 import OrderTable from './OrderTable';
-import './scss/order.css'
+import './scss/order.scss'
 import {
   CPagination
 } from '@coreui/react'
 
-
-
-
 const Order = () => {
+  const [orderDto,setOrderDto] = useState({});
+  const [totalPage,setTotalPage] = useState(5);
   const [currentPage, setCurrentPage] = useState(1);
   const {jwt}= useContext(JwtContext);
   const acc= reactLocalStorage.getObject("acc");
   console.log(acc);
   const [orderPageable, setOrderPageAble] = useState({
     page:1,
-    limit:7,
+    limit:20,
     inputOrder:"",
     orderTime:""
   });
@@ -37,15 +36,16 @@ const Order = () => {
       }
       response.json().then((data) => {     
         console.log("size data:",data.length);
-        setListOrder(data);
-        
-        // alert("thao tác thành công");       
+        setOrderDto(data);  
+        console.log("order give:",data);
+        setTotalPage(Math.ceil(data.totalItem/orderPageable.limit));
+        setListOrder(data.resultItem);
       });
     });
  
 }, [orderPageable])
 
-/**
+/**-------------------------------------------------
  * filter and search order
  */
 
@@ -75,9 +75,9 @@ const getPage = (page) =>{
           <OrderHeader inputs  = {getInput} getDate = {getDate} />   
          <OrderTable lists = {listOrder}/>
          <CPagination
-            doubleArrows = {false}
+            doubleArrows = {true}
             activePage={orderPageable.page}
-            pages={10}
+            pages={totalPage}
             onActivePageChange={getPage}
           />  
           

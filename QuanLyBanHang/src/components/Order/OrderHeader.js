@@ -1,7 +1,7 @@
 import React from "react";
-import "./scss/order.css";
+import "./scss/order.scss";
 import DropDown from "./DropDown";
-import "./scss/DropDown.css";
+import "./scss/DropDown.scss";
 
 const OrderHeader = (props) => {
   let inputs = props.inputs;

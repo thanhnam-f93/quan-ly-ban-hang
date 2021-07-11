@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
 import { callApi, callApiNotJwt } from "src/apis/ApiCaller";
 import OrderHeader from "../Order/OrderHeader";
-import BillTable from "./BillTable";
-import "./../Order/scss/order.css";
+import ReturnOrderList from "./ReturnOrderList";
+import "./../Order/scss/order.scss";
 import { JwtContext } from "src/context/JwtContext";
 import { Dropdown, Modal } from "react-bootstrap";
 import Login from "src/views/pages/login/Login";
@@ -11,15 +11,15 @@ import Logins from "../Login/Logins";
 import OrderModal from "../Order/OrderModal";
 import { CPagination } from "@coreui/react";
 
-const Bill = () => {
+const ReturnOrder = () => {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const { jwt } = useContext(JwtContext);
-  const [totalPage, setTotalPage] = useState(6);
+  const [totalPage, setTotalPage] = useState();
   const [orderPageable, setOrderPageAble] = useState({
     page: 1,
-    limit: 10,
+    limit: 20,
     inputOrder: "",
     orderTime: "",
   });
@@ -42,13 +42,11 @@ const Bill = () => {
         return;
       }
       response.json().then((data) => {
+        console.log(data);
         console.log(data.length);
-        setListOrder(data);
-        if(data.length<7){
-          var page = orderPageable.page;
-          setTotalPage({page});
-        }
-        // alert("thao tác thành công");
+        setListOrder(data.resultList);
+        setTotalPage(Math.ceil(data.totalItem/orderPageable.limit));
+      
       });
     });
   }, [orderPageable]);
@@ -79,11 +77,11 @@ const Bill = () => {
           </button>
         </div>
       </div>
-      <BillTable lists={listOrder} />
+      <ReturnOrderList lists={listOrder} />
       <CPagination
-            doubleArrows = {false}
+            doubleArrows = {true}
             activePage={orderPageable.page}
-            pages={6}
+            pages={totalPage}
             onActivePageChange={getPage}
           />  
       <Modal show={show}
@@ -111,4 +109,4 @@ const Bill = () => {
   );
 };
 
-export default Bill;
+export default ReturnOrder;

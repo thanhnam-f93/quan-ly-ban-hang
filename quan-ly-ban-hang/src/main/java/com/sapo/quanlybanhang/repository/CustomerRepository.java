@@ -4,9 +4,11 @@ import com.sapo.quanlybanhang.entity.CustomerEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.query.Procedure;
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -46,12 +48,11 @@ public interface CustomerRepository extends JpaRepository<CustomerEntity, Intege
     @Query(value = "select * from customers where ROUND(DATEDIFF(CURDATE(), date_of_birth) / 365, 0) > 35 and gender = :gender and status='on'", nativeQuery = true)
     Page<CustomerEntity> findByAgeOver35optionGender(@Param("gender")String gender, Pageable pageable);
 
-    @Query(value = "select * from customers where status='on'", nativeQuery = true)
-    Page<CustomerEntity> fillAll(Pageable pageable);
+    @Query(value = "select * from customers  where status ='on'",nativeQuery = true)
+    Page<CustomerEntity> All(Pageable pageable);
 
-    @Query(value = "select * from customers", nativeQuery = true)
-    List<CustomerEntity> All();
-
+    @Transactional
+    @Modifying
     @Query(value = "update CustomerEntity c set c.status ='off' where c.id = :id")
 void updateStatus(@Param("id")Integer id);
 
