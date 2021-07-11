@@ -9,10 +9,25 @@ const OrderHeader = () => {
 
   const { jwt } = useContext(JwtContext);
   const { setProducts, setIsShowProducts } = useContext(SalerContext);
-
+  const orderPageable = {
+    page:1,
+    limit:7,
+  };
 
   //--------------------------------useEffect-------------------------------------------
   useEffect(() => {
+    callApi(`api/v1/find-all`, "POST",orderPageable, jwt).then(
+      (response) => {
+        if (response.status !== 200) {
+          alert("thao tác thất bại");
+          return;
+        }
+        response.json().then((data) => {
+          console.log(data);
+          setProducts(data);
+        });
+      }
+    );
   }, []);
   // ----------------------------------functions----------------------------------------------
   /**
@@ -38,9 +53,21 @@ const OrderHeader = () => {
   };
 
   const IsShowProduct = ()=>{
+    callApi("api/v1/find-all", "POST", orderPageable ,jwt).then((response) => {
+      if (response.status !== 200) {
+        alert("thao tác thất bại");
+        return;
+      }
+      response.json().then((data) => {
+        console.log("products:",data);
+        setProducts(data);
+      });
+    });
     setIsShowProducts(true);
     console.log("ishow:");
   }
+  
+
   return (
     <div className="wrapper-header">
       <div className="header-left">

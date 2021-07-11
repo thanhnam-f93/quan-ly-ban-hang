@@ -18,7 +18,7 @@ const Order = () => {
   console.log(acc);
   const [orderPageable, setOrderPageAble] = useState({
     page:1,
-    limit:20,
+    limit:10,
     inputOrder:"",
     orderTime:""
   });
@@ -67,6 +67,10 @@ const getDate = (op, da) =>{
 
 const getPage = (page) =>{
   console.log("trang:",page);
+  if(page==0){
+   
+    page = 1;
+  }
   setOrderPageAble({...orderPageable, page:page});
 }
 
