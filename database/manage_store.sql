@@ -114,7 +114,6 @@ UNLOCK TABLES;
 --
 -- Table structure for table `categories`
 --
-
 DROP TABLE IF EXISTS `categories`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
@@ -174,18 +173,18 @@ DROP TABLE IF EXISTS `customers`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `customers` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `phone` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `email` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `address` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `gender` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `date_of_birth` date DEFAULT NULL,
+  `phone` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci unique NOT NULL,
+  `email` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci unique NOT NULL,
+  `address` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `gender` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `date_of_birth` date NOT NULL,
   `note` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `created_date` date DEFAULT NULL,
-  `modified_by` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `modified_date` date DEFAULT NULL,
-  `created_by` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `name` varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `status` varchar(3) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `created_date` date NOT NULL,
+  `modified_by` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `modified_date` date NOT NULL,
+  `created_by` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `name` varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `status` varchar(3) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -197,20 +196,20 @@ CREATE TABLE `customers` (
 LOCK TABLES `customers` WRITE;
 /*!40000 ALTER TABLE `customers` DISABLE KEYS */;
 INSERT INTO `customers`(phone,email,address,gender,date_of_birth,note,created_date,modified_by,modified_date,created_by,name,status) 
- VALUES ('321456256','N@gmail.com','Hà Nội','Nam','2001-02-02','adsa','2021-02-02','Nguyễn Văn a','2000-02-02','Nguyễn Văn v','trần hà','on');
-INSERT INTO `customers` (phone,email,address,gender,date_of_birth,note,created_date,modified_by,modified_date,created_by,name,status) VALUES ('321456256','N@gmail.com','Hà Nội','Nu','2002-02-02','adsa','2021-02-02','Nguyễn Văn a','2000-02-02','Nguyễn Văn b','trần hà','on');
-INSERT INTO `customers` (phone,email,address,gender,date_of_birth,note,created_date,modified_by,modified_date,created_by,name,status) VALUES ('321453256','N@gmail.com','Hà Nội','Nam','2003-02-02','adsa','2021-02-02','Nguyễn Văn a','2000-02-02','Nguyễn Văn c','trần hà','on');
-INSERT INTO `customers` (phone,email,address,gender,date_of_birth,note,created_date,modified_by,modified_date,created_by,name,status) VALUES ('32148256','N@gmail.com','Hà Nội','Nam','2010-02-02','adsa','2021-02-02','Nguyễn Văn a','2000-02-02','Nguyễn Văn d','trần hà','on');
-INSERT INTO `customers` (phone,email,address,gender,date_of_birth,note,created_date,modified_by,modified_date,created_by,name,status) VALUES ('321496256','N@gmail.com','Hà Nội','Nam','2004-02-02','adsa','2021-02-02','Nguyễn Văn a','2000-02-02','Nguyễn Văn e','trần hà','on');
-INSERT INTO `customers` (phone,email,address,gender,date_of_birth,note,created_date,modified_by,modified_date,created_by,name,status) VALUES ('321406256','N@gmail.com','Hà Nội','Nam','2005-02-02','adsa','2021-02-02','Nguyễn Văn a','2000-02-02','Nguyễn Văn f','trần hà','on');
-INSERT INTO `customers` (phone,email,address,gender,date_of_birth,note,created_date,modified_by,modified_date,created_by,name,status) VALUES ('321426256','N@gmail.com','Hà Nội','Nam','2006-02-02','adsa','2021-02-02','Nguyễn Văn a','2000-02-02','Nguyễn Văn g','trần hà','on');
-INSERT INTO `customers` (phone,email,address,gender,date_of_birth,note,created_date,modified_by,modified_date,created_by,name,status) VALUES ('321446256','N@gmail.com','Hà Nội','Nam','2007-02-02','adsa','2021-02-02','Nguyễn Văn a','2000-02-02','Nguyễn Văn h','trần hà','on');
-INSERT INTO `customers` (phone,email,address,gender,date_of_birth,note,created_date,modified_by,modified_date,created_by,name,status) VALUES ('321476256','N@gmail.com','Hà Nội','Nu','2008-02-02','adsa','2021-02-02','Nguyễn Văn a','2000-02-02','Nguyễn Văn j','trần hà','on');
-INSERT INTO `customers` (phone,email,address,gender,date_of_birth,note,created_date,modified_by,modified_date,created_by,name,status) VALUES ('321476256','N@gmail.com','Hà Nội','Nam','2013-02-02','adsa','2021-02-02','Nguyễn Văn a','2000-02-02','Nguyễn Văn k','trần hà','on');
-INSERT INTO `customers` (phone,email,address,gender,date_of_birth,note,created_date,modified_by,modified_date,created_by,name,status) VALUES ('321486256','N@gmail.com','Hà Nội','Nam','2012-02-02','adsa','2021-02-02','Nguyễn Văn a','2000-02-02','Nguyễn Văn l','trần hà','on');
-INSERT INTO `customers` (phone,email,address,gender,date_of_birth,note,created_date,modified_by,modified_date,created_by,name,status) VALUES ('321456256','N@gmail.com','Hà Nội','Nu','2011-02-02','adsa','2021-02-02','Nguyễn Văn a','2000-02-02','Nguyễn Văn x','trần hà','on');
-INSERT INTO `customers` (phone,email,address,gender,date_of_birth,note,created_date,modified_by,modified_date,created_by,name,status) VALUES ('321436256','N@gmail.com','Hà Nội','Nam','1983-02-02','adsa','2021-02-02','Nguyễn Văn a','2000-02-02','Nguyễn Văn z','trần hà','on');
-INSERT INTO `customers`(phone,email,address,gender,date_of_birth,note,created_date,modified_by,modified_date,created_by,name,status) VALUES ('321416256','N@gmail.com','Hà Nội','Nam','1988-02-02','adsa','2021-02-02','Nguyễn Văn a','2000-02-02','Nguyễn Văn b','trần hà','on');
+ VALUES ('0399439339','Nxx@gmail.com','Hà Nội','Nam','2001-02-02','adsa','2021-02-02','Nguyễn Văn a','2000-02-02','Nguyễn Văn v','trần hà','on');
+INSERT INTO `customers` (phone,email,address,gender,date_of_birth,note,created_date,modified_by,modified_date,created_by,name,status) VALUES ('0392439378','N1@gmail.com','Hà Nội','Nu','2002-02-02','adsa','2020-02-02','Nguyễn Văn a','2001-02-02','Nguyễn Văn b','trần hà Nam','on');
+INSERT INTO `customers` (phone,email,address,gender,date_of_birth,note,created_date,modified_by,modified_date,created_by,name,status) VALUES ('0392439369','N2@gmail.com','Hà Nội','Nam','2003-02-02','adsa','2021-02-02','Nguyễn Văn a','2002-02-02','Nguyễn Văn c','trần hà Noi','on');
+INSERT INTO `customers` (phone,email,address,gender,date_of_birth,note,created_date,modified_by,modified_date,created_by,name,status) VALUES ('0392439359','N3@gmail.com','Hà Nội','Nam','2010-02-02','adsa','2020-02-02','Nguyễn Văn a','1977-02-02','Nguyễn Văn d','trần hà Bac','on');
+INSERT INTO `customers` (phone,email,address,gender,date_of_birth,note,created_date,modified_by,modified_date,created_by,name,status) VALUES ('0392439349','N4@gmail.com','Hà Nội','Nam','2004-02-02','adsa','2021-02-02','Nguyễn Văn a','1975-02-02','Nguyễn Văn e','trần hà Dong','on');
+INSERT INTO `customers` (phone,email,address,gender,date_of_birth,note,created_date,modified_by,modified_date,created_by,name,status) VALUES ('0332439349','N5@gmail.com','Hà Nội','Nam','2005-02-02','adsa','2020-02-02','Nguyễn Văn a','1988-02-02','Nguyễn Văn f','trần hà Tay','on');
+INSERT INTO `customers` (phone,email,address,gender,date_of_birth,note,created_date,modified_by,modified_date,created_by,name,status) VALUES ('0392439338','N6@gmail.com','Hà Nội','Nam','2006-02-02','adsa','2007-02-02','Nguyễn Văn a','1967-02-02','Nguyễn Văn g','trần hà Duong','on');
+INSERT INTO `customers` (phone,email,address,gender,date_of_birth,note,created_date,modified_by,modified_date,created_by,name,status) VALUES ('0392439337','N7@gmail.com','Hà Nội','Nam','2007-02-02','adsa','2008-02-02','Nguyễn Văn a','1966-02-02','Nguyễn Văn h','trần hà Am','on');
+INSERT INTO `customers` (phone,email,address,gender,date_of_birth,note,created_date,modified_by,modified_date,created_by,name,status) VALUES ('0392439336','N8@gmail.com','Hà Nội','Nu','2008-02-02','adsa','2008-02-02','Nguyễn Văn a','1994-02-02','Nguyễn Văn j','trần hà Ti','on');
+INSERT INTO `customers` (phone,email,address,gender,date_of_birth,note,created_date,modified_by,modified_date,created_by,name,status) VALUES ('0392439335','N9@gmail.com','Hà Nội','Nam','2013-02-02','adsa','2008-02-02','Nguyễn Văn a','1995-02-02','Nguyễn Văn k','trần hà Suu','on');
+INSERT INTO `customers` (phone,email,address,gender,date_of_birth,note,created_date,modified_by,modified_date,created_by,name,status) VALUES ('0392439334','N10@gmail.com','Hà Nội','Nam','2012-02-02','adsa','2011-02-02','Nguyễn Văn a','1995-02-02','Nguyễn Văn l','trần hà Dan','on');
+INSERT INTO `customers` (phone,email,address,gender,date_of_birth,note,created_date,modified_by,modified_date,created_by,name,status) VALUES ('0392439333','N22@gmail.com','Hà Nội','Nu','2011-02-02','adsa','2011-02-02','Nguyễn Văn a','1999-02-02','Nguyễn Văn x','trần hà Mao','on');
+INSERT INTO `customers` (phone,email,address,gender,date_of_birth,note,created_date,modified_by,modified_date,created_by,name,status) VALUES ('0392439332','N11@gmail.com','Hà Nội','Nam','1983-02-02','adsa','2014-02-02','Nguyễn Văn a','2006-02-02','Nguyễn Văn z','trần hà Thin','on');
+INSERT INTO `customers`(phone,email,address,gender,date_of_birth,note,created_date,modified_by,modified_date,created_by,name,status) VALUES ('0392439331','N12@gmail.com','Hà Nội','Nam','1988-02-02','adsa','2014-02-02','Nguyễn Văn a','2009-02-02','Nguyễn Văn b','trần hà Ti','on');
 
 /*!40000 ALTER TABLE `customers` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -501,7 +500,16 @@ END
 &&
 DELIMITER ;
 call getNewCustomersByMonth(2, 2021);
-
+-- Procedure thống kê số khách hàng mới theo ngày,tháng,năm
+drop procedure getNewCustomersByDay
+    DELIMITER &&
+CREATE PROCEDURE getNewCustomersByDay(in d int,in m int, in y int)
+BEGIN
+select count(*) as Khach_hang_moi from customers where day(created_date) = d and month(created_date) =m and year(created_date) =y;
+END
+&&
+DELIMITER ;
+call getNewCustomersByDay(2,7,2021);
 -- Thong ke lich su cua khach hang
 drop procedure StatisticsByTime
     DELIMITER &&
@@ -532,5 +540,5 @@ select * from customers where gender='Nam' and ROUND(DATEDIFF(CURDATE(), date_of
 select distinct gender from customers;
 select * from customers where  ROUND(DATEDIFF(CURDATE(), date_of_birth) / 365, 0)>35;
 UPDATE customers SET date_of_birth = '1982-09-07' WHERE (`id` = '23');
-select * from staff
-
+select * from staff;
+select year(created_date) from customers;

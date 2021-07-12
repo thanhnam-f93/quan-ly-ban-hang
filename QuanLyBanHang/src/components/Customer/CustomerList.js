@@ -5,7 +5,6 @@ import NavBar from "./NavBar";
 import { reactLocalStorage } from "reactjs-localstorage";
 import Paginations from "src/views/base/paginations/Pagnations";
 import Swal from "sweetalert2";
-import ApiCustomer from "src/apis/ApiCustomer";
 function CustomerList() {
   const headers = {
     Authorization: "Bearer " + reactLocalStorage.get("token"),
@@ -19,11 +18,9 @@ function CustomerList() {
   const [page, setPage] = useState(0);
   const [limit, setLimit] = useState(5);
   const [status, setStatus] = useState(true);
-  const [response, setResponse] = useState([]);
   const getData = async () => {
     setIsLoading(true);
     setCustomers([]);
-
     var URL;
     if (search.length > 0) {
       URL = `http://localhost:8080/customers/search?input=${search}&pageNo=${page}&limit=${limit}`;
@@ -36,62 +33,27 @@ function CustomerList() {
     } else {
       URL = `http://localhost:8080/customers/page?pageNo=${page}&limit=${limit}`;
     }
-
     console.log("this URL: ", URL);
     await axios
       .get(URL, { headers })
       .then((response) => {
         const result = response.data;
-
-        // const totalPage = response.data.totalPage;
+        const totalPage = response.data.totalPage;
         setTotalPage(response.data.totalPages);
-        // console.log("totalPage", totalPage);
-
+        console.log("totalPage", totalPage);
         const currentPage = result.pageable.pageNumber;
         setPage(currentPage);
-        //   console.log("currentPage", currentPage);
-
+        console.log("currentPage", currentPage);
         const cus = result.content;
         setCustomers(cus);
-        //    console.log("cus", customers);
-
+        console.log("cus", customers);
         setIsLoading(false);
       })
       .catch((error) => {
         setIsLoading(true);
         console.log(error);
       });
-
-    // try {
-    //   var rs = null;
-    //   if (search.length > 0) {
-    //     //  rs = getPageBySearch(search, page, limit);
-    //   } else if (age.length > 0 && gender.length > 0) {
-    //     //   rs = getPageByAgeAndGender(age, gender, page, limit);
-    //   } else if (gender.length > 0) {
-    //     //  rs = setResponse(getPageByGender(gender, page, limit));
-    //   } else if (age.length > 0) {
-    //     //  rs = setResponse(getPageByAge(age, page, limit));
-    //   } else {
-    //     console.log("ahihihihihi");
-    //     ApiCustomer.getBasePage(page, limit)
-    //       .then((result) => {
-    //         setResponse(result);
-    //       })
-    //       .catch((err) => console.log(err));
-    //     console.log("Rs is :    " + response);
-    //   }
-    //   console.log("object tra ve customer:   " + rs);
-    //   setCustomers(response.data.content);
-    //   setTotalPage(response.data.totalPages);
-    //   setPage(response.pageable.pageNumber);
-    //   setIsLoading(false);
-    // } catch (error) {
-    //   setIsLoading(true);
-    //   console.log(error);
-    // }
   };
-
   console.log("totalPage", totalPage);
   const renderTodo = customers.map((customer, index) => {
     return (
@@ -118,11 +80,9 @@ function CustomerList() {
         });
     }
   }
-
   useEffect(() => {
     getData();
   }, [gender, page, search, age, status, limit]);
-
   return (
     <div>
       <NavBar
@@ -170,3 +130,31 @@ function CustomerList() {
   );
 }
 export default CustomerList;
+// try {
+//   var rs = null;
+//   if (search.length > 0) {
+//     //  rs = getPageBySearch(search, page, limit);
+//   } else if (age.length > 0 && gender.length > 0) {
+//     //   rs = getPageByAgeAndGender(age, gender, page, limit);
+//   } else if (gender.length > 0) {
+//     //  rs = setResponse(getPageByGender(gender, page, limit));
+//   } else if (age.length > 0) {
+//     //  rs = setResponse(getPageByAge(age, page, limit));
+//   } else {
+//     console.log("ahihihihihi");
+//     ApiCustomer.getBasePage(page, limit)
+//       .then((result) => {
+//         setResponse(result);
+//       })
+//       .catch((err) => console.log(err));
+//     console.log("Rs is :    " + response);
+//   }
+//   console.log("object tra ve customer:   " + rs);
+//   setCustomers(response.data.content);
+//   setTotalPage(response.data.totalPages);
+//   setPage(response.pageable.pageNumber);
+//   setIsLoading(false);
+// } catch (error) {
+//   setIsLoading(true);
+//   console.log(error);
+// }

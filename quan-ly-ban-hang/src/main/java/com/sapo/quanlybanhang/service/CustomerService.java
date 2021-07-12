@@ -48,6 +48,10 @@ public interface CustomerService {
     void delete(Integer id);
     //
     Integer countCustomersByMonth(Integer m, Integer n);
+
+    Integer countCustomersByDay(Integer d,Integer m, Integer n);
     //
-    List<Object[]> getStatistics();
+    Page<Object[]> getStatistics(Pageable pageable);
+
+    List<Integer> getYearCreateCustomer();
 }

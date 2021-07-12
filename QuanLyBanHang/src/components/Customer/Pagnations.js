@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { CCard, CCardBody, CPagination } from "@coreui/react";
 
 const Paginations = ({ totalPages, currentPage, setCurrentPage }) => {

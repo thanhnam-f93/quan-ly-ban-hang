@@ -14,7 +14,7 @@ function CustomerItem({ customer, deleteC, index }) {
     //   }}
     // >
     <tr
-      className="row"
+      className="row alig"
       style={{ backgroundColor: "white", hover: { backgroundColor: "red" } }}
     >
       <td className="col-1">{index + 1}</td>
@@ -26,7 +26,7 @@ function CustomerItem({ customer, deleteC, index }) {
 
       <td className="col-4">
         <button
-          style={{ marginLeft: "10px" }}
+          style={{ marginLeft: "10px", hover: { cursor: "pointer" } }}
           onClick={() =>
             history.push({
               pathname: "/customerDetail",
@@ -35,7 +35,7 @@ function CustomerItem({ customer, deleteC, index }) {
           }
           className="btn btn-success"
         >
-          Update
+          Chi tiết
         </button>
 
         <button
@@ -43,7 +43,7 @@ function CustomerItem({ customer, deleteC, index }) {
           onClick={() => deleteC(customer.id)}
           className="btn btn-danger"
         >
-          Delete
+          Xóa
         </button>
       </td>
     </tr>

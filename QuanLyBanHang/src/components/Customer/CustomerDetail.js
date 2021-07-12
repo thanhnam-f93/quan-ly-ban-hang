@@ -4,6 +4,7 @@ import Select from "react-select";
 import Swal from "sweetalert2";
 import axios from "axios";
 import { useForm } from "react-hook-form";
+import { dataGender } from "./data";
 import { reactLocalStorage } from "reactjs-localstorage";
 import {
   CCard,
@@ -21,10 +22,6 @@ function CustomerDetail() {
   const headers = {
     Authorization: "Bearer " + reactLocalStorage.get("token"),
   };
-  const genders = [
-    { value: "Nam", label: "Nam" },
-    { value: "Nu", label: "Nu" },
-  ];
   function handleChange(e) {
     const name = e.target.name;
     const value = e.target.value;
@@ -127,10 +124,10 @@ function CustomerDetail() {
                 <CLabel htmlFor="gender">Giới tính</CLabel>
                 <Select
                   name="gender"
-                  options={genders}
+                  options={dataGender}
                   defaultValue={{
-                    label: "Select Gender",
-                    value: "",
+                    label: customer.gender,
+                    value: customer.gender,
                   }}
                   onChange={handleChangeGender}
                 />
@@ -165,7 +162,7 @@ function CustomerDetail() {
                 )}
               </CFormGroup>
               <CFormGroup>
-                <CLabel htmlFor="vat">Email</CLabel>
+                <CLabel htmlFor="email">Email</CLabel>
                 <CInput
                   {...register("email", {
                     required: true,
@@ -216,7 +213,7 @@ function CustomerDetail() {
                 )}
               </CFormGroup>
               <CFormGroup>
-                <CLabel htmlFor="birthday">Ngày sinh</CLabel>
+                <CLabel htmlFor="dateOfBirth">Ngày sinh</CLabel>
                 <CInput
                   name="dateOfBirth"
                   type="date"
@@ -307,7 +304,7 @@ function CustomerDetail() {
       </button>
       <button
         className="btn btn-success"
-        onClick={updateCustomer}
+        onClick={handleSubmit(updateCustomer)}
         style={{ marginLeft: "10px" }}
       >
         Cập nhật

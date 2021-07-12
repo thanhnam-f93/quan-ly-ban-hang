@@ -59,9 +59,13 @@ void updateStatus(@Param("id")Integer id);
     @Query(value = "call getNewCustomersByMonth(:m,:y)",nativeQuery = true)
     Integer getNew(Integer m, Integer y);
 
-    @Procedure(procedureName = "StatisticsByTime")
-    List<Object[]> getStatistics();
+    @Query(value = "call getNewCustomersByDay(:d,:m,:y)",nativeQuery = true)
+    Integer getNewByDay(Integer d,Integer m, Integer y);
 
+    @Query(value = "call StatisticsByTime",nativeQuery = true)
+    Page<Object[]> getStatistics(Pageable pageable);
 
+@Query(value = "select distinct year(created_date)  from customers",nativeQuery = true)
+List<Integer> getYearCreateCustomer();
     CustomerEntity findOneById(Integer customId);
 }

@@ -4,8 +4,9 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { useForm } from "react-hook-form";
 import { reactLocalStorage } from "reactjs-localstorage";
-import { dataGender } from "./dataGender";
+import { dataGender } from "./data";
 import "./st.css";
+//import DateTimePicker from 'react-datetime-picker';
 import {
   CCard,
   CCardHeader,
@@ -132,7 +133,6 @@ function CustomerNew() {
                 <CLabel htmlFor="phone">Số điện thoại</CLabel>
                 <CInput
                   {...register("phone", {
-                    // required: true,
                     maxLength: 11,
                     minLength: 10,
                     valueAsNumber: true,
@@ -143,9 +143,6 @@ function CustomerNew() {
                   pattern="0[0-9]{9}"
                   onChange={handleChange}
                 />
-                {errors?.phone?.type === "required" && (
-                  <p>Không được để trống</p>
-                )}
                 {errors?.phone?.type === "maxLength" && (
                   <p>Độ dài không được vượt quá 11 kí tự</p>
                 )}
@@ -217,14 +214,13 @@ function CustomerNew() {
               <CFormGroup>
                 <CLabel htmlFor="note">Thông tin bổ sung về khách hàng</CLabel>
                 <CTextarea
-                 {...register("note", {
-                  maxLength: 250,
-                })}
+                  {...register("note", {
+                    maxLength: 250,
+                  })}
                   style={{ height: "100px" }}
                   name="note"
                   placeholder="Ghi chú thông tin Khách hàng"
                   onChange={handleChange}
-
                 />
                 {errors?.note?.type === "maxLength" && (
                   <p>Độ dài không được vượt quá 250 kí tự</p>

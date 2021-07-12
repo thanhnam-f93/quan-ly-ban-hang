@@ -1,6 +1,7 @@
 package com.sapo.quanlybanhang.dto;
 
 
+import jdk.jfr.Timestamp;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -33,15 +34,20 @@ public class CustomerDto implements Serializable {
     private String gender;
     @Size(min = 5, max = 250, message = "Data Length must between 5 and 250")
     private String address;
+    @Past(message = "Birthday must under at the moment")
     private Date dateOfBirth;
-    @Size(min = 5, max = 250, message = "Data Length must between 5 and 250")
-    private String note;
+
     @Past(message = "Date Create must Before Present")
     private Date createdDate;
-    private Date modifiedDate;
+    @Timestamp
+    private Date modifiedDate = new Date();
+    @NotNull(message = "Không được để trống Create By")
     private String createBy;
+    @NotNull(message = "Không được để trống ModìieBy By")
     private String modifiedBy;
+    @NotNull(message = "Status Khong duoc trong")
 private String status;
+    private String note;
     public CustomerDto(String name, String phone, String email, String gender,String address, Date dateOfBirth,
                        String note, Date createdDate, Date modifiedDate, String createBy, String modifiedBy,String status) {
         this.name = name;
