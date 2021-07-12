@@ -25,6 +25,7 @@ import {
   getSize,
   DeleteCategory,
   getCategory,
+  ApiQuan,
 } from "src/apis/Product";
 import Select from "react-select";
 import axios from "axios";
@@ -65,15 +66,16 @@ function Update(props) {
   const [brandName, setBrandName] = useState("");
   const [product, setProduct] = useState([]);
 
+
   useEffect(() => {
-    getSupplier().then((res) => {
+    ApiQuan('get',`suppliers`).then((res) => {
       setSupplier(res.data);
       console.log(res.data);
     });
   }, []);
 
   useEffect(() => {
-    getCate().then((res) => {
+    ApiQuan('get',`categories`).then((res) => {
       setCategory(res.data);
       console.log(res.data);
     });
@@ -81,7 +83,7 @@ function Update(props) {
 
 
   useEffect(() => {
-    getBrand().then((res) => {
+    ApiQuan('get',`brands`).then((res) => {
       setBrand(res.data);
       console.log(res.data);
     });
@@ -92,7 +94,7 @@ function Update(props) {
   };
 
   useEffect(() => {
-    getCategory().then((item) => {
+    ApiQuan('get',`products`).then((item) => {
       setProduct(item.data);
       console.log(item);
     });
@@ -107,7 +109,7 @@ function Update(props) {
     })
     .then((willDelete) => {
       if (willDelete) {
-        DeleteCategory(id).then(() => {
+        ApiQuan('delete',`products/${id}`).then(() => {
           setProduct(product.filter((item) => item.id !== id))
           props.history.push("/category");
         });
@@ -154,7 +156,8 @@ function Update(props) {
   }, [brand]);
 
   useEffect(() => {
-    getCategoryByID(id).then((res) => {
+    // getCategoryByID(id).then((res) => {
+      ApiQuan('get',`products/${id}`).then((res) => {
       setCode(res.data.code);
       setName(res.data.name);
       setBrandName(res.data.brandID);
@@ -186,6 +189,7 @@ function Update(props) {
       createdDate: createdDate,
     };
 
+    var data = JSON.stringify(category)
     Swal.fire({
       title: 'bạn có muốn thay đổi sản phẩm?',
       showDenyButton: true,
@@ -195,7 +199,8 @@ function Update(props) {
     }).then((result) => {
       /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
-        UpdateCategory(category, id).then((res) => {
+        // UpdateCategory(category, id).then((res) => {
+          ApiQuan('put',`products/${id}`,data).then((res)=>{
           // props.history.push("/category");
           console.log(category);
         });
@@ -445,7 +450,7 @@ function Update(props) {
                 </CFormGroup>
                     
                 <CFormGroup>
-                  <CLabel htmlFor="vat">Nhà phân phối</CLabel>
+                  <CLabel htmlFor="vat">Nhà cung cấp</CLabel>
                   <Select placeholder={supplierName} 
                   options={filterSupplier} onChange={changeSupplier} />
                 </CFormGroup>

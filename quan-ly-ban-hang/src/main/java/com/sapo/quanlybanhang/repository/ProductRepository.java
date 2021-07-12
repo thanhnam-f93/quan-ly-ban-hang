@@ -15,8 +15,8 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Integer>
     List<ProductEntity> searchByNameAndCode(String keyword, Pageable pageable);
 //    @Query(value = "SELECT * FROM products as p where p.category_id = ?1; ", nativeQuery = true)
 //    List<ProductEntity> findAllByCategory(String keyword);
-@Query(value = "select * from products as p where p.state is null and (p.code LIKE %?1% or p.name like %?1%)", nativeQuery = true)
-List<ProductEntity> searchByKey(String keyword);
+ @Query(value = "select * from products as p where p.state is null and (p.code LIKE %?1% or p.name like %?1%)", nativeQuery = true)
+ List<ProductEntity> searchByKey(String keyword);
     @Query(value = "select * from products as p where p.state is null order by p.id desc ", nativeQuery = true)
     List<ProductEntity> getAll();
    ProductEntity findFirstByOrderByIdDesc();

@@ -10,6 +10,7 @@ import {
   Search,
   getCate,
   Filter,
+  ApiQuan,
 
 } from "../../apis/Product";
 import {
@@ -26,43 +27,81 @@ import {
   CCard
 } from "@coreui/react";
 import swal from 'sweetalert';
-import { DocsLink } from "src/reusable";
+
 import Select from "react-select";
-import CIcon from "@coreui/icons-react";
+
 import axios from "axios";
 
 
 function ListProduct(props) {
   const id = useState(props.match.params.id);
   const [search, setSearch] = useState("");
+  const [filter, setFilter] = useState("");
   const [product,setProduct] = useState([]);
   const [pageNo, setPageNo] = useState(1);
-  const [pageSize,setPageSize]= useState(5);
+  const [pageSize,setPageSize]= useState(3);
   const [total,setTotal] = useState(1);
   const [filterCategory, setFilterOptionCategory] = useState([]);
   const [categories, setCategories] = useState([]);
   
+  const config = {
+    method: 'get',
+    url: `http://localhost:8080/api/v1/productSearch?keyword=${search}&filter=${filter}&pageNo=${pageNo}&pageSize=${pageSize}`,
+    headers: {
+        'Authorization': `Bearer ${localStorage.getItem("token")}`,
+        'Content-Type': 'application/json'
+    }
+};
+const config3 = {
+  method: 'get',
+  url: `http://localhost:8080/api/v1/product_searchByCategories?keyword=${search}&pageNo=${pageNo}&pageSize=${pageSize}`,
+  headers: {
+      'Authorization': `Bearer ${localStorage.getItem("token")}`,
+      'Content-Type': 'application/json'
+  }
+};
+
+const config1 = {
+  method: 'get',
+  url: `http://localhost:8080/api/v1/productSearchByKey?keyword=${search}&filter=${filter}`,
+  headers: {
+      'Authorization': `Bearer ${localStorage.getItem("token")}`,
+      'Content-Type': 'application/json'
+  }
+};
+
+
+const config2 = {
+  method: 'get',
+  url: `http://localhost:8080/api/v1/categories`,
+  headers: {
+      'Authorization': `Bearer ${localStorage.getItem("token")}`,
+      'Content-Type': 'application/json'
+  }
+};
+
 
  useEffect(() => {
-  axios.get(`http://localhost:8080/api/v1/productSearch?keyword=${search}&pageNo=${pageNo}&pageSize=${pageSize}`)
-    .then((item) => {
+  // axios.get(`http://localhost:8080/api/v1/productSearch?keyword=${search}&pageNo=${pageNo}&pageSize=${pageSize}`)
+   axios(config).then((item) => {
       setProduct(item.data);
       console.log(item)
     });
-}, [search,pageNo,pageSize]);
+}, [search,pageNo,pageSize,filter]);
 
 
 useEffect(() => {
-  axios.get(`http://localhost:8080/api/v1/productSearchByKey?keyword=${search}`)
+ // axios.get(`http://localhost:8080/api/v1/productSearchByKey?keyword=${search}`)
+ axios(config1)
      .then((item) => {
        setTotal(Math.ceil(item.data.length/pageSize));
      });
- }, [search]);
+ }, [search,filter]);
 
 
 
   useEffect(() => {
-    getCate().then((res) => {
+    axios(config2).then((res) => {
       setCategories(res.data);
       console.log(res.data);
     });
@@ -87,17 +126,18 @@ useEffect(() => {
   };
 
 
-  const changeCate = (event) => {
-    // setCategory_Id(event.value);
-   Filter(event.value).then((item) => {
-      setProduct(item.data);
-      console.log(event.value)
-    });
-   
-  };
 
   const changeSearch = (event) => {
     setSearch(event.target.value)
+  };
+  const changeFilter =(event)=>{
+    setFilter(event.value)
+    console.log(event.value)
+  }
+  const cancel = (e) => {
+    e.preventDefault();
+    setFilter("");
+    setSearch("");
   };
 
   return (
@@ -116,8 +156,13 @@ useEffect(() => {
                
             </CFormGroup>
           </CCol>
-          <CCol xs="3"  sm="3">
-         <Select placeholder="loại sản phẩm" options={filterCategory} onChange={changeCate} />  
+          <CCol xs="3"  sm="2">
+         <Select placeholder="loại sản phẩm" options={filterCategory} onChange={changeFilter} />  
+          </CCol>
+          <CCol xs="3"  sm="1">
+          <CButton block color="secondary" onClick={cancel}>
+            Đặt lại
+            </CButton>
           </CCol>
         </CRow>
         <CRow>

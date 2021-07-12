@@ -18,10 +18,12 @@ import {
   getBrand,
   getCate,
   getSupplier,
-  createProduct
+  createProduct,
+  ApiQuan
 } from "src/apis/Product";
 import Select from "react-select";
 import axios from "axios";
+import ApiCustomer from "src/apis/ApiCustomer";
 function Create(props) {
   const [code, setCode] = useState("1");
   const [name, setName] = useState("");
@@ -65,8 +67,9 @@ function Create(props) {
           createdDate: createdDate,
           supplierName: supplierName,
     };
+    var data = JSON.stringify(product)
   console.log(product);
-    createProduct(product).then((item) => {  
+    ApiQuan('post',`products`,data).then((item) => {  
     Swal.fire({
       icon: 'success',
       title: 'đã đạo thêm nhà cung cấp',
@@ -78,21 +81,21 @@ function Create(props) {
   };
 
   useEffect(() => {
-    getSupplier().then((res) => {
+    ApiQuan('get',`suppliers`).then((res) => {
       setSupplier(res.data);
       console.log(res.data);
     });
   }, []);
 
   useEffect(() => {
-    getCate().then((res) => {
+    ApiQuan('get',`categories`).then((res) => {
       setCategory(res.data);
       console.log(res.data);
     });
   }, []);
 
   useEffect(() => {
-    getBrand().then((res) => {
+    ApiQuan('get',`brands`).then((res) => {
       setBrand(res.data);
       console.log(res.data);
     });

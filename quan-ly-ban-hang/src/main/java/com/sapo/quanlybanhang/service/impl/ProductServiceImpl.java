@@ -126,7 +126,17 @@ public class ProductServiceImpl implements ProductService {
 
 
     @Override
-    public List filterAll(int keyword, Pageable pageable) {
+    public List<ProductDto> filterAll(int keyword, int pageNo,int pageSize) {
+        if (keyword != 0) {
+            Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+            List<ProductEntity> productEntities = productRepository.filterAll(keyword,pageable);
+            List<ProductDto> productDtos = new ArrayList<>();
+            Converter converter = new Converter();
+            for (ProductEntity item : productEntities) {
+                productDtos.add(converter.ConverterToDtoProduct(item));
+            }
+            return productDtos;
+        }
         return null;
     }
 
@@ -243,8 +253,9 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<ProductDto>  searchByCategories(int keyword, Pageable pageable) {
+    public List<ProductDto>  searchByCategories(int keyword, int pageNo, int pageSize) {
         if (keyword != 0) {
+            Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
             List<ProductEntity> productEntities = productRepository.filterAll(keyword,pageable);
             List<ProductDto> productDtos = new ArrayList<>();
             Converter converter = new Converter();

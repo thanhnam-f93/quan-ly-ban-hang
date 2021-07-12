@@ -52,8 +52,6 @@ import Swal from 'sweetalert2'
     };
 
     const deleteSupplier = (id) => {
-     
-
       swal({
         title: "bạn có muốn xóa nhà cung cấp?",
         icon: "warning",

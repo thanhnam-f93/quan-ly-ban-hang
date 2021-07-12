@@ -8,7 +8,7 @@ import {
 } from './index'
 
 const TheLayout = () => {
-const [isShow, setShow] = useState(false);
+const [isShow, setShow] = useState(true);
   return (  
     <div className="c-app c-default-layout">
       <SalerContext.Provider value ={{isShow,setShow}}>

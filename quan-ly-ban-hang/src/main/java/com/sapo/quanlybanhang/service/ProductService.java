@@ -17,7 +17,7 @@ public interface ProductService <t>{
     ProductDto findById(int id);
     ProductEntity update(int id, ProductEntity productEntity);
     List<t> searchByNameAndCode(String keyword, int pageNo,int pageSize);
-    List<t> filterAll(int keyword, Pageable pageable);
+    List<t> filterAll(int keyword, int pageNo,int pageSize);
     List<t> searchByKey(String keyword);
     List<t> getAllByDay();
     List<t> getAllByMonth();
@@ -27,7 +27,7 @@ public interface ProductService <t>{
     List<t> searchByCategory(int keyword);
     List<t> searchByCate(String keyword);
     List<t> searchByCatePagination(String keyword, int pageNo,int pageSize);
-    List<t> searchByCategories(int keyword,Pageable pageable);
+    List<t> searchByCategories(int keyword,int pageNo,int pageSize);
     List<t> findPaginated(int pageNo, int pageSize);
     ProductEntity deleteByID(int id);
     ProductEntity RevertByID(int id);
