@@ -1,6 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
+import { set } from "react-hook-form";
+import { Link } from "react-router-dom";
 import { callApi, callApiNotJwt } from "src/apis/ApiCaller";
-import { JwtContext, SalerContext } from "src/context/JwtContext";
+import {
+  JwtContext,
+  LayoutContext,
+  SalerContext,
+} from "src/context/JwtContext";
 import SalerContent from "./SalerContent";
 import "./scss/SalerHeader.scss";
 
@@ -8,27 +14,33 @@ const OrderHeader = () => {
   // ------------------------------- useState-------------------------------------------
 
   const { jwt } = useContext(JwtContext);
-  const { setProducts, setIsShowProducts } = useContext(SalerContext);
+  const { isShow, setProducts, setIsShowProducts, isFocus, setFocus } =
+    useContext(SalerContext);
+  const { setShow } = useContext(LayoutContext);
+
   const orderPageable = {
-    page:1,
-    limit:7,
+    page: 1,
+    limit: 7,
   };
 
   //--------------------------------useEffect-------------------------------------------
   useEffect(() => {
-    callApi(`api/v1/find-all`, "POST",orderPageable, jwt).then(
-      (response) => {
-        if (response.status !== 200) {
-          alert("thao tác thất bại");
-          return;
-        }
-        response.json().then((data) => {
-          console.log(data);
-          setProducts(data);
-        });
+    callApi(`api/v1/find-all`, "POST", orderPageable, jwt).then((response) => {
+      if (response.status !== 200) {
+        alert("thao tác thất bại");
+        return;
       }
-    );
-  }, []);
+      response.json().then((data) => {
+        console.log(data);
+        setProducts(data);
+      });
+    });
+    if(isFocus){
+      getFocus();
+    }
+    setFocus(false);
+   
+  }, [isFocus]);
   // ----------------------------------functions----------------------------------------------
   /**
    *
@@ -36,6 +48,7 @@ const OrderHeader = () => {
    * get character from input form
    */
   const getInputKey = (e) => {
+    setShow(false);
     let val = e.target.value;
     // console.log("order-header-value input form:", val);
     callApiNotJwt(`api/v1/productSearchByKey?keyword=${val}`, "Get", jwt).then(
@@ -48,25 +61,33 @@ const OrderHeader = () => {
           console.log(data);
           setProducts(data);
         });
+       
       }
     );
   };
 
-  const IsShowProduct = ()=>{
-    callApi("api/v1/find-all", "POST", orderPageable ,jwt).then((response) => {
+  const getFocus =()=>{
+    document.getElementById("input-id").focus();
+  }
+
+  const IsShowProduct = () => {
+    callApi("api/v1/find-all", "POST", orderPageable, jwt).then((response) => {
       if (response.status !== 200) {
         alert("thao tác thất bại");
         return;
       }
       response.json().then((data) => {
-        console.log("products:",data);
+        console.log("products:", data);
         setProducts(data);
       });
     });
     setIsShowProducts(true);
     console.log("ishow:");
-  }
-  
+  };
+
+  const returnHome = () => {
+    setShow(!isShow);
+  };
 
   return (
     <div className="wrapper-header">
@@ -76,8 +97,9 @@ const OrderHeader = () => {
             <i className="fas fa-search" />
           </div>
           <input
+            id="input-id"
             type="text"
-            onFocus = {IsShowProduct}
+            onFocus={IsShowProduct}
             onChange={(e) => getInputKey(e)}
             placeholder="Thêm sản phẩm vào đơn"
           />
@@ -96,7 +118,9 @@ const OrderHeader = () => {
           <div className="header-right-utils-1">
             <div className="utils-full-screen">
               <i className="fas fa-expand-arrows-alt fa-lg"></i>
-              <i className="fas fa-home fa-lg"></i>
+              <Link to="/dashboard">
+                <i className="fas fa-home fa-lg" onClick={returnHome}></i>
+              </Link>
               <button> Phím tắt </button>
             </div>
           </div>

@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react'
-import { SalerContext } from 'src/context/JwtContext'
+import { LayoutContext, SalerContext } from 'src/context/JwtContext'
 import {
   TheContent,
   TheSidebar,
@@ -8,19 +8,19 @@ import {
 } from './index'
 
 const TheLayout = () => {
-const [isShow, setShow] = useState(false);
+const [isShow, setShow] = useState(true);
   return (  
     <div className="c-app c-default-layout">
-      <SalerContext.Provider value ={{isShow,setShow}}>
-        {isShow ==false ?<TheSidebar />: ""}
+      <LayoutContext.Provider value ={{isShow,setShow}}>
+        {isShow ?<TheSidebar />: ""}
       <div className="c-wrapper">
         {isShow  ? <TheHeader/> : ""}
         <div className="c-body">
           <TheContent/>
         </div>
-        {isShow == false ?<TheFooter/>:"" }   
+        {isShow ?<TheFooter/>:"" }   
       </div>
-      </SalerContext.Provider>
+      </LayoutContext.Provider>
     </div>
   )
 }

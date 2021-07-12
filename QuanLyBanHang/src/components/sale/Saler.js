@@ -1,10 +1,14 @@
 import React, { useContext, useEffect, useState } from "react";
 import { callApi, callApiNotJwt } from "src/apis/ApiCaller";
-import { JwtContext, SalerContext } from "src/context/JwtContext";
+import {
+  JwtContext,
+  LayoutContext,
+  SalerContext,
+} from "src/context/JwtContext";
 import SaleProductOption from "./SaleProductOption";
 import SalerContent from "./SalerContent";
 import SalerHeader from "./SalerHeader";
-import "./scss/Sale.scss"
+import "./scss/Sale.scss";
 
 const Saler = () => {
   // ------------------------------- useState-------------------------------------------
@@ -12,9 +16,11 @@ const Saler = () => {
   const { jwt } = useContext(JwtContext);
   const [isShowProducts, setIsShowProducts] = useState(false);
   const [productOption, setProductOption] = useState([]);
-  const [total, setTotal]=useState(0);
-  const [amountChange,setAmountChange] = useState(false);
+  const [total, setTotal] = useState(0);
+  const [amountChange, setAmountChange] = useState(false);
   const [amount] = useState(0);
+  const { isShow, setShow } = useContext(LayoutContext);
+  const [isFocus, setFocus] = useState(false);
   const orderPageable = {
     page: 1,
     limit: 20,
@@ -22,34 +28,50 @@ const Saler = () => {
   //--------------------------------useEffect-------------------------------------------
   useEffect(() => {
     let val = 0;
-    if(productOption ==0){
+    if (productOption == 0) {
       setTotal(0);
-    }else{
+    } else {
       for (const ob of productOption) {
-       val+= ob['amount']*ob['price'];
+        val += ob["amount"] * ob["price"];
       }
     }
-    
+    setShow(false);
   }, [isShowProducts, productOption]);
 
-  const getAmounts=(amount,item)=>{
+  const getAmounts = (amount, item) => {
     for (const ob of productOption) {
-      if(ob['id']==item['id']){
-        ob['amount']=amount;
+      if (ob["id"] == item["id"]) {
+        ob["amount"] = amount;
       }
     }
-  }
+  };
   return (
     <div>
       <SalerContext.Provider
-        value={{getAmounts,amountChange,setAmountChange, setProducts, setIsShowProducts, products, isShowProducts, setProductOption,productOption }}
+        value={{
+          isFocus,
+          setFocus,
+          getAmounts,
+          amountChange,
+          setAmountChange,
+          setProducts,
+          setIsShowProducts,
+          products,
+          isShowProducts,
+          setProductOption,
+          productOption,
+        }}
       >
         <div className="header">
           <SalerHeader />
         </div>
         <div className="body">
           {isShowProducts ? <SaleProductOption products={products} /> : ""}
-          <SalerContent total = {total} productOption = {productOption} setIsShowProducts = {setIsShowProducts}/>
+          <SalerContent
+            total={total}
+            productOption={productOption}
+            setIsShowProducts={setIsShowProducts}
+          />
         </div>
       </SalerContext.Provider>
     </div>
