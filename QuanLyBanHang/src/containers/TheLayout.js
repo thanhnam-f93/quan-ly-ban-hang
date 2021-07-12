@@ -12,13 +12,13 @@ const [isShow, setShow] = useState(false);
   return (  
     <div className="c-app c-default-layout">
       <SalerContext.Provider value ={{isShow,setShow}}>
-        {isShow ? <TheSidebar />: ""}
+        {isShow ==false ?<TheSidebar />: ""}
       <div className="c-wrapper">
-        {isShow ?  <TheHeader/> : ""}
+        {isShow  ? <TheHeader/> : ""}
         <div className="c-body">
           <TheContent/>
         </div>
-        {isShow ? <TheFooter/>:"" }   
+        {isShow == false ?<TheFooter/>:"" }   
       </div>
       </SalerContext.Provider>
     </div>

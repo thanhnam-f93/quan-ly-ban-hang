@@ -12,24 +12,44 @@ const Saler = () => {
   const { jwt } = useContext(JwtContext);
   const [isShowProducts, setIsShowProducts] = useState(false);
   const [productOption, setProductOption] = useState([]);
-  const [isShowTableProduct, setIsShowTableProduct] = useState(false);
+  const [total, setTotal]=useState(0);
+  const [amountChange,setAmountChange] = useState(false);
+  const [amount] = useState(0);
   const orderPageable = {
     page: 1,
     limit: 20,
   };
   //--------------------------------useEffect-------------------------------------------
-  useEffect(() => {}, [products, isShowProducts]);
+  useEffect(() => {
+    let val = 0;
+    if(productOption ==0){
+      setTotal(0);
+    }else{
+      for (const ob of productOption) {
+       val+= ob['amount']*ob['price'];
+      }
+    }
+    
+  }, [isShowProducts, productOption]);
+
+  const getAmounts=(amount,item)=>{
+    for (const ob of productOption) {
+      if(ob['id']==item['id']){
+        ob['amount']=amount;
+      }
+    }
+  }
   return (
     <div>
       <SalerContext.Provider
-        value={{isShowTableProduct, setIsShowTableProduct, setProducts, setIsShowProducts, products, isShowProducts, setProductOption,productOption }}
+        value={{getAmounts,amountChange,setAmountChange, setProducts, setIsShowProducts, products, isShowProducts, setProductOption,productOption }}
       >
         <div className="header">
           <SalerHeader />
         </div>
         <div className="body">
           {isShowProducts ? <SaleProductOption products={products} /> : ""}
-          <SalerContent productOption = {productOption} />
+          <SalerContent total = {total} productOption = {productOption} setIsShowProducts = {setIsShowProducts}/>
         </div>
       </SalerContext.Provider>
     </div>

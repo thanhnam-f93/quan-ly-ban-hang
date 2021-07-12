@@ -5,7 +5,13 @@ import SaleProductItem from "./SaleProductItem";
 
 import "./scss/SaleTableProduct.scss";
 const SaleTableProduct = ({productOption}) => {
-  // const {productOption} = useContext(SalerContext);
+ const getAmount=(amount, item)=>{
+    for (const ob of productOption) {
+      if(ob.id==item.id){
+        ob.amount = amount;
+      }
+    }
+ }
   return (
     <div className="sale-table-product">
       <table className="table table-striped">
@@ -21,7 +27,7 @@ const SaleTableProduct = ({productOption}) => {
           </tr>
         </thead>
         <tbody>
-          <List data = {productOption} render = {(item,index) => <SaleProductItem  key = {index} item = {item} index = {index}/>} />
+          <List data = {productOption}  render = {(item,index) => <SaleProductItem listProductOption = { getAmount}  key = {index} item = {item} index = {index}/>} />
         </tbody>
       </table>
     </div>

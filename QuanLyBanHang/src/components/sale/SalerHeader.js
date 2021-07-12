@@ -77,7 +77,7 @@ const OrderHeader = () => {
           </div>
           <input
             type="text"
-            onClick = {IsShowProduct}
+            onFocus = {IsShowProduct}
             onChange={(e) => getInputKey(e)}
             placeholder="Thêm sản phẩm vào đơn"
           />

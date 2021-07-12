@@ -4,9 +4,9 @@ import FirstContent from "./FirstContent";
 import SalePayment from "./SalePayment";
 import SaleTableProduct from "./SaleTableProduct";
 import "./scss/SalerContent.scss";
-const SalerContent = ({productOption}) => {
-const {isShowTableProduct} = useContext(SalerContext);
-const {setIsShowProducts} = useContext(SalerContext);
+const SalerContent = ({productOption, setIsShowProducts,total}) => {
+// const {setIsShowProducts} = useContext(SalerContext);
+const isCheck = false;
   const IsCheckShowProductList = ()=>{
     setIsShowProducts(false);
   }
@@ -14,12 +14,11 @@ const {setIsShowProducts} = useContext(SalerContext);
     <div className="wrap-content"
     onClick ={IsCheckShowProductList}>
       <div className="content-left">
-       {/* <FirstContent /> */}
-       {(isShowTableProduct )?  <SaleTableProduct productOption = {productOption} /> :""}
+       {productOption.length ==0 ?<FirstContent setIsShowProducts ={setIsShowProducts} />:<SaleTableProduct productOption = {productOption} />}
       
       </div>
       <div className="content-right">
-        <SalePayment />
+        <SalePayment total = {total} />
       </div>
     </div>
   );

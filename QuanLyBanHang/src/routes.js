@@ -11,6 +11,7 @@ import AddStaff from './components/Staff/AddStaff/AddStaff';
 import StaffDetail from './components/Staff/StaffDetail/StaffDetail';
 import ReturnOrder from './components/OrderReturn/ReturnOrder';
 import ReturnOrderDetail from './components/ReturnOrderDetail/ReturnOrderDetail';
+import SaleAddCustomer from './components/sale/SaleAddCustomer';
 
 /*================== Of Template React =================*/
 const Toaster = React.lazy(() =>
@@ -247,7 +248,7 @@ const routes = [
   { path: '/supplier', exact: true,  name: 'Supplier', component: ListSupplier },
   { path: '/logins', exact: true,  name: '', component: Logins },
   { path: '/saler', exact: true,  name: 'ban-hang', component: Saler },
-
+  { path: '/them-khach-hang', exact: true,  name: 'ban-hang', component: SaleAddCustomer },
   
   { path: '/settings', exact: true,  name: 'Cấu hình', component: Setting },
   { path: '/settings/staffs', exact: true,  name: 'Nhân viên', component: Staff },

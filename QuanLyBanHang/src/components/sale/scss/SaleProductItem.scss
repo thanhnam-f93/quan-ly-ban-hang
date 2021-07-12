@@ -33,7 +33,15 @@
              border-bottom-width: 0.5px;
              border-bottom-color: #e5e5e5;
              background-color: transparent;
+             text-align: center;
              &:hover{
+                border:none;
+                border-bottom-style: solid;
+                border-bottom-width: 1px;
+                border-bottom-color: black;
+             }
+             &:focus{
+                outline:none;
                 border:none;
                 border-bottom-style: solid;
                 border-bottom-width: 1px;
