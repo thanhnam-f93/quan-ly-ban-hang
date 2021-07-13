@@ -7,7 +7,8 @@ import {
     CInput,
     CLabel,
     CRow,
-    CTextarea
+    CTextarea,
+    CButton
   } from "@coreui/react";
   import swal from 'sweetalert';
 import Swal from 'sweetalert2'
@@ -270,30 +271,6 @@ import Swal from 'sweetalert2'
                 </CFormGroup>
                 </CCardBody>
               </CCard>
-              <CCol xs="7">
-              {" "}
-              <button
-                className="btn btn-secondary"
-                onClick={cancel}
-                style={{ marginLeft: "10px" }}
-              >
-                Quay lại
-              </button>
-              <button
-                className="btn btn-success"
-                onClick={updateSupplier}
-                style={{ marginLeft: "10px" }}
-              >
-                Sửa
-              </button>
-              <button
-          style={{ marginLeft: "10px" }}
-          onClick={() => deleteSupplier(id)}
-          className="btn btn-danger"
-        >
-          Xóa
-        </button>
-        </CCol>
         </CCol>
             <CCol xs="5">
             <CCard>
@@ -313,6 +290,29 @@ import Swal from 'sweetalert2'
             </CCard>
           </CCol>
           </CRow>
+          <CRow>
+         <CCol xs="12" sm="7">
+           <CRow>
+           <CCol xs="6"  sm="2" >
+           <CButton block color="secondary" onClick={cancel}>
+            Quay lại
+            </CButton>
+           </CCol>
+           <CCol xs="6"  sm="3">
+           <CButton block color="success" onClick={updateSupplier}>
+            Cập nhật
+            </CButton>
+           </CCol>
+           </CRow>
+         </CCol>
+         <CCol className="px-0 d-flex justify-content-end" xs="12" sm="5" >
+         <CCol xs="6"  sm="3" >
+           <CButton block color="danger" onClick={() => deleteSupplier(id)}>
+            Xóa
+            </CButton>
+           </CCol>
+         </CCol>
+       </CRow>
         </div>
       </div>
     );

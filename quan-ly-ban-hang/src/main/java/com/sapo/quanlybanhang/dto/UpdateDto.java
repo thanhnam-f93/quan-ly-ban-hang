@@ -33,7 +33,7 @@ public class UpdateDto {
 
     private String color;
 
-    private Date created_date;
+    private Date createdDate;
 
     private Date modifiedDate;
 

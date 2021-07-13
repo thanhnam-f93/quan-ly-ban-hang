@@ -37,7 +37,7 @@ public class InputProductDto {
 
     private Date createdDate;
 
-    private Date modified_date;
+    private Date modifiedDate;
 
     private String size;
 

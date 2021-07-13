@@ -66,7 +66,7 @@ public class ProductServiceImpl implements ProductService {
         }
         else {
             if(productRepository.existsByCode(inputProductDTO.getCode())){
-                  return ResponseEntity.badRequest().body(new Message("Erorr: code trung"));
+                  return ResponseEntity.badRequest().body(new Message(" error : code trung "));
             }
         }
 
@@ -350,6 +350,7 @@ public class ProductServiceImpl implements ProductService {
         product.setPrice(updateDto.getPrice());
         product.setDescription(updateDto.getDescription());
         product.setBrand(brandEntity);
+        product.setModifiedDate(updateDto.getModifiedDate());
         product.setColor(updateDto.getColor());
         product.setSize(updateDto.getSize());
         product.setSupplier(supplierEntity);

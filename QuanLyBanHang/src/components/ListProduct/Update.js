@@ -8,7 +8,8 @@ import {
   CLabel,
   CSelect,
   CRow,
-  CTextarea
+  CTextarea,
+  CButton
  
 } from "@coreui/react";
 import swal from 'sweetalert';
@@ -212,6 +213,11 @@ function Update(props) {
     
     
   };
+  function format2(n, currency) {
+    if (n != "") {
+        return n.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') + " " + currency;
+    }
+}
 
   const changeCode = (event) => {
     setCode(event.target.value);
@@ -298,14 +304,15 @@ function Update(props) {
   }
   
   const changeonBlurPrice = (event)=>{
-    var a = new RegExp("^[0-9]*$")
+    // var a = new RegExp("^[0-9]*$")
     
-    if((a.test(event.target.value)==false)){
-      setMesage({
-        price:"Giá không được nhập kí tự"
-      })
-    }
-    else if( /((\r\n|\n|\r)$)|(^(\r\n|\n|\r))|^\s*$/.test(event.target.value)!=false){
+    // if((a.test(event.target.value)==false)){
+    //   setMesage({
+    //     price:"Giá không được nhập kí tự"
+    //   })
+    // }
+    // else 
+    if( /((\r\n|\n|\r)$)|(^(\r\n|\n|\r))|^\s*$/.test(event.target.value)!=false){
       setMesage({
         price:" Giá sản phẩm không được để trống"
       })
@@ -373,7 +380,7 @@ function Update(props) {
                     name="price"
                     placeholder="DE1234567890"
                     onChange={changePrice}
-                    value={price}
+                    value={format2(price,"vnd")}
                     onBlur={changeonBlurPrice}
                   />
                    <span style={{color:"red"}}> {message.price}</span>
@@ -470,7 +477,7 @@ function Update(props) {
             </CCard>
         </CCol>
     
-        <CCol className="px-0" xs="12" sm="7">
+        {/* <CCol className="px-0" xs="12" sm="7">
         <button
           className="btn btn-secondary"
           onClick={cancel}
@@ -496,8 +503,31 @@ function Update(props) {
           Xóa
         </button>
         </CCol>
-    
+     */}
         </CRow>
+        <CRow>
+         <CCol xs="12" sm="7">
+           <CRow>
+           <CCol xs="6"  sm="2" >
+           <CButton block color="secondary" onClick={cancel}>
+            Quay lại
+            </CButton>
+           </CCol>
+           <CCol xs="6"  sm="3">
+           <CButton block color="success" onClick={updateCategory}>
+            Cập nhật
+            </CButton>
+           </CCol>
+           </CRow>
+         </CCol>
+         <CCol className="px-0 d-flex justify-content-end" xs="12" sm="5" >
+         <CCol xs="6"  sm="3" >
+           <CButton block color="danger" onClick={() => deleteCategory(id)}>
+            Xóa
+            </CButton>
+           </CCol>
+         </CCol>
+       </CRow>
       </div>
     </div>
   );

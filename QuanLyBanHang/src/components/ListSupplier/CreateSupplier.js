@@ -8,8 +8,7 @@ import {
   CLabel,
   CRow,
   CTextarea,
-  CInputFile,
-  CValidFeedback,
+  CButton
 } from "@coreui/react";
 import Swal from 'sweetalert2'
 import { useEffect, useState } from "react";
@@ -223,7 +222,7 @@ var data = JSON.stringify(supplier)
                 </CFormGroup>
               </CCardBody>
             </CCard>
-            <CCol xs="7">
+            {/* <CCol xs="7">
               {" "}
               <button
                 className="btn btn-secondary"
@@ -239,7 +238,7 @@ var data = JSON.stringify(supplier)
               >
                 Thêm
               </button>
-            </CCol>
+            </CCol> */}
           </CCol>
           <CCol xs="5">
             <CCard>
@@ -258,6 +257,24 @@ var data = JSON.stringify(supplier)
             </CCard>
           </CCol>
         </CRow>
+        <CRow>
+         <CCol xs="12" sm="7">
+           <CRow>
+           <CCol xs="6"  sm="2" >
+           <CButton block color="secondary" onClick={cancel}>
+            Quay lại
+            </CButton>
+           </CCol>
+           <CCol xs="6"  sm="3">
+           <CButton block color="success" onClick={saveSupplier}>
+            Thêm
+            </CButton>
+           </CCol>
+
+           </CRow>
+           
+         </CCol>
+       </CRow>
       
       </div>
     </div>

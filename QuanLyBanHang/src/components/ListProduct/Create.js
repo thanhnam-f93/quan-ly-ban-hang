@@ -9,7 +9,8 @@ import {
   CRow,
   CTextarea,
   CInputFile,
-  CValidFeedback
+  CValidFeedback,
+  CButton
 } from "@coreui/react";
 import Swal from 'sweetalert2'
 import { useEffect, useState } from "react";
@@ -79,8 +80,8 @@ function Create(props) {
       props.history.push("/product");
     })
     .catch(error=>{
-      console.log("erro",error)
-      if(error.response.data.mess != "Erorr: code trung"){
+      console.log("aaaaaaaaaaaaaaaa")
+      if(error.response.data.mess == " error : code trung "){
         Swal.fire({
           icon: 'error',
           title: 'code trùng',
@@ -341,6 +342,7 @@ const changeCode= (event) => {
                 </CFormGroup>
               </CCardBody>
             </CCard>
+            
           </CCol>
           <CCol xs="12" sm="5">
             <CCard>
@@ -401,21 +403,28 @@ const changeCode= (event) => {
            
           </CCol>
         </CRow>
+       <CRow>
+         <CCol xs="12" sm="7">
+           <CRow>
+           <CCol xs="6"  sm="2" >
+           <CButton block color="secondary" onClick={cancel}>
+            Quay lại
+            </CButton>
+           </CCol>
+           <CCol xs="6"  sm="3">
+           <CButton block color="success" onClick={saveProduct}>
+            Thêm sản phẩm
+            </CButton>
+           </CCol>
 
-        <button
-          className="btn btn-secondary"
-          onClick={cancel}
-          style={{ marginLeft: "10px" }}
-        >
-          Quay lại
-        </button>
-        <button
-          className="btn btn-success"
-          onClick={saveProduct}
-          style={{ marginLeft: "10px" }}
-        >
-          Thêm sản phẩm
-        </button>
+           </CRow>
+           
+         </CCol>
+         <CCol>
+             fdfd
+           </CCol>
+     
+       </CRow>
       </div>
     </div>
   );
