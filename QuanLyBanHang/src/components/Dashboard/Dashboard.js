@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { callApi, callApiNotJwt } from "src/apis/ApiCaller";
 import { JwtContext } from "src/context/JwtContext";
+import { FormatMoney } from "src/helpers/FormatMoney";
 import ChartDashBoard from "./ChartDashBoard";
 import "./scss/DashBoard.scss";
 
@@ -66,7 +67,7 @@ const Dashboard = () => {
                   </div>
                   <div className="text">
                     <p>Doanh thu</p>
-                    <p>{dto.price}</p>
+                    <p>{FormatMoney(dto.price)}</p>
                   </div>
                 </div>
               </div>

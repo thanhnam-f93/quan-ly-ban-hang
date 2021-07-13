@@ -161,7 +161,7 @@ useEffect(() => {
           <CCol xs="3"  sm="2">
          <Select placeholder="loại sản phẩm" defaultValue={filter} options={filterCategory} onChange={changeFilter} />  
           </CCol>
-          <CCol xs="3"  sm="1">
+          <CCol xs="3"  sm="2">
           <CButton block color="secondary" onClick={cancel}>
             Đặt lại
             </CButton>

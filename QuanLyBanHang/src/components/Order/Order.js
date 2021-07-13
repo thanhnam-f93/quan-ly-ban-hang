@@ -18,7 +18,7 @@ const Order = () => {
   console.log(acc);
   const [orderPageable, setOrderPageAble] = useState({
     page:1,
-    limit:10,
+    limit:7,
     inputOrder:"",
     orderTime:""
   });

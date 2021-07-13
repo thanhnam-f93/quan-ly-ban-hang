@@ -11,6 +11,7 @@ public class ProductConverter {
         dto.setNumberProduct(entity.getNumberProduct());
         dto.setPrice(entity.getPrice());
         dto.setId(entity.getId());
+        dto.setImage(entity.getImage());
         return dto;
     }
 }

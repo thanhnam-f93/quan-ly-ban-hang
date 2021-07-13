@@ -43,10 +43,10 @@ const SaleProductOptionItem = (props) => {
     <div className="Sale-product-option-item" onClick = {getProductOption}>
       <div className="option-item-left">
         <div className="option-item-left-1">
-        <img src = '{item.image}'/>
-          {/* {isCheck?<img src = {item.image}/>:
-          <img src="https://lh3.googleusercontent.com/NevAMsFwOcu9jE1olaVuBh7mOFjiwvX125G0gyU_yeOzFvT4mNodgJxBew33Wc0xJ7wAap9uhayfIcODs5dziCV0bdvAzEGMvHvEAF4f4-L6HDHRxPd4bwXYvztRu5McDOi9V-9xOw=s60-p-k" />
-  } */}
+   
+          <img src = {item.image}/>
+          {/* <img src="https://lh3.googleusercontent.com/NevAMsFwOcu9jE1olaVuBh7mOFjiwvX125G0gyU_yeOzFvT4mNodgJxBew33Wc0xJ7wAap9uhayfIcODs5dziCV0bdvAzEGMvHvEAF4f4-L6HDHRxPd4bwXYvztRu5McDOi9V-9xOw=s60-p-k" /> */}
+  
           </div>
       </div>
       <div className="option-item-content">

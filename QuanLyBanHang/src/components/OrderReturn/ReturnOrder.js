@@ -19,7 +19,7 @@ const ReturnOrder = () => {
   const [totalPage, setTotalPage] = useState();
   const [orderPageable, setOrderPageAble] = useState({
     page: 1,
-    limit: 10,
+    limit: 7,
     inputOrder: "",
     orderTime: "",
   });
