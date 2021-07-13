@@ -26,7 +26,7 @@ const AddStaff = () => {
 
   let history = useHistory();
 
-  const [staff, setStaff] = useState({ createdDate: new Date(), createBy: localStorage.getItem("user"), roleId: [1], status: "Đang làm việc" })
+  const [staff, setStaff] = useState({ createdDate: new Date(), createBy: localStorage.getItem("name"), roleId: [1], status: "Đang làm việc" })
 
   const getValueSelect = () => {
     var select = document.getElementById('select')

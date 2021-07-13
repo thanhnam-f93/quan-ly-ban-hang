@@ -24,4 +24,6 @@ public interface StaffRepository extends JpaRepository<StaffEntity, Integer> {
 //    List<StaffEntity> findAllStaffByName(String name);
     @Query( value = "select s from StaffEntity s where s.fullName like %:name%")
     Page<StaffEntity> findAllStaffByName(@Param("name") String name,Pageable page);
+
+    Boolean existsByPhone(String phone);
 }

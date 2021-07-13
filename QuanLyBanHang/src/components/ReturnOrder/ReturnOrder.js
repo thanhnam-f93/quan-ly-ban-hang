@@ -7,7 +7,7 @@ import { JwtContext } from "src/context/JwtContext";
 import { Dropdown, Modal } from "react-bootstrap";
 import Login from "src/views/pages/login/Login";
 import Order from "../Order/Order";
-import Logins from "../Login/Logins";
+import Logins from "../Login/Login";
 import OrderModal from "../Order/OrderModal";
 import { CPagination } from "@coreui/react";
 

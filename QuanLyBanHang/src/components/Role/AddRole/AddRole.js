@@ -13,7 +13,7 @@ const AddRole = () => {
 
     let history = useHistory();
 
-    const [role, setRole] = useState({createdDate: new Date(), createBy: localStorage.getItem('user')})
+    const [role, setRole] = useState({createdDate: new Date(), createBy: localStorage.getItem('name')})
 
     const onHandleChange = (e) => {
         const {name, value} = e.target;

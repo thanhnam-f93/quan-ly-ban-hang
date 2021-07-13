@@ -24,7 +24,7 @@ const [role, setRole] = useState({
     createdDate: roleDetail.createdDate,
     createBy: roleDetail.createBy,
     modifiedDate: new Date(),
-    modifiedBy: localStorage.getItem('user')
+    modifiedBy: localStorage.getItem('name')
 });
 
 const onHandleChange = (e) => {

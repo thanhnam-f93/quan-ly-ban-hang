@@ -5,7 +5,7 @@ import ChartDashBoard from "./ChartDashBoard";
 import "./scss/DashBoard.css";
 
 const Dashboard = () => {
-  const { jwt } = useContext(JwtContext);
+  // const { jwt } = useContext(JwtContext);
   const [accColumn, setAccColumn] = useState(0);
   const [dto, setDto] = useState({
     optionTime: "LAST_WEEK",
@@ -15,9 +15,10 @@ const Dashboard = () => {
     billNumber: 0,
     totalPrice: 0,
   });
-  console.log("jwt", jwt);
+  // console.log("jwt", jwt);
   useEffect(() => {
-    callApi("dashboard", "post", dto, jwt).then((response) => {
+    // callApi("dashboard", "post", dto, jwt).then((response) => {
+      callApi("dashboard", "post", dto, localStorage.getItem("token")).then((response) => {
       if (response.status !== 200) {
         alert("thao tác thất bại");
         return;

@@ -9,7 +9,6 @@ import {
   CInput,
 
 } from '@coreui/react'
-import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 // import {useForm} from 'react-hook-form';
 
@@ -41,7 +40,7 @@ const StaffDetail = (props) => {
     createdDate: staffDetail.createdDate,
     createBy: staffDetail.createBy,
     modifiedDate: new Date(),
-    modifiedBy: localStorage.getItem("user")
+    modifiedBy: localStorage.getItem("name")
   });
 
   const roleEdit = roles.filter(item => item.id != staffDetail.roleId);
@@ -52,17 +51,6 @@ const StaffDetail = (props) => {
     console.log('staff ',staff)
   }
 
-  var data = JSON.stringify(staff);
-  var config = {
-    method: 'put',
-    url: `http://localhost:8080/admin/staffs/${staffDetail.id}`,
-    headers: {
-      'Authorization': `Bearer ${localStorage.getItem("token")}`,
-      'Content-Type': 'application/json'
-    },
-    data: data
-  };
-
   const getValueSelect = () => {
     var select = document.getElementById('select')
     setStaff({ ...staff, roleId: [Number(select.value)] })
@@ -70,8 +58,9 @@ const StaffDetail = (props) => {
     console.log('staff ở selct ', staff)
   }
 
+  var data = JSON.stringify(staff);
   const updateStaff = () => {
-    axios(config)
+    callApi('put', `staffs/${staffDetail.id}`, data)
       .then(response => { history.goBack() })
       .catch(error => { console.log(error) })
   }

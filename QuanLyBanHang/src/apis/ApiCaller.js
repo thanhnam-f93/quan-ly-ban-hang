@@ -14,6 +14,8 @@ async function  callApi(endpoint, method, body,token){
     redirect: "follow",
   };
 
+
+
   const response = await fetch(UrlConstant.API_URL+"/"+endpoint, requestOptions);
   return response;
 }

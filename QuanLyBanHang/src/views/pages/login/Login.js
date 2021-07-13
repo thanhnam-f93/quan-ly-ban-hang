@@ -1,4 +1,10 @@
+
 import React from 'react'
+import { useContext, useState } from "react";
+import { useHistory } from "react-router-dom";
+import { reactLocalStorage } from "reactjs-localstorage";
+import { callApi } from "src/apis/ApiCaller";
+import { JwtContext } from "src/context/JwtContext";
 import { Link } from 'react-router-dom'
 import {
   CButton,
@@ -12,16 +18,65 @@ import {
   CInputGroup,
   CInputGroupPrepend,
   CInputGroupText,
-  CRow
+  CRow,
+  CFormGroup,
+  CCardHeader
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
+import axios from 'axios';
 
 const Login = () => {
+
+  const { jwt, setJwt } = useContext(JwtContext);
+  const history = useHistory();
+  const [category, setCategory] = useState({ phone: "", passWord: "" });
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setCategory({ ...category, [name]: value });
+    console.log('bình ', category);
+  };
+  /**
+   * get jwt from db
+   * set jwt into cookie
+   * set context
+   */
+   var data = JSON.stringify(category);
+   var config = {
+    method: "POST",
+    url: `http://localhost:8080/login`,
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    data: data
+  };
+
+  const handleSubmit = () => {
+    console.log(category);
+    // callApi("login", "POST", category).then((response) => {
+      axios(config)
+      .then((response) => {
+        alert("Đăng nhập thành công");
+        console.log("response:", data);
+        reactLocalStorage.set("token", response.data.token);
+        reactLocalStorage.set("name", response.data.fullName);
+        setJwt(data.token);
+      history.push("/dashboard");
+    })
+    .catch(function (error) {
+      alert("Tài khoản hoặc mật khẩu không chính xác");
+      console.log(error);
+    });
+
+  };
+
+
+
   return (
     <div className="c-app c-default-layout flex-row align-items-center">
       <CContainer>
         <CRow className="justify-content-center">
-          <CCol md="8">
+
+          {/* <CCol md="8">
             <CCardGroup>
               <CCard className="p-4">
                 <CCardBody>
@@ -68,7 +123,50 @@ const Login = () => {
                 </CCardBody>
               </CCard>
             </CCardGroup>
+          </CCol> */}
+
+          <CCol xs="12" sm="5">
+            <CCard>
+
+              <div style={{ backgroundColor: "#3c4b64", padding: "20px 0" }}>
+                <div style={{ backgroundColor: "#3c4b64", width: "176.53px", height: "63.7px", margin: "0 auto" }}>
+                  <img src="/avatars/logo.png" alt="" style={{ maxWidth: "100%" }} />
+                </div>
+              </div>
+
+              <CCardBody>
+                <CForm action="" method="post">
+                  <p className="text-muted">Đăng nhập vào tài khoản của bạn</p>
+                  <CFormGroup>
+                    <CInputGroup>
+                      <CInputGroupPrepend>
+                        <CInputGroupText><CIcon name="cil-user" /></CInputGroupText>
+                      </CInputGroupPrepend>
+                      <CInput  name="phone" placeholder="Tài khoản" autoComplete="name" onChange={handleChange} />
+                    </CInputGroup>
+                  </CFormGroup>
+
+                  <CFormGroup>
+                    <CInputGroup>
+                      <CInputGroupPrepend>
+                        <CInputGroupText><CIcon name="cil-asterisk" /></CInputGroupText>
+                      </CInputGroupPrepend>
+                      <CInput type="password" name="passWord" placeholder="Mật khẩu" autoComplete="current-password" onChange={handleChange} />
+                    </CInputGroup>
+                  </CFormGroup>
+                  <CRow style={{ marginBottom: "12px" }}>
+                    <CCol xs="6">
+                      <CButton color="success" className="px-4" onClick={handleSubmit}>Đăng nhập</CButton>
+                    </CCol>
+                    <CCol xs="6" className="text-right">
+                      <CButton color="link" className="px-0">Quên mật khẩu?</CButton>
+                    </CCol>
+                  </CRow>
+                </CForm>
+              </CCardBody>
+            </CCard>
           </CCol>
+
         </CRow>
       </CContainer>
     </div>

@@ -19,7 +19,7 @@ const _nav = [
     icon: "cil-laptop",
     _tag: 'CSidebarNavItem',
     name: 'Bán hàng',
-    to: '/saler',
+    to: '/dashboard/saler',
     icon: 'cil-laptop',
   },
   {
@@ -36,12 +36,12 @@ const _nav = [
       {
         _tag: "CSidebarNavItem",
         name: "Danh sách đơn hàng",
-        to: "/order",
+        to: "/dashboard/order",
       },
       {
         _tag: "CSidebarNavItem",
         name: "Khách trả hàng",
-        to: "/order",
+        to: "/dashboard/order/return",
       },
     ],
   },

@@ -1,5 +1,5 @@
 import React from 'react';
-import Logins from './components/Login/Logins';
+import Logins from './components/Login/Login';
 import DropDown from './components/Order/DropDown';
 import OrderDetail from './components/OrderDetail/OrderDetail';
 import AddRole from './components/Role/AddRole/AddRole';
@@ -13,62 +13,37 @@ import ReturnOrder from './components/ReturnOrder/ReturnOrder';
 import ReturnOrderDetail from './components/ReturnOrderDetail/ReturnOrderDetail';
 
 /*================== Of Template React =================*/
-const Toaster = React.lazy(() =>
-  import("./views/notifications/toaster/Toaster")
-);
+const Toaster = React.lazy(() => import("./views/notifications/toaster/Toaster"));
 const Tables = React.lazy(() => import("./views/base/tables/Tables"));
-
-const Breadcrumbs = React.lazy(() =>
-  import("./views/base/breadcrumbs/Breadcrumbs")
-);
+const Breadcrumbs = React.lazy(() =>import("./views/base/breadcrumbs/Breadcrumbs"));
 const Cards = React.lazy(() => import("./views/base/cards/Cards"));
 const Carousels = React.lazy(() => import("./views/base/carousels/Carousels"));
 const Collapses = React.lazy(() => import("./views/base/collapses/Collapses"));
 const BasicForms = React.lazy(() => import("./views/base/forms/BasicForms"));
-
-const Jumbotrons = React.lazy(() =>
-  import("./views/base/jumbotrons/Jumbotrons")
-);
-const ListGroups = React.lazy(() =>
-  import("./views/base/list-groups/ListGroups")
-);
+const Jumbotrons = React.lazy(() =>import("./views/base/jumbotrons/Jumbotrons"));
+const ListGroups = React.lazy(() =>import("./views/base/list-groups/ListGroups"));
 const Navbars = React.lazy(() => import("./views/base/navbars/Navbars"));
 const Navs = React.lazy(() => import("./views/base/navs/Navs"));
-const Paginations = React.lazy(() =>
-  import("./views/base/paginations/Pagnations")
-);
+const Paginations = React.lazy(() =>import("./views/base/paginations/Pagnations"));
 const Popovers = React.lazy(() => import("./views/base/popovers/Popovers"));
-const ProgressBar = React.lazy(() =>
-  import("./views/base/progress-bar/ProgressBar")
-);
+const ProgressBar = React.lazy(() =>import("./views/base/progress-bar/ProgressBar"));
 const Switches = React.lazy(() => import("./views/base/switches/Switches"));
-
 const Tabs = React.lazy(() => import("./views/base/tabs/Tabs"));
 const Tooltips = React.lazy(() => import("./views/base/tooltips/Tooltips"));
-const BrandButtons = React.lazy(() =>
-  import("./views/buttons/brand-buttons/BrandButtons")
-);
-const ButtonDropdowns = React.lazy(() =>
-  import("./views/buttons/button-dropdowns/ButtonDropdowns")
-);
-const ButtonGroups = React.lazy(() =>
-  import("./views/buttons/button-groups/ButtonGroups")
-);
+const BrandButtons = React.lazy(() =>import("./views/buttons/brand-buttons/BrandButtons"));
+const ButtonDropdowns = React.lazy(() =>import("./views/buttons/button-dropdowns/ButtonDropdowns"));
+const ButtonGroups = React.lazy(() =>import("./views/buttons/button-groups/ButtonGroups"));
 const Buttons = React.lazy(() => import("./views/buttons/buttons/Buttons"));
 const Charts = React.lazy(() => import("./views/charts/Charts"));
 // const Dashboard = React.lazy(() => import('./views/dashboard/Dashboard'));
-const CoreUIIcons = React.lazy(() =>
-  import("./views/icons/coreui-icons/CoreUIIcons")
-);
+const CoreUIIcons = React.lazy(() =>import("./views/icons/coreui-icons/CoreUIIcons"));
 const Flags = React.lazy(() => import("./views/icons/flags/Flags"));
 const Brands = React.lazy(() => import("./views/icons/brands/Brands"));
 const Alerts = React.lazy(() => import("./views/notifications/alerts/Alerts"));
 const Badges = React.lazy(() => import("./views/notifications/badges/Badges"));
 const Modals = React.lazy(() => import("./views/notifications/modals/Modals"));
 const Colors = React.lazy(() => import("./views/theme/colors/Colors"));
-const Typography = React.lazy(() =>
-  import("./views/theme/typography/Typography")
-);
+const Typography = React.lazy(() =>import("./views/theme/typography/Typography"));
 const Widgets = React.lazy(() => import("./views/widgets/Widgets"));
 const Users = React.lazy(() => import("./views/users/Users"));
 const User = React.lazy(() => import("./views/users/User"));
@@ -78,19 +53,12 @@ const User = React.lazy(() => import("./views/users/User"));
 /*---------------------------------------------------------------------------------------*/
 
 /*================== Start code of Team - Quản lý bán hàng =================*/
+
 const Dashboard = React.lazy(() => import("./components/Dashboard/Dashboard"));
 const Staff = React.lazy(() => import("./components/Staff/Staff"));
-const CustomerDetail = React.lazy(() =>
-  import("./components/Customer/CustomerDetail")
-);
-const CustomerNew = React.lazy(() =>
-  import("./components/Customer/CustomerNew")
-);
-const CustomerList = React.lazy(() =>
-  import("./components/Customer/CustomerList")
-);
-
-
+const CustomerDetail = React.lazy(() =>import("./components/Customer/CustomerDetail"));
+const CustomerNew = React.lazy(() => import("./components/Customer/CustomerNew"));
+const CustomerList = React.lazy(() => import("./components/Customer/CustomerList"));
 const ListProduct = React.lazy(() => import('./components/ListProduct/ListProduct'));
 const Update = React.lazy(() => import('./components/ListProduct/Update'));
 const Create = React.lazy(() => import('./components/ListProduct/Create'));
@@ -100,14 +68,12 @@ const Create = React.lazy(() => import('./components/ListProduct/Create'));
 const ListSupplier = React.lazy(() => import('./components/ListSupplier/ListSupplier'));
 const UpdateSupplier = React.lazy(() => import('./components/ListSupplier/UpdateSupplier'));
 const CreateSupplier = React.lazy(() => import('./components/ListSupplier/CreateSupplier'));
-
-
 const Order = React.lazy(() => import('./components/Order/Order'));
 /*================== The End code of Team - Quản lý bán hàng =================*/
 
 const routes = [
   /*================== Of Template React =================*/
-  { path: "/", exact: true, name: "Home" },
+  // { path: "/", exact: true, name: "Home" },
   // { path: '/dashboard', name: 'Dashboard', component: Dashboard },
   { path: "/theme", name: "Theme", component: Colors, exact: true },
   { path: "/theme/colors", name: "Colors", component: Colors },
@@ -165,7 +131,7 @@ const routes = [
   { path: "/users", exact: true, name: "Users", component: Users },
   { path: "/users/:id", exact: true, name: "User Details", component: User },
   /*================== The End Of Template React =================*/
-  { path: '/', exact: true, name: 'trang-chu' },
+  // { path: '/', exact: true, name: 'trang-chu' },
   // { path: '/dashboard', name: 'Dashboard', component: Dashboard },
   { path: '/theme', name: 'Theme', component: Colors, exact: true },
   { path: '/theme/colors', name: 'Colors', component: Colors },
@@ -211,6 +177,7 @@ const routes = [
   /*---------------------------------------------------------------------------------------*/
 
   /*================== Start code of Team - Quản lý bán hàng =================*/
+    { path: "/", exact: true, name: "Home" },
   { path: "/dashboard", exact: true, name: "Tổng quan", component: Dashboard },
   { path: "/staff", exact: true, name: "Staff", component: Staff },
   {
@@ -245,7 +212,7 @@ const routes = [
   { path: '/product/update-category/:id', exact: true,  name: 'update', component: Update },
   { path: '/product/add-category', exact: true,  name: 'add', component: Create },
   { path: '/supplier', exact: true,  name: 'Supplier', component: ListSupplier },
-  { path: '/logins', exact: true,  name: '', component: Logins },
+  // { path: '/binhlogins', exact: true,  name: '', component: Logins },
   { path: '/saler', exact: true,  name: 'ban-hang', component: Saler },
 
   

@@ -81,4 +81,9 @@ public class StaffServiceImpl implements StaffService {
         Page<StaffDto> staffDtoPage = listStaffEntity.map(item->StaffConverter.toDto(item));
         return  staffDtoPage;
     }
+
+    @Override
+    public Boolean existsByPhone(String phone) {
+        return staffRepository.existsByPhone(phone);
+    }
 }
