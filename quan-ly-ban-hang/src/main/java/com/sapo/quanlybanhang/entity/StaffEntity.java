@@ -1,6 +1,6 @@
 package com.sapo.quanlybanhang.entity;
 
-import com.sun.istack.NotNull;
+
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 

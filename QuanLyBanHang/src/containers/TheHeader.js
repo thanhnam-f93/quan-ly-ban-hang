@@ -92,8 +92,8 @@ const TheHeader = () => {
             >
               <CIcon name="cil-graph" alt="Dashboard" />&nbsp;Tổng quan
             </CLink>
-            <CLink className="c-subheader-nav-link" href="/settings">
-              <CIcon name="cil-settings" alt="Settings" />&nbsp;Cấu hình
+            <CLink className="c-subheader-nav-link" href="#">
+              <CIcon name="cil-settings" alt="Settings" />&nbsp;Cài đặt
             </CLink>
           </div>
       </CSubheader>

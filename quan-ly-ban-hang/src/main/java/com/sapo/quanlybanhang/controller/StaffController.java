@@ -12,7 +12,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.FieldError;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,6 +29,9 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/admin")
 public class StaffController {
+
+    @Autowired
+    PasswordEncoder encoder;
 
     private final StaffService staffService;
 
@@ -62,10 +67,23 @@ public class StaffController {
     }
 
     //Thêm mới 1 Staff
+//    @PostMapping("/staffs")
+//    public ResponseEntity createStaff(@Valid @RequestBody StaffDto staffDto){
+//        StaffDto dto = staffService.createStaff(staffDto);
+//        return new ResponseEntity(dto, HttpStatus.OK);
+//    }
+
     @PostMapping("/staffs")
-    public ResponseEntity createStaff(@Valid @RequestBody StaffDto staffDto){
+    public ResponseEntity createStaff(@Valid @RequestBody StaffDto staffDto) {
+        if (staffService.existsByPhone(staffDto.getPhone())) {
+            return ResponseEntity
+                    .badRequest()
+                    .body("Error: Số điện thoại đã được sử dụng");
+        }
+        staffDto.setPassWord(encoder.encode(staffDto.getPassWord()));
         StaffDto dto = staffService.createStaff(staffDto);
         return new ResponseEntity(dto, HttpStatus.OK);
+
     }
 
     //Cập nhật 1 Staff

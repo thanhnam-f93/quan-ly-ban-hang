@@ -26,4 +26,7 @@ public interface StaffService {
 
     //Tìm kiếm staff theo tên
     public Page<StaffDto> getAllStaffByName(String name,Pageable pageable);
+
+    //Check trùng số điện thoại
+    public Boolean existsByPhone(String phone);
 }

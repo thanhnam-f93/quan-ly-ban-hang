@@ -1,8 +1,8 @@
 import React from 'react'
 import { useHistory } from 'react-router-dom'
-import {Link} from 'react-router-dom'
 
 const RoleItem = ({role}) => {
+
   let history = useHistory();
 
   const updateRole = (role) => {
@@ -11,6 +11,7 @@ const RoleItem = ({role}) => {
       state: { role: role }
     })
   }
+  
   return (
     <>
        <tr >

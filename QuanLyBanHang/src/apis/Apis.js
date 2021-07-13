@@ -1,34 +1,17 @@
 import React from 'react'
+import axios from 'axios';
 
-var API = 'http://localhost:8080/admin';
+const callApi = (method, urlController, data) => {
+    var config = {
+        method: method,
+        url: `http://localhost:8080/admin/${urlController}`,
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem("token")}`,
+          'Content-Type': 'application/json'
+        },
+        data: data
+      };
+    return axios(config)
+}
 
-// const ApiStaff = {
-//     method: 'get',
-//     url: `${API}/staffs`,
-//     headers: {
-//         'Authorization': `Bearer ${localStorage.getItem("token")}`,
-//         'Content-Type': 'application/json'
-//     }
-// };
-// export { ApiStaff };
-
-const ApiRole = {
-    method: 'get',
-    url: `${API}/roles`,
-    headers: {
-        'Authorization': `Bearer ${localStorage.getItem("token")}`,
-        'Content-Type': 'application/json'
-    }
-};
-export { ApiRole }
-
-const apiAddRole = {
-    method: 'post',
-    url: `${API}/roles`,
-    data: null,
-    headers: {
-        'Authorization': `Bearer ${localStorage.getItem("token")}`,
-        'Content-Type': 'application/json'
-    }
-};
-export { apiAddRole }
+export {callApi}

@@ -12,7 +12,7 @@ import CIcon from '@coreui/icons-react'
 
 
 const Setting = () => {
-  localStorage.setItem("user", "chủ cửa hàng");
+
   return (
     <>
      <h1 style = {{ color: "#464545", fontSize: "25px", marginTop: "-15px" , marginBottom: "25px"}}>Cấu hình</h1>      
