@@ -1,6 +1,6 @@
 import React from "react";
 import OrderInforItem from "./OrderInforItem";
-import "./scss/OrderDetail.css";
+import "./scss/OrderDetail.scss";
 
 const orderInfor = (props) => {
   const products = props.order;
