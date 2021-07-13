@@ -27,10 +27,12 @@ public class CustomerDto implements Serializable {
     private String name;
     @NumberFormat
     @Length(min = 10,max = 11,message = "So dien thoai khong hop le")
+// @UniqueElements(message = "So điện thoại phải là duy nhất")
     private String phone;
     @Size(min = 5, max = 250, message = "Data Length must between 5 and 250")
-    private String email;
     @NotNull(message = "Email Khong duoc de trong")
+   // @UniqueElements(message = "Email phai la duy nhat")
+    private String email;
     private String gender;
     @Size(min = 5, max = 250, message = "Data Length must between 5 and 250")
     private String address;

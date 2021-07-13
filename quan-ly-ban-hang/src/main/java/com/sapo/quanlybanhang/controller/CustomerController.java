@@ -280,13 +280,20 @@ public class CustomerController {
     @PostMapping("customers")
     ResponseEntity<?> save(@Valid @RequestBody CustomerDto customerDto ) {
         try {
+            if(customerService.checkDuplicateEmail(customerDto.getEmail())){
+                return new ResponseEntity<>("Email da ton tai",HttpStatus.BAD_REQUEST);
+            }
+            if(customerService.checkDuplicatePhone(customerDto.getPhone())){
+                return new ResponseEntity<>("Phone da ton tai",HttpStatus.BAD_REQUEST);
+            }
             if(customerDto!=null){
                 customerService.save(customerDto);
-                return ResponseEntity.ok().body("Thêm mới thành công");
+                return new ResponseEntity<>("Thêm mới thành công",HttpStatus.OK);
             }else{
                 return new ResponseEntity<>("Không có dữ liệu",HttpStatus.NO_CONTENT);
             }
         } catch (Exception e) {
+            logger.error("this is: "+e.getMessage());
             return new ResponseEntity<>("Thêm mới thất bại, kiểm tra lại tính hợp lệ của dữ liệu",HttpStatus.BAD_REQUEST);
         }
     }
@@ -296,6 +303,12 @@ public class CustomerController {
 
         try {
             CustomerEntity root = CustomerConvert.toEntity(customerService.findById(id));
+//            if(customerService.checkDuplicateEmail(customerDto.getEmail())){
+//                return new ResponseEntity<>("Email da ton tai",HttpStatus.BAD_REQUEST);
+//            }
+//            if(customerService.checkDuplicatePhone(customerDto.getPhone())){
+//                return new ResponseEntity<>("Phone da ton tai",HttpStatus.BAD_REQUEST);
+//            }
             if(root!=null){
                 root.setModifiedDate(customerDto.getModifiedDate());
                 root.setModifiedBy(customerDto.getModifiedBy());
@@ -309,7 +322,7 @@ public class CustomerController {
                 root.setDateOfBirth(customerDto.getDateOfBirth());
                 root.setStatus(customerDto.getStatus());
                 customerService.save(CustomerConvert.toDTO(root));
-                return ResponseEntity.ok().body("Cập nhập thành công");
+                return new ResponseEntity<>("Update thành công",HttpStatus.OK);
             }else{
                 return new ResponseEntity<>("Không có dữ liệu",HttpStatus.NO_CONTENT);
             }
@@ -320,7 +333,7 @@ public class CustomerController {
         }
     }
 
-    @GetMapping("customers/off/{id}")
+   @GetMapping("customers/off/{id}")
     ResponseEntity<?> delete(@PathVariable("id") Integer id) {
         CustomerDto root = customerService.findById(id);
         if (id != null) {

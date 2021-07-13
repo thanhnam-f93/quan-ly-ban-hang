@@ -149,4 +149,14 @@ public class CustomerServiceImpl implements CustomerService {
     public List<Integer> getYearCreateCustomer() {
         return customerRepository.getYearCreateCustomer();
     }
+
+    @Override
+    public boolean checkDuplicatePhone(String phone) {
+        return customerRepository.existsByPhone(phone);
+    }
+
+    @Override
+    public boolean checkDuplicateEmail(String email) {
+       return customerRepository.existsByEmail(email);
+    }
 }

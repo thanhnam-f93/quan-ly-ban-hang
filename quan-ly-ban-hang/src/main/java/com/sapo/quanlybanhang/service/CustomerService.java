@@ -54,4 +54,6 @@ public interface CustomerService {
     Page<Object[]> getStatistics(Pageable pageable);
 
     List<Integer> getYearCreateCustomer();
+    boolean checkDuplicatePhone(String phone);
+    boolean checkDuplicateEmail(String email);
 }

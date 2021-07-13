@@ -68,4 +68,6 @@ void updateStatus(@Param("id")Integer id);
 @Query(value = "select distinct year(created_date)  from customers",nativeQuery = true)
 List<Integer> getYearCreateCustomer();
     CustomerEntity findOneById(Integer customId);
+    boolean existsByPhone(String phone);
+    boolean existsByEmail(String email);
 }
