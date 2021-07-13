@@ -260,7 +260,7 @@ const routes = [
   { path: '/settings/roles/:id', exact: true,  name: 'Chỉnh sửa', component: RoleDetail },
   { path: '/update-supplier/:id', exact: true,  name: 'update', component: UpdateSupplier },
   { path: '/add-supplier', exact: true,  name: 'add', component: CreateSupplier },
-  { path: '/create-order-return/:id', exact: true,  name: 'add', component: OrderReturnCustomer }
+  { path: '/create-order-return/:id/:code', exact: true,  name: 'add', component: OrderReturnCustomer }
 
  
 

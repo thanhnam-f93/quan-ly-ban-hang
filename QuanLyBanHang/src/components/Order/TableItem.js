@@ -28,7 +28,7 @@ const TableItem = (props) => {
         }
       }else{
          location = {
-          pathname: `/create-order-return/${item.id}`, 
+          pathname: `/create-order-return/${item.id}/${item.code}`, 
           state:{item:item}  
         }
       }
