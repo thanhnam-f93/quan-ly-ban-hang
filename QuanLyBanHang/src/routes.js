@@ -12,6 +12,7 @@ import StaffDetail from './components/Staff/StaffDetail/StaffDetail';
 import ReturnOrder from './components/OrderReturn/ReturnOrder';
 import ReturnOrderDetail from './components/ReturnOrderDetail/ReturnOrderDetail';
 import SaleAddCustomer from './components/sale/SaleAddCustomer';
+import OrderReturnCustomer from './components/OrderReturn/OrderReturnCustomer';
 
 /*================== Of Template React =================*/
 const Toaster = React.lazy(() =>
@@ -259,6 +260,8 @@ const routes = [
   { path: '/settings/roles/:id', exact: true,  name: 'Chỉnh sửa', component: RoleDetail },
   { path: '/update-supplier/:id', exact: true,  name: 'update', component: UpdateSupplier },
   { path: '/add-supplier', exact: true,  name: 'add', component: CreateSupplier },
+  { path: '/create-order-return/:id', exact: true,  name: 'add', component: OrderReturnCustomer }
+
  
 
 /*================== The End code of Team - Quản lý bán hàng =================*/

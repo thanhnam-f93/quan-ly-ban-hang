@@ -1,12 +1,14 @@
 import React, { useContext, useEffect, useState } from "react";
 import { set } from "react-hook-form";
 import { Link } from "react-router-dom";
+import { reactLocalStorage } from "reactjs-localstorage";
 import { callApi, callApiNotJwt } from "src/apis/ApiCaller";
 import {
   JwtContext,
   LayoutContext,
   SalerContext,
 } from "src/context/JwtContext";
+import { openFullscreen } from "src/helpers/FullScreen";
 import SalerContent from "./SalerContent";
 import "./scss/SalerHeader.scss";
 
@@ -88,6 +90,10 @@ const OrderHeader = () => {
   const returnHome = () => {
     setShow(!isShow);
   };
+  // -------------------fullScreen----------------
+  const openFullScreen =()=>{
+    openFullscreen();
+  }
 
   return (
     <div className="wrapper-header">
@@ -112,13 +118,13 @@ const OrderHeader = () => {
             <span>
               <i className="far fa-user"></i>
             </span>
-            <span>Nguyễn Quang Phúc</span>
+            <span>{reactLocalStorage.get("name")}</span>
           </div>
         </div>
         <div className="header-right-utils">
           <div className="header-right-utils-1">
             <div className="utils-full-screen">
-              <i className="fas fa-expand-arrows-alt fa-lg"></i>
+              <i className="fas fa-expand-arrows-alt fa-lg" onClick = {openFullScreen}></i>
               <Link to="/dashboard">
                 <i className="fas fa-home fa-lg" onClick={returnHome}></i>
               </Link>

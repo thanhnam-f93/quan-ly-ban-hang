@@ -18,6 +18,42 @@
         border-bottom-width: 0.5px;
         border-bottom-color:#e5e5e5;
         margin-top:15px;
+        .show-customer{
+            position: absolute;
+            right:0;
+            top:0;
+            width: 400px;
+            z-index: 10;
+            display: flex;
+            justify-content: space-between;
+            background-color: white;
+            border-bottom:1px solid #e5e5e5;
+            .show-1{
+                display: flex;
+                span{
+                    display: flex;
+                    i{
+                        margin:auto;
+                    }     
+                   
+                }
+                .show-1-1{
+                    margin-left: 10px;
+                    p{
+                        margin-bottom:5px;
+                        &:first-child{
+                            color:#0964cf;
+                        }
+                    }
+                }
+            }
+            span{
+                display: flex;
+                i{
+                    margin:auto;
+                }
+            }
+        }
         .customer-infor{
             background-color: transparent;
             width: 100%;  
@@ -47,7 +83,7 @@
             max-height: 50%;
             right:0;
             top:45px;
-            overflow-y: scroll;
+            overflow-y: auto;
            
 
         }
@@ -123,6 +159,7 @@
             margin:auto;
         }
         &:hover{
+            background-color: #09992d;
             cursor: pointer;
         }
 

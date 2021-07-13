@@ -77,7 +77,7 @@ const getPage = (page) =>{
     return (
         <div className = "list-order">
           <OrderHeader inputs  = {getInput} getDate = {getDate} />   
-         <OrderTable lists = {listOrder}/>
+         <OrderTable  type = "order" lists = {listOrder}/>
          <CPagination
             doubleArrows = {true}
             activePage={orderPageable.page}

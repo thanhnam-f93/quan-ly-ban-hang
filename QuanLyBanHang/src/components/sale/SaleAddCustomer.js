@@ -15,14 +15,8 @@ const validateName = (e)=>{
     let val =  e.target.value;
     var regexName = /^[a-zA-Z ]{2,}$/g;
     if(!regexName.test(removeAscent(val))){
-        // console.log("lỗi");
-        // document.getElementById("p-1").style.color= "red";
-        // document.getElementById("input-name").style.borderColor ="red";
         setName(true);
     }else{
-        // document.getElementById("input-name").style.borderColor ="#cfd5df";
-        // console.log("ko thành công");
-        // document.getElementById("p-1").style.color= "#768192";
        setName(false);
     }
 }
@@ -31,13 +25,9 @@ const validatePhone= (e)=>{
     let val = e.target.value;
     let exp = /((09|03|07|08|05)+([0-9]{8})\b)/g;
     if(exp.test(val)){
-        // document.getElementById("p-2").style.color= "#768192";
-        // document.getElementById('input-phone').borderColor = "#cfd5df";
         setPhone(false);
     }else{
         console.log("no ok");
-        // document.getElementById("p-2").style.color= "red";
-        // document.getElementById('input-phone').borderColor = "red";
         setPhone(true);
     }
 
