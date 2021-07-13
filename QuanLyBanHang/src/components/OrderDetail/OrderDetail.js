@@ -5,7 +5,7 @@ import {  callApiNotJwt } from "src/apis/ApiCaller";
 import { JwtContext } from "src/context/JwtContext";
 import CustomerInfor from "./CustomerInfor";
 import OrderInfor from "./OrderInfor";
-import "./scss/OrderDetail.css";
+import "./scss/OrderDetail.scss";
 
 const OrderDetail = () => {
   const {jwt} = useContext(JwtContext);
