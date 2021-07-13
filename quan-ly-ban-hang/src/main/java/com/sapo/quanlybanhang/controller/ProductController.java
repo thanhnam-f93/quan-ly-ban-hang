@@ -54,9 +54,9 @@ public class ProductController {
     }
 
     @PostMapping(value = "/products")
-    public InputProductDto create(@RequestBody InputProductDto productDto) {
-        productService.create(productDto);
-        return productDto;
+    public ResponseEntity<?> create(@RequestBody InputProductDto productDto) {
+        return productService.create(productDto);
+
     }
 
     @GetMapping(value = "/products/{id}")

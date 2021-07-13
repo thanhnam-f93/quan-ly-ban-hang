@@ -145,18 +145,18 @@ function Create(props) {
   };
 
 
-const changeonBlur = (event)=>{
-if( /((\r\n|\n|\r)$)|(^(\r\n|\n|\r))|^\s*$/.test(event.target.value)!=false){
-    setMesage({
-      code:" * Mã không được để trống"
-    })
-  }
-  else{
-    setMesage({
-      code:""
-    })
-  }
-}
+// const changeonBlur = (event)=>{
+// if( /((\r\n|\n|\r)$)|(^(\r\n|\n|\r))|^\s*$/.test(event.target.value)!=false){
+//     setMesage({
+//       code:" * Mã không được để trống"
+//     })
+//   }
+//   else{
+//     setMesage({
+//       code:""
+//     })
+//   }
+// }
 
 const changeonBlurName = (event)=>{
  if( /((\r\n|\n|\r)$)|(^(\r\n|\n|\r))|^\s*$/.test(event.target.value)!=false){
@@ -266,7 +266,7 @@ const changeCode= (event) => {
                     name="code"
                     placeholder="Nhập Mã"
                     onChange={changeCode}
-                    onBlur={changeonBlur}
+                    // onBlur={changeonBlur}
                   />
                   <span style={{color:"red"}}> {message.code}</span>
                 </CFormGroup>
@@ -420,10 +420,6 @@ const changeCode= (event) => {
            </CRow>
            
          </CCol>
-         <CCol>
-             fdfd
-           </CCol>
-     
        </CRow>
       </div>
     </div>

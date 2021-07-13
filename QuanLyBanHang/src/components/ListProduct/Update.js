@@ -204,7 +204,18 @@ function Update(props) {
           ApiQuan('put',`products/${id}`,data).then((res)=>{
           // props.history.push("/category");
           console.log(category);
-        });
+        }) .catch(error=>{
+          console.log("aaaaaaaaaaaaaaaa")
+          if(error.response.data.mess == " error : code trung "){
+            Swal.fire({
+              icon: 'error',
+              title: 'code trùng',
+              showConfirmButton: false,
+              timer: 1500
+            })
+          }
+        })
+        ;
         Swal.fire('đã lưu!', '', 'success')
       } else if (result.isDenied) {
         Swal.fire('Sản phẩm vẫn chưa được thay đổi', '', 'info')
@@ -418,29 +429,6 @@ function Update(props) {
             </CFormGroup>
           </CCardBody>
         </CCard>
-        {/* <CCol className="px-0"  xs="12" sm="7">
-        <button
-          className="btn btn-secondary"
-          onClick={cancel}
-          style={{ marginLeft: "10px" }}
-        >
-          Quay Lại
-        </button>
-        <button
-          className="btn btn-success"
-          onClick={updateCategory}
-          style={{ marginLeft: "10px" }}
-        >
-          Cập nhật
-        </button>
-        <button
-          style={{ marginLeft: "10px" }}
-          onClick={() => deleteCategory(id)}
-          className="btn btn-danger"
-        >
-          Xóa
-        </button>
-        </CCol> */}
     
       </CCol>
          <CCol xs="12" sm="5">   

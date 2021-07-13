@@ -49,7 +49,6 @@ public class SupplierServiceImpl implements SupplierService {
         supplierDto.setModifiedBy(supplierEntity.getModifiedBy());
         return supplierDto;
     }
-
     @Override
     public List<SupplierDto> findAll(String keyword) {
         if (keyword != null) {
