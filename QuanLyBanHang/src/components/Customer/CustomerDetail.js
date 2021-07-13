@@ -15,10 +15,9 @@ import {
   CInput,
   CTextarea,
 } from "@coreui/react";
-function CustomerDetail() {
-  const location = useLocation();
-  var customer = location.state.customer;
-  console.log("customer_init:         ", customer);
+function CustomerDetail(props) {
+  const history = useHistory();
+  var customer = props.location.state.customer;
   const headers = {
     Authorization: "Bearer " + reactLocalStorage.get("token"),
   };
@@ -54,11 +53,44 @@ function CustomerDetail() {
       .catch((error) => {
         Swal.fire({
           icon: "error",
-          title: "Oops...",
-          text: "Cập nhập thất bại!",
-          footer: '<a href="">Why do I have this issue?</a>',
+          title: "Warning" + error.response.status,
+          text: "Error: " + error.response.data,
+          // footer: '<a href="">Why do I have this issue?</a>',
         });
+        console.log("data", error.response.data);
+        console.log("status", error.response.status);
+        console.log("header", error.response.headers);
       });
+  }
+  function deleteCustomer(id) {
+    const API = `http://localhost:8080/customers/off/${id}`;
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios
+          .get(API, { headers })
+          .then(function (response) {
+            Swal.fire("Good job!", "Delete Complete!", "success");
+            history.goBack();
+          })
+          .catch(function (error) {
+            Swal.fire({
+              icon: "error",
+              title: "Error",
+              text: "Delete Failure: " + error.response.data,
+            });
+            console.log(error.response);
+          });
+        Swal.fire("Deleted!", "Your file has been deleted.", "success");
+      }
+    });
   }
   function resetForm() {
     const inputs = document.getElementsByTagName("input");
@@ -98,12 +130,12 @@ function CustomerDetail() {
               <CFormGroup>
                 <CLabel htmlFor="vat">Tên</CLabel>
                 <CInput
-                  {...register("name", {
-                    required: true,
-                    maxLength: 20,
-                    minLength: 3,
-                    //   pattern: /^[A-Za-z]+$/i,
-                  })}
+                  // {...register("name", {
+                  //   required: true,
+                  //   maxLength: 20,
+                  //   minLength: 3,
+                  //   //   pattern: /^[A-Za-z]+$/i,
+                  // })}
                   name="name"
                   placeholder="Tên khách hàng"
                   defaultValue={customer.name}
@@ -135,12 +167,12 @@ function CustomerDetail() {
               <CFormGroup>
                 <CLabel htmlFor="phone">Số điện thoại</CLabel>
                 <CInput
-                  {...register("phone", {
-                    required: true,
-                    maxLength: 11,
-                    minLength: 10,
-                    valueAsNumber: true,
-                  })}
+                  // {...register("phone", {
+                  //   required: true,
+                  //   maxLength: 11,
+                  //   minLength: 10,
+                  //   valueAsNumber: true,
+                  // })}
                   name="phone"
                   type="tel"
                   pattern="[0]{1}[0-9]{9}"
@@ -164,12 +196,12 @@ function CustomerDetail() {
               <CFormGroup>
                 <CLabel htmlFor="email">Email</CLabel>
                 <CInput
-                  {...register("email", {
-                    required: true,
-                    maxLength: 50,
-                    minLength: 5,
-                    pattern: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/,
-                  })}
+                  // {...register("email", {
+                  //   required: true,
+                  //   maxLength: 50,
+                  //   minLength: 5,
+                  //   pattern: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/,
+                  // })}
                   name="email"
                   type="mail"
                   placeholder="Email"
@@ -192,11 +224,11 @@ function CustomerDetail() {
               <CFormGroup>
                 <CLabel htmlFor="address">Địa chỉ</CLabel>
                 <CInput
-                  {...register("address", {
-                    required: true,
-                    maxLength: 50,
-                    minLength: 5,
-                  })}
+                  // {...register("address", {
+                  //   required: true,
+                  //   maxLength: 50,
+                  //   minLength: 5,
+                  // })}
                   name="address"
                   placeholder="Địa chỉ"
                   defaultValue={customer.address}
@@ -295,20 +327,35 @@ function CustomerDetail() {
           </CCard>
         </div>
       </div>
-      <button
-        className="btn btn-danger"
-        onClick={resetForm}
-        style={{ marginLeft: "10px" }}
-      >
-        Hủy
-      </button>
-      <button
-        className="btn btn-success"
-        onClick={handleSubmit(updateCustomer)}
-        style={{ marginLeft: "10px" }}
-      >
-        Cập nhật
-      </button>
+      <div className="row">
+        <div className="col-6">
+          <button
+            className="btn btn-danger"
+            onClick={resetForm}
+            style={{ marginLeft: "10px" }}
+          >
+            Hủy
+          </button>
+          <button
+            className="btn btn-success"
+            onClick={handleSubmit(updateCustomer)}
+            style={{ marginLeft: "10px" }}
+          >
+            Cập nhật
+          </button>
+        </div>
+        <div className="col-6">
+          <button
+            style={{ marginLeft: "10px", width: "55px" }}
+            onClick={() => {
+              deleteCustomer(customer.id);
+            }}
+            className="btn btn-danger  float-right"
+          >
+            Xóa
+          </button>
+        </div>
+      </div>
     </div>
   );
 }

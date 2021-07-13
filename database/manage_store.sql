@@ -1,11 +1,9 @@
--- MySQL dump 10.13  Distrib 8.0.24, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.23, for Win64 (x86_64)
 --
--- Host: localhost    Database: quan_ly
+-- Host: 127.0.0.1    Database: manage_store
 -- ------------------------------------------------------
--- Server version	8.0.21
-drop database manage_store;
-create database manage_store;
-use manage_store;
+-- Server version	8.0.23
+
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
@@ -114,6 +112,7 @@ UNLOCK TABLES;
 --
 -- Table structure for table `categories`
 --
+
 DROP TABLE IF EXISTS `categories`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
@@ -173,8 +172,8 @@ DROP TABLE IF EXISTS `customers`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `customers` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `phone` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci unique NOT NULL,
-  `email` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci unique NOT NULL,
+  `phone` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `email` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `address` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `gender` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `date_of_birth` date NOT NULL,
@@ -185,8 +184,10 @@ CREATE TABLE `customers` (
   `created_by` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `name` varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `status` varchar(3) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `phone` (`phone`),
+  UNIQUE KEY `email` (`email`)
+) ENGINE=InnoDB AUTO_INCREMENT=72 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -195,22 +196,7 @@ CREATE TABLE `customers` (
 
 LOCK TABLES `customers` WRITE;
 /*!40000 ALTER TABLE `customers` DISABLE KEYS */;
-INSERT INTO `customers`(phone,email,address,gender,date_of_birth,note,created_date,modified_by,modified_date,created_by,name,status) 
- VALUES ('0399439339','Nxx@gmail.com','Hà Nội','Nam','2001-02-02','adsa','2021-02-02','Nguyễn Văn a','2000-02-02','Nguyễn Văn v','trần hà','on');
-INSERT INTO `customers` (phone,email,address,gender,date_of_birth,note,created_date,modified_by,modified_date,created_by,name,status) VALUES ('0392439378','N1@gmail.com','Hà Nội','Nu','2002-02-02','adsa','2020-02-02','Nguyễn Văn a','2001-02-02','Nguyễn Văn b','trần hà Nam','on');
-INSERT INTO `customers` (phone,email,address,gender,date_of_birth,note,created_date,modified_by,modified_date,created_by,name,status) VALUES ('0392439369','N2@gmail.com','Hà Nội','Nam','2003-02-02','adsa','2021-02-02','Nguyễn Văn a','2002-02-02','Nguyễn Văn c','trần hà Noi','on');
-INSERT INTO `customers` (phone,email,address,gender,date_of_birth,note,created_date,modified_by,modified_date,created_by,name,status) VALUES ('0392439359','N3@gmail.com','Hà Nội','Nam','2010-02-02','adsa','2020-02-02','Nguyễn Văn a','1977-02-02','Nguyễn Văn d','trần hà Bac','on');
-INSERT INTO `customers` (phone,email,address,gender,date_of_birth,note,created_date,modified_by,modified_date,created_by,name,status) VALUES ('0392439349','N4@gmail.com','Hà Nội','Nam','2004-02-02','adsa','2021-02-02','Nguyễn Văn a','1975-02-02','Nguyễn Văn e','trần hà Dong','on');
-INSERT INTO `customers` (phone,email,address,gender,date_of_birth,note,created_date,modified_by,modified_date,created_by,name,status) VALUES ('0332439349','N5@gmail.com','Hà Nội','Nam','2005-02-02','adsa','2020-02-02','Nguyễn Văn a','1988-02-02','Nguyễn Văn f','trần hà Tay','on');
-INSERT INTO `customers` (phone,email,address,gender,date_of_birth,note,created_date,modified_by,modified_date,created_by,name,status) VALUES ('0392439338','N6@gmail.com','Hà Nội','Nam','2006-02-02','adsa','2007-02-02','Nguyễn Văn a','1967-02-02','Nguyễn Văn g','trần hà Duong','on');
-INSERT INTO `customers` (phone,email,address,gender,date_of_birth,note,created_date,modified_by,modified_date,created_by,name,status) VALUES ('0392439337','N7@gmail.com','Hà Nội','Nam','2007-02-02','adsa','2008-02-02','Nguyễn Văn a','1966-02-02','Nguyễn Văn h','trần hà Am','on');
-INSERT INTO `customers` (phone,email,address,gender,date_of_birth,note,created_date,modified_by,modified_date,created_by,name,status) VALUES ('0392439336','N8@gmail.com','Hà Nội','Nu','2008-02-02','adsa','2008-02-02','Nguyễn Văn a','1994-02-02','Nguyễn Văn j','trần hà Ti','on');
-INSERT INTO `customers` (phone,email,address,gender,date_of_birth,note,created_date,modified_by,modified_date,created_by,name,status) VALUES ('0392439335','N9@gmail.com','Hà Nội','Nam','2013-02-02','adsa','2008-02-02','Nguyễn Văn a','1995-02-02','Nguyễn Văn k','trần hà Suu','on');
-INSERT INTO `customers` (phone,email,address,gender,date_of_birth,note,created_date,modified_by,modified_date,created_by,name,status) VALUES ('0392439334','N10@gmail.com','Hà Nội','Nam','2012-02-02','adsa','2011-02-02','Nguyễn Văn a','1995-02-02','Nguyễn Văn l','trần hà Dan','on');
-INSERT INTO `customers` (phone,email,address,gender,date_of_birth,note,created_date,modified_by,modified_date,created_by,name,status) VALUES ('0392439333','N22@gmail.com','Hà Nội','Nu','2011-02-02','adsa','2011-02-02','Nguyễn Văn a','1999-02-02','Nguyễn Văn x','trần hà Mao','on');
-INSERT INTO `customers` (phone,email,address,gender,date_of_birth,note,created_date,modified_by,modified_date,created_by,name,status) VALUES ('0392439332','N11@gmail.com','Hà Nội','Nam','1983-02-02','adsa','2014-02-02','Nguyễn Văn a','2006-02-02','Nguyễn Văn z','trần hà Thin','on');
-INSERT INTO `customers`(phone,email,address,gender,date_of_birth,note,created_date,modified_by,modified_date,created_by,name,status) VALUES ('0392439331','N12@gmail.com','Hà Nội','Nam','1988-02-02','adsa','2014-02-02','Nguyễn Văn a','2009-02-02','Nguyễn Văn b','trần hà Ti','on');
-
+INSERT INTO `customers` VALUES (25,'0399439339','Nxx@gmail.com','Hà Nội','Nam','2001-02-02','adsa','2021-12-02','Nguyễn Văn a','2000-02-02','Nguyễn Văn v','trần hà phong','on'),(26,'0392439378','N1@gmail.com','Hà Nội','Nu','2002-02-02','adsa','2020-12-02','Nguyễn Văn a','2001-02-02','Nguyễn Văn b','IRON MEN','on'),(27,'0392439369','N2@gmail.com','Hà Nội','Nam','2003-02-02','adsa','2021-02-02','Nguyễn Văn a','2002-02-02','Nguyễn Văn c','HULK','on'),(28,'0392439359','N3@gmail.com','Hà Nội','Nam','2010-02-02','adsa','2020-03-02','Nguyễn Văn a','1977-02-02','Nguyễn Văn d','BAT MAN','on'),(29,'0392439349','N4@gmail.com','Hà Nội','Nam','2004-02-02','adsa','2021-02-02','Nguyễn Văn a','1975-02-02','Nguyễn Văn e','JOCKER','on'),(31,'0332439349','N5@gmail.com','Hà Nội','Nam','2005-02-02','adsa','2020-02-02','Nguyễn Văn a','1988-02-02','Nguyễn Văn f','WONDER WOMEN','on'),(32,'0392439338','N6@gmail.com','Hà Nội','Nam','2006-02-02','adsa','2007-02-02','Nguyễn Văn a','1967-02-02','Nguyễn Văn g','SUPERMAN','on'),(33,'0392439337','N7@gmail.com','Hà Nội','Nam','2007-02-02','adsa','2008-03-02','Nguyễn Văn a','1966-02-02','Nguyễn Văn h','FLASH','on'),(34,'0392439336','N8@gmail.com','Hà Nội','Nu','2008-02-02','adsa','2008-03-02','Nguyễn Văn a','1994-02-02','Nguyễn Văn j','GREEN LATE','on'),(35,'0392439335','N9@gmail.com','Hà Nội','Nam','2013-02-02','adsa','2008-02-02','Nguyễn Văn a','1995-02-02','Nguyễn Văn k','DOCTOR STRANGER','on'),(36,'0392439334','N10@gmail.com','Hà Nội','Nam','2012-02-02','adsa','2014-07-02','Nguyễn Văn a','1995-02-02','Nguyễn Văn l','SPIDER MAN','on'),(37,'0392439333','N22@gmail.com','Hà Nội','Nu','2011-02-02','adsa','2014-08-02','Nguyễn Văn a','1999-02-02','Nguyễn Văn x','THOR','on'),(38,'0392439332','N11@gmail.com','Hà Nội','Nam','1983-02-02','adsa','2014-02-02','Nguyễn Văn a','2006-02-02','Nguyễn Văn z','LOKI','on'),(39,'0392439331','N12@gmail.com','Hà Nội','Nam','1988-02-02','adsa','2014-03-02','Nguyễn Văn a','2009-02-02','Nguyễn Văn b','CAPTAIN AMERICAN','on'),(40,'0392459331','N124@gmail.com','Hà Nội','Nam','1988-02-02','adsa','2014-05-02','Nguyễn Văn a','2009-02-02','Nguyễn Văn b','VU THANH NAM','on'),(41,'0916225588','thanhnam@gmail.com','Nam Dinh','Nam','1993-10-21','It is My Nam','2000-09-11','Nguyen Van an','2010-09-09','Vu VAn Nam','Vu Thanh Nan','on'),(42,'0392439339','thanhnam.humg93@gmail.com','Sai Gon','Nam','2017-06-14','hahahahha','2021-07-13','','2021-07-13','Ngyễn quang phúc','MacBook111','on'),(47,'0916113957','thanhnamw.humg93@gmail.com','266 Doi Can , Ba Dinh , Ha Noi','Nam','1987-05-12','ghi chu them item spring','2021-07-12','Ngyễn quang phúc','2021-07-13','Ngyễn quang phúc','spring 555','on'),(60,'03924393391','thanhnwam.humg93@gmail.com','266 Doi Can , Ba Dinh , Ha Noi','Nu','2021-07-03',NULL,'2021-07-13','','2021-07-13','Ngyễn quang phúc','wwwwwwwwwwwwwwwwww','on'),(65,'0392469584','Nwwsw4@gmail.com','Hà Nội','Nam','2004-02-01','adsa','2021-02-01','Nguyễn Văn a','1975-02-01','Nguyễn Văn e','JOCKER','on'),(67,'0392439330','thanham.humg93@gmail.com','Sai Gon','Nu','2021-07-01','44444444','2021-07-13','','2021-07-13','Ngyễn quang phúc','trần hà Binh Le','on'),(68,'0392439311','thanhnam.hdumg93@gmail.com','Sai Gon','Nu','2021-07-02','ddddddddd','2021-07-13','','2021-07-13','Ngyễn quang phúc','MacBook11ss','off'),(69,'0916113958','thanhndam.humg93@gmail.com','Hà Nội','Nu','2021-06-30','dddddddddd','2021-07-13','','2021-07-13','Ngyễn quang phúc','new Customer','off'),(70,'03924393395','thanhndam.humfg93@gmail.com','Hà Nội','Nu','2021-07-03',NULL,'2021-07-13','','2021-07-13','Ngyễn quang phúc','trần hà Binh Le','on'),(71,'0392439999','thanhnam11.humg93@gmail.com','Nghe An','Nu','2021-06-30','hihihi','2021-07-13','','2021-07-13','Ngyễn quang phúc','Super Cat','off');
 /*!40000 ALTER TABLE `customers` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -280,7 +266,7 @@ CREATE TABLE `orders` (
 
 LOCK TABLES `orders` WRITE;
 /*!40000 ALTER TABLE `orders` DISABLE KEYS */;
-INSERT INTO `orders` VALUES (1,'phuc12',1,1,'Nguyễn Văn a','2021-02-02','2021-06-24 17:00:00',NULL,'resend',1000),(2,'phuc1',15,1,'Nguyễn Văn b','2021-02-02',NULL,NULL,'resend',NULL),(3,'phuc',15,2,'Nguyễn Văn c','2021-02-03',NULL,NULL,'resend',NULL),(4,'phu',14,2,'Nguyễn Văn e','2021-02-03',NULL,NULL,'complete',NULL),(5,'phuc',1,1,'Nguyễn Văn f','2021-11-11 ',NULL,NULL,'complete',NULL),(6,'@ql3',1,1,'Nguyễn Văn g','2021-05-05',NULL,NULL,'resend',NULL),(7,'@ql3',1,1,'Nguyễn Văn d','2021-05-05','2021-05-04 17:00:00',NULL,'complete',NULL),(8,NULL,1,1,NULL,'2021 - 06 -28',NULL,NULL,NULL,NULL),(9,NULL,1,1,NULL,NULL,NULL,NULL,NULL,1000000),(10,NULL,1,1,NULL,NULL,NULL,NULL,NULL,1000000),(11,NULL,1,1,NULL,NULL,NULL,NULL,NULL,1000000),(12,NULL,1,1,NULL,NULL,NULL,NULL,NULL,1000000),(13,NULL,1,1,NULL,NULL,NULL,NULL,NULL,1000000),(14,NULL,1,1,NULL,NULL,NULL,NULL,NULL,1000000),(15,NULL,1,1,NULL,NULL,'2021-06-27 05:12:16',NULL,NULL,1000000),(16,NULL,1,1,NULL,NULL,NULL,NULL,NULL,1000000),(17,NULL,1,1,NULL,NULL,NULL,NULL,NULL,110),(18,NULL,1,1,NULL,NULL,NULL,NULL,NULL,110),(19,NULL,1,1,NULL,NULL,NULL,NULL,NULL,210),(20,NULL,1,1,NULL,NULL,NULL,NULL,NULL,210),(21,'phuc',1,1,NULL,NULL,'2021-06-27 05:12:16',NULL,NULL,210),(22,'phuc123',1,1,NULL,NULL,'2021-06-27 14:46:12',NULL,NULL,210),(23,'phuc1',1,1,NULL,NULL,'2021-06-27 14:48:39',NULL,NULL,210),(24,'phuc12',1,1,NULL,NULL,'2021-06-28 03:16:06',NULL,NULL,220),(25,NULL,1,1,NULL,NULL,'2021-06-28 03:16:06',NULL,NULL,NULL),(26,NULL,1,1,NULL,NULL,'2021-06-28 09:49:32',NULL,NULL,220),(27,NULL,1,1,NULL,NULL,'2021-06-28 10:01:13',NULL,NULL,470),(28,NULL,1,1,NULL,NULL,'2021-06-28 10:01:43',NULL,NULL,400),(29,NULL,1,1,NULL,NULL,'2021-06-28 10:08:02',NULL,NULL,300),(30,'SON0002',1,1,NULL,NULL,'2021-06-28 10:10:12',NULL,NULL,200),(35,'SON0001',1,1,NULL,NULL,'2021-06-29 03:12:13',NULL,NULL,250),(37,NULL,1,1,NULL,NULL,'2021-07-02 04:52:21',NULL,NULL,300),(38,NULL,1,1,NULL,NULL,'2021-07-02 04:53:04',NULL,NULL,300),(39,NULL,1,1,NULL,NULL,'2021-07-02 04:54:58',NULL,NULL,300),(40,'phuc0001',1,1,NULL,NULL,'2021-07-02 04:58:29',NULL,NULL,300),(41,'phuc0002',1,1,NULL,NULL,'2021-07-02 05:00:03',NULL,NULL,300),(42,NULL,1,1,NULL,NULL,'2021-07-02 05:03:07',NULL,NULL,300),(43,NULL,1,1,NULL,NULL,'2021-07-02 05:05:09',NULL,NULL,300),(44,NULL,1,1,NULL,NULL,'2021-07-03 10:22:17',NULL,NULL,300),(45,NULL,1,1,NULL,NULL,'2021-07-03 12:44:43',NULL,NULL,300),(46,NULL,1,1,NULL,NULL,'2021-07-03 12:53:05',NULL,NULL,300),(47,NULL,1,1,NULL,NULL,'2021-07-03 12:57:32',NULL,NULL,300),(48,NULL,1,1,NULL,NULL,'2021-07-03 12:58:36',NULL,NULL,300),(49,NULL,1,1,NULL,NULL,'2021-07-03 13:01:50',NULL,NULL,300),(50,NULL,1,1,NULL,NULL,'2021-07-03 13:04:19',NULL,NULL,300),(51,NULL,1,1,NULL,NULL,'2021-07-03 13:04:54',NULL,NULL,300),(52,NULL,1,1,NULL,NULL,'2021-07-03 13:05:47',NULL,NULL,300),(53,'210703200713',1,1,NULL,NULL,'2021-07-03 13:07:14',NULL,NULL,300),(54,'210703200718',1,1,NULL,NULL,'2021-07-03 13:07:18',NULL,NULL,300),(55,'210703200720',1,1,NULL,NULL,'2021-07-03 13:07:20',NULL,NULL,300),(56,'210703200721',1,1,NULL,NULL,'2021-07-06 13:07:22',NULL,NULL,300),(57,'210703200722',14,1,NULL,NULL,'2021-07-06 13:07:22',NULL,NULL,300),(68,'210707115557',NULL,3,'Ngyễn quang phúc',NULL,'2021-07-07 04:55:58',NULL,NULL,2600),(69,'210707115717',NULL,3,'Ngyễn quang phúc',NULL,'2021-07-07 04:57:17',NULL,NULL,2600),(70,'210707120136',NULL,3,'Ngyễn quang phúc',NULL,'2021-07-07 05:01:37',NULL,NULL,2600),(71,'210707163340',NULL,3,'Ngyễn quang phúc',NULL,'2021-07-07 09:33:39',NULL,NULL,1150);
+INSERT INTO `orders` VALUES (1,'phuc12',1,1,'Nguyễn Văn a','2021-02-02','2021-06-24 17:00:00',NULL,'resend',1000),(2,'phuc1',15,1,'Nguyễn Văn b','2021-02-02',NULL,NULL,'resend',NULL),(3,'phuc',15,2,'Nguyễn Văn c','2021-02-03',NULL,NULL,'resend',NULL),(4,'phu',14,2,'Nguyễn Văn e','2021-02-03',NULL,NULL,'complete',NULL),(5,'phuc',25,1,'Nguyễn Văn f','2021-11-11 ',NULL,NULL,'complete',NULL),(6,'@ql3',25,1,'Nguyễn Văn g','2021-05-05',NULL,NULL,'resend',NULL),(7,'@ql3',25,1,'Nguyễn Văn d','2021-05-05','2021-05-04 17:00:00',NULL,'complete',NULL),(8,NULL,25,1,NULL,'2021 - 06 -28',NULL,NULL,NULL,NULL),(9,NULL,25,1,NULL,NULL,NULL,NULL,NULL,1000000),(10,NULL,25,1,NULL,NULL,NULL,NULL,NULL,1000000),(11,NULL,26,1,NULL,NULL,NULL,NULL,NULL,1000000),(12,NULL,26,1,NULL,NULL,NULL,NULL,NULL,1000000),(13,NULL,26,1,NULL,NULL,NULL,NULL,NULL,1000000),(14,NULL,27,1,NULL,NULL,NULL,NULL,NULL,1000000),(15,NULL,27,1,NULL,NULL,'2021-06-27 05:12:16',NULL,NULL,1000000),(16,NULL,28,1,NULL,NULL,NULL,NULL,NULL,1000000),(17,NULL,28,1,NULL,NULL,NULL,NULL,NULL,110),(18,NULL,29,1,NULL,NULL,NULL,NULL,NULL,110),(19,NULL,31,1,NULL,NULL,NULL,NULL,NULL,210),(20,NULL,31,1,NULL,NULL,NULL,NULL,NULL,210),(21,'phuc',31,1,NULL,NULL,'2021-06-27 05:12:16',NULL,NULL,210),(22,'phuc123',31,1,NULL,NULL,'2021-06-27 14:46:12',NULL,NULL,210),(23,'phuc1',32,1,NULL,NULL,'2021-06-27 14:48:39',NULL,NULL,210),(24,'phuc12',32,1,NULL,NULL,'2021-06-28 03:16:06',NULL,NULL,220),(25,NULL,32,1,NULL,NULL,'2021-06-28 03:16:06',NULL,NULL,NULL),(26,NULL,32,1,NULL,NULL,'2021-06-28 09:49:32',NULL,NULL,220),(27,NULL,32,1,NULL,NULL,'2021-06-28 10:01:13',NULL,NULL,470),(28,NULL,32,1,NULL,NULL,'2021-06-28 10:01:43',NULL,NULL,400),(29,NULL,32,1,NULL,NULL,'2021-06-28 10:08:02',NULL,NULL,300),(30,'SON0002',32,1,NULL,NULL,'2021-06-28 10:10:12',NULL,NULL,200),(35,'SON0001',33,1,NULL,NULL,'2021-06-29 03:12:13',NULL,NULL,250),(37,NULL,33,1,NULL,NULL,'2021-07-02 04:52:21',NULL,NULL,300),(38,NULL,33,1,NULL,NULL,'2021-07-02 04:53:04',NULL,NULL,300),(39,NULL,33,1,NULL,NULL,'2021-07-02 04:54:58',NULL,NULL,300),(40,'phuc0001',33,1,NULL,NULL,'2021-07-02 04:58:29',NULL,NULL,300),(41,'phuc0002',33,1,NULL,NULL,'2021-07-02 05:00:03',NULL,NULL,300),(42,NULL,1,1,NULL,NULL,'2021-07-02 05:03:07',NULL,NULL,300),(43,NULL,1,1,NULL,NULL,'2021-07-02 05:05:09',NULL,NULL,300),(44,NULL,1,1,NULL,NULL,'2021-07-03 10:22:17',NULL,NULL,300),(45,NULL,1,1,NULL,NULL,'2021-07-03 12:44:43',NULL,NULL,300),(46,NULL,1,1,NULL,NULL,'2021-07-03 12:53:05',NULL,NULL,300),(47,NULL,33,1,NULL,NULL,'2021-07-03 12:57:32',NULL,NULL,300),(48,NULL,33,1,NULL,NULL,'2021-07-03 12:58:36',NULL,NULL,300),(49,NULL,33,1,NULL,NULL,'2021-07-03 13:01:50',NULL,NULL,300),(50,NULL,26,1,NULL,NULL,'2021-07-03 13:04:19',NULL,NULL,300),(51,NULL,26,1,NULL,NULL,'2021-07-03 13:04:54',NULL,NULL,300),(52,NULL,39,1,NULL,NULL,'2021-07-03 13:05:47',NULL,NULL,300),(53,'210703200713',39,1,NULL,NULL,'2021-07-03 13:07:14',NULL,NULL,300),(54,'210703200718',39,1,NULL,NULL,'2021-07-03 13:07:18',NULL,NULL,300),(55,'210703200720',39,1,NULL,NULL,'2021-07-03 13:07:20',NULL,NULL,300),(56,'210703200721',39,1,NULL,NULL,'2021-07-06 13:07:22',NULL,NULL,300),(57,'210703200722',14,1,NULL,NULL,'2021-07-06 13:07:22',NULL,NULL,300),(68,'210707115557',38,3,'Ngyễn quang phúc',NULL,'2021-07-07 04:55:58',NULL,NULL,2600),(69,'210707115717',38,3,'Ngyễn quang phúc',NULL,'2021-07-07 04:57:17',NULL,NULL,2600),(70,'210707120136',37,3,'Ngyễn quang phúc',NULL,'2021-07-07 05:01:37',NULL,NULL,2600),(71,'210707163340',37,3,'Ngyễn quang phúc',NULL,'2021-07-07 09:33:39',NULL,NULL,1150);
 /*!40000 ALTER TABLE `orders` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -478,6 +464,69 @@ LOCK TABLES `supplier` WRITE;
 INSERT INTO `supplier` VALUES (1,'QT','Quảng Châu','quangchau@gmail.com','Trung Quốc','0123654789',NULL,NULL,NULL,NULL,NULL),(2,'NH','Ninh Hiệp','nh@gmail.com','Hà Nội-Việt Nam','06325489586',NULL,NULL,NULL,NULL,NULL),(3,'DX','Đồng Xuân','dx@gmail.com','Hà Nội -Việt Nam','0569654852',NULL,NULL,NULL,NULL,NULL),(4,'DN','Đà Nẵng','dn@gmail.com','Tp HCM','0123659854',NULL,NULL,NULL,NULL,NULL),(5,'HCM','Hồ Chí Minh','hcm@gmail.com','Tp HCM','0986532145',NULL,NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `supplier` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Dumping routines for database 'manage_store'
+--
+/*!50003 DROP PROCEDURE IF EXISTS `getNewCustomersByDay` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getNewCustomersByDay`(in d int,in m int, in y int)
+BEGIN
+select count(*) as Khach_hang_moi from customers where day(created_date) = d and month(created_date) =m and year(created_date) =y;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `getNewCustomersByMonth` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getNewCustomersByMonth`(in m int, in y int)
+BEGIN
+select count(*) as Khach_hang_moi from customers where month(created_date) =m and year(created_date) =y;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `StatisticsByTime` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `StatisticsByTime`()
+BEGIN
+select customers.name,phone,email,address,customers.created_date as Bat_dau,orders.created_date as Gan_nhat,count(*) as Tong_so_don 
+from orders join customers on customers.id = orders.customer_id group by customers.name,phone,email,address,bat_dau,gan_nhat 
+order by Tong_so_don desc;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -487,58 +536,5 @@ UNLOCK TABLES;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
--- Dump completed on 2021-07-08 10:43:19
--- ----------------------------------------------------------Update By Thanh Nam----------------------------------------------------------------------
 
--- Procedure thống kê số khách hàng mới theo tháng/năm
-drop procedure getNewCustomersByMonth
-    DELIMITER &&
-CREATE PROCEDURE getNewCustomersByMonth(in m int, in y int)
-BEGIN
-select count(*) as Khach_hang_moi from customers where month(created_date) =m and year(created_date) =y;
-END
-&&
-DELIMITER ;
-call getNewCustomersByMonth(2, 2021);
--- Procedure thống kê số khách hàng mới theo ngày,tháng,năm
-drop procedure getNewCustomersByDay
-    DELIMITER &&
-CREATE PROCEDURE getNewCustomersByDay(in d int,in m int, in y int)
-BEGIN
-select count(*) as Khach_hang_moi from customers where day(created_date) = d and month(created_date) =m and year(created_date) =y;
-END
-&&
-DELIMITER ;
-call getNewCustomersByDay(2,7,2021);
--- Thong ke lich su cua khach hang
-drop procedure StatisticsByTime
-    DELIMITER &&
-CREATE PROCEDURE StatisticsByTime()
-BEGIN
-select customers.name,phone,email,address,customers.created_date as Bat_dau,orders.created_date as Gan_nhat,count(*) as Tong_so_don 
-from orders join customers on customers.id = orders.customer_id group by customers.name,phone,email,address,bat_dau,gan_nhat 
-order by Tong_so_don desc;
-END
-&&
-DELIMITER ;
-call StatisticsByTime();
--- Thống
-update customers set status ='off' where id = 15;
-select * from orders; 
-select * from oder_detail;
-select * from products;
-select * from staff;
-alter table customers add column status varchar(3) ;
-ALTER TABLE customers
-drop column  staff_id;
-ALTER TABLE customers
-drop  FOREIGN KEY fk_customers;
-select staff.full_name from staff join orders on staff.id=orders.staff_id 
-join customers on customers.id = orders.customer_id group by staff.full_name;
-select * from customers where id=20;
-select * from customers where gender='Nam' and ROUND(DATEDIFF(CURDATE(), date_of_birth) / 365, 0) between 18 and 35;
-select distinct gender from customers;
-select * from customers where  ROUND(DATEDIFF(CURDATE(), date_of_birth) / 365, 0)>35;
-UPDATE customers SET date_of_birth = '1982-09-07' WHERE (`id` = '23');
-select * from staff;
-select year(created_date) from customers;
+-- Dump completed on 2021-07-13 15:05:39

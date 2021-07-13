@@ -26,7 +26,7 @@ function CustomerNew() {
 
   const [customer, setCustomer] = useState({
     createdDate: new Date(),
-    modifiedDate: null,
+    modifiedDate: new Date(),
     createBy: reactLocalStorage.get("name"),
     modifiedBy: "",
     status: "on",
@@ -49,31 +49,36 @@ function CustomerNew() {
     }
   }
   const Save = async () => {
-    //  e.preventDefault();
-    //  handleSubmit(onSubmit);
     console.log("this is cate", customer);
-    axios.post(APIPost, customer, { headers }).then(
-      (response) => {
-        console.log("resp", response);
-        const inputs = document.getElementsByTagName("input");
 
-        for (const input of inputs) {
-          input.value = "";
-        }
-        Swal.fire("Good job!", "Delete Complete!", "success");
+    axios
+      .post(APIPost, customer, { headers })
+      .then((response) => {
+        ResetForm();
         Swal.fire("Good job!", "Thêm mới thành công", "success");
-      },
-      (error) => {
-        console.log("error:  ", error);
-        Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: "Tạo mơi không thành công, vui lòng thử lại!",
-          footer: '<a href="">Why do I have this issue?</a>',
+        setCustomer({
+          createdDate: new Date(),
+          modifiedDate: new Date(),
+          createBy: reactLocalStorage.get("name"),
+          modifiedBy: "",
+          status: "on",
         });
-      }
-    );
+      })
+      .catch(function (error) {
+        if (error.response) {
+          Swal.fire({
+            icon: "error",
+            title: "Warning" + error.response.status,
+            text: "Error: " + error.response.data,
+            // footer: '<a href="">Why do I have this issue?</a>',
+          });
+          console.log("data", error.response.data);
+          console.log("status", error.response.status);
+          console.log("header", error.response.headers);
+        }
+      });
   };
+
   const {
     register,
     handleSubmit,
@@ -108,9 +113,9 @@ function CustomerNew() {
                   placeholder="Tên khách hàng"
                   onChange={handleChange}
                 />
-                {errors?.name?.type === "required" && (
+                {/* {errors?.name?.type === "required" && (
                   <p>Không được để trống</p>
-                )}
+                )} */}
                 {errors?.name?.type === "maxLength" && (
                   <p>Độ dài không được vượt quá 20 kí tự</p>
                 )}
@@ -160,7 +165,7 @@ function CustomerNew() {
                     required: true,
                     maxLength: 50,
                     minLength: 5,
-                    pattern: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/,
+                    pattern: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
                   })}
                   name="email"
                   placeholder="Email"
@@ -204,12 +209,18 @@ function CustomerNew() {
               <CFormGroup>
                 <CLabel htmlFor="birthday">Ngày sinh</CLabel>
                 <CInput
+                  {...register("dateOfBirth", {
+                    required: true,
+                  })}
                   name="dateOfBirth"
                   type="date"
                   max={new Date().toISOString().slice(0, 10)}
                   placeholder="Ngày sinh"
                   onChange={handleChange}
                 />
+                {errors?.dateOfBirth?.type === "required" && (
+                  <p>Không được để trống</p>
+                )}
               </CFormGroup>
               <CFormGroup>
                 <CLabel htmlFor="note">Thông tin bổ sung về khách hàng</CLabel>

@@ -10,7 +10,7 @@ const Paginations = ({ totalPages, currentPage, setCurrentPage }) => {
             align="center"
             addListClass="some-class"
             activePage={currentPage}
-            pages={totalPages - 1}
+            pages={totalPages}
             onActivePageChange={setCurrentPage}
           />
         </CCardBody>
