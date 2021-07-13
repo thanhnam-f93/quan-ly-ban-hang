@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { callApi, callApiNotJwt } from "src/apis/ApiCaller";
 import { JwtContext } from "src/context/JwtContext";
 import ChartDashBoard from "./ChartDashBoard";
-import "./scss/DashBoard.css";
+import "./scss/DashBoard.scss";
 
 const Dashboard = () => {
   // const { jwt } = useContext(JwtContext);
