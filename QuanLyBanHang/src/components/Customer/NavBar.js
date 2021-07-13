@@ -18,24 +18,24 @@ import {
 } from "@coreui/react";
 import { DocsLink } from "src/reusable";
 import { useHistory } from "react-router-dom";
-function NavBar({ setGender, setAge, setSearch }) {
+function NavBar({ setGender, setAge, setSearch, setPage }) {
   const history = useHistory();
   const handleChange = (e) => {
+    setPage(1);
     setSearch(e.target.value);
   };
   return (
-    <div>
+    <div style={{ padding: "0", margin: "0" }}>
       <CCard>
-        <CCardHeader>
-          Khách hàng
-          <DocsLink name="CNavbar" />
-        </CCardHeader>
         <CCardBody>
           <CNavbar expandable="sm" color="info">
             <CToggler inNavbar />
             <CButton
               onClick={() => history.goBack()}
-              style={{ backgroundColor: "orange", textAlign: "center" }}
+              style={{
+                backgroundColor: "white",
+                textAlign: "center",
+              }}
             >
               Back
             </CButton>
@@ -55,10 +55,20 @@ function NavBar({ setGender, setAge, setSearch }) {
                     <CDropdownItem onClick={() => setGender("")}>
                       All
                     </CDropdownItem>
-                    <CDropdownItem onClick={() => setGender("Nam")}>
+                    <CDropdownItem
+                      onClick={() => {
+                        setPage(1);
+                        setGender("Nam");
+                      }}
+                    >
                       Nam
                     </CDropdownItem>
-                    <CDropdownItem onClick={() => setGender("Nu")}>
+                    <CDropdownItem
+                      onClick={() => {
+                        setPage(1);
+                        setGender("Nu");
+                      }}
+                    >
                       Nu
                     </CDropdownItem>
                   </CDropdownMenu>
@@ -74,19 +84,28 @@ function NavBar({ setGender, setAge, setSearch }) {
                     </CDropdownItem>
                     <CDropdownItem
                       // key={1}
-                      onClick={() => setAge("under")}
+                      onClick={() => {
+                        setPage(1);
+                        setAge("under");
+                      }}
                     >
                       Dưới 18
                     </CDropdownItem>
                     <CDropdownItem
                       // key={2}
-                      onClick={() => setAge("between")}
+                      onClick={() => {
+                        setPage(1);
+                        setAge("between");
+                      }}
                     >
                       18 đến 35
                     </CDropdownItem>
                     <CDropdownItem
                       //key={3}
-                      onClick={() => setAge("over")}
+                      onClick={() => {
+                        setPage(1);
+                        setAge("over");
+                      }}
                     >
                       Trên 35 tuổi
                     </CDropdownItem>
@@ -94,7 +113,9 @@ function NavBar({ setGender, setAge, setSearch }) {
                 </CDropdown>
 
                 <CButton color="light" className="my-2 my-sm-0" type="submit">
-                  <Link to="/customerNew">Thêm mới</Link>
+                  <Link to="/customerNew" className="text-decoration-none">
+                    Thêm mới
+                  </Link>
                 </CButton>
               </CNavbarNav>
             </CCollapse>

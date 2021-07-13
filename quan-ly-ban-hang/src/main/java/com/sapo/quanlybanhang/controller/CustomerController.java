@@ -18,6 +18,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -44,7 +45,7 @@ public class CustomerController {
                 return new ResponseEntity<>(dtoPage, new HttpHeaders(), HttpStatus.OK);
             }
         } catch (Exception e) {
-            logger.error("What the fuck: " + e.getMessage());
+            logger.error("Error: : " + e.getMessage());
             return ResponseEntity.badRequest().body("Page Empty");
         }
         return null;
@@ -66,7 +67,7 @@ public class CustomerController {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            logger.error("What the fuck: " + e.getMessage());
+            logger.error("Error: : " + e.getMessage());
             return ResponseEntity.badRequest().body("Page Empty");
         }
     }
@@ -82,12 +83,14 @@ public class CustomerController {
             Page<CustomerDto> dtoPage = customerService.findByGender(gender, pageRequest);
             if (dtoPage.hasContent()) {
                 return new ResponseEntity<>(dtoPage, new HttpHeaders(), HttpStatus.OK);
+            }else{
+                return new ResponseEntity<>("Không có dữ liễu", new HttpHeaders(), HttpStatus.NO_CONTENT);
             }
         } catch (Exception e) {
-            logger.error("What the fuck: " + e.getMessage());
-            return ResponseEntity.badRequest().body("Page Empty");
+            logger.error("Error: : " + e.getMessage());
+            return ResponseEntity.badRequest().body("Lỗi truy vấn dữ liệu");
         }
-        return null;
+
     }
 
     @GetMapping("customers/findAddress")
@@ -103,7 +106,7 @@ public class CustomerController {
                 return new ResponseEntity<>(dtoPage, new HttpHeaders(), HttpStatus.OK);
             }
         } catch (Exception e) {
-            logger.error("What the fuck: " + e.getMessage());
+            logger.error("Error: : " + e.getMessage());
             return ResponseEntity.badRequest().body("Page Empty");
         }
         return null;
@@ -122,7 +125,7 @@ public class CustomerController {
                 return new ResponseEntity<>(dtoPage, new HttpHeaders(), HttpStatus.OK);
             }
         } catch (Exception e) {
-            logger.error("What the fuck: " + e.getMessage());
+            logger.error("Error: : " + e.getMessage());
             return ResponseEntity.badRequest().body("Page Empty");
         }
         return null;
@@ -144,12 +147,14 @@ public class CustomerController {
             }
             if (dtoPage.hasContent()) {
                 return new ResponseEntity<>(dtoPage, new HttpHeaders(), HttpStatus.OK);
+            }else{
+                return new ResponseEntity<>("Không có dữ liệu", new HttpHeaders(), HttpStatus.NO_CONTENT);
             }
         } catch (Exception e) {
-            logger.error("What the fuck: " + e.getMessage());
-            return ResponseEntity.badRequest().body("Page Empty");
+            logger.error("Error: : " + e.getMessage());
+            return ResponseEntity.badRequest().body("Lỗi truy vấn dữ liệu");
         }
-        return null;
+
     }
 
     @GetMapping("customers/between")
@@ -168,12 +173,15 @@ public class CustomerController {
             }
             if (dtoPage.hasContent()) {
                 return new ResponseEntity<>(dtoPage, new HttpHeaders(), HttpStatus.OK);
+            }else{
+                return new ResponseEntity<>("Không có dữ liệu", new HttpHeaders(), HttpStatus.NO_CONTENT);
             }
+
         } catch (Exception e) {
-            logger.error("What the fuck: " + e.getMessage());
-            return ResponseEntity.badRequest().body("Page Empty");
+            logger.error("Error: : " + e.getMessage());
+            return ResponseEntity.badRequest().body("lỗi truy vấn dữ liệu");
         }
-        return null;
+
     }
 
     @GetMapping("customers/over")
@@ -192,12 +200,14 @@ public class CustomerController {
             }
             if (dtoPage.hasContent()) {
                 return new ResponseEntity<>(dtoPage, new HttpHeaders(), HttpStatus.OK);
+            }else{
+                return new ResponseEntity<>("Không có dữ liệu", new HttpHeaders(), HttpStatus.NO_CONTENT);
             }
         } catch (Exception e) {
-            logger.error("What the fuck: " + e.getMessage());
-            return ResponseEntity.badRequest().body("Page Empty");
+            logger.error("Error: : " + e.getMessage());
+            return ResponseEntity.badRequest().body("Lỗi truy vấn dữ liệu");
         }
-        return null;
+
     }
 
     @GetMapping("customers/{id}")
@@ -223,60 +233,112 @@ public class CustomerController {
         return ResponseEntity.badRequest().body("Khách hàng không tồn tại");
     }
     @GetMapping("customers/count")
-    ResponseEntity<?> count(@RequestParam("m") Integer month, @RequestParam("y") Integer year){
+    ResponseEntity<?> count(@RequestParam("year") Integer year){
         try{
-            return new ResponseEntity<>(customerService.countCustomersByMonth(month,year),HttpStatus.OK);
+            List<Integer> listNewNumberOfCustomer = new ArrayList<>();
+            for (int i = 1; i <=12 ; i++) {
+                listNewNumberOfCustomer.add(customerService.countCustomersByMonth(i,year));
+            }
+            return new ResponseEntity<List<Integer>>(listNewNumberOfCustomer,HttpStatus.OK);
         }catch (Exception e){
-            return ResponseEntity.badRequest().body("Loi Truy Van Du Lieu");
+            return ResponseEntity.badRequest().body("Lỗi truy vấn dữ liệu");
+        }
+    }
+    @GetMapping("customers/count2")
+    ResponseEntity<?> count(@RequestParam("year") Integer year,@RequestParam("month") Integer month){
+        try{
+            List<Integer> listNewNumberOfCustomer = new ArrayList<>();
+            for (int i = 1; i <=31 ; i++) {
+                listNewNumberOfCustomer.add(customerService.countCustomersByDay(i,month,year));
+            }
+            return new ResponseEntity<List<Integer>>(listNewNumberOfCustomer,HttpStatus.OK);
+        }catch (Exception e){
+            return ResponseEntity.badRequest().body("Lỗi truy vấn dữ liệu");
         }
     }
     @GetMapping("customers/statistics")
-    ResponseEntity<List<Object[]>> statisticsByTime(){
+    ResponseEntity<Page<Object[]>> statisticsByTime(  @RequestParam(name = "pageNo", defaultValue = "0") String pageNo,
+                                                      @RequestParam(name= "limit",defaultValue = "5",required = false) String limit){
         try{
-            List<Object[]> list = customerService.getStatistics();
+            PageRequest pageRequest = PageRequest.of(Integer.parseInt(pageNo), Integer.parseInt(limit), Sort.by("id").descending());
+            Page<Object[]> list = customerService.getStatistics(pageRequest);
             return new ResponseEntity<>(list,HttpStatus.OK);
         }catch (Exception e){
-            return new ResponseEntity<List<Object[]>>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<Page<Object[]>>(HttpStatus.BAD_REQUEST);
         }
     }
+    @GetMapping("customers/getYearCreateCustomer")
+    ResponseEntity<List<Integer>> getYearCreateCustomer(){
+        try{
+            List<Integer> listYear = customerService.getYearCreateCustomer();
+            return new ResponseEntity<>(listYear,HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<List<Integer>>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
     @PostMapping("customers")
     ResponseEntity<?> save(@Valid @RequestBody CustomerDto customerDto ) {
         try {
-            customerService.save(customerDto);
-            return ResponseEntity.ok().body("Thêm mới thành công");
+            if(customerService.checkDuplicateEmail(customerDto.getEmail())){
+                return new ResponseEntity<>("Email da ton tai",HttpStatus.BAD_REQUEST);
+            }
+            if(customerService.checkDuplicatePhone(customerDto.getPhone())){
+                return new ResponseEntity<>("Phone da ton tai",HttpStatus.BAD_REQUEST);
+            }
+            if(customerDto!=null){
+                customerService.save(customerDto);
+                return new ResponseEntity<>("Thêm mới thành công",HttpStatus.OK);
+            }else{
+                return new ResponseEntity<>("Không có dữ liệu",HttpStatus.NO_CONTENT);
+            }
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            logger.error("this is: "+e.getMessage());
+            return new ResponseEntity<>("Thêm mới thất bại, kiểm tra lại tính hợp lệ của dữ liệu",HttpStatus.BAD_REQUEST);
         }
     }
 
     @PutMapping("customers/{id}")
     ResponseEntity<?> update(@Valid @RequestBody CustomerDto customerDto, @PathVariable("id") Integer id) {
-        CustomerEntity root = CustomerConvert.toEntity(customerService.findById(id));
+
         try {
-            root.setModifiedDate(customerDto.getModifiedDate());
-            root.setModifiedBy(customerDto.getModifiedBy());
-            root.setCreatedDate(customerDto.getCreatedDate());
-            root.setCreateBy(customerDto.getCreateBy());
-            root.setEmail(customerDto.getEmail());
-            root.setName(customerDto.getName());
-            root.setGender(customerDto.getGender());
-            root.setNote(customerDto.getNote());
-            root.setPhone(customerDto.getPhone());
-            root.setDateOfBirth(customerDto.getDateOfBirth());
-            root.setStatus(customerDto.getStatus());
-            customerService.save(CustomerConvert.toDTO(root));
-            return ResponseEntity.ok().body("Cập nhập thành công");
+            CustomerEntity root = CustomerConvert.toEntity(customerService.findById(id));
+//            if(customerService.checkDuplicateEmail(customerDto.getEmail())){
+//                return new ResponseEntity<>("Email da ton tai",HttpStatus.BAD_REQUEST);
+//            }
+//            if(customerService.checkDuplicatePhone(customerDto.getPhone())){
+//                return new ResponseEntity<>("Phone da ton tai",HttpStatus.BAD_REQUEST);
+//            }
+            if(root!=null){
+                root.setModifiedDate(customerDto.getModifiedDate());
+                root.setModifiedBy(customerDto.getModifiedBy());
+                root.setCreatedDate(customerDto.getCreatedDate());
+                root.setCreateBy(customerDto.getCreateBy());
+                root.setEmail(customerDto.getEmail());
+                root.setName(customerDto.getName());
+                root.setGender(customerDto.getGender());
+                root.setNote(customerDto.getNote());
+                root.setPhone(customerDto.getPhone());
+                root.setDateOfBirth(customerDto.getDateOfBirth());
+                root.setStatus(customerDto.getStatus());
+                customerService.save(CustomerConvert.toDTO(root));
+                return new ResponseEntity<>("Update thành công",HttpStatus.OK);
+            }else{
+                return new ResponseEntity<>("Không có dữ liệu",HttpStatus.NO_CONTENT);
+            }
+
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            logger.error("Error: "+e);
+            return new ResponseEntity<>("Lỗi:  "+e,HttpStatus.BAD_REQUEST);
         }
     }
 
-    @GetMapping("customers/off/{id}")
+   @GetMapping("customers/off/{id}")
     ResponseEntity<?> delete(@PathVariable("id") Integer id) {
         CustomerDto root = customerService.findById(id);
         if (id != null) {
             customerService.delete(id);
-            return ResponseEntity.ok().body("Xóa thành công !");
+            return ResponseEntity.ok().body("Thay đổi trạng thái thành công !");
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }

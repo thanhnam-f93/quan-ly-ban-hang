@@ -218,19 +218,19 @@ const routes = [
   {
     path: "/CustomerDetail",
     exact: true,
-    name: "Detail",
+    name: "Chi tiết",
     component: CustomerDetail,
   },
   {
     path: "/CustomerNew",
     exact: true,
-    name: "New",
+    name: "Thêm",
     component: CustomerNew,
   },
   {
     path: "/CustomerList",
     exact: true,
-    name: "List",
+    name: "Danh sách",
     component: CustomerList,
   },
   /*================== The End code of Team - Quản lý bán hàng =================*/

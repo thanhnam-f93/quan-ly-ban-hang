@@ -4,6 +4,7 @@ import Select from "react-select";
 import Swal from "sweetalert2";
 import axios from "axios";
 import { useForm } from "react-hook-form";
+import { dataGender } from "./data";
 import { reactLocalStorage } from "reactjs-localstorage";
 import {
   CCard,
@@ -14,17 +15,12 @@ import {
   CInput,
   CTextarea,
 } from "@coreui/react";
-function CustomerDetail() {
-  const location = useLocation();
-  var customer = location.state.customer;
-  console.log("customer_init:         ", customer);
+function CustomerDetail(props) {
+  const history = useHistory();
+  var customer = props.location.state.customer;
   const headers = {
     Authorization: "Bearer " + reactLocalStorage.get("token"),
   };
-  const genders = [
-    { value: "Nam", label: "Nam" },
-    { value: "Nu", label: "Nu" },
-  ];
   function handleChange(e) {
     const name = e.target.name;
     const value = e.target.value;
@@ -57,11 +53,44 @@ function CustomerDetail() {
       .catch((error) => {
         Swal.fire({
           icon: "error",
-          title: "Oops...",
-          text: "Cập nhập thất bại!",
-          footer: '<a href="">Why do I have this issue?</a>',
+          title: "Warning" + error.response.status,
+          text: "Error: " + error.response.data,
+          // footer: '<a href="">Why do I have this issue?</a>',
         });
+        console.log("data", error.response.data);
+        console.log("status", error.response.status);
+        console.log("header", error.response.headers);
       });
+  }
+  function deleteCustomer(id) {
+    const API = `http://localhost:8080/customers/off/${id}`;
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios
+          .get(API, { headers })
+          .then(function (response) {
+            Swal.fire("Good job!", "Delete Complete!", "success");
+            history.goBack();
+          })
+          .catch(function (error) {
+            Swal.fire({
+              icon: "error",
+              title: "Error",
+              text: "Delete Failure: " + error.response.data,
+            });
+            console.log(error.response);
+          });
+        Swal.fire("Deleted!", "Your file has been deleted.", "success");
+      }
+    });
   }
   function resetForm() {
     const inputs = document.getElementsByTagName("input");
@@ -72,19 +101,19 @@ function CustomerDetail() {
       input.value = "";
     }
   }
-  // const {
-  //   register,
-  //   handleSubmit,
-  //   watch,
-  //   formState: { errors },
-  // } = useForm();
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm();
 
   // const onSubmit = (data) => {
   //   alert(JSON.stringify(data));
   // };
   // your form submit function which will invoke after successful validation
 
-  //console.log(watch("example")); // you can watch individual input by pass the name of the input
+  console.log(watch("example")); // you can watch individual input by pass the name of the input
 
   return (
     <div>
@@ -101,18 +130,18 @@ function CustomerDetail() {
               <CFormGroup>
                 <CLabel htmlFor="vat">Tên</CLabel>
                 <CInput
-                  name="name"
-                  placeholder="Tên khách hàng"
-                  defaultValue={customer.name}
-                  onChange={handleChange}
                   // {...register("name", {
                   //   required: true,
                   //   maxLength: 20,
                   //   minLength: 3,
-                  //   pattern: /^[A-Za-z]+$/i,
+                  //   //   pattern: /^[A-Za-z]+$/i,
                   // })}
+                  name="name"
+                  placeholder="Tên khách hàng"
+                  defaultValue={customer.name}
+                  onChange={handleChange}
                 />
-                {/* {errors?.name?.type === "required" && (
+                {errors?.name?.type === "required" && (
                   <p>Không được để trống</p>
                 )}
                 {errors?.name?.type === "maxLength" && (
@@ -121,16 +150,16 @@ function CustomerDetail() {
                 {errors?.name?.type === "minLength" && (
                   <p>Độ dài không được ít hơn 3 kí tự</p>
                 )}
-                {errors?.name?.type === "pattern" && <p>Tên phải là chữ</p>} */}
+                {errors?.name?.type === "pattern" && <p>Tên phải là chữ</p>}
               </CFormGroup>
               <CFormGroup>
                 <CLabel htmlFor="gender">Giới tính</CLabel>
                 <Select
                   name="gender"
-                  options={genders}
+                  options={dataGender}
                   defaultValue={{
-                    label: "Select Gender",
-                    value: "",
+                    label: customer.gender,
+                    value: customer.gender,
                   }}
                   onChange={handleChangeGender}
                 />
@@ -138,20 +167,20 @@ function CustomerDetail() {
               <CFormGroup>
                 <CLabel htmlFor="phone">Số điện thoại</CLabel>
                 <CInput
-                  name="phone"
-                  type="tel"
-                  pattern="[0]{1}[0-9]{9}"
-                  placeholder="Phone Number"
-                  defaultValue={customer.phone}
-                  onChange={handleChange}
                   // {...register("phone", {
                   //   required: true,
                   //   maxLength: 11,
                   //   minLength: 10,
                   //   valueAsNumber: true,
                   // })}
+                  name="phone"
+                  type="tel"
+                  pattern="[0]{1}[0-9]{9}"
+                  placeholder="Phone Number"
+                  defaultValue={customer.phone}
+                  onChange={handleChange}
                 />
-                {/* {errors?.phone?.type === "required" && (
+                {errors?.phone?.type === "required" && (
                   <p>Không được để trống</p>
                 )}
                 {errors?.phone?.type === "maxLength" && (
@@ -162,24 +191,24 @@ function CustomerDetail() {
                 )}
                 {errors?.phone?.type === "valueAsNumber" && (
                   <p>Yêu cầu phải nhập vào là số</p>
-                )} */}
+                )}
               </CFormGroup>
               <CFormGroup>
-                <CLabel htmlFor="vat">Email</CLabel>
+                <CLabel htmlFor="email">Email</CLabel>
                 <CInput
-                  name="email"
-                  type="mail"
-                  placeholder="Email"
-                  defaultValue={customer.email}
-                  onChange={handleChange}
                   // {...register("email", {
                   //   required: true,
                   //   maxLength: 50,
                   //   minLength: 5,
                   //   pattern: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/,
                   // })}
+                  name="email"
+                  type="mail"
+                  placeholder="Email"
+                  defaultValue={customer.email}
+                  onChange={handleChange}
                 />
-                {/* {errors?.email?.type === "required" && (
+                {errors?.email?.type === "required" && (
                   <p>Không được để trống</p>
                 )}
                 {errors?.email?.type === "maxLength" && (
@@ -190,22 +219,22 @@ function CustomerDetail() {
                 )}
                 {errors?.email?.type === "pattern" && (
                   <p>Email Không đúng định dạng</p>
-                )} */}
+                )}
               </CFormGroup>
               <CFormGroup>
                 <CLabel htmlFor="address">Địa chỉ</CLabel>
                 <CInput
-                  name="address"
-                  placeholder="Địa chỉ"
-                  defaultValue={customer.address}
-                  onChange={handleChange}
                   // {...register("address", {
                   //   required: true,
                   //   maxLength: 50,
                   //   minLength: 5,
                   // })}
+                  name="address"
+                  placeholder="Địa chỉ"
+                  defaultValue={customer.address}
+                  onChange={handleChange}
                 />
-                {/* {errors?.address?.type === "required" && (
+                {errors?.address?.type === "required" && (
                   <p>Không được để trống</p>
                 )}
                 {errors?.address?.type === "maxLength" && (
@@ -213,14 +242,14 @@ function CustomerDetail() {
                 )}
                 {errors?.address?.type === "minLength" && (
                   <p>Độ dài không được ít hơn 5 kí tự</p>
-                )} */}
+                )}
               </CFormGroup>
               <CFormGroup>
-                <CLabel htmlFor="birthday">Ngày sinh</CLabel>
+                <CLabel htmlFor="dateOfBirth">Ngày sinh</CLabel>
                 <CInput
                   name="dateOfBirth"
                   type="date"
-                  max={new Date().toISOString()}
+                  max={new Date().toISOString().slice(0, 10)}
                   placeholder="Ngày sinh"
                   defaultValue={new Date(customer.dateOfBirth)
                     .toISOString()
@@ -280,45 +309,53 @@ function CustomerDetail() {
               <CFormGroup>
                 <CLabel htmlFor="note">Thông tin bổ sung về khách hàng</CLabel>
                 <CTextarea
+                  {...register("note", {
+                    maxLength: 250,
+                  })}
                   style={{ height: "120px" }}
                   name="note"
                   placeholder="Ghi chú thông tin Khách hàng"
                   defaultValue={customer.note}
                   onChange={handleChange}
-                  // {...register("phone", {
-                  //   required: true,
-                  //   maxLength: 250,
-                  //   minLength: 5,
-                  // })}
                 />
-                {/* {errors?.name?.type === "required" && (
-                  <p>Không được để trống</p>
-                )}
-                {errors?.name?.type === "maxLength" && (
+
+                {errors?.note?.type === "maxLength" && (
                   <p>Độ dài không được vượt quá 250 kí tự</p>
                 )}
-                {errors?.name?.type === "minLength" && (
-                  <p>Độ dài không được ít hơn 5 kí tự</p>
-                )} */}
               </CFormGroup>
             </CCardBody>
           </CCard>
         </div>
       </div>
-      <button
-        className="btn btn-danger"
-        onClick={resetForm}
-        style={{ marginLeft: "10px" }}
-      >
-        Hủy
-      </button>
-      <button
-        className="btn btn-success"
-        onClick={updateCustomer}
-        style={{ marginLeft: "10px" }}
-      >
-        Cập nhật
-      </button>
+      <div className="row">
+        <div className="col-6">
+          <button
+            className="btn btn-danger"
+            onClick={resetForm}
+            style={{ marginLeft: "10px" }}
+          >
+            Hủy
+          </button>
+          <button
+            className="btn btn-success"
+            onClick={handleSubmit(updateCustomer)}
+            style={{ marginLeft: "10px" }}
+          >
+            Cập nhật
+          </button>
+        </div>
+        <div className="col-6">
+          <button
+            style={{ marginLeft: "10px", width: "55px" }}
+            onClick={() => {
+              deleteCustomer(customer.id);
+            }}
+            className="btn btn-danger  float-right"
+          >
+            Xóa
+          </button>
+        </div>
+      </div>
     </div>
   );
 }

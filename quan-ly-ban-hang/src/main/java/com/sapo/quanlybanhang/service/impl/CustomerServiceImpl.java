@@ -136,7 +136,27 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public List<Object[]> getStatistics() {
-        return customerRepository.getStatistics();
+    public Integer countCustomersByDay(Integer d, Integer m, Integer n) {
+        return customerRepository.getNewByDay(d,m,n);
+    }
+
+    @Override
+    public Page<Object[]> getStatistics(Pageable pageable) {
+        return customerRepository.getStatistics(pageable);
+    }
+
+    @Override
+    public List<Integer> getYearCreateCustomer() {
+        return customerRepository.getYearCreateCustomer();
+    }
+
+    @Override
+    public boolean checkDuplicatePhone(String phone) {
+        return customerRepository.existsByPhone(phone);
+    }
+
+    @Override
+    public boolean checkDuplicateEmail(String email) {
+       return customerRepository.existsByEmail(email);
     }
 }
