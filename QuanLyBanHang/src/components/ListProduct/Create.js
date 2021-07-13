@@ -406,7 +406,7 @@ const changeCode= (event) => {
        <CRow>
          <CCol xs="12" sm="7">
            <CRow>
-           <CCol xs="6"  sm="2" >
+           <CCol xs="6"  sm="3" >
            <CButton block color="secondary" onClick={cancel}>
             Quay lại
             </CButton>

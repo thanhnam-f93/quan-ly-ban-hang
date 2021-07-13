@@ -15,12 +15,6 @@ const _nav = [
   {
     _tag: "CSidebarNavItem",
     name: "Bán hàng",
-    to: "/staff",
-    icon: "cil-laptop",
-  },
-  {
-    _tag: "CSidebarNavItem",
-    name: "Bán hàng",
     to: "/saler",
     icon: "cil-laptop",
   },
@@ -68,17 +62,17 @@ const _nav = [
         _tag: "CSidebarNavItem",
         name: "Nhà cung cấp",
         to: "/supplier",
-      },
-      {
-        _tag: "CSidebarNavItem",
-        name: "Nhập hàng",
-        to: "/base/carousels",
-      },
-      {
-        _tag: "CSidebarNavItem",
-        name: "Kiểm hàng",
-        to: "/base/collapses",
-      },
+      }
+      // {
+      //   _tag: "CSidebarNavItem",
+      //   name: "Nhập hàng",
+      //   to: "/base/carousels",
+      // },
+      // {
+      //   _tag: "CSidebarNavItem",
+      //   name: "Kiểm hàng",
+      //   to: "/base/collapses",
+      // },
     ],
   },
   {

@@ -62,7 +62,7 @@ public class ProductServiceImpl implements ProductService {
 
         if(inputProductDTO.getCode() == ""){
             ProductEntity productEntity1 = productRepository.findFirstByOrderByIdDesc();
-            productEntity.setCode(("#SKU" + String.valueOf(productEntity1.getId()+1)));
+            productEntity.setCode(("SKU" + String.valueOf(productEntity1.getId()+1)));
         }
         else {
             if(productRepository.existsByCode(inputProductDTO.getCode())){
