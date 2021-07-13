@@ -21,6 +21,7 @@ const Saler = () => {
   const [amount] = useState(0);
   const { isShow, setShow } = useContext(LayoutContext);
   const [isFocus, setFocus] = useState(false);
+  const [isShowCustomer, setIsShowCustomer] = useState(false);
   const orderPageable = {
     page: 1,
     limit: 20,
@@ -49,6 +50,7 @@ const Saler = () => {
     <div>
       <SalerContext.Provider
         value={{
+          setIsShowCustomer,
           isFocus,
           setFocus,
           getAmounts,
@@ -71,7 +73,9 @@ const Saler = () => {
             total={total}
             productOption={productOption}
             setIsShowProducts={setIsShowProducts}
-          />
+           isShowCustomer = {isShowCustomer}  
+           setIsShowCustomer = {setIsShowCustomer}
+          /> 
         </div>
       </SalerContext.Provider>
     </div>

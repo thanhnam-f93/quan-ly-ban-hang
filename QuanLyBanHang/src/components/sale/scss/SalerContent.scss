@@ -22,7 +22,8 @@
       border-right-style: solid;
       border-right-width: 7px;
       border-right-color: #e5e5e5;
-      overflow:hidden
+      overflow-y: auto;
+      overflow-x:hidden;
 
     }
     .content-right{

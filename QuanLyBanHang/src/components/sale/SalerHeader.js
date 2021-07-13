@@ -97,6 +97,7 @@ const OrderHeader = () => {
             <i className="fas fa-search" />
           </div>
           <input
+            autoComplete = "off"
             id="input-id"
             type="text"
             onFocus={IsShowProduct}

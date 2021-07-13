@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { SalerContext } from "src/context/JwtContext";
+import { FormatMoney } from "src/helpers/FormatMoney";
 import SaleProductOption from "./SaleProductOption";
 import "./scss/SaleProductItem.scss";
 const SaleProductItem = ({item,index, listProductOption}) => {
@@ -14,11 +15,28 @@ const SaleProductItem = ({item,index, listProductOption}) => {
   // -----------------------get input amount---------------------------
  const getAmount =(e)=>{
    let val = e.target.value;
-   console.log("get value:",val);
-   setItemValue(val);
-   setAmountChange(!amountChange);
-   getAmounts(val,item);
+   let exp = /^\d+$/;
+   if(exp.test(val)){
+     let val1 = item.numberProduct;
+     if(val>val1){
+       console.log("lon hon");
+      setItemValue(FormatMoney(val1));
+      getAmounts(val1,item);
+     }else{
+      setItemValue(FormatMoney(val)); 
+      getAmounts(val,item);
+     }
 
+    console.log("get value:",val);
+    setAmountChange(!amountChange);
+ 
+   }else {
+     console.log("fail");
+     setItemValue(1);
+     setAmountChange(!amountChange);
+     getAmounts(1,item);
+   }
+  
  }
 //  ----------------press button increment amount--------------------
 const incrementAmount =()=>{
@@ -43,7 +61,7 @@ const decrementAmount =()=>{
 
  useEffect(() => {
    let val = item.amount;
-   setItemValue(val);
+   setItemValue(FormatMoney(val));
  }, [item.amount,amountChange]);
   return (
     <tr style = {{backgroundColor :index%2!=0? "#f2f7fd": "white"}} className="table-row" >
@@ -54,11 +72,11 @@ const decrementAmount =()=>{
       <td className="h-3">{item.name}</td>
       <td className="h-4 h-4-4">
       <span className = 's-2'><i className="fas fa-arrow-up" onClick = {incrementAmount}></i></span>
-      <span><input type = 'text' value = {itemValue}  maxLength = "5" onChange = {(e)=>getAmount(e)}/></span>
+      <span><input type = 'text' value = {FormatMoney(itemValue)}  maxLength = "5" onChange = {(e)=>getAmount(e)}/></span>
       <span className = 's-2'><i className="fas fa-arrow-down" onClick = {decrementAmount}></i></span>
       </td>
-      <td className="h-5">{item.price}</td>
-      <td className="h-5">{item.price*itemValue}</td>
+      <td className="h-5">{FormatMoney(item.price)}</td>
+      <td className="h-5">{FormatMoney(item.price*itemValue)}</td>
       <td className="h-4" onClick = {deleteItem}><i className="far fa-trash-alt fa-lg" /></td>
     </tr>
   
