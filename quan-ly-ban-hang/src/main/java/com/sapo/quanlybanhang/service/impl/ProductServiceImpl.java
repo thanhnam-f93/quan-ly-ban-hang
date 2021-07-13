@@ -9,14 +9,15 @@ import com.sapo.quanlybanhang.dto.UpdateDto;
 import com.sapo.quanlybanhang.entity.*;
 import com.sapo.quanlybanhang.repository.*;
 import com.sapo.quanlybanhang.service.ProductService;
-import org.aspectj.bridge.Message;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.Repository;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.RequestEntity;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.modelmapper.ModelMapper;
 
@@ -48,7 +49,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductDto create(InputProductDto inputProductDTO) {
+    public ResponseEntity<?> create(InputProductDto inputProductDTO) {
+
         Converter converter = new Converter();
         CategoryEntity categoriesEntity = categoryRepository.findByName(inputProductDTO.getCategoryName());
         BrandEntity brandEntity = brandRepository.findByName(inputProductDTO.getBrandName());
@@ -57,23 +59,26 @@ public class ProductServiceImpl implements ProductService {
         modelMapper.getConfiguration()
                 .setMatchingStrategy(MatchingStrategies.STRICT);
         ProductEntity productEntity = modelMapper.map(inputProductDTO, ProductEntity.class);
-//        if(inputProductDTO.getCode()==""){
-//            ProductEntity productEntity1 = productRepository.findFirstByOrderByIdDesc();
-//            productEntity.setCode("#SKU" + String.valueOf(productEntity1.getId()+1));
-//        }
-//        else {
-//            if(productRepository.existsByCode(inputProductDTO.getCode())){
-//                  return RequestEntit
-//
-//            }
-//
-//        }
-        productEntity.setCategory(categoriesEntity);
-        productEntity.setBrand(brandEntity);
-        productEntity.setSupplier(supplierEntity);
-        productRepository.save(productEntity);
-        ProductDto productsDTO = converter.ConverterToDtoProduct(productEntity);
-        return productsDTO;
+
+        if(inputProductDTO.getCode() == ""){
+            ProductEntity productEntity1 = productRepository.findFirstByOrderByIdDesc();
+            productEntity.setCode(("#SKU" + String.valueOf(productEntity1.getId()+1)));
+        }
+        else {
+            if(productRepository.existsByCode(inputProductDTO.getCode())){
+                  return ResponseEntity.badRequest().body(new Message(" error : code trung "));
+            }
+        }
+
+            productEntity.setCategory(categoriesEntity);
+            productEntity.setBrand(brandEntity);
+            productEntity.setSupplier(supplierEntity);
+            productRepository.save(productEntity);
+            ProductDto productsDTO = converter.ConverterToDtoProduct(productEntity);
+            return ResponseEntity.ok(productsDTO);
+
+
+
     }
 
     @Override
@@ -126,7 +131,17 @@ public class ProductServiceImpl implements ProductService {
 
 
     @Override
-    public List filterAll(int keyword, Pageable pageable) {
+    public List<ProductDto> filterAll(int keyword, int pageNo,int pageSize) {
+        if (keyword != 0) {
+            Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+            List<ProductEntity> productEntities = productRepository.filterAll(keyword,pageable);
+            List<ProductDto> productDtos = new ArrayList<>();
+            Converter converter = new Converter();
+            for (ProductEntity item : productEntities) {
+                productDtos.add(converter.ConverterToDtoProduct(item));
+            }
+            return productDtos;
+        }
         return null;
     }
 
@@ -243,8 +258,9 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<ProductDto>  searchByCategories(int keyword, Pageable pageable) {
+    public List<ProductDto>  searchByCategories(int keyword, int pageNo, int pageSize) {
         if (keyword != 0) {
+            Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
             List<ProductEntity> productEntities = productRepository.filterAll(keyword,pageable);
             List<ProductDto> productDtos = new ArrayList<>();
             Converter converter = new Converter();
@@ -288,6 +304,38 @@ public class ProductServiceImpl implements ProductService {
         return null;
     }
 
+    @Override
+    public List searchByNameAndCodeByCategoryPagination(String filter, String keyword, int pageNo, int pageSize) {
+        List<ProductDto> productDtos = new ArrayList<>();
+        List<ProductEntity> productEntities = new ArrayList<>();
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+         if(keyword !="" && filter !=""){
+             productEntities = productRepository.searchByNameAndCodeByCategoryPagination(filter,keyword,pageable);
+         }
+        Converter converter = new Converter();
+        for (ProductEntity item : productEntities) {
+            productDtos.add(converter.ConverterToDtoProduct(item));
+        }
+        return productDtos;
+
+    }
+
+    @Override
+    public List<ProductDto> searchByNameAndCodeByCategory(String filter,String keyword) {
+
+        if(keyword !="" && filter !=""){
+            List<ProductDto> productDtos = new ArrayList<>();
+            List<ProductEntity> productEntities = productRepository.searchByNameAndCodeByCategory(filter,keyword);
+            Converter converter = new Converter();
+            for (ProductEntity item : productEntities) {
+                productDtos.add(converter.ConverterToDtoProduct(item));
+            }
+            return productDtos;
+        }
+        return null;
+
+    }
+
 
     @Override
     public ProductDto updateProduct(int id, UpdateDto updateDto) {
@@ -302,6 +350,7 @@ public class ProductServiceImpl implements ProductService {
         product.setPrice(updateDto.getPrice());
         product.setDescription(updateDto.getDescription());
         product.setBrand(brandEntity);
+        product.setModifiedDate(updateDto.getModifiedDate());
         product.setColor(updateDto.getColor());
         product.setSize(updateDto.getSize());
         product.setSupplier(supplierEntity);

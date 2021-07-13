@@ -81,6 +81,19 @@ function createProduct(product){
   return axios.post(PRODUCTS,product)
 }
 
+const ApiQuan = (method, URL, data) => {
+ var config = { 
+  method: method,
+  url: `http://localhost:8080/api/v1/${URL}`,
+  headers: {
+      'Authorization': `Bearer ${localStorage.getItem("token")}`,
+      'Content-Type': 'application/json'
+  },
+  data: data
+}
+return axios(config);
+};
+
 export {
   getCategory,
   getCategoryByID,
@@ -98,5 +111,6 @@ export {
   DeleteSupplier,
   UpdateSuppliers,
   getSupplierByID,
-  createProduct
+  createProduct,
+  ApiQuan
 };

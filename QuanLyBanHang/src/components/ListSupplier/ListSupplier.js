@@ -33,11 +33,25 @@ function ListSupplier(props) {
   const [pageSize, setPageSize] = useState(5);
   const [total, setTotal] = useState(1);
 
+  const config = {
+    method: 'get',
+    url: `http://localhost:8080/api/v1/supplier_search?keyword=${search}&pageNo=${pageNo}&pageSize=${pageSize}`,
+    headers: {
+        'Authorization': `Bearer ${localStorage.getItem("token")}`,
+        'Content-Type': 'application/json'
+    }
+};
+
+const config1 = {
+  method: 'get',
+  url: `http://localhost:8080/api/v1/supplierss?keyword=${search}`,
+  headers: {
+      'Authorization': `Bearer ${localStorage.getItem("token")}`,
+      'Content-Type': 'application/json'
+  }
+};
   useEffect(() => {
-    axios
-      .get(
-        `http://localhost:8080/api/v1/supplier_search?keyword=${search}&pageNo=${pageNo}&pageSize=${pageSize}`
-      )
+    axios(config)
       .then((item) => {
         setSupplier(item.data);
         console.log(item);
@@ -45,8 +59,7 @@ function ListSupplier(props) {
   }, [search, pageNo, pageSize]);
 
   useEffect(() => {
-    axios
-      .get(`http://localhost:8080/api/v1/supplierss?keyword=${search}`)
+    axios(config1)
       .then((item) => {
         setTotal(Math.ceil(item.data.length / pageSize));
       });
@@ -59,6 +72,12 @@ function ListSupplier(props) {
   const updateSupplier = (id) => {
     props.history.push(`/update-supplier/${id}`);
   };
+  const cancel = (e) => {
+    e.preventDefault();
+    setSearch("");
+    setPageNo(1);
+  };
+
 
   //   const SearchByName = (e) => {
   //     e.preventDefault();
@@ -98,7 +117,15 @@ function ListSupplier(props) {
                 name="name"
                 placeholder="tìm kiếm mã, số điện thoại,địa chỉ"
                 onChange={changeSearch}
+                value={search}
               />
+            </CFormGroup>
+          </CCol>
+          <CCol xs="3" sm="2">
+            <CFormGroup row>
+            <CButton block color="secondary" onClick={cancel}>
+              mặc định
+            </CButton>
             </CFormGroup>
           </CCol>
         </CRow>

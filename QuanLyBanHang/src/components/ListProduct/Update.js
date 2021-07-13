@@ -8,7 +8,8 @@ import {
   CLabel,
   CSelect,
   CRow,
-  CTextarea
+  CTextarea,
+  CButton
  
 } from "@coreui/react";
 import swal from 'sweetalert';
@@ -25,6 +26,7 @@ import {
   getSize,
   DeleteCategory,
   getCategory,
+  ApiQuan,
 } from "src/apis/Product";
 import Select from "react-select";
 import axios from "axios";
@@ -65,15 +67,16 @@ function Update(props) {
   const [brandName, setBrandName] = useState("");
   const [product, setProduct] = useState([]);
 
+
   useEffect(() => {
-    getSupplier().then((res) => {
+    ApiQuan('get',`suppliers`).then((res) => {
       setSupplier(res.data);
       console.log(res.data);
     });
   }, []);
 
   useEffect(() => {
-    getCate().then((res) => {
+    ApiQuan('get',`categories`).then((res) => {
       setCategory(res.data);
       console.log(res.data);
     });
@@ -81,7 +84,7 @@ function Update(props) {
 
 
   useEffect(() => {
-    getBrand().then((res) => {
+    ApiQuan('get',`brands`).then((res) => {
       setBrand(res.data);
       console.log(res.data);
     });
@@ -92,7 +95,7 @@ function Update(props) {
   };
 
   useEffect(() => {
-    getCategory().then((item) => {
+    ApiQuan('get',`products`).then((item) => {
       setProduct(item.data);
       console.log(item);
     });
@@ -107,7 +110,7 @@ function Update(props) {
     })
     .then((willDelete) => {
       if (willDelete) {
-        DeleteCategory(id).then(() => {
+        ApiQuan('delete',`products/${id}`).then(() => {
           setProduct(product.filter((item) => item.id !== id))
           props.history.push("/category");
         });
@@ -154,7 +157,8 @@ function Update(props) {
   }, [brand]);
 
   useEffect(() => {
-    getCategoryByID(id).then((res) => {
+    // getCategoryByID(id).then((res) => {
+      ApiQuan('get',`products/${id}`).then((res) => {
       setCode(res.data.code);
       setName(res.data.name);
       setBrandName(res.data.brandID);
@@ -186,6 +190,7 @@ function Update(props) {
       createdDate: createdDate,
     };
 
+    var data = JSON.stringify(category)
     Swal.fire({
       title: 'bạn có muốn thay đổi sản phẩm?',
       showDenyButton: true,
@@ -195,7 +200,8 @@ function Update(props) {
     }).then((result) => {
       /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
-        UpdateCategory(category, id).then((res) => {
+        // UpdateCategory(category, id).then((res) => {
+          ApiQuan('put',`products/${id}`,data).then((res)=>{
           // props.history.push("/category");
           console.log(category);
         });
@@ -207,6 +213,11 @@ function Update(props) {
     
     
   };
+  function format2(n, currency) {
+    if (n != "") {
+        return n.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') + " " + currency;
+    }
+}
 
   const changeCode = (event) => {
     setCode(event.target.value);
@@ -293,14 +304,15 @@ function Update(props) {
   }
   
   const changeonBlurPrice = (event)=>{
-    var a = new RegExp("^[0-9]*$")
+    // var a = new RegExp("^[0-9]*$")
     
-    if((a.test(event.target.value)==false)){
-      setMesage({
-        price:"Giá không được nhập kí tự"
-      })
-    }
-    else if( /((\r\n|\n|\r)$)|(^(\r\n|\n|\r))|^\s*$/.test(event.target.value)!=false){
+    // if((a.test(event.target.value)==false)){
+    //   setMesage({
+    //     price:"Giá không được nhập kí tự"
+    //   })
+    // }
+    // else 
+    if( /((\r\n|\n|\r)$)|(^(\r\n|\n|\r))|^\s*$/.test(event.target.value)!=false){
       setMesage({
         price:" Giá sản phẩm không được để trống"
       })
@@ -368,7 +380,7 @@ function Update(props) {
                     name="price"
                     placeholder="DE1234567890"
                     onChange={changePrice}
-                    value={price}
+                    value={format2(price,"vnd")}
                     onBlur={changeonBlurPrice}
                   />
                    <span style={{color:"red"}}> {message.price}</span>
@@ -406,6 +418,7 @@ function Update(props) {
             </CFormGroup>
           </CCardBody>
         </CCard>
+        {/* <CCol className="px-0"  xs="12" sm="7">
         <button
           className="btn btn-secondary"
           onClick={cancel}
@@ -427,6 +440,8 @@ function Update(props) {
         >
           Xóa
         </button>
+        </CCol> */}
+    
       </CCol>
          <CCol xs="12" sm="5">   
             <CCard>
@@ -445,7 +460,7 @@ function Update(props) {
                 </CFormGroup>
                     
                 <CFormGroup>
-                  <CLabel htmlFor="vat">Nhà phân phối</CLabel>
+                  <CLabel htmlFor="vat">Nhà cung cấp</CLabel>
                   <Select placeholder={supplierName} 
                   options={filterSupplier} onChange={changeSupplier} />
                 </CFormGroup>
@@ -461,7 +476,58 @@ function Update(props) {
                   />        
             </CCard>
         </CCol>
+    
+        {/* <CCol className="px-0" xs="12" sm="7">
+        <button
+          className="btn btn-secondary"
+          onClick={cancel}
+          style={{ marginLeft: "10px" }}
+        >
+          Quay Lại
+        </button>
+        <button
+          className="btn btn-success"
+          onClick={updateCategory}
+          style={{ marginLeft: "10px" }}
+        >
+          Cập nhật
+        </button>
+       
+        </CCol>
+        <CCol  xs="12" sm="5">
+        <button
+          style={{ marginLeft: "10px" }}
+          onClick={() => deleteCategory(id)}
+          className="btn btn-danger"
+        >
+          Xóa
+        </button>
+        </CCol>
+     */}
         </CRow>
+        <CRow>
+         <CCol xs="12" sm="7">
+           <CRow>
+           <CCol xs="6"  sm="2" >
+           <CButton block color="secondary" onClick={cancel}>
+            Quay lại
+            </CButton>
+           </CCol>
+           <CCol xs="6"  sm="3">
+           <CButton block color="success" onClick={updateCategory}>
+            Cập nhật
+            </CButton>
+           </CCol>
+           </CRow>
+         </CCol>
+         <CCol className="px-0 d-flex justify-content-end" xs="12" sm="5" >
+         <CCol xs="6"  sm="3" >
+           <CButton block color="danger" onClick={() => deleteCategory(id)}>
+            Xóa
+            </CButton>
+           </CCol>
+         </CCol>
+       </CRow>
       </div>
     </div>
   );

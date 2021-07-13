@@ -9,7 +9,8 @@ import {
   CRow,
   CTextarea,
   CInputFile,
-  CValidFeedback
+  CValidFeedback,
+  CButton
 } from "@coreui/react";
 import Swal from 'sweetalert2'
 import { useEffect, useState } from "react";
@@ -18,10 +19,12 @@ import {
   getBrand,
   getCate,
   getSupplier,
-  createProduct
+  createProduct,
+  ApiQuan
 } from "src/apis/Product";
 import Select from "react-select";
 import axios from "axios";
+import ApiCustomer from "src/apis/ApiCustomer";
 function Create(props) {
   const [code, setCode] = useState("1");
   const [name, setName] = useState("");
@@ -65,8 +68,9 @@ function Create(props) {
           createdDate: createdDate,
           supplierName: supplierName,
     };
+    var data1 = JSON.stringify(product)
   console.log(product);
-    createProduct(product).then((item) => {  
+    ApiQuan('post',`products`,data1).then((item) => {  
     Swal.fire({
       icon: 'success',
       title: 'đã đạo thêm nhà cung cấp',
@@ -74,25 +78,36 @@ function Create(props) {
       timer: 1500
     })
       props.history.push("/product");
-    });
+    })
+    .catch(error=>{
+      console.log("aaaaaaaaaaaaaaaa")
+      if(error.response.data.mess == " error : code trung "){
+        Swal.fire({
+          icon: 'error',
+          title: 'code trùng',
+          showConfirmButton: false,
+          timer: 1500
+        })
+      }
+    })
   };
 
   useEffect(() => {
-    getSupplier().then((res) => {
+    ApiQuan('get',`suppliers`).then((res) => {
       setSupplier(res.data);
       console.log(res.data);
     });
   }, []);
 
   useEffect(() => {
-    getCate().then((res) => {
+    ApiQuan('get',`categories`).then((res) => {
       setCategory(res.data);
       console.log(res.data);
     });
   }, []);
 
   useEffect(() => {
-    getBrand().then((res) => {
+    ApiQuan('get',`brands`).then((res) => {
       setBrand(res.data);
       console.log(res.data);
     });
@@ -327,6 +342,7 @@ const changeCode= (event) => {
                 </CFormGroup>
               </CCardBody>
             </CCard>
+            
           </CCol>
           <CCol xs="12" sm="5">
             <CCard>
@@ -387,21 +403,28 @@ const changeCode= (event) => {
            
           </CCol>
         </CRow>
+       <CRow>
+         <CCol xs="12" sm="7">
+           <CRow>
+           <CCol xs="6"  sm="2" >
+           <CButton block color="secondary" onClick={cancel}>
+            Quay lại
+            </CButton>
+           </CCol>
+           <CCol xs="6"  sm="3">
+           <CButton block color="success" onClick={saveProduct}>
+            Thêm sản phẩm
+            </CButton>
+           </CCol>
 
-        <button
-          className="btn btn-secondary"
-          onClick={cancel}
-          style={{ marginLeft: "10px" }}
-        >
-          Quay lại
-        </button>
-        <button
-          className="btn btn-success"
-          onClick={saveProduct}
-          style={{ marginLeft: "10px" }}
-        >
-          Thêm sản phẩm
-        </button>
+           </CRow>
+           
+         </CCol>
+         <CCol>
+             fdfd
+           </CCol>
+     
+       </CRow>
       </div>
     </div>
   );
