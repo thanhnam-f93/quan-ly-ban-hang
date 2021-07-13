@@ -138,6 +138,7 @@ useEffect(() => {
     e.preventDefault();
     setFilter("");
     setSearch("");
+    setPageNo(1);
   };
 
   return (
@@ -150,6 +151,7 @@ useEffect(() => {
               <CInput
                 name="name"
                 placeholder="tìm kiếm mã, tên"
+                value={search}
                 onChange={changeSearch}
               />  
           
@@ -157,7 +159,7 @@ useEffect(() => {
             </CFormGroup>
           </CCol>
           <CCol xs="3"  sm="2">
-         <Select placeholder="loại sản phẩm" options={filterCategory} onChange={changeFilter} />  
+         <Select placeholder="loại sản phẩm" defaultValue={filter} options={filterCategory} onChange={changeFilter} />  
           </CCol>
           <CCol xs="3"  sm="1">
           <CButton block color="secondary" onClick={cancel}>

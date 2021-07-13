@@ -92,9 +92,11 @@ public class ProductController {
        else if(keyword =="" && filter !=""){
            return productService.searchByCatePagination(filter,pageNo,pageSize);
        }
-       else {
-           return productService.findPaginated(pageNo, pageSize);
+       else if (keyword !="" && filter!=""){
+           return productService.searchByNameAndCodeByCategoryPagination(filter,keyword,pageNo,pageSize);
        }
+       else
+           return  null;
     }
 //    @GetMapping(value = "/productSearchByKey")
 //    public List<ProductDto> searchAll(@RequestParam String keyword) {
@@ -115,6 +117,9 @@ public List<ProductDto> searchAll(@RequestParam String keyword,@RequestParam Str
     }
     else if(keyword == "" && filter != ""){
         return productService.searchByCate(filter);
+    }
+    else if(keyword != "" && filter != ""){
+        return productService.searchByNameAndCodeByCategory(filter,keyword);
     }
     else return null;
 
@@ -154,6 +159,16 @@ public List<ProductDto> searchAll(@RequestParam String keyword,@RequestParam Str
     public List<ProductDto> findPaginated(@RequestParam int pageNo,@RequestParam int pageSize) {
         return productService.findPaginated(pageNo, pageSize);
 
+    }
+
+    @GetMapping(value = "/productByCategory")
+    public List<ProductDto> searchByNameAndCodeByCategoryPagination(@RequestParam String filter, @RequestParam String keyword, @RequestParam int pageNo,@RequestParam int pageSize) {
+        return productService.searchByNameAndCodeByCategoryPagination(filter,keyword,pageNo,pageSize);
+
+    }
+    @GetMapping(value = "/productByCategorys")
+    public List<ProductDto> searchByNameAndCodeByCategory(@RequestParam String filter,@RequestParam String keyword) {
+        return productService.searchByNameAndCodeByCategory(filter,keyword);
 
     }
 

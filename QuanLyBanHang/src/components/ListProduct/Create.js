@@ -67,9 +67,9 @@ function Create(props) {
           createdDate: createdDate,
           supplierName: supplierName,
     };
-    var data = JSON.stringify(product)
+    var data1 = JSON.stringify(product)
   console.log(product);
-    ApiQuan('post',`products`,data).then((item) => {  
+    ApiQuan('post',`products`,data1).then((item) => {  
     Swal.fire({
       icon: 'success',
       title: 'đã đạo thêm nhà cung cấp',
@@ -77,7 +77,18 @@ function Create(props) {
       timer: 1500
     })
       props.history.push("/product");
-    });
+    })
+    .catch(error=>{
+      console.log("erro",error)
+      if(error.response.data.mess != "Erorr: code trung"){
+        Swal.fire({
+          icon: 'error',
+          title: 'code trùng',
+          showConfirmButton: false,
+          timer: 1500
+        })
+      }
+    })
   };
 
   useEffect(() => {

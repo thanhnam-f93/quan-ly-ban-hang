@@ -411,6 +411,7 @@ function Update(props) {
             </CFormGroup>
           </CCardBody>
         </CCard>
+        {/* <CCol className="px-0"  xs="12" sm="7">
         <button
           className="btn btn-secondary"
           onClick={cancel}
@@ -432,6 +433,8 @@ function Update(props) {
         >
           Xóa
         </button>
+        </CCol> */}
+    
       </CCol>
          <CCol xs="12" sm="5">   
             <CCard>
@@ -466,6 +469,34 @@ function Update(props) {
                   />        
             </CCard>
         </CCol>
+    
+        <CCol className="px-0" xs="12" sm="7">
+        <button
+          className="btn btn-secondary"
+          onClick={cancel}
+          style={{ marginLeft: "10px" }}
+        >
+          Quay Lại
+        </button>
+        <button
+          className="btn btn-success"
+          onClick={updateCategory}
+          style={{ marginLeft: "10px" }}
+        >
+          Cập nhật
+        </button>
+       
+        </CCol>
+        <CCol  xs="12" sm="5">
+        <button
+          style={{ marginLeft: "10px" }}
+          onClick={() => deleteCategory(id)}
+          className="btn btn-danger"
+        >
+          Xóa
+        </button>
+        </CCol>
+    
         </CRow>
       </div>
     </div>

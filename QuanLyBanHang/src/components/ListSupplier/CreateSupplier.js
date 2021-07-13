@@ -13,14 +13,14 @@ import {
 } from "@coreui/react";
 import Swal from 'sweetalert2'
 import { useEffect, useState } from "react";
-import { createCategory, createSupplier, getSupplier } from "src/apis/Product";
+import { ApiQuan, createCategory, createSupplier, getSupplier } from "src/apis/Product";
 
 function Create(props) {
   const [message, setMesage] = useState({
     code: "",
     name: "",
-    numberProduct: "",
-    price: "",
+    phone: "",
+    email: "",
   });
   const [code, setCode] = useState("");
   const [name, setName] = useState("");
@@ -42,7 +42,10 @@ function Create(props) {
       description: description,
     };
   
-    createSupplier(supplier).then((item) => {
+var data = JSON.stringify(supplier)
+
+
+    ApiQuan('post',`suppliers`,data).then((item) => {
       
     Swal.fire({
       icon: 'success',
@@ -58,71 +61,71 @@ function Create(props) {
     props.history.push("/supplier");
   };
 
-  //   const changeonBlur = (event)=>{
-  //   if( /((\r\n|\n|\r)$)|(^(\r\n|\n|\r))|^\s*$/.test(event.target.value)!=false){
-  //       setMesage({
-  //         code:" * Mã không được để trống"
-  //       })
-  //     }
-  //     else{
-  //       setMesage({
-  //         code:""
-  //       })
-  //     }
-  //   }
+    const changeonBlur = (event)=>{
+    if( /((\r\n|\n|\r)$)|(^(\r\n|\n|\r))|^\s*$/.test(event.target.value)!=false){
+        setMesage({
+          code:" * Mã không được để trống"
+        })
+      }
+      else{
+        setMesage({
+          code:""
+        })
+      }
+    }
 
-  //   const changeonBlurName = (event)=>{
-  //    if( /((\r\n|\n|\r)$)|(^(\r\n|\n|\r))|^\s*$/.test(event.target.value)!=false){
-  //       setMesage({
-  //         name:" Tên sản phẩm không được để trống"
-  //       })
-  //     }
-  //     else{
-  //       setMesage({
-  //         name:""
-  //       })
-  //     }
-  //   }
+    const changeonBlurName = (event)=>{
+     if( /((\r\n|\n|\r)$)|(^(\r\n|\n|\r))|^\s*$/.test(event.target.value)!=false){
+        setMesage({
+          name:" Tên không được để trống"
+        })
+      }
+      else{
+        setMesage({
+          name:""
+        })
+      }
+    }
 
-  //   const changeonBlurNumber = (event)=>{
-  //     var a = new RegExp("^[0-9]*$")
+    const changeonBlurPhone = (event)=>{
+      // var a = new RegExp("^[0-9]*$")
 
-  //     if((a.test(event.target.value)==false)){
-  //       setMesage({
-  //         numberProduct:"Số lượng không được nhập kí tự"
-  //       })
-  //     }
-  //     else if( /((\r\n|\n|\r)$)|(^(\r\n|\n|\r))|^\s*$/.test(event.target.value)!=false){
-  //       setMesage({
-  //         numberProduct:" Số lượng sản phẩm không được để trống"
-  //       })
-  //     }
-  //     else{
-  //       setMesage({
-  //         numberProduct:""
-  //       })
-  //     }
-  //   }
+      if((/((09|03|07|08|05)+([0-9]{8})\b)/.test(event.target.value)==false)){
+        setMesage({
+          phone:"Số điện thoại không hợp lệ"
+        })
+      }
+      else if( /((\r\n|\n|\r)$)|(^(\r\n|\n|\r))|^\s*$/.test(event.target.value)!=false){
+        setMesage({
+          phone:" Số lượng sản phẩm không được để trống"
+        })
+      }
+      else{
+        setMesage({
+          phone:""
+        })
+      }
+    }
 
-  //   const changeonBlurPrice = (event)=>{
-  //     var a = new RegExp("^[0-9]*$")
+    const changeonBlurEmail = (event)=>{
+     
 
-  //     if((a.test(event.target.value)==false)){
-  //       setMesage({
-  //         price:"Số lượng không được nhập kí tự"
-  //       })
-  //     }
-  //     else if( /((\r\n|\n|\r)$)|(^(\r\n|\n|\r))|^\s*$/.test(event.target.value)!=false){
-  //       setMesage({
-  //         price:" Số lượng sản phẩm không được để trống"
-  //       })
-  //     }
-  //     else{
-  //       setMesage({
-  //         price:""
-  //       })
-  //     }
-  //   }
+      if((/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/.test(event.target.value)==false)){
+        setMesage({
+          email:"Email ko hợp lệ"
+        })
+      }
+      else if( /((\r\n|\n|\r)$)|(^(\r\n|\n|\r))|^\s*$/.test(event.target.value)!=false){
+        setMesage({
+          email:" Email không được để trống"
+        })
+      }
+      else{
+        setMesage({
+          email:""
+        })
+      }
+    }
 
   const changeCode = (event) => {
     setCode(event.target.value);
@@ -164,9 +167,9 @@ function Create(props) {
                     name="code"
                     placeholder="Nhập Mã"
                     onChange={changeCode}
-                    //   onBlur={changeonBlur}
+                      onBlur={changeonBlur}
                   />
-                  {/* <span style={{color:"red"}}> {message.code}</span> */}
+                  <span style={{color:"red"}}> {message.code}</span>
                 </CFormGroup>
                 <CFormGroup>
                   <CLabel htmlFor="vat">Tên</CLabel>
@@ -174,9 +177,9 @@ function Create(props) {
                     name="name"
                     placeholder="Nhập tên"
                     onChange={changeName}
-                    //   onBlur={changeonBlurName}
+                      onBlur={changeonBlurName}
                   />
-                  {/* <span style={{color:"red"}}> {message.name}</span> */}
+                  <span style={{color:"red"}}> {message.name}</span>
                 </CFormGroup>
                 <CFormGroup>
                   <CLabel htmlFor="vat">Số điện thoại</CLabel>
@@ -184,9 +187,10 @@ function Create(props) {
                     id="vat"
                     placeholder="Số điện thoại"
                     onChange={changePhone}
+                    onBlur={changeonBlurPhone}
                   />
 
-                  {/* <span style={{color:"red"}}> {message.numberProduct}</span> */}
+                  <span style={{color:"red"}}> {message.phone}</span>
                 </CFormGroup>
                 {/* <CFormGroup>
                     <CLabel htmlFor="vat">Mô tả</CLabel>
@@ -203,6 +207,7 @@ function Create(props) {
                     id="vat"
                     placeholder="nhập giá"
                     onChange={changeAddress}
+                    
                   />
                   {/* <span style={{color:"red"}}> {message.price}</span> */}
                 </CFormGroup>
@@ -210,10 +215,11 @@ function Create(props) {
                   <CLabel htmlFor="vat">Email</CLabel>
                   <CInput
                     id="vat"
-                    placeholder="nhập giá"
+                    placeholder="Example@gmail.com"
                     onChange={changeEmail}
+                    onBlur={changeonBlurEmail}
                   />
-                  {/* <span style={{color:"red"}}> {message.price}</span> */}
+                  <span style={{color:"red"}}> {message.email}</span>
                 </CFormGroup>
               </CCardBody>
             </CCard>
