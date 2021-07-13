@@ -11,6 +11,8 @@ import AddStaff from './components/Staff/AddStaff/AddStaff';
 import StaffDetail from './components/Staff/StaffDetail/StaffDetail';
 import ReturnOrder from './components/OrderReturn/ReturnOrder';
 import ReturnOrderDetail from './components/ReturnOrderDetail/ReturnOrderDetail';
+import SaleAddCustomer from './components/sale/SaleAddCustomer';
+import OrderReturnCustomer from './components/OrderReturn/OrderReturnCustomer';
 
 /*================== Of Template React =================*/
 const Toaster = React.lazy(() =>
@@ -247,7 +249,7 @@ const routes = [
   { path: '/supplier', exact: true,  name: 'Supplier', component: ListSupplier },
   { path: '/logins', exact: true,  name: '', component: Logins },
   { path: '/saler', exact: true,  name: 'ban-hang', component: Saler },
-
+  { path: '/them-khach-hang', exact: true,  name: 'ban-hang', component: SaleAddCustomer },
   
   { path: '/settings', exact: true,  name: 'Cấu hình', component: Setting },
   { path: '/settings/staffs', exact: true,  name: 'Nhân viên', component: Staff },
@@ -257,7 +259,9 @@ const routes = [
   { path: '/settings/roles/new-role', exact: true,  name: 'Thêm mới', component: AddRole },
   { path: '/settings/roles/:id', exact: true,  name: 'Chỉnh sửa', component: RoleDetail },
   { path: '/update-supplier/:id', exact: true,  name: 'update', component: UpdateSupplier },
-  { path: '/add-supplier', exact: true,  name: 'add', component: CreateSupplier }
+  { path: '/add-supplier', exact: true,  name: 'add', component: CreateSupplier },
+  { path: '/create-order-return/:id/:code', exact: true,  name: 'add', component: OrderReturnCustomer }
+
  
 
 /*================== The End code of Team - Quản lý bán hàng =================*/

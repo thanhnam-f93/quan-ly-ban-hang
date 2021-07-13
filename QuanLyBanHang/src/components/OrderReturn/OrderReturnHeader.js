@@ -1,5 +1,4 @@
 import React from 'react';
-import { Dropdown } from 'react-bootstrap';
 import DropDown from './DropDown';
 
 const ModalHeaders = (props) => {

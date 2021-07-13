@@ -92,7 +92,7 @@ public class ProductController {
        }
     }
     @GetMapping(value = "/productSearchByKey")
-    public List<ProductDto> searchAll(@RequestParam String keyword) {
+    public List<ProductDto> searchAll(@RequestParam  String keyword) {
         if( keyword == ""){
             return productService.getAll();
         }

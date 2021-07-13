@@ -19,7 +19,7 @@ const ReturnOrder = () => {
   const [totalPage, setTotalPage] = useState();
   const [orderPageable, setOrderPageAble] = useState({
     page: 1,
-    limit: 20,
+    limit: 10,
     inputOrder: "",
     orderTime: "",
   });
@@ -49,7 +49,8 @@ const ReturnOrder = () => {
       
       });
     });
-  }, [orderPageable]);
+
+  }, [orderPageable,show]);
 
   /**
    * filter and search order
@@ -78,33 +79,16 @@ const ReturnOrder = () => {
         </div>
       </div>
       <ReturnOrderList lists={listOrder} />
-      <CPagination
+      <CPagination         
             doubleArrows = {true}
             activePage={orderPageable.page}
             pages={totalPage}
             onActivePageChange={getPage}
           />  
-      <Modal show={show}
-      scrollable = "true"
-       onHide={handleClose}
-       size="lg"
-       aria-labelledby="contained-modal-title-vcenter"
-       centered>
-        <Modal.Header closeButton>
-          <Modal.Title>Chọn đơn để trả hàng</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <OrderModal />
-        </Modal.Body>
-        <Modal.Footer>
-          <button variant="secondary" onClick={handleClose}>
-            Close
-          </button>
-          <button onClick={handleClose}>
-            Save Changes
-          </button>
-        </Modal.Footer>
-      </Modal>
+       {
+         show ?  <OrderModal show = {show}  setShow = {setShow} /> :""
+       }   
+ 
     </div>
   );
 };

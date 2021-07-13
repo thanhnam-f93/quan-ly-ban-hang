@@ -35,7 +35,7 @@ const Logins = () => {
         reactLocalStorage.set("name", data.fullName);
         setJwt(data.token);
         console.log("login:", jwt);
-        history.push("/home");
+        history.push("/404");
       });
     });
   };

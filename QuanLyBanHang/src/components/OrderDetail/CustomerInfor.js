@@ -1,4 +1,5 @@
 import React from 'react';
+import "./scss/CustomerInfor.scss"
 
 const CustomerInfor = (props) => {
     var list = props.list;

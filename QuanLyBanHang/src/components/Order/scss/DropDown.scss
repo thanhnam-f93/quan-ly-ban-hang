@@ -3,7 +3,9 @@
     max-width: 300px;
     position: relative;
     z-index:1;
+    
     .btn-change{
+        position: relative;
         padding: 5px;
         border-style:solid;
         border-color: #e1e2e2;
@@ -31,6 +33,7 @@
         display: flex;
         justify-content: space-between;
         flex-direction: column;
+        position: absolute;
         .h-1{   
             padding-bottom: 6px;
             padding-top:3px;
