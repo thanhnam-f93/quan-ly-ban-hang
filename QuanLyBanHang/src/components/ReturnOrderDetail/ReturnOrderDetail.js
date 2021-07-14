@@ -9,7 +9,7 @@ import ReturnOrderDetailInfor from './ReturnOrderDetailInfor';
 const ReturnOrderDetail = () => {
   const {jwt}=useContext(JwtContext);
   const [orderDto, setOrderDto] = useState([]);
-  const customerInfor = reactLocalStorage.getObject("infor");
+  const customerInfor = reactLocalStorage.getObject("cInfor");
   const param = useParams();
   const id = param.id;
   console.log("orderDetail:"+id);

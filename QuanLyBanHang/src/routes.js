@@ -50,6 +50,7 @@ const Widgets = React.lazy(() => import("./views/widgets/Widgets"));
 const Users = React.lazy(() => import("./views/users/Users"));
 const User = React.lazy(() => import("./views/users/User"));
 
+
 /*==================The End Of Template React =================*/
 
 /*---------------------------------------------------------------------------------------*/
@@ -64,13 +65,15 @@ const CustomerList = React.lazy(() => import("./components/Customer/CustomerList
 const ListProduct = React.lazy(() => import('./components/ListProduct/ListProduct'));
 const Update = React.lazy(() => import('./components/ListProduct/Update'));
 const Create = React.lazy(() => import('./components/ListProduct/Create'));
+const Order = React.lazy(()=>import('./components/Order/Order'));
+
 
 /*================== The End code of Team - Quản lý bán hàng =================*/
 
 const ListSupplier = React.lazy(() => import('./components/ListSupplier/ListSupplier'));
 const UpdateSupplier = React.lazy(() => import('./components/ListSupplier/UpdateSupplier'));
 const CreateSupplier = React.lazy(() => import('./components/ListSupplier/CreateSupplier'));
-const Order = React.lazy(() => import('./components/Order/Order'));
+// const Order = React.lazy(() => import('./components/Order/Order'));
 /*================== The End code of Team - Quản lý bán hàng =================*/
 
 const routes = [
@@ -179,7 +182,7 @@ const routes = [
   /*---------------------------------------------------------------------------------------*/
 
   /*================== Start code of Team - Quản lý bán hàng =================*/
-    { path: "/", exact: true, name: "Home" },
+    { path: "/", exact: true, name: "trang-chu" },
   { path: "/dashboard", exact: true, name: "Tổng quan", component: Dashboard },
   { path: "/staff", exact: true, name: "Staff", component: Staff },
   {
@@ -203,12 +206,12 @@ const routes = [
   /*================== The End code of Team - Quản lý bán hàng =================*/
 /*================== Start code of Team - Quản lý bán hàng =================*/
   { path: '/order', exact: true,  name: 'danh-sach-don-hang', component: Order },
-  { path: '/dropdown', exact: true,  name: 'danh-sach-don-hang', component: DropDown },
-  { path: '/order-detail', exact: true,  name: '', component: OrderDetail },
-  { path: '/order-detail/:id/:type', exact: true,  name: 'chi-tiet-don-hang', component: OrderDetail },
-  { path: '/order/return', exact: true,  name: 'don-hang-tra-ve ', component: ReturnOrder },
+  {path: '/order/order-detail', exact: true,  name: '', component: OrderDetail },
+  { path: '/dropdown', exact: true,  name: '', component: DropDown },
+  { path: '/order/order-detail/:id/:type', exact: true,  name: 'chi-tiet-don-hang', component: OrderDetail },
+  { path: '/return', exact: true,  name: 'khach-tra-hang', component: ReturnOrder },
   { path: '/order/return/:id', exact: true,  name: '', component: ReturnOrder },
-  { path: '/order/return-order-detail', exact: true,  name: '', component: ReturnOrderDetail },
+  { path: '/return/return-order-detail/:id', exact: true,  name: '', component: ReturnOrderDetail },
   { path: '/product', exact: true,  name: 'Product', component: ListProduct },
   { path: '/category', exact: true,  name: 'Product', component: ListProduct },
   { path: '/product/update-category/:id', exact: true,  name: 'update', component: Update },
@@ -227,7 +230,7 @@ const routes = [
   { path: '/settings/roles/:id', exact: true,  name: 'Chỉnh sửa', component: RoleDetail },
   { path: '/update-supplier/:id', exact: true,  name: 'update', component: UpdateSupplier },
   { path: '/add-supplier', exact: true,  name: 'add', component: CreateSupplier },
-  { path: '/create-order-return/:id/:code', exact: true,  name: 'add', component: OrderReturnCustomer }
+  { path: '/create-order-return/:id/:code/:createdDate', exact: true,  name: 'add', component: OrderReturnCustomer }
 
  
 

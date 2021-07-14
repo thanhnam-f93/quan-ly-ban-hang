@@ -159,4 +159,9 @@ public class CustomerServiceImpl implements CustomerService {
     public boolean checkDuplicateEmail(String email) {
        return customerRepository.existsByEmail(email);
     }
+
+    @Override
+    public CustomerEntity save(CustomerEntity customerEntity) {
+        return customerRepository.save(customerEntity);
+    }
 }

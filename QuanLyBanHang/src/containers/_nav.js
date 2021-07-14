@@ -41,7 +41,7 @@ const _nav = [
       {
         _tag: "CSidebarNavItem",
         name: "Khách trả hàng",
-        to: "/order/return",
+        to: "/return",
       },
     ],
   },

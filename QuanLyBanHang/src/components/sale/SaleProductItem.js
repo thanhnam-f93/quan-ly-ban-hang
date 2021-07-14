@@ -40,10 +40,11 @@ const SaleProductItem = ({item,index, listProductOption}) => {
  }
 //  ----------------press button increment amount--------------------
 const incrementAmount =()=>{
-  if (item.numberProduct>itemValue){
-    let val= itemValue;
-    item['amount']=val+1;
-    setItemValue(val+1);
+  var x = parseInt(itemValue);
+  if (item.numberProduct>x){  
+    item['amount']=x+1;
+    console.log("giá trị:",x+1);
+    setItemValue(x+1);
     setAmountChange(!amountChange);
   }
  
@@ -51,7 +52,7 @@ const incrementAmount =()=>{
 
 const decrementAmount =()=>{
   if(itemValue>1){
-    let val = itemValue;
+    let val = parseInt(itemValue);
     item['amount']=val-1;
     setItemValue(val-1);
   }

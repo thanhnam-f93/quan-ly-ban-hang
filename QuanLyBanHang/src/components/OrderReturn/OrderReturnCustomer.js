@@ -1,9 +1,11 @@
+import { CButton } from "@coreui/react";
 import React, { useContext, useState } from "react";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { reactLocalStorage } from "reactjs-localstorage";
 import { callApiNotJwt } from "src/apis/ApiCaller";
 import { JwtContext } from "src/context/JwtContext";
+import { FormatMoney } from "src/helpers/FormatMoney";
 import CustomerInfor from "../OrderDetail/CustomerInfor";
 import List from "../sale/List";
 import OrderReturnCustomerItem from "./OrderReturnCustomerItem";
@@ -13,8 +15,15 @@ const OrderReturnCustomer = ({ item }) => {
   const customerInfor = reactLocalStorage.getObject("infor");
   const [orderDto, setOrderDto] = useState([]);
   const param = useParams();
-  const { id, code } = param;
+  const { id, code,createdDate } = param;
+  const [payMoney,setPayMoney] = useState(0);
+  const [amount,setAmount] = useState(0);
+  const [total,setTotal] = useState(0);
+  const [billDto, setBillDto] = useState({});
+  const [orderDetails, setOrderDetails] = useState([]);
+  const [isState, setIsState] = useState(false);
 
+  var date1,date2;
   useEffect(() => {
     console.log("types:" + param.id);
     callApiNotJwt(`order-details/${id}`, "GET", jwt).then((response) => {
@@ -25,9 +34,64 @@ const OrderReturnCustomer = ({ item }) => {
       response.json().then((data) => {
         console.log("orderDetail:", data);
         setOrderDto(data);
+       
       });
     });
-  }, []);
+    var dateNow = new Date();
+    var offset = 60*60*1000*24;
+    var myDate = new Date(createdDate);
+    var moneyPay = 0;
+    if(dateNow.getTime()-(offset*30)>myDate.getTime()){
+      console.log("het bao hanh");
+      moneyPay=100;
+      setPayMoney(100);
+    }else if(dateNow.getTime()-(offset*7)<myDate.getTime()){
+      console.log("trừ 7 ngày:",(dateNow.setDate(dateNow.getDate()-7)));
+      console.log("trả 100%");
+      moneyPay=100;
+      setPayMoney(100);
+    }else {
+      console.log("trả 70%");
+      moneyPay=70;
+      setPayMoney(70);
+    }
+    let val = 0;
+    let totalMoney = 0;
+    if(orderDetails.length!==0){
+      for (const ob of orderDetails) {
+        val += ob['amountPay'];
+        totalMoney += ob['amountPay']*((ob.price)*moneyPay/100);
+        setAmount(val);
+        setTotal(totalMoney);
+      }
+    }else{
+      setAmount(0);
+      setTotal(0);
+    }
+    console.log("length", orderDetails);
+    
+  }, [amount,total, isState]);
+// ------------------------functions------------------------
+const getOrderDetail = (item)=>{
+  if(orderDetails.length ===0){
+    setOrderDetails([item]);
+    setAmount(item.amount);
+  }else{
+    let check =false;
+    for (const ob of orderDetails) {
+      if(ob['id']==item['id']){
+        console.log("=nhau");
+        ob['amountPay'] = item['amountPay'];
+        check= true;
+      }
+    }
+    if(check === false){
+      setOrderDetails([...orderDetails,item]);
+    }
+  }
+ 
+ setIsState(!isState);
+}
   return (
     <div className="create-return-order">
       <div className="lable">
@@ -48,6 +112,7 @@ const OrderReturnCustomer = ({ item }) => {
                       <th scope="col">Mã sản phẩm</th>
                       <th scope="col">Tên sản phẩm</th>
                       <th scope="col">Số lượng trả</th>
+                      <th scope="col">Giá bán ra</th>
                       <th className="th-3" scope="col">
                         Giá hàng trả
                       </th>
@@ -59,9 +124,11 @@ const OrderReturnCustomer = ({ item }) => {
                       data={orderDto}
                       render={(item, index) => (
                         <OrderReturnCustomerItem
+                          dismount ={payMoney}
                           key={index}
                           item={item}
                           index={index}
+                          getOrderDetail = {getOrderDetail}
                         />
                       )}
                     />
@@ -74,14 +141,14 @@ const OrderReturnCustomer = ({ item }) => {
                   <div className="col-lg-7">
                     <div className="amount">
                       <span>Số lượng</span>
-                      <span>amount</span>
+                      <span>{amount}</span>
                     </div>
                     <div className="total-money">
                       <span>Tổng số tiền trả khách</span>
-                      <span>money</span>
+                      <span>{FormatMoney(total)}</span>
                     </div>
                   </div>
-                </div>
+                </div>  
               </div>
             </div>
           </div>
@@ -91,6 +158,9 @@ const OrderReturnCustomer = ({ item }) => {
             </div>
           </div>
         </div>
+      </div>
+      <div className = "btn-end">
+      <CButton className = "btn-1" color="primary" >Trả  hàng</CButton>
       </div>
     </div>
   );

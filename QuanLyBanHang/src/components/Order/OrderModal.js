@@ -8,6 +8,7 @@ import { CPagination } from "@coreui/react";
 import { Modal } from "react-bootstrap";
 import ReturnOrder from "../OrderReturn/ReturnOrder";
 const OrderModal = ({show, setShow}) => {
+  const [totalPage,setTotalPage] = useState(5);
   const [isShow, setIsShow] = useState(true);
   const { jwt } = useContext(JwtContext);
   const acc = reactLocalStorage.getObject("acc");
@@ -24,7 +25,16 @@ const OrderModal = ({show, setShow}) => {
   }
 
   const [listOrder, setListOrder] = useState([]);
-
+ 
+  const getPage = (page) =>{
+    console.log("trang:",page);
+    if(page==0){
+     
+      page = 1;
+    }
+    setOrderPageAble({...orderPageable, page:page});
+  }
+  
   useEffect(() => {
     console.log("useeffect:" + orderPageable);
     console.log(acc.token);
@@ -38,6 +48,7 @@ const OrderModal = ({show, setShow}) => {
         setListOrder(data.resultItem);
         // alert("thao tác thành công");
         console.log("list order", data);
+        setTotalPage(Math.ceil(data.totalItem/orderPageable.limit));
       });
     });
   }, [orderPageable,show]);
@@ -81,12 +92,12 @@ const OrderModal = ({show, setShow}) => {
          
         </Modal.Body>
         <Modal.Footer>
-          {/* <CPagination
+          <CPagination
             doubleArrows={true}
             activePage={orderPageable.page}
             pages={totalPage}
             onActivePageChange={getPage}
-          /> */}
+          />
         </Modal.Footer>
       </Modal>
     </div>

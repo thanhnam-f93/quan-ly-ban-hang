@@ -12,7 +12,7 @@ import SaleSearchCustomer from "./SaleSearchCustomer";
 const SalePayment = ({ isShowCustomer, setIsShowCustomer }) => {
   const { jwt } = useContext(JwtContext);
   const [isShow, setIsShow] = useState(false);
-  const { productOption, amountChange } = useContext(SalerContext);
+  const { productOption, amountChange ,setProductOption} = useContext(SalerContext);
   const handleClose = () => setIsShow(false);
   const [total, setTotal] = useState(0);
   const [MoneyOfCustomer, setMoneyOfCustomer] = useState(0);
@@ -37,10 +37,16 @@ const SalePayment = ({ isShowCustomer, setIsShowCustomer }) => {
       val += ob["amount"] * ob["price"];
     }
     setTotal(val);
+    setMoneyOfCustomer(val);
     console.log("tổng :", val);
     console.log("sale payment product:", productOption);
     setGivedMoney(val - (val * dismount) / 100);
-    setLessMoney(MoneyOfCustomer - givedMoney);
+    if(MoneyOfCustomer-givedMoney<0){
+      setLessMoney(0);
+    }else{
+      setLessMoney(MoneyOfCustomer - givedMoney);
+    }
+    
     if (productOption.length == 0) {
       setDismount(0);
       setMoneyOfCustomer(0);
@@ -50,22 +56,36 @@ const SalePayment = ({ isShowCustomer, setIsShowCustomer }) => {
         discount: item.price,
         productId: item.id,
         quanlity: item.amount,
+        dismount: dismount
       };
     });
-    setOrderDto({ customId: 1, orderDetailDtos: orderDetailDtos });
+    setOrderDto({  orderDetailDtos: orderDetailDtos });
   }, [productOption, total, amountChange, dismount, isShowCustomer, isCheck]);
 
   const getMoneyOfCustomer = (e) => {
+    console.log("gt",typeof(e.target.value));
     let val = e.target.value;
+    // let val = e.target.value;
+    console.log("giá trị:",val);
     let exp = /^\d+$/;
     if (exp.test(val)) {
       console.log("ok");
+      val = val.replace(/,/g, '');
+    
+      console.log("val",typeof(val));
+      // val = parseInt(val);
+      // val =parseInt( val.replace((/,/g, '')));
       setMoneyOfCustomer(FormatMoney(val));
-      setLessMoney(val - givedMoney);
+       if((val-givedMoney)<0){
+        setLessMoney(0);
+       } else{
+          setLessMoney(val-givedMoney);
+       } 
+    
     } else {
       console.log("lỗi");
-      setMoneyOfCustomer(0);
-      setLessMoney(0 - givedMoney);
+      setMoneyOfCustomer(givedMoney);
+      setLessMoney(0 );
     }
   };
 
@@ -104,7 +124,7 @@ const SalePayment = ({ isShowCustomer, setIsShowCustomer }) => {
   };
   // -----------------------------validate input----------------------------
   const getDismount = (e) => {
-    let val = e.target.value;
+    let val =  e.target.value;
     let exp = /^\d{1,3}\.?\d*$/;
     console.log("getDismount", val);
     if (val > 100) {
@@ -138,6 +158,7 @@ const SalePayment = ({ isShowCustomer, setIsShowCustomer }) => {
           alert("thao tác thành công");
           console.log(data.content);
           setCustomer(data.content);
+          setProductOption([]);
         });
       });
     }
@@ -220,8 +241,7 @@ const SalePayment = ({ isShowCustomer, setIsShowCustomer }) => {
           <span> Tiền khách đưa</span>
           <input
             type="text"
-            class="numeric"
-            value={FormatMoney(MoneyOfCustomer)}
+            value={FormatMoney(parseInt(MoneyOfCustomer))}
             onChange={getMoneyOfCustomer}
           />
         </div>

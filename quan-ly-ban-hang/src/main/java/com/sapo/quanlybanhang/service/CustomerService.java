@@ -1,6 +1,7 @@
 package com.sapo.quanlybanhang.service;
 
 import com.sapo.quanlybanhang.dto.CustomerDto;
+import com.sapo.quanlybanhang.entity.CustomerEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -56,4 +57,5 @@ public interface CustomerService {
     List<Integer> getYearCreateCustomer();
     boolean checkDuplicatePhone(String phone);
     boolean checkDuplicateEmail(String email);
+    CustomerEntity save(CustomerEntity customerEntity);
 }

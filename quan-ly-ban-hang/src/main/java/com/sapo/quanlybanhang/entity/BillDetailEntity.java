@@ -5,7 +5,7 @@ import lombok.Data;
 import javax.persistence.*;
 
 @Entity
-@Table (name = "bill_details")
+@Table (name = "return_order_details")
 @Data
 public class BillDetailEntity  {
     @Id
@@ -21,7 +21,7 @@ public class BillDetailEntity  {
     @Column(name = "discount")
     private  Long discount;
 
-    @Column(name = "price")
+    @Column(name = "total")
     private Long price;
 
     @ManyToOne

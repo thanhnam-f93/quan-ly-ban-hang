@@ -49,6 +49,7 @@ public class OrderService implements IOrderService {
     @Autowired
     OrderDetailRepository orderDetailRepository;
 
+
     @Override
     public List<OrderDto> findAll( Pageable pageable) {
         List<OrderEntity> list = orderRepository.findAll(pageable).getContent();
@@ -95,20 +96,25 @@ public class OrderService implements IOrderService {
         orderEntity.setCreateBy(SecurityUtils.getPrincipal().getFullName());
         orderEntity.setPrice(price);
         orderEntity.setOrderDetailEntities(orderDetailEntities);
-        if(orderDto.getCustomId()==null){
+        if(orderDto.getCustomId()==null ){
             customerEntity.setName("Khách lẻ");
         }else{
             customerEntity = customerRepository.findOneById(orderDto.getCustomId());
         }
-
+        Long dismount = orderDto.getDismount();
+        if(dismount == null ){
+            orderEntity.setDismount(0L);
+        }else{
+            orderEntity.setDismount(dismount);
+        }
+        customerEntity.setPhone("xxxxx");
+        customerEntity.setStatus("on");
+        customerEntity = customerRepository.save(customerEntity);
         orderEntity.setCustomer(customerEntity);
         orderEntity.setStaff(staffEntity);
         orderEntity.setCreatedDate(new Timestamp(System.currentTimeMillis()));
+        orderEntity.setDismount(orderDto.getDismount());
         orderEntity = orderRepository.save(orderEntity);
-        LocalDateTime tEnd = LocalDateTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyMMddHHmmss");
-        orderEntity.setCode(tEnd.format(formatter));
-        logger.info(String.valueOf(this.PREFIX+tEnd.format(formatter)));
          if(orderEntity != null){
              return OrderConverter.toDto(orderEntity);
          }
