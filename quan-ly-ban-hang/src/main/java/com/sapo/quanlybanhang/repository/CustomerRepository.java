@@ -6,7 +6,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.jpa.repository.query.Procedure;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,40 +33,51 @@ public interface CustomerRepository extends JpaRepository<CustomerEntity, Intege
 
     @Query(value = "select * from customers where ROUND(DATEDIFF(CURDATE(), date_of_birth) / 365, 0) < 18 and status='on'", nativeQuery = true)
     Page<CustomerEntity> findByAgeUnder18(Pageable pageable);
+
     @Query(value = "select * from customers where ROUND(DATEDIFF(CURDATE(), date_of_birth) / 365, 0) < 18 and gender = :gender and status='on'", nativeQuery = true)
-    Page<CustomerEntity> findByAgeUnder18optionGender(@Param("gender")String gender, Pageable pageable);
+    Page<CustomerEntity> findByAgeUnder18optionGender(@Param("gender") String gender, Pageable pageable);
 
     @Query(value = "select * from customers where ROUND(DATEDIFF(CURDATE()," +
             " date_of_birth) / 365, 0) between 18 and 35 and status='on'", nativeQuery = true)
     Page<CustomerEntity> findByAgeBetween18and35(Pageable pageable);
+
     @Query(value = "select * from customers where ROUND(DATEDIFF(CURDATE(), date_of_birth) / 365, 0) between  18 and 35 and gender = :gender and status='on'", nativeQuery = true)
-    Page<CustomerEntity> findByAgeBetween18and35optionGender(@Param("gender")String gender, Pageable pageable);
+    Page<CustomerEntity> findByAgeBetween18and35optionGender(@Param("gender") String gender, Pageable pageable);
 
     @Query(value = "select * from customers where ROUND(DATEDIFF(CURDATE(), date_of_birth) / 365, 0) > 35 and status='on'", nativeQuery = true)
     Page<CustomerEntity> findByAgeOver35(Pageable pageable);
-    @Query(value = "select * from customers where ROUND(DATEDIFF(CURDATE(), date_of_birth) / 365, 0) > 35 and gender = :gender and status='on'", nativeQuery = true)
-    Page<CustomerEntity> findByAgeOver35optionGender(@Param("gender")String gender, Pageable pageable);
 
-    @Query(value = "select * from customers  where status ='on'",nativeQuery = true)
+    @Query(value = "select * from customers where ROUND(DATEDIFF(CURDATE(), date_of_birth) / 365, 0) > 35 and gender = :gender and status='on'", nativeQuery = true)
+    Page<CustomerEntity> findByAgeOver35optionGender(@Param("gender") String gender, Pageable pageable);
+
+    @Query(value = "select * from customers  where status ='on'", nativeQuery = true)
     Page<CustomerEntity> All(Pageable pageable);
 
     @Transactional
     @Modifying
     @Query(value = "update CustomerEntity c set c.status ='off' where c.id = :id")
-void updateStatus(@Param("id")Integer id);
+    void updateStatus(@Param("id") Integer id);
 
-    @Query(value = "call getNewCustomersByMonth(:m,:y)",nativeQuery = true)
+    @Query(value = "call getNewCustomersByMonth(:m,:y)", nativeQuery = true)
     Integer getNew(Integer m, Integer y);
 
-    @Query(value = "call getNewCustomersByDay(:d,:m,:y)",nativeQuery = true)
-    Integer getNewByDay(Integer d,Integer m, Integer y);
+    @Query(value = "call getNewCustomersByDay(:d,:m,:y)", nativeQuery = true)
+    Integer getNewByDay(Integer d, Integer m, Integer y);
 
-    @Query(value = "call StatisticsByTime",nativeQuery = true)
-    Page<Object[]> getStatistics(Pageable pageable);
+    @Query(value = "select customers.name,phone,email,address,customers.created_date as Bat_dau,orders.created_date as Gan_nhat,count(*) as Tong_so_don \n" +
+            "from orders join customers on customers.id = orders.customer_id group by customers.name,phone,email,address,bat_dau\n" +
+            "order by Tong_so_don desc", nativeQuery = true)
+    List<Object[]> getStatistics(Pageable pageable);
+    @Query(value = "select customers.name,phone,email,address,customers.created_date as Bat_dau,orders.created_date as Gan_nhat,count(*) as Tong_so_don \n" +
+            "from orders join customers on customers.id = orders.customer_id group by customers.name,phone,email,address,bat_dau\n" +
+            "order by Tong_so_don desc", nativeQuery = true)
+    List<Object[]> getStatistics1();
+    @Query(value = "select distinct year(created_date)  from customers", nativeQuery = true)
+    List<Integer> getYearCreateCustomer();
 
-@Query(value = "select distinct year(created_date)  from customers",nativeQuery = true)
-List<Integer> getYearCreateCustomer();
     CustomerEntity findOneById(Integer customId);
+
     boolean existsByPhone(String phone);
+
     boolean existsByEmail(String email);
 }

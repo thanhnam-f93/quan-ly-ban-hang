@@ -5,7 +5,7 @@ import lombok.Data;
 
 @AllArgsConstructor
 @Data
-public class OrderItem  {
+public class OrderItem {
     private Long countOrder;
     private Long priceOrder;
 }

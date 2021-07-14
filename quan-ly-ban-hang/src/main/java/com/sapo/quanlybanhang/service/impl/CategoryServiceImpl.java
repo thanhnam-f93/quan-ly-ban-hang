@@ -6,7 +6,6 @@ import com.sapo.quanlybanhang.dto.ProductDto;
 import com.sapo.quanlybanhang.entity.CategoryEntity;
 import com.sapo.quanlybanhang.entity.ProductEntity;
 import com.sapo.quanlybanhang.repository.CategoryRepository;
-import com.sapo.quanlybanhang.repository.ProductRepository;
 import com.sapo.quanlybanhang.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -46,10 +45,8 @@ public class CategoryServiceImpl implements CategoryService {
         categoryDto.setName(categoryEntity.getName());
         categoryDto.setProductDtoList(productDtos);
 
-        return  categoryDto;
+        return categoryDto;
     }
-
-
 
 
 }

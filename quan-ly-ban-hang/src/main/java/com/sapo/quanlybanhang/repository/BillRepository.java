@@ -9,8 +9,9 @@ import java.time.LocalDate;
 
 public interface BillRepository extends JpaRepository<BillEntity, Integer> {
     @Query("select new com.sapo.quanlybanhang.dto.OrderItem(count (b), sum(b.price)) " +
-            " from BillEntity b where  DATE(b.createdDate) = DATE(?1)" )
+            " from BillEntity b where  DATE(b.createdDate) = DATE(?1)")
     public OrderItem findPrice(LocalDate optionDate);
+
     BillEntity findOneById(Integer id);
 
 }

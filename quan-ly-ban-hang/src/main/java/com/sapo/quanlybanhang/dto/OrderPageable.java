@@ -10,10 +10,10 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Data
 public class OrderPageable {
+    OptionTime optionTime;
     private Integer page;
     private Integer limit;
     private LocalDate orderTime;
     private String inputOrder;
-    OptionTime optionTime;
 //    private String optionTime;
 }

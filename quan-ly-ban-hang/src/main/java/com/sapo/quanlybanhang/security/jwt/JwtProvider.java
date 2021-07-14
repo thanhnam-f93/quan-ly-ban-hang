@@ -19,12 +19,13 @@ import java.sql.Timestamp;
 @Component
 public class JwtProvider {
     private Logger logger = LoggerFactory.getLogger(JwtProvider.class);
+
     public String generateJwtToken(Authentication auth) {
         MyUser user = (MyUser) auth.getPrincipal();
         return Jwts.builder()
                 .setSubject(user.getUsername())
                 .setIssuedAt(new Timestamp(System.currentTimeMillis()))
-                .setExpiration(new Timestamp(System.currentTimeMillis()+ JwtConstant.EXPIRATON) )
+                .setExpiration(new Timestamp(System.currentTimeMillis() + JwtConstant.EXPIRATON))
                 .signWith(SignatureAlgorithm.HS256, JwtConstant.SECRET)
                 .compact();
     }

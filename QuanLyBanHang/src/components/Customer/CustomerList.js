@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import CustomerItem from "./CustomerItem";
 import NavBar from "./NavBar";
-import { useHistory } from "react-router-dom";
 import { reactLocalStorage } from "reactjs-localstorage";
 import Swal from "sweetalert2";
 import {
@@ -13,7 +12,6 @@ import {
   CDropdownToggle,
 } from "@coreui/react";
 function CustomerList() {
-  const history = useHistory();
   const headers = {
     Authorization: "Bearer " + reactLocalStorage.get("token"),
   };
@@ -133,6 +131,7 @@ function CustomerList() {
       </table>
       <div className="row">
         <CPagination
+          id="pagination"
           align="center"
           addListClass="some-class"
           activePage={page}

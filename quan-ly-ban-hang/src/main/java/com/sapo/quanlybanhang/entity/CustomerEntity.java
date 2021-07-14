@@ -1,14 +1,9 @@
 package com.sapo.quanlybanhang.entity;
 
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 
 @Entity
 @Table(name = "customers")
@@ -28,27 +23,27 @@ public class CustomerEntity {
 
     @Column(name = "gender")
     private String gender;
-@Column(name="address")
-private String address;
+    @Column(name = "address")
+    private String address;
     @Column(name = "date_of_birth")
     private Date dateOfBirth;
 
     @Column(name = "note")
     private String note;
 
-    @Column(name ="created_date")
+    @Column(name = "created_date")
     private Date createdDate;
 
-    @Column(name ="modified_date")
+    @Column(name = "modified_date")
     private Date modifiedDate;
 
-    @Column(name ="created_by")
+    @Column(name = "created_by")
     private String createBy;
 
-    @Column(name ="modified_by")
+    @Column(name = "modified_by")
     private String modifiedBy;
 
-    @Column(name="status")
+    @Column(name = "status")
     private String status;
 
 //    @OneToMany(mappedBy = "customer")

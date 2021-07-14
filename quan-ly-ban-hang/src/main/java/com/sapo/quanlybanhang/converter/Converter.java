@@ -1,7 +1,13 @@
 package com.sapo.quanlybanhang.converter;
 
-import com.sapo.quanlybanhang.dto.*;
-import com.sapo.quanlybanhang.entity.*;
+import com.sapo.quanlybanhang.dto.BrandDto;
+import com.sapo.quanlybanhang.dto.CategoryDto;
+import com.sapo.quanlybanhang.dto.ProductDto;
+import com.sapo.quanlybanhang.dto.SupplierDto;
+import com.sapo.quanlybanhang.entity.BrandEntity;
+import com.sapo.quanlybanhang.entity.CategoryEntity;
+import com.sapo.quanlybanhang.entity.ProductEntity;
+import com.sapo.quanlybanhang.entity.SupplierEntity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +35,7 @@ public class Converter {
         return dto;
 
     }
+
     public CategoryDto ConverterToDtoCategory(CategoryEntity item) {
         CategoryDto dto = new CategoryDto();
         dto.setId(item.getId());
@@ -39,8 +46,7 @@ public class Converter {
         dto.setCreate_by(item.getCreate_by());
         dto.setModified_by(item.getModified_by());
         List<ProductDto> productDtoList = new ArrayList<>();
-        for ( ProductEntity productEntity: item.getProductEntities())
-        {
+        for (ProductEntity productEntity : item.getProductEntities()) {
             ProductDto productDto = ConverterToDtoProduct(productEntity);
             productDtoList.add(productDto);
 
@@ -50,6 +56,7 @@ public class Converter {
         return dto;
 
     }
+
     public SupplierDto ConverterToDtoSupplier(SupplierEntity item) {
         SupplierDto dto = new SupplierDto();
 
@@ -70,8 +77,8 @@ public class Converter {
 
     public BrandDto ConverterToDtoBrand(BrandEntity item) {
         BrandDto dto = new BrandDto();
-          dto.setId(item.getId());
-          dto.setName(item.getName());
+        dto.setId(item.getId());
+        dto.setName(item.getName());
         return dto;
 
     }

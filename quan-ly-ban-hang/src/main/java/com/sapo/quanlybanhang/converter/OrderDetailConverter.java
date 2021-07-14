@@ -4,7 +4,7 @@ import com.sapo.quanlybanhang.dto.OrderDetailDto;
 import com.sapo.quanlybanhang.entity.OrderDetailEntity;
 
 public class OrderDetailConverter {
-    public static OrderDetailDto toDto (OrderDetailEntity entity){
+    public static OrderDetailDto toDto(OrderDetailEntity entity) {
         OrderDetailDto dto = new OrderDetailDto();
         dto.setId(entity.getId());
         dto.setCode(entity.getCode());
@@ -16,16 +16,16 @@ public class OrderDetailConverter {
         dto.setProductName(entity.getProduct().getName());
         dto.setProductId(entity.getProduct().getId());
         dto.setPrice(entity.getPrice());
-        return  dto;
+        return dto;
     }
 
-    public static OrderDetailEntity toEntity (OrderDetailDto dto){
+    public static OrderDetailEntity toEntity(OrderDetailDto dto) {
         OrderDetailEntity entity = new OrderDetailEntity();
         entity.setId(dto.getId());
         entity.setCode(dto.getCode());
         entity.setDiscount(dto.getDiscount());
         entity.setQuanlity(dto.getQuanlity());
         entity.setRemainAmount(dto.getRemainAmount());
-        return  entity;
+        return entity;
     }
 }

@@ -6,6 +6,7 @@ import com.sapo.quanlybanhang.repository.OrderDetailRepository;
 import com.sapo.quanlybanhang.service.IOrderDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -13,6 +14,7 @@ import java.util.stream.Collectors;
 public class OrderDetailService implements IOrderDetailService {
     @Autowired
     private OrderDetailRepository orderDetailRepository;
+
     @Override
     public List<OrderDetailDto> findAllByOrderId(Integer id) {
         return orderDetailRepository.findAllByOrderId(id).stream()

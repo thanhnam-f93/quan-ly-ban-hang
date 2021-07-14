@@ -3,10 +3,9 @@ import React from "react";
 import Swal from "sweetalert2";
 import { useHistory, NavLink } from "react-router-dom";
 function CustomerItem({ customer, index }) {
-
   return (
     <NavLink
-      to={{ pathname: "/customerDetail", state: { customer } }}
+      to={{ pathname: "/customer/detail", state: { customer } }}
       style={{
         padding: 0,
         textDecoration: "none",

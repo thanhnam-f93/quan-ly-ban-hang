@@ -138,6 +138,7 @@ function CustomerNew() {
                 <CLabel htmlFor="phone">Số điện thoại</CLabel>
                 <CInput
                   {...register("phone", {
+                    required: true,
                     maxLength: 11,
                     minLength: 10,
                     valueAsNumber: true,

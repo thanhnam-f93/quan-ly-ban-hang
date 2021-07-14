@@ -1,10 +1,10 @@
 package com.sapo.quanlybanhang.controller;
 
-import com.sapo.quanlybanhang.dto.*;
-import com.sapo.quanlybanhang.entity.ProductEntity;
+import com.sapo.quanlybanhang.dto.InputProductDto;
+import com.sapo.quanlybanhang.dto.OrderPageable;
+import com.sapo.quanlybanhang.dto.ProductDto;
+import com.sapo.quanlybanhang.dto.UpdateDto;
 import com.sapo.quanlybanhang.service.ProductService;
-import org.modelmapper.ModelMapper;
-import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -32,6 +32,7 @@ public class ProductController {
     public List<ProductDto> filterByDay() {
         return productService.getAllByDay();
     }
+
     @GetMapping(value = "/month")
 
     public List<ProductDto> filterByMonth() {
@@ -55,7 +56,7 @@ public class ProductController {
 
     @PostMapping(value = "/products")
     public ResponseEntity<?> create(@RequestBody InputProductDto productDto) {
-      return   productService.create(productDto);
+        return productService.create(productDto);
 
     }
 
@@ -82,23 +83,20 @@ public class ProductController {
 //    }
 
     @GetMapping(value = "/productSearch")
-    public List<ProductDto> search(@RequestParam String keyword,@RequestParam String filter,@RequestParam int pageNo,@RequestParam int pageSize) {
-       if( keyword =="" && filter=="") {
-           return productService.findPaginated(pageNo, pageSize);
-       }
-       else if(keyword !="" && filter==""){
-           return productService.searchByNameAndCode(keyword,pageNo,pageSize);
-       }
-       else if(keyword =="" && filter !=""){
-           return productService.searchByCatePagination(filter,pageNo,pageSize);
-       }
-       else if (keyword !="" && filter!=""){
-           return productService.searchByNameAndCodeByCategoryPagination(filter,keyword,pageNo,pageSize);
-       }
-       else
-           return  null;
+    public List<ProductDto> search(@RequestParam String keyword, @RequestParam String filter, @RequestParam int pageNo, @RequestParam int pageSize) {
+        if (keyword == "" && filter == "") {
+            return productService.findPaginated(pageNo, pageSize);
+        } else if (keyword != "" && filter == "") {
+            return productService.searchByNameAndCode(keyword, pageNo, pageSize);
+        } else if (keyword == "" && filter != "") {
+            return productService.searchByCatePagination(filter, pageNo, pageSize);
+        } else if (keyword != "" && filter != "") {
+            return productService.searchByNameAndCodeByCategoryPagination(filter, keyword, pageNo, pageSize);
+        } else
+            return null;
     }
-//    @GetMapping(value = "/productSearchByKey")
+
+    //    @GetMapping(value = "/productSearchByKey")
 //    public List<ProductDto> searchAll(@RequestParam String keyword) {
 //        if( keyword == "" ){
 //            return productService.getAll();
@@ -107,23 +105,19 @@ public class ProductController {
 //            return productService.searchByKey(keyword);
 //        }
 //    }
-@GetMapping(value = "/productSearchByKey")
-public List<ProductDto> searchAll(@RequestParam String keyword,@RequestParam String filter) {
-    if( keyword == "" && filter==""){
-        return productService.getAll();
-    }
-    else if (keyword !="" && filter=="") {
-        return productService.searchByKey(keyword);
-    }
-    else if(keyword == "" && filter != ""){
-        return productService.searchByCate(filter);
-    }
-    else if(keyword != "" && filter != ""){
-        return productService.searchByNameAndCodeByCategory(filter,keyword);
-    }
-    else return null;
+    @GetMapping(value = "/productSearchByKey")
+    public List<ProductDto> searchAll(@RequestParam String keyword, @RequestParam String filter) {
+        if (keyword == "" && filter == "") {
+            return productService.getAll();
+        } else if (keyword != "" && filter == "") {
+            return productService.searchByKey(keyword);
+        } else if (keyword == "" && filter != "") {
+            return productService.searchByCate(filter);
+        } else if (keyword != "" && filter != "") {
+            return productService.searchByNameAndCodeByCategory(filter, keyword);
+        } else return null;
 
-}
+    }
 
 //    @GetMapping(value = "/productss")
 //    public List<ProductDto> searchByName(@RequestParam String keyword) {
@@ -132,43 +126,42 @@ public List<ProductDto> searchAll(@RequestParam String keyword,@RequestParam Str
 //    }
 
     @GetMapping(value = "/product_searchByCategory/{keyword}")
-    public List<ProductDto> filterByCategory(@PathVariable int keyword)
-    {
+    public List<ProductDto> filterByCategory(@PathVariable int keyword) {
         return productService.searchByCategory(keyword);
     }
+
     @GetMapping(value = "/productsearchByCategory")
-    public List<ProductDto> filterByCategory(@RequestParam String keyword)
-    {
+    public List<ProductDto> filterByCategory(@RequestParam String keyword) {
         return productService.searchByCate(keyword);
     }
 
     @GetMapping(value = "/product_searchByCategories")
-    public List<ProductDto> searchCatePagination(@RequestParam String keyword,@RequestParam int pageNo,@RequestParam int pageSize)
-    {
+    public List<ProductDto> searchCatePagination(@RequestParam String keyword, @RequestParam int pageNo, @RequestParam int pageSize) {
 
-        return productService.searchByCatePagination(keyword,pageNo,pageSize);
+        return productService.searchByCatePagination(keyword, pageNo, pageSize);
     }
-    @GetMapping(value = "/productsearchByCategories")
-    public List<ProductDto> filterByCategory(@RequestParam int keyword,@RequestParam int pageNo,@RequestParam int pageSize)
-    {
 
-        return productService.searchByCategories(keyword,pageNo,pageSize);
+    @GetMapping(value = "/productsearchByCategories")
+    public List<ProductDto> filterByCategory(@RequestParam int keyword, @RequestParam int pageNo, @RequestParam int pageSize) {
+
+        return productService.searchByCategories(keyword, pageNo, pageSize);
     }
 
     @GetMapping(value = "/product")
-    public List<ProductDto> findPaginated(@RequestParam int pageNo,@RequestParam int pageSize) {
+    public List<ProductDto> findPaginated(@RequestParam int pageNo, @RequestParam int pageSize) {
         return productService.findPaginated(pageNo, pageSize);
 
     }
 
     @GetMapping(value = "/productByCategory")
-    public List<ProductDto> searchByNameAndCodeByCategoryPagination(@RequestParam String filter, @RequestParam String keyword, @RequestParam int pageNo,@RequestParam int pageSize) {
-        return productService.searchByNameAndCodeByCategoryPagination(filter,keyword,pageNo,pageSize);
+    public List<ProductDto> searchByNameAndCodeByCategoryPagination(@RequestParam String filter, @RequestParam String keyword, @RequestParam int pageNo, @RequestParam int pageSize) {
+        return productService.searchByNameAndCodeByCategoryPagination(filter, keyword, pageNo, pageSize);
 
     }
+
     @GetMapping(value = "/productByCategorys")
-    public List<ProductDto> searchByNameAndCodeByCategory(@RequestParam String filter,@RequestParam String keyword) {
-        return productService.searchByNameAndCodeByCategory(filter,keyword);
+    public List<ProductDto> searchByNameAndCodeByCategory(@RequestParam String filter, @RequestParam String keyword) {
+        return productService.searchByNameAndCodeByCategory(filter, keyword);
 
     }
 
@@ -185,12 +178,12 @@ public List<ProductDto> searchAll(@RequestParam String keyword,@RequestParam Str
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PostMapping ("/find-all")
-    public List<ProductDto> findAll(@RequestBody OrderPageable orderPageable){
+    @PostMapping("/find-all")
+    public List<ProductDto> findAll(@RequestBody OrderPageable orderPageable) {
 
-            Sort sort = Sort.by("createdDate").descending();
-            Pageable pageable = PageRequest.of(orderPageable.getPage()-1,orderPageable.getLimit(),sort);
-            return  productService.findAll(pageable);
-        }
+        Sort sort = Sort.by("createdDate").descending();
+        Pageable pageable = PageRequest.of(orderPageable.getPage() - 1, orderPageable.getLimit(), sort);
+        return productService.findAll(pageable);
+    }
 
 }

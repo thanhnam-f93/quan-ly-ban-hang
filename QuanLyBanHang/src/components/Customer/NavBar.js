@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import {
   CCard,
   CCardBody,
-  CCardHeader,
   CCollapse,
   CDropdownItem,
   CDropdownMenu,
@@ -16,7 +15,6 @@ import {
   CInput,
   CButton,
 } from "@coreui/react";
-import { DocsLink } from "src/reusable";
 import { useHistory } from "react-router-dom";
 function NavBar({ setGender, setAge, setSearch, setPage }) {
   const history = useHistory();
@@ -28,7 +26,11 @@ function NavBar({ setGender, setAge, setSearch, setPage }) {
     <div style={{ padding: "0", margin: "0" }}>
       <CCard>
         <CCardBody>
-          <CNavbar expandable="sm" color="info">
+          <CNavbar
+            expandable="sm"
+            //   color="primary"
+            style={{ backgroundColor: "#0089ff" }}
+          >
             <CToggler inNavbar />
             <CButton
               onClick={() => history.goBack()}
@@ -50,7 +52,7 @@ function NavBar({ setGender, setAge, setSearch, setPage }) {
                   />
                 </CForm>
                 <CDropdown inNav style={{ paddingRight: "50px" }}>
-                  <CDropdownToggle>Giới tính</CDropdownToggle>
+                  <CDropdownToggle color="light">Giới tính</CDropdownToggle>
                   <CDropdownMenu>
                     <CDropdownItem onClick={() => setGender("")}>
                       All
@@ -74,7 +76,7 @@ function NavBar({ setGender, setAge, setSearch, setPage }) {
                   </CDropdownMenu>
                 </CDropdown>
                 <CDropdown inNav style={{ paddingRight: "50px" }}>
-                  <CDropdownToggle>Độ tuổi</CDropdownToggle>
+                  <CDropdownToggle color="light">Độ tuổi</CDropdownToggle>
                   <CDropdownMenu>
                     <CDropdownItem
                       // key={1}
@@ -113,7 +115,7 @@ function NavBar({ setGender, setAge, setSearch, setPage }) {
                 </CDropdown>
 
                 <CButton color="light" className="my-2 my-sm-0" type="submit">
-                  <Link to="/customerNew" className="text-decoration-none">
+                  <Link to="customer/new" className="text-decoration-none">
                     Thêm mới
                   </Link>
                 </CButton>

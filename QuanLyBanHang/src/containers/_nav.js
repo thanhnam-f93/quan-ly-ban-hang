@@ -17,10 +17,10 @@ const _nav = [
     name: "Bán hàng",
     to: "/saler",
     icon: "cil-laptop",
-    _tag: 'CSidebarNavItem',
-    name: 'Bán hàng',
-    to: '/saler',
-    icon: 'cil-laptop',
+    _tag: "CSidebarNavItem",
+    name: "Bán hàng",
+    to: "/saler",
+    icon: "cil-laptop",
   },
   {
     _tag: "CSidebarNavDropdown",
@@ -48,7 +48,7 @@ const _nav = [
   {
     _tag: "CSidebarNavItem",
     name: "Khách hàng",
-    to: "/customerList",
+    to: "/customer",
     icon: "cil-people",
   },
   {
@@ -66,7 +66,7 @@ const _nav = [
         _tag: "CSidebarNavItem",
         name: "Nhà cung cấp",
         to: "/supplier",
-      }
+      },
       // {
       //   _tag: "CSidebarNavItem",
       //   name: "Nhập hàng",
@@ -112,10 +112,10 @@ const _nav = [
     _children: ["Hỗ trợ"],
   },
   {
-    _tag: 'CSidebarNavItem',
-    name: 'Cấu hình',
-    to: '/settings',
-    icon: 'cil-settings',
+    _tag: "CSidebarNavItem",
+    name: "Cấu hình",
+    to: "/settings",
+    icon: "cil-settings",
   },
   {
     _tag: "CSidebarNavItem",

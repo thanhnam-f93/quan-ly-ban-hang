@@ -1,13 +1,12 @@
 package com.sapo.quanlybanhang.entity;
 
-import lombok.*;
-import org.hibernate.annotations.GenericGenerator;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -24,22 +23,22 @@ public class OrderEntity {
     @Column(name = "code")
     private String code;
 
-    @Column(name ="created_date")
+    @Column(name = "created_date")
     private Timestamp createdDate;
 
-    @Column(name ="modified_date")
+    @Column(name = "modified_date")
     private Timestamp modifiedDate;
 
-    @Column(name ="created_by")
+    @Column(name = "created_by")
     private String createBy;
 
-    @Column(name ="modified_by")
+    @Column(name = "modified_by")
     private String modifiedBy;
 
-    @Column(name ="price")
+    @Column(name = "price")
     private Long price;
 
-    @Column (name = "state")
+    @Column(name = "state")
     private String state;
 
     @ManyToOne

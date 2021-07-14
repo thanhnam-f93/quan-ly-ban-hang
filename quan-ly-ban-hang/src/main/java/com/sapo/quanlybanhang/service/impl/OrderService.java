@@ -15,7 +15,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,72 +31,66 @@ public class OrderService implements IOrderService {
     public static final String PREFIX = "SON";
     Logger logger = LoggerFactory.getLogger(OrderService.class);
     @Autowired
+    OrderDetailRepository orderDetailRepository;
+    @Autowired
     private OrderRepository orderRepository;
-
     @Autowired
     private ProductRepository productRepository;
-
     @Autowired
-     private CustomerRepository customerRepository;
-
+    private CustomerRepository customerRepository;
     @Autowired
     private StaffRepository staffRepository;
-
     @Autowired
     private IOrderDao orderDao;
 
-    @Autowired
-    OrderDetailRepository orderDetailRepository;
-
     @Override
-    public List<OrderDto> findAll( Pageable pageable) {
+    public List<OrderDto> findAll(Pageable pageable) {
         List<OrderEntity> list = orderRepository.findAll(pageable).getContent();
-        return list.stream().map(item-> OrderConverter.toDto(item)).collect(Collectors.toList());
+        return list.stream().map(item -> OrderConverter.toDto(item)).collect(Collectors.toList());
     }
 
     /**
      * create bill, save into database
-
      */
     @Override
     @Transactional
     public OrderDto save(OrderDto orderDto) {
         LocalDateTime tStart = LocalDateTime.of(2021, 2, 13, 15, 56);
 
-       logger.info(String.valueOf(tStart.getSecond()));
+        logger.info(String.valueOf(tStart.getSecond()));
         Long price = 0L;
         Integer index = 0;
         OrderEntity orderEntity = OrderConverter.toEntity(orderDto);
         List<OrderDetailDto> orderDetailDtos = orderDto.getOrderDetailDtos();
         List<Integer> productIds = orderDetailDtos.stream()
                 .map(item -> item.getProductId()).collect(Collectors.toList());
-          List<ProductEntity> productEntities = productRepository.findAllById(productIds);
-          List<OrderDetailEntity> orderDetailEntities = orderDetailDtos.stream()
-                                .map(item -> OrderDetailConverter.toEntity(item)).collect(Collectors.toList());
+        List<ProductEntity> productEntities = productRepository.findAllById(productIds);
+        List<OrderDetailEntity> orderDetailEntities = orderDetailDtos.stream()
+                .map(item -> OrderDetailConverter.toEntity(item)).collect(Collectors.toList());
 
-        for(OrderDetailEntity item : orderDetailEntities){
-        if(productEntities.get(index).getNumberProduct()-item.getQuanlity()<0){
-            return null;
-        }
-           ProductEntity productEntity = productEntities.get(index);
+        for (OrderDetailEntity item : orderDetailEntities) {
+            if (productEntities.get(index).getNumberProduct() - item.getQuanlity() < 0) {
+                return null;
+            }
+            ProductEntity productEntity = productEntities.get(index);
             item.setOrder(orderEntity);
             price += item.getDiscount() * item.getQuanlity();
             item.setPrice(item.getDiscount() * item.getQuanlity());
             item.setProduct(productEntity);
-            item.getProduct().setSellProduct(item.getQuanlity()+item.getProduct().getSellProduct());
-            item.getProduct().setNumberProduct(item.getProduct().getNumberProduct()-item.getQuanlity());
+            item.getProduct().setSellProduct(item.getQuanlity() + item.getProduct().getSellProduct());
+            item.getProduct().setNumberProduct(item.getProduct().getNumberProduct() - item.getQuanlity());
             item.setRemainAmount(item.getQuanlity());
             item.setPrice(item.getDiscount() * item.getQuanlity());
-            index+=1;
+            index += 1;
         }
-        CustomerEntity customerEntity=new CustomerEntity();
-        StaffEntity staffEntity =  staffRepository.findOneByPhone(SecurityUtils.getPrincipal().getUsername());
+        CustomerEntity customerEntity = new CustomerEntity();
+        StaffEntity staffEntity = staffRepository.findOneByPhone(SecurityUtils.getPrincipal().getUsername());
         orderEntity.setCreateBy(SecurityUtils.getPrincipal().getFullName());
         orderEntity.setPrice(price);
         orderEntity.setOrderDetailEntities(orderDetailEntities);
-        if(orderDto.getCustomId()==null){
+        if (orderDto.getCustomId() == null) {
             customerEntity.setName("Khách lẻ");
-        }else{
+        } else {
             customerEntity = customerRepository.findOneById(orderDto.getCustomId());
         }
 
@@ -108,17 +101,17 @@ public class OrderService implements IOrderService {
         LocalDateTime tEnd = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyMMddHHmmss");
         orderEntity.setCode(tEnd.format(formatter));
-        logger.info(String.valueOf(this.PREFIX+tEnd.format(formatter)));
-         if(orderEntity != null){
-             return OrderConverter.toDto(orderEntity);
-         }
-    return null;
+        logger.info(String.valueOf(this.PREFIX + tEnd.format(formatter)));
+        if (orderEntity != null) {
+            return OrderConverter.toDto(orderEntity);
+        }
+        return null;
     }
 
     @Override
     @Transactional
     public OrderListDto findByCodeAndCustomer(OrderPageable orderPageable) {
-            return orderDao.findByCodeAndCustomer( orderPageable);
+        return orderDao.findByCodeAndCustomer(orderPageable);
 
 
     }

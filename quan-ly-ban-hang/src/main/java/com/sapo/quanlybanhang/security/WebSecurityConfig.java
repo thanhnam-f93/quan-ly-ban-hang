@@ -26,7 +26,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private final JwtAuthEntryPoint jwtAuthEntryPoint;
 
     public WebSecurityConfig(CustomUserDetailService customUserDetailService,
-                            JwtAuthEntryPoint jwtAuthEntryPoint) {
+                             JwtAuthEntryPoint jwtAuthEntryPoint) {
         this.customUserDetailService = customUserDetailService;
         this.jwtAuthEntryPoint = jwtAuthEntryPoint;
     }
@@ -47,10 +47,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.cors().and().csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/**").permitAll()
-                .antMatchers("/dashboard/**","admin/staffs/**").hasAuthority("ADMIN")
-                .antMatchers("/bill/**","/bill-details/**",
-                        "/order/**","/orders/**","/order-details/**")
-                .hasAnyAuthority("ADMIN","STAFF_SALE")
+                .antMatchers("/dashboard/**", "admin/staffs/**").hasAuthority("ADMIN")
+                .antMatchers("/bill/**", "/bill-details/**",
+                        "/order/**", "/orders/**", "/order-details/**")
+                .hasAnyAuthority("ADMIN", "STAFF_SALE")
                 .anyRequest().authenticated().and()
                 .exceptionHandling().authenticationEntryPoint(jwtAuthEntryPoint)
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
@@ -64,7 +64,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public JwtAuthTokenFilter jwtAuthTokenFilter(){
+    public JwtAuthTokenFilter jwtAuthTokenFilter() {
         return new JwtAuthTokenFilter();
     }
 }

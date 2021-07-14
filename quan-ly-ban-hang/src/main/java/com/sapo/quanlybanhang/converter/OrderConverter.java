@@ -6,7 +6,7 @@ import com.sapo.quanlybanhang.entity.OrderEntity;
 import java.util.stream.Collectors;
 
 public class OrderConverter {
-    public static OrderEntity toEntity(OrderDto dto){
+    public static OrderEntity toEntity(OrderDto dto) {
         OrderEntity entity = new OrderEntity();
         entity.setCode(dto.getCode());
         entity.setId(dto.getId());
@@ -18,7 +18,7 @@ public class OrderConverter {
         return entity;
     }
 
-    public  static OrderDto toDto(OrderEntity entity){
+    public static OrderDto toDto(OrderEntity entity) {
         OrderDto dto = new OrderDto();
         dto.setCode(entity.getCode());
         dto.setId(entity.getId());
@@ -28,7 +28,7 @@ public class OrderConverter {
         dto.setCreatedDate(entity.getCreatedDate());
         dto.setPrice(entity.getPrice());
         dto.setStaffId(entity.getStaff().getId());
-        if(entity.getCustomer() != null) {
+        if (entity.getCustomer() != null) {
             dto.setCustomId(entity.getCustomer().getId());
             dto.setCustomerName(entity.getCustomer().getName());
             dto.setCustomerEmail(entity.getCustomer().getEmail());
@@ -36,7 +36,7 @@ public class OrderConverter {
         }
         dto.setStaffName(entity.getStaff().getFullName());
         dto.setOrderDetailDtos(entity.getOrderDetailEntities().stream()
-                .map(item ->OrderDetailConverter.toDto(item)).collect(Collectors.toList()));
+                .map(item -> OrderDetailConverter.toDto(item)).collect(Collectors.toList()));
         return dto;
     }
 }

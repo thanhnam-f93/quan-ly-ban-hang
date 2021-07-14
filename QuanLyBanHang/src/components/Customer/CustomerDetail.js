@@ -330,27 +330,31 @@ function CustomerDetail(props) {
       <div className="row">
         <div className="col-6">
           <button
-            className="btn btn-danger"
+            className="btn btn-primary"
             onClick={resetForm}
-            style={{ marginLeft: "10px" }}
+            style={{ marginLeft: "10px" , backgroundColor: "#0089ff"}}
           >
             Hủy
           </button>
           <button
-            className="btn btn-success"
+            className="btn btn-primary"
             onClick={handleSubmit(updateCustomer)}
-            style={{ marginLeft: "10px" }}
+            style={{ marginLeft: "10px", backgroundColor: "#0089ff" }}
           >
             Cập nhật
           </button>
         </div>
         <div className="col-6">
           <button
-            style={{ marginLeft: "10px", width: "55px" }}
+            style={{
+              marginLeft: "10px",
+              width: "55px",
+              backgroundColor: "#0089ff",
+            }}
             onClick={() => {
               deleteCustomer(customer.id);
             }}
-            className="btn btn-danger  float-right"
+            className="btn btn-primary  float-right"
           >
             Xóa
           </button>

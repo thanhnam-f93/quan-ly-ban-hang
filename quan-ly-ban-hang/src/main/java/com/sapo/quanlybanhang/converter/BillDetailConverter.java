@@ -4,7 +4,7 @@ import com.sapo.quanlybanhang.dto.BillDetailDto;
 import com.sapo.quanlybanhang.entity.BillDetailEntity;
 
 public class BillDetailConverter {
-    public  static BillDetailEntity toEntity (BillDetailDto dto){
+    public static BillDetailEntity toEntity(BillDetailDto dto) {
         BillDetailEntity entity = new BillDetailEntity();
         entity.setQuanlity(dto.getQuanlity());
         entity.setDiscount(dto.getDiscount());
@@ -13,7 +13,7 @@ public class BillDetailConverter {
         return entity;
     }
 
-    public static  BillDetailDto toDto (BillDetailEntity entity){
+    public static BillDetailDto toDto(BillDetailEntity entity) {
         BillDetailDto dto = new BillDetailDto();
         dto.setDiscount(entity.getDiscount());
         dto.setId(entity.getId());

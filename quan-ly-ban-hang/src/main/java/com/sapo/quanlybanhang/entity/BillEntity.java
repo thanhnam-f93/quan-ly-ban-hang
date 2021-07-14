@@ -11,27 +11,27 @@ import java.util.List;
 @Table(name = "bills")
 @Data
 public class BillEntity {
-   @Id
-   @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-   @Column(name = "code")
+    @Column(name = "code")
     private String code;
 
-   @Column(name = "modified_date")
+    @Column(name = "modified_date")
     private Timestamp modifiedDate;
 
-   @Column(name = "modified_by")
+    @Column(name = "modified_by")
     private String modifiedBy;
 
-   @Column(name = "created_date")
+    @Column(name = "created_date")
     private Timestamp createdDate;
 
-   @Column(name = "created_by")
+    @Column(name = "created_by")
     private String createdBy;
 
-   @Column( name = "price")
-     private  Long price;
+    @Column(name = "price")
+    private Long price;
 
     @ManyToOne
     @JoinColumn(name = "order_id")
@@ -45,6 +45,6 @@ public class BillEntity {
     @JoinColumn(name = "customer_id")
     private CustomerEntity customerBill;
 
-    @OneToMany(mappedBy = "bill",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "bill", cascade = CascadeType.ALL)
     private List<BillDetailEntity> billDetailEntities = new ArrayList();
 }

@@ -4,22 +4,20 @@ import com.sapo.quanlybanhang.converter.Converter;
 import com.sapo.quanlybanhang.converter.ProductConverter;
 import com.sapo.quanlybanhang.dto.InputProductDto;
 import com.sapo.quanlybanhang.dto.ProductDto;
-
 import com.sapo.quanlybanhang.dto.UpdateDto;
 import com.sapo.quanlybanhang.entity.*;
-import com.sapo.quanlybanhang.repository.*;
+import com.sapo.quanlybanhang.repository.BrandRepository;
+import com.sapo.quanlybanhang.repository.CategoryRepository;
+import com.sapo.quanlybanhang.repository.ProductRepository;
+import com.sapo.quanlybanhang.repository.SupplierRepository;
 import com.sapo.quanlybanhang.service.ProductService;
+import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.repository.Repository;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.modelmapper.ModelMapper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,23 +58,21 @@ public class ProductServiceImpl implements ProductService {
                 .setMatchingStrategy(MatchingStrategies.STRICT);
         ProductEntity productEntity = modelMapper.map(inputProductDTO, ProductEntity.class);
 
-        if(inputProductDTO.getCode() == ""){
+        if (inputProductDTO.getCode() == "") {
             ProductEntity productEntity1 = productRepository.findFirstByOrderByIdDesc();
-            productEntity.setCode(("SKU" + String.valueOf(productEntity1.getId()+1)));
-        }
-        else {
-            if(productRepository.existsByCode(inputProductDTO.getCode())){
-                  return ResponseEntity.badRequest().body(new Message(" error : code trung "));
+            productEntity.setCode(("SKU" + String.valueOf(productEntity1.getId() + 1)));
+        } else {
+            if (productRepository.existsByCode(inputProductDTO.getCode())) {
+                return ResponseEntity.badRequest().body(new Message(" error : code trung "));
             }
         }
 
-            productEntity.setCategory(categoriesEntity);
-            productEntity.setBrand(brandEntity);
-            productEntity.setSupplier(supplierEntity);
-            productRepository.save(productEntity);
-            ProductDto productsDTO = converter.ConverterToDtoProduct(productEntity);
-            return ResponseEntity.ok(productsDTO);
-
+        productEntity.setCategory(categoriesEntity);
+        productEntity.setBrand(brandEntity);
+        productEntity.setSupplier(supplierEntity);
+        productRepository.save(productEntity);
+        ProductDto productsDTO = converter.ConverterToDtoProduct(productEntity);
+        return ResponseEntity.ok(productsDTO);
 
 
     }
@@ -131,10 +127,10 @@ public class ProductServiceImpl implements ProductService {
 
 
     @Override
-    public List<ProductDto> filterAll(int keyword, int pageNo,int pageSize) {
+    public List<ProductDto> filterAll(int keyword, int pageNo, int pageSize) {
         if (keyword != 0) {
             Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
-            List<ProductEntity> productEntities = productRepository.filterAll(keyword,pageable);
+            List<ProductEntity> productEntities = productRepository.filterAll(keyword, pageable);
             List<ProductDto> productDtos = new ArrayList<>();
             Converter converter = new Converter();
             for (ProductEntity item : productEntities) {
@@ -258,10 +254,10 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<ProductDto>  searchByCategories(int keyword, int pageNo, int pageSize) {
+    public List<ProductDto> searchByCategories(int keyword, int pageNo, int pageSize) {
         if (keyword != 0) {
             Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
-            List<ProductEntity> productEntities = productRepository.filterAll(keyword,pageable);
+            List<ProductEntity> productEntities = productRepository.filterAll(keyword, pageable);
             List<ProductDto> productDtos = new ArrayList<>();
             Converter converter = new Converter();
             for (ProductEntity item : productEntities) {
@@ -309,9 +305,9 @@ public class ProductServiceImpl implements ProductService {
         List<ProductDto> productDtos = new ArrayList<>();
         List<ProductEntity> productEntities = new ArrayList<>();
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
-         if(keyword !="" && filter !=""){
-             productEntities = productRepository.searchByNameAndCodeByCategoryPagination(filter,keyword,pageable);
-         }
+        if (keyword != "" && filter != "") {
+            productEntities = productRepository.searchByNameAndCodeByCategoryPagination(filter, keyword, pageable);
+        }
         Converter converter = new Converter();
         for (ProductEntity item : productEntities) {
             productDtos.add(converter.ConverterToDtoProduct(item));
@@ -321,11 +317,11 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<ProductDto> searchByNameAndCodeByCategory(String filter,String keyword) {
+    public List<ProductDto> searchByNameAndCodeByCategory(String filter, String keyword) {
 
-        if(keyword !="" && filter !=""){
+        if (keyword != "" && filter != "") {
             List<ProductDto> productDtos = new ArrayList<>();
-            List<ProductEntity> productEntities = productRepository.searchByNameAndCodeByCategory(filter,keyword);
+            List<ProductEntity> productEntities = productRepository.searchByNameAndCodeByCategory(filter, keyword);
             Converter converter = new Converter();
             for (ProductEntity item : productEntities) {
                 productDtos.add(converter.ConverterToDtoProduct(item));
@@ -366,7 +362,7 @@ public class ProductServiceImpl implements ProductService {
     public List<ProductDto> findAll(Pageable pageable) {
         return productRepository.
                 findAll(pageable).getContent().stream()
-                .map(item ->ProductConverter.toDto(item)).collect(Collectors.toList());
+                .map(item -> ProductConverter.toDto(item)).collect(Collectors.toList());
     }
 }
 
