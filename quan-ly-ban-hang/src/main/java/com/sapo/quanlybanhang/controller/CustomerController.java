@@ -292,13 +292,14 @@ Integer count(){
     @PostMapping("customers")
     ResponseEntity<?> save(@Valid @RequestBody CustomerDto customerDto) {
         try {
-            if (customerService.checkDuplicateEmail(customerDto.getEmail())) {
-                return new ResponseEntity<>("Email da ton tai", HttpStatus.BAD_REQUEST);
-            }
-            if (customerService.checkDuplicatePhone(customerDto.getPhone())) {
-                return new ResponseEntity<>("Phone da ton tai", HttpStatus.BAD_REQUEST);
-            }
+
             if (customerDto != null) {
+                if (customerDto.getEmail()!=null&&customerService.checkDuplicateEmail(customerDto.getEmail())) {
+                    return new ResponseEntity<>("Email da ton tai", HttpStatus.BAD_REQUEST);
+                }
+                if (customerDto.getPhone()!=null&&customerService.checkDuplicatePhone(customerDto.getPhone())) {
+                    return new ResponseEntity<>("Phone da ton tai", HttpStatus.BAD_REQUEST);
+                }
                 customerService.save(customerDto);
                 return new ResponseEntity<>("Thêm mới thành công", HttpStatus.OK);
             } else {

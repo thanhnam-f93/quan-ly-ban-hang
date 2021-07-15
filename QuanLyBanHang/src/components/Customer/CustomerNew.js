@@ -96,7 +96,7 @@ function CustomerNew() {
     <div>
       <div className="row">
         <div className=" card col-lg-8 offset-2 align-center">
-          <CCard>
+          <CCard style={{ border: "none" }}>
             <CCardHeader style={{ fontWeight: "bold" }}>
               Thêm mới Khách hàng
             </CCardHeader>
@@ -104,11 +104,11 @@ function CustomerNew() {
               <CFormGroup>
                 <CLabel htmlFor="name">Tên</CLabel>
                 <CInput
-                  {...register("name", {
-                    required: true,
-                    maxLength: 20,
-                    minLength: 3,
-                  })}
+                  // {...register("name", {
+                  //   required: true,
+                  //   maxLength: 20,
+                  //   minLength: 3,
+                  // })}
                   name="name"
                   placeholder="Tên khách hàng"
                   onChange={handleChange}
@@ -137,12 +137,12 @@ function CustomerNew() {
               <CFormGroup>
                 <CLabel htmlFor="phone">Số điện thoại</CLabel>
                 <CInput
-                  {...register("phone", {
-                    required: true,
-                    maxLength: 11,
-                    minLength: 10,
-                    valueAsNumber: true,
-                  })}
+                  // {...register("phone", {
+                  //   required: true,
+                  //   maxLength: 11,
+                  //   minLength: 10,
+                  //   valueAsNumber: true,
+                  // })}
                   name="phone"
                   type="tel"
                   placeholder="Phone Number"
@@ -162,12 +162,12 @@ function CustomerNew() {
               <CFormGroup>
                 <CLabel htmlFor="email">Email</CLabel>
                 <CInput
-                  {...register("email", {
-                    required: true,
-                    maxLength: 50,
-                    minLength: 5,
-                    pattern: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
-                  })}
+                  // {...register("email", {
+                  //   required: true,
+                  //   maxLength: 50,
+                  //   minLength: 5,
+                  //   pattern: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+                  // })}
                   name="email"
                   placeholder="Email"
                   onChange={handleChange}
@@ -188,11 +188,11 @@ function CustomerNew() {
               <CFormGroup>
                 <CLabel htmlFor="address">Địa chỉ</CLabel>
                 <CInput
-                  {...register("address", {
-                    required: true,
-                    maxLength: 50,
-                    minLength: 5,
-                  })}
+                  // {...register("address", {
+                  //   required: true,
+                  //   maxLength: 50,
+                  //   minLength: 5,
+                  // })}
                   name="address"
                   placeholder="Địa chỉ"
                   onChange={handleChange}
@@ -210,9 +210,9 @@ function CustomerNew() {
               <CFormGroup>
                 <CLabel htmlFor="birthday">Ngày sinh</CLabel>
                 <CInput
-                  {...register("dateOfBirth", {
-                    required: true,
-                  })}
+                  // {...register("dateOfBirth", {
+                  //   required: true,
+                  // })}
                   name="dateOfBirth"
                   type="date"
                   max={new Date().toISOString().slice(0, 10)}
@@ -226,9 +226,9 @@ function CustomerNew() {
               <CFormGroup>
                 <CLabel htmlFor="note">Thông tin bổ sung về khách hàng</CLabel>
                 <CTextarea
-                  {...register("note", {
-                    maxLength: 250,
-                  })}
+                  // {...register("note", {
+                  //   maxLength: 250,
+                  // })}
                   style={{ height: "100px" }}
                   name="note"
                   placeholder="Ghi chú thông tin Khách hàng"

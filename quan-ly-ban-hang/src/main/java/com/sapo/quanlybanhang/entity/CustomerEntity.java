@@ -3,7 +3,9 @@ package com.sapo.quanlybanhang.entity;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "customers")
@@ -46,11 +48,52 @@ public class CustomerEntity {
     @Column(name = "status")
     private String status;
 
-//    @OneToMany(mappedBy = "customer")
-//    private List<OrderEntity> orderEntities = new ArrayList();
-//
-//    @OneToMany(mappedBy = "customerBill")
-//    private List<BillEntity> billEntities = new ArrayList();
+    public CustomerEntity(String name, String phone, String email, String gender, String address, Date dateOfBirth, String note, Date createdDate, Date modifiedDate, String createBy, String modifiedBy, String status) {
+        this.name = name;
+        this.phone = phone;
+        this.email = email;
+        this.gender = gender;
+        this.address = address;
+        this.dateOfBirth = dateOfBirth;
+        this.note = note;
+        this.createdDate = createdDate;
+        this.modifiedDate = modifiedDate;
+        this.createBy = createBy;
+        this.modifiedBy = modifiedBy;
+        this.status = status;
+    }
+
+    public CustomerEntity(int id, String name, String phone, String email, String gender, String address, Date dateOfBirth, String note, Date createdDate, Date modifiedDate, String createBy, String modifiedBy, String status) {
+        this.id = id;
+        this.name = name;
+        this.phone = phone;
+        this.email = email;
+        this.gender = gender;
+        this.address = address;
+        this.dateOfBirth = dateOfBirth;
+        this.note = note;
+        this.createdDate = createdDate;
+        this.modifiedDate = modifiedDate;
+        this.createBy = createBy;
+        this.modifiedBy = modifiedBy;
+        this.status = status;
+    }
+
+    public CustomerEntity(String name, String phone, String email, Date dateOfBirth) {
+        this.name = name;
+        this.phone = phone;
+        this.email = email;
+        this.dateOfBirth = dateOfBirth;
+    }
+
+    @OneToMany(mappedBy = "customer")
+    private List<OrderEntity> orderEntities = new ArrayList();
+
+    @OneToMany(mappedBy = "customerBill")
+    private List<BillEntity> billEntities = new ArrayList();
 
 
+    public CustomerEntity() {
+
+    }
 }

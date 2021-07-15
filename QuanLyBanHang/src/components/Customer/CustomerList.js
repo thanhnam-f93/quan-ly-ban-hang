@@ -2,15 +2,19 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import CustomerItem from "./CustomerItem";
 import NavBar from "./NavBar";
+import "../../apis/css.scss";
 import { reactLocalStorage } from "reactjs-localstorage";
-import Swal from "sweetalert2";
+import Select from "react-select";
+import { dataRecord } from "./data";
 import {
   CPagination,
   CDropdown,
   CDropdownItem,
   CDropdownMenu,
   CDropdownToggle,
+  CFormGroup,
 } from "@coreui/react";
+import { height } from "dom-helpers";
 function CustomerList() {
   const headers = {
     Authorization: "Bearer " + reactLocalStorage.get("token"),
@@ -20,7 +24,7 @@ function CustomerList() {
   const [isLoading, setIsLoading] = useState(false);
   const [gender, setGender] = useState({});
   const [age, setAge] = useState({});
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(2);
   const [search, setSearch] = useState({});
   const [limit, setLimit] = useState(5);
   const [status, setStatus] = useState(true);
@@ -109,8 +113,8 @@ function CustomerList() {
           <tr className="row">
             <th className="col-1">STT</th>
             <th className="col-2">Name</th>
-            <th className="col-1">Gender</th>
             <th className="col-2">Phone</th>
+            <th className="col-1">Gender</th>
             <th className="col-3">Email</th>
             <th className="col-3">Address</th>
           </tr>
@@ -130,54 +134,36 @@ function CustomerList() {
         </tbody>
       </table>
       <div className="row">
-        <CPagination
-          id="pagination"
-          align="center"
-          addListClass="some-class"
-          activePage={page}
-          pages={totalPage}
-          onActivePageChange={setPage}
-        />
-
-        <CDropdown className="m-1 float-right offset-8">
-          <CDropdownToggle color="secondary" size="sm">
-            Bản ghi
-          </CDropdownToggle>
-          <CDropdownMenu>
-            <CDropdownItem header>Chọn số bản ghi hiển thị</CDropdownItem>
-            <CDropdownItem
-              onClick={() => {
-                setPage(1);
-                setLimit(5);
-              }}
-            >
-              5
-            </CDropdownItem>
-            <CDropdownItem
-              onClick={() => {
-                setPage(1);
-                setLimit(8);
-              }}
-            >
-              8
-            </CDropdownItem>
-            <CDropdownItem
-              onClick={() => {
-                setPage(1);
-                setLimit(10);
-              }}
-            >
-              10
-            </CDropdownItem>
-          </CDropdownMenu>
-        </CDropdown>
+        <div className="col-6">
+          <CPagination
+            id="pagination"
+            align="center"
+            // addListClass="some-class"
+            activePage={page}
+            pages={totalPage}
+            onActivePageChange={setPage}
+          />
+        </div>
+        <div className="row">
+          <span>Hiển thị</span>
+          <Select
+            style={{ height: "28px" }}
+            name="gender"
+            options={dataRecord}
+            placeholder="Chọn số bản ghi hiển thị"
+            defaultValue={{ value: 5, label: "5" }}
+            onChange={(e) => {
+              setPage(1);
+              setLimit(e.value);
+            }}
+          />
+          <span>kết quả</span>
+          <span>
+            Từ {(page - 1) * limit + 1} đến {page * limit} trên tổng{" "}
+            {totalPage * limit}{" "}
+          </span>
+        </div>
       </div>
-
-      {/* <Paginations
-        totalPages={totalPage}
-        currentPage={page}
-        setCurrentPage={setPage}
-      ></Paginations> */}
     </div>
   );
 }

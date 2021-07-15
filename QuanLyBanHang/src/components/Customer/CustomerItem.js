@@ -22,8 +22,8 @@ function CustomerItem({ customer, index }) {
       >
         <td className="col-1">{index + 1}</td>
         <td className="col-2">{customer.name}</td>
-        <td className="col-1">{customer.gender}</td>
         <td className="col-2">{customer.phone}</td>
+        <td className="col-1">{customer.gender}</td>
         <td className="col-3">{customer.email}</td>
         <td className="col-3">{customer.address}</td>
       </tr>
