@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "bills")
+@Table(name = "return_orders")
 @Data
 public class BillEntity {
    @Id
@@ -30,7 +30,7 @@ public class BillEntity {
    @Column(name = "created_by")
     private String createdBy;
 
-   @Column( name = "price")
+   @Column( name = "total")
      private  Long price;
 
     @ManyToOne

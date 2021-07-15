@@ -101,11 +101,11 @@ public class OrderService implements IOrderService {
         }else{
             customerEntity = customerRepository.findOneById(orderDto.getCustomId());
         }
-        Long dismount = orderDto.getDismount();
+        Long dismount = orderDto.getDiscount();
         if(dismount == null ){
-            orderEntity.setDismount(0L);
+            orderEntity.setDiscount(0L);
         }else{
-            orderEntity.setDismount(dismount);
+            orderEntity.setDiscount(dismount);
         }
         customerEntity.setPhone("xxxxx");
         customerEntity.setStatus("on");
@@ -113,7 +113,7 @@ public class OrderService implements IOrderService {
         orderEntity.setCustomer(customerEntity);
         orderEntity.setStaff(staffEntity);
         orderEntity.setCreatedDate(new Timestamp(System.currentTimeMillis()));
-        orderEntity.setDismount(orderDto.getDismount());
+        orderEntity.setDiscount(orderDto.getDiscount());
         orderEntity = orderRepository.save(orderEntity);
          if(orderEntity != null){
              return OrderConverter.toDto(orderEntity);

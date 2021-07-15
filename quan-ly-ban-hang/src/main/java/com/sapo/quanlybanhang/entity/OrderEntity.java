@@ -41,7 +41,7 @@ public class OrderEntity {
     @Column(name ="modified_by")
     private String modifiedBy;
 
-    @Column(name ="price")
+    @Column(name ="total")
     private Long price;
 
     @Column (name = "state")
@@ -61,7 +61,8 @@ public class OrderEntity {
     @OneToMany(mappedBy = "orderEntity", cascade = CascadeType.ALL)
     private List<BillEntity> billEntities = new ArrayList();
 
-    private Long dismount;
+    @Column(name = "discount")
+    private Long discount;
 
 
 }

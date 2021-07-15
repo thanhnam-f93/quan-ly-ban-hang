@@ -16,6 +16,7 @@ const SaleProductItem = ({item,index, listProductOption}) => {
  const getAmount =(e)=>{
    let val = e.target.value;
    let exp = /^\d+$/;
+   val = val.replace(/,/g,'');
    if(exp.test(val)){
      let val1 = item.numberProduct;
      if(val>val1){
@@ -73,7 +74,7 @@ const decrementAmount =()=>{
       <td className="h-3">{item.name}</td>
       <td className="h-4 h-4-4">
       <span className = 's-2'><i className="fas fa-arrow-up" onClick = {incrementAmount}></i></span>
-      <span><input type = 'text' value = {FormatMoney(itemValue)}  maxLength = "5" onChange = {(e)=>getAmount(e)}/></span>
+      <span><input type = 'text' value = {FormatMoney(new Number(itemValue))}  maxLength = "5" onChange = {(e)=>getAmount(e)}/></span>
       <span className = 's-2'><i className="fas fa-arrow-down" onClick = {decrementAmount}></i></span>
       </td>
       <td className="h-5">{FormatMoney(item.price)}</td>
