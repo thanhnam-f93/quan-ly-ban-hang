@@ -80,35 +80,35 @@ public class OrderService implements IOrderService {
         if(productEntities.get(index).getNumberProduct()-item.getQuanlity()<0){
             return null;
         }
-           ProductEntity productEntity = productEntities.get(index);
+            ProductEntity productEntity = productEntities.get(index);
             item.setOrder(orderEntity);
-            price += item.getDiscount() * item.getQuanlity();
-            item.setPrice(item.getDiscount() * item.getQuanlity());
+//            price += item.getDiscount() * item.getQuanlity();
+//            item.setPrice(item.getDiscount() * item.getQuanlity());
             item.setProduct(productEntity);
             item.getProduct().setSellProduct(item.getQuanlity()+item.getProduct().getSellProduct());
             item.getProduct().setNumberProduct(item.getProduct().getNumberProduct()-item.getQuanlity());
             item.setRemainAmount(item.getQuanlity());
-            item.setPrice(item.getDiscount() * item.getQuanlity());
+//            item.setPrice(item.getDiscount() * item.getQuanlity());
             index+=1;
         }
         CustomerEntity customerEntity=new CustomerEntity();
         StaffEntity staffEntity =  staffRepository.findOneByPhone(SecurityUtils.getPrincipal().getUsername());
         orderEntity.setCreateBy(SecurityUtils.getPrincipal().getFullName());
-        orderEntity.setPrice(price);
+//        orderEntity.setPrice(price);
         orderEntity.setOrderDetailEntities(orderDetailEntities);
         if(orderDto.getCustomId()==null ){
             customerEntity.setName("Khách lẻ");
+            customerEntity.setPhone("xxxxx");
+            customerEntity.setStatus("off");
         }else{
             customerEntity = customerRepository.findOneById(orderDto.getCustomId());
         }
-        Long dismount = orderDto.getDiscount();
-        if(dismount == null ){
-            orderEntity.setDiscount(0L);
-        }else{
-            orderEntity.setDiscount(dismount);
-        }
-        customerEntity.setPhone("xxxxx");
-        customerEntity.setStatus("on");
+//        Long dismount = orderDto.getDiscount();
+//        if(dismount == null ){
+//            orderEntity.setDiscount(0L);
+//        }else{
+//            orderEntity.setDiscount(dismount);
+//        }
         customerEntity = customerRepository.save(customerEntity);
         orderEntity.setCustomer(customerEntity);
         orderEntity.setStaff(staffEntity);

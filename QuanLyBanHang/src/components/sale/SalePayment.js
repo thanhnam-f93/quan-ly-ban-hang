@@ -46,7 +46,6 @@ const SalePayment = ({ isShowCustomer, setIsShowCustomer }) => {
       val += ob["amount"] * ob["price"];
     }
     setTotal(val);
-    setMoneyOfCustomer(val);
     console.log("tổng :", val);
     if(isCheckTypeDiscount){
       setDiscountConverter(dismount);
@@ -55,6 +54,7 @@ const SalePayment = ({ isShowCustomer, setIsShowCustomer }) => {
       setDiscountConverter(dismount*val/100);
       discountCv = dismount*val/100;
     }
+    setMoneyOfCustomer(val-discountCv);
     setGivedMoney(val - discountCv);
     if (MoneyOfCustomer - givedMoney < 0) {
       setLessMoney(0);
@@ -66,15 +66,16 @@ const SalePayment = ({ isShowCustomer, setIsShowCustomer }) => {
       setDismount(0);
       setMoneyOfCustomer(0);
     }
+    console.log("sale-payment-productOption",productOption);
     var orderDetailDtos = productOption.map((item) => {
       return {
-        discount: item.price,
+        price: item.amount*item.price,
         productId: item.id,
         quanlity: item.amount,
-        dismount: dismount,
+        // dismount: dismount,
       };
     });
-    setOrderDto({ orderDetailDtos: orderDetailDtos });
+    setOrderDto({discount:discountCv,price:total, orderDetailDtos: orderDetailDtos });
   }, [productOption, total, amountChange, dismount,isCheckTypeDiscount,isShowCustomer, isCheck]);
 
   const getMoneyOfCustomer = (e) => {
@@ -137,22 +138,7 @@ const SalePayment = ({ isShowCustomer, setIsShowCustomer }) => {
     console.log("payment-discount:",isCheckTypeDiscount);
     setIsShowDiscount(true);
     console.log("giá trị của dismount:",dismount);
-    // let val =  e.target.value;
-    // let exp = /^\d{1,3}\.?\d*$/;
-    // console.log("getDismount", val);
-    // if (val > 100) {
-    //   console.log("not bigger 100");
-    //   val = 20;
-    // } else {
-    //   if (exp.test(val)) {
-    //     console.log("ok");
-    //   } else {
-    //     console.log("not ok");
-    //     val = 20;
-    //   }
-    // }
-    // setDismount(val);
-    // setGivedMoney(total - (total * val) / 100);
+   
   };
 
   // -----------------------create bill-----------------------
@@ -248,7 +234,7 @@ const SalePayment = ({ isShowCustomer, setIsShowCustomer }) => {
           <span>Chiết khấu</span>
           <input
             type="text"
-            value={discountConverter}
+            value={FormatMoney(parseInt(discountConverter))}
             placeholder=""
             onClick={getDismount}
           />
