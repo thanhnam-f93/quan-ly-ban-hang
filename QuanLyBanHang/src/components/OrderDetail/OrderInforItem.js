@@ -1,5 +1,5 @@
 import React from "react";
-import "./scss/OrderInfor.css"
+import "./scss/OrderInfor.scss"
 
 const OrderInforItem = (props) => {
     const item = props.item;
