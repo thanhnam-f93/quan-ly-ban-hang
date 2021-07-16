@@ -26,6 +26,7 @@ function Badges() {
       <hr />
       <TotalCustomerByMonth></TotalCustomerByMonth>
       <hr />
+
       <StatisticTotalOrderByCustomers></StatisticTotalOrderByCustomers>
     </div>
   );
@@ -266,7 +267,6 @@ export default CustomerReport;
 //   CRow
 // } from '@coreui/react'
 // import { DocsLink } from 'src/reusable'
-
 
 // const Badges = () => {
 //   return (

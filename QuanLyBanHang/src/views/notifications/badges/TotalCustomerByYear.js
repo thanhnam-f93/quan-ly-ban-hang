@@ -15,6 +15,8 @@ function TotalCustomerByYear() {
   const [year, setYear] = useState();
   const [listYear, setListYear] = useState([]);
   const [totalByYear, setTotalByYear] = useState([]);
+  const [dataTable, setDataTable] = useState([]);
+  const [pageNo, setPageno] = useState(1);
   const getListYear = async () => {
     const API_listYear =
       "http://localhost:8080/customers/getYearCreateCustomer";
@@ -22,7 +24,7 @@ function TotalCustomerByYear() {
       .get(API_listYear, { headers })
       .then((response) => {
         setListYear(response.data);
- //       console.log("list Year: ", listYear);
+        //       console.log("list Year: ", listYear);
       })
       .catch((error) => {
         console.log(error);
@@ -30,11 +32,21 @@ function TotalCustomerByYear() {
   };
   const getDataByYear = async () => {
     var API_Statistics = `http://localhost:8080/customers/count?year=${year}`;
-   // console.log("API: ", API_Statistics);
+    // console.log("API: ", API_Statistics);
     axios.get(API_Statistics, { headers }).then((response) => {
       setTotalByYear(response.data);
+      setPageno(0);
       console.log("response:  " + response.data);
     });
+  };
+  const getDataTable = async () => {
+    if (pageNo === 1) {
+      setDataTable(totalByYear.slice(0, 6));
+      console.log("data page1:   ", dataTable);
+    } else {
+      setDataTable(totalByYear.slice(7, 12));
+      console.log("data page2:   ", dataTable);
+    }
   };
   function handleChangeYear() {
     let y = document.getElementById("year");
@@ -44,6 +56,10 @@ function TotalCustomerByYear() {
   useEffect(() => {
     getDataByYear();
   }, [year]);
+
+  useEffect(() => {
+    getDataTable();
+  }, [pageNo]);
 
   useEffect(() => {
     getListYear();
@@ -71,7 +87,11 @@ function TotalCustomerByYear() {
               Select year
             </option>
             {listYear.map((item) => {
-              return <option value={item}>{item}</option>;
+              return (
+                <option value={item} key={item}>
+                  {item}
+                </option>
+              );
             })}
           </select>
 
@@ -102,7 +122,7 @@ function TotalCustomerByYear() {
               </tr>
             </thead>
             <tbody>
-              {totalByYear.map((item, index) => {
+              {dataTable.map((item, index) => {
                 return (
                   <tr>
                     <td> {index + 1}</td>
@@ -115,9 +135,9 @@ function TotalCustomerByYear() {
           <CPagination
             align="center"
             addListClass="some-class"
-            activePage={1}
+            activePage={pageNo}
             pages={2}
-            onActivePageChange
+            onActivePageChange={setPageno}
           />
         </CCard>
       </CCardGroup>

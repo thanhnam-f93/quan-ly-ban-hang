@@ -56,7 +56,9 @@ public interface CustomerService {
     //
     Integer countCustomersByMonth(Integer m, Integer n);
 
-    Integer countCustomersByDay(Integer d, Integer m, Integer n);
+//    Integer countCustomersByDay(Integer d, Integer m, Integer n);
+
+public Integer countCustomersByDay(Integer d,Integer m, Integer y) ;
 
     //
     List<Object[]> getStatistics(Pageable pageable);

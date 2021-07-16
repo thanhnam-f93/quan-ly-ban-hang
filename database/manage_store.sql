@@ -2,10 +2,8 @@
 --
 -- Host: 127.0.0.1    Database: manage_store
 -- ------------------------------------------------------
--- Server version	8.0.21
-drop database manage_store;
-create database manage_store;
-use manage_store;
+-- Server version	8.0.23
+
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
@@ -175,21 +173,21 @@ DROP TABLE IF EXISTS `customers`;
 CREATE TABLE `customers` (
   `id` int NOT NULL AUTO_INCREMENT,
   `phone` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `email` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `address` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `gender` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `date_of_birth` date NOT NULL,
+  `email` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `address` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `gender` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `date_of_birth` date DEFAULT NULL,
   `note` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `created_date` date NOT NULL,
-  `modified_by` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `modified_date` date NOT NULL,
-  `created_by` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `name` varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `status` varchar(3) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `created_date` date DEFAULT NULL,
+  `modified_by` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `modified_date` date DEFAULT NULL,
+  `created_by` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `name` varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `status` varchar(3) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `phone` (`phone`),
   UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=72 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=78 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -198,23 +196,39 @@ CREATE TABLE `customers` (
 
 LOCK TABLES `customers` WRITE;
 /*!40000 ALTER TABLE `customers` DISABLE KEYS */;
-INSERT INTO `customers`(phone,email,address,gender,date_of_birth,note,created_date,modified_by,modified_date,created_by,name,status) 
- VALUES ('321456256','N@gmail.com','Hà Nội','Nam','2001-02-02','adsa','2021-02-02','Nguyễn Văn a','2000-02-02','Nguyễn Văn v','trần hà','on');
-INSERT INTO `customers` (phone,email,address,gender,date_of_birth,note,created_date,modified_by,modified_date,created_by,name,status) VALUES ('321456256','N@gmail.com','Hà Nội','Nu','2002-02-02','adsa','2021-02-02','Nguyễn Văn a','2000-02-02','Nguyễn Văn b','trần hà','on');
-INSERT INTO `customers` (phone,email,address,gender,date_of_birth,note,created_date,modified_by,modified_date,created_by,name,status) VALUES ('321453256','N@gmail.com','Hà Nội','Nam','2003-02-02','adsa','2021-02-02','Nguyễn Văn a','2000-02-02','Nguyễn Văn c','trần hà','on');
-INSERT INTO `customers` (phone,email,address,gender,date_of_birth,note,created_date,modified_by,modified_date,created_by,name,status) VALUES ('32148256','N@gmail.com','Hà Nội','Nam','2010-02-02','adsa','2021-02-02','Nguyễn Văn a','2000-02-02','Nguyễn Văn d','trần hà','on');
-INSERT INTO `customers` (phone,email,address,gender,date_of_birth,note,created_date,modified_by,modified_date,created_by,name,status) VALUES ('321496256','N@gmail.com','Hà Nội','Nam','2004-02-02','adsa','2021-02-02','Nguyễn Văn a','2000-02-02','Nguyễn Văn e','trần hà','on');
-INSERT INTO `customers` (phone,email,address,gender,date_of_birth,note,created_date,modified_by,modified_date,created_by,name,status) VALUES ('321406256','N@gmail.com','Hà Nội','Nam','2005-02-02','adsa','2021-02-02','Nguyễn Văn a','2000-02-02','Nguyễn Văn f','trần hà','on');
-INSERT INTO `customers` (phone,email,address,gender,date_of_birth,note,created_date,modified_by,modified_date,created_by,name,status) VALUES ('321426256','N@gmail.com','Hà Nội','Nam','2006-02-02','adsa','2021-02-02','Nguyễn Văn a','2000-02-02','Nguyễn Văn g','trần hà','on');
-INSERT INTO `customers` (phone,email,address,gender,date_of_birth,note,created_date,modified_by,modified_date,created_by,name,status) VALUES ('321446256','N@gmail.com','Hà Nội','Nam','2007-02-02','adsa','2021-02-02','Nguyễn Văn a','2000-02-02','Nguyễn Văn h','trần hà','on');
-INSERT INTO `customers` (phone,email,address,gender,date_of_birth,note,created_date,modified_by,modified_date,created_by,name,status) VALUES ('321476256','N@gmail.com','Hà Nội','Nu','2008-02-02','adsa','2021-02-02','Nguyễn Văn a','2000-02-02','Nguyễn Văn j','trần hà','on');
-INSERT INTO `customers` (phone,email,address,gender,date_of_birth,note,created_date,modified_by,modified_date,created_by,name,status) VALUES ('321476256','N@gmail.com','Hà Nội','Nam','2013-02-02','adsa','2021-02-02','Nguyễn Văn a','2000-02-02','Nguyễn Văn k','trần hà','on');
-INSERT INTO `customers` (phone,email,address,gender,date_of_birth,note,created_date,modified_by,modified_date,created_by,name,status) VALUES ('321486256','N@gmail.com','Hà Nội','Nam','2012-02-02','adsa','2021-02-02','Nguyễn Văn a','2000-02-02','Nguyễn Văn l','trần hà','on');
-INSERT INTO `customers` (phone,email,address,gender,date_of_birth,note,created_date,modified_by,modified_date,created_by,name,status) VALUES ('321456256','N@gmail.com','Hà Nội','Nu','2011-02-02','adsa','2021-02-02','Nguyễn Văn a','2000-02-02','Nguyễn Văn x','trần hà','on');
-INSERT INTO `customers` (phone,email,address,gender,date_of_birth,note,created_date,modified_by,modified_date,created_by,name,status) VALUES ('321436256','N@gmail.com','Hà Nội','Nam','1983-02-02','adsa','2021-02-02','Nguyễn Văn a','2000-02-02','Nguyễn Văn z','trần hà','on');
-INSERT INTO `customers`(phone,email,address,gender,date_of_birth,note,created_date,modified_by,modified_date,created_by,name,status) VALUES ('321416256','N@gmail.com','Hà Nội','Nam','1988-02-02','adsa','2021-02-02','Nguyễn Văn a','2000-02-02','Nguyễn Văn b','trần hà','on');
-
+INSERT INTO `customers` VALUES (25,'0399439339','Nxx@gmail.com','Hà Nội','Nam','2001-02-02','adsa','2021-12-02','Nguyễn Văn a','2000-02-02','Nguyễn Văn v','trần hà phong','on'),(26,'0392439378','N1@gmail.com','Hà Nội','Nu','2002-02-02','adsa','2020-12-02','Nguyễn Văn a','2001-02-02','Nguyễn Văn b','IRON MEN','on'),(27,'0392439369','N2@gmail.com','Hà Nội','Nam','2003-02-02','adsa','2021-02-02','Nguyễn Văn a','2002-02-02','Nguyễn Văn c','HULK','on'),(28,'0392439359','N3@gmail.com','Hà Nội','Nam','2010-02-02','adsa','2020-03-02','Nguyễn Văn a','1977-02-02','Nguyễn Văn d','BAT MAN','on'),(29,'0392439349','N4@gmail.com','Hà Nội','Nam','2004-02-02','adsa','2021-02-02','Nguyễn Văn a','1975-02-02','Nguyễn Văn e','JOCKER','on'),(31,'0332439349','N5@gmail.com','Hà Nội','Nam','2005-02-02','adsa','2020-02-02','Nguyễn Văn a','1988-02-02','Nguyễn Văn f','WONDER WOMEN','on'),(32,'0392439338','N6@gmail.com','Hà Nội','Nam','2006-02-02','adsa','2007-02-02','Nguyễn Văn a','1967-02-02','Nguyễn Văn g','SUPERMAN','on'),(33,'0392439337','N7@gmail.com','Hà Nội','Nam','2007-02-02','adsa','2008-03-02','Nguyễn Văn a','1966-02-02','Nguyễn Văn h','FLASH','on'),(34,'0392439336','N8@gmail.com','Hà Nội','Nu','2008-02-02','adsa','2008-03-02','Nguyễn Văn a','1994-02-02','Nguyễn Văn j','GREEN LATE','on'),(35,'0392439335','N9@gmail.com','Hà Nội','Nam','2013-02-02','adsa','2008-02-02','Nguyễn Văn a','1995-02-02','Nguyễn Văn k','DOCTOR STRANGER','on'),(36,'0392439334','N10@gmail.com','Hà Nội','Nam','2012-02-02','adsa','2014-07-02','Nguyễn Văn a','1995-02-02','Nguyễn Văn l','SPIDER MAN','on'),(37,'0392439333','N22@gmail.com','Hà Nội','Nu','2011-02-02','adsa','2014-08-02','Nguyễn Văn a','1999-02-02','Nguyễn Văn x','THOR','on'),(38,'0392439332','N11@gmail.com','Hà Nội','Nam','1983-02-02','adsa','2014-02-02','Nguyễn Văn a','2006-02-02','Nguyễn Văn z','LOKI','on'),(39,'0392439331','N12@gmail.com','Hà Nội','Nam','1988-02-02','adsa','2014-03-02','Nguyễn Văn a','2009-02-02','Nguyễn Văn b','CAPTAIN AMERICAN','on'),(40,'0392459331','N124@gmail.com','Hà Nội','Nam','1988-02-02','adsa','2014-05-02','Nguyễn Văn a','2009-02-02','Nguyễn Văn b','VU THANH NAM','on'),(41,'0916225588','thanhnam@gmail.com','Nam Dinh','Nam','1993-10-21','It is My Nam','2000-09-11','Nguyen Van an','2010-09-09','Vu VAn Nam','Vu Thanh Nan','on'),(42,'0392439339','thanhnam.humg93@gmail.com','Sai Gon','Nam','2017-06-14','hahahahha','2021-07-13','','2021-07-13','Ngyễn quang phúc','MacBook111','on'),(47,'0916113957','thanhnamw.humg93@gmail.com','266 Doi Can , Ba Dinh , Ha Noi','Nam','1987-05-12','ghi chu them item spring','2021-07-12','Ngyễn quang phúc','2021-07-13','Ngyễn quang phúc','spring 555','on'),(60,'03924393391','thanhnwam.humg93@gmail.com','266 Doi Can , Ba Dinh , Ha Noi','Nu','2021-07-01',NULL,'2021-07-11','Ngyễn quang phúc','2021-07-15','Ngyễn quang phúc','Le Anh Tung','on'),(65,'0392469584','Nwwsw4@gmail.com','Hà Nội','Nam','2004-02-01','adsa','2021-02-01','Nguyễn Văn a','1975-02-01','Nguyễn Văn e','JOCKER','on'),(67,'0392439330','thanham.humg93@gmail.com','Sai Gon','Nu','2021-07-01','44444444','2021-07-13','','2021-07-13','Ngyễn quang phúc','trần hà Binh Le','on'),(68,'0392439311','thanhnam.hdumg93@gmail.com','Sai Gon','Nu','2021-07-02','ddddddddd','2021-07-13','','2021-07-13','Ngyễn quang phúc','MacBook11ss','on'),(69,'0916113958','thanhndam.humg93@gmail.com','Hà Nội','Nu','2021-06-30','dddddddddd','2021-07-13','','2021-07-13','Ngyễn quang phúc','new Customer','on'),(70,'03924393395','thanhndam.humfg93@gmail.com','Hà Nội','Nu','2021-07-03',NULL,'2021-07-13','','2021-07-13','Ngyễn quang phúc','trần hà Binh Le','on'),(71,'0392439999','thanhnam11.humg93@gmail.com','Nghe An','Nu','2021-06-30','hihihi','2021-07-13','','2021-07-13','Ngyễn quang phúc','Super Cat','on'),(72,'09554477889','fdfdff@gmail.com','Hà Nội','Nu','2021-06-27','rêrêrêr','2021-07-13','Ngyễn quang phúc','2021-07-15','Ngyễn quang phúc','fdsfdsfsdfd','on'),(73,'0394555566','Nwwsw34@gmail.com','Hà Nội','Nu','2004-01-31','adsa','2021-01-31','Ngyễn quang phúc','2021-07-15','Nguyễn Văn e','JOCKEeR','on'),(74,'03924393393','thanhn3am.humg93@gmail.com','Hà Nội','Nu','2021-06-30','33333333333333333','2021-07-14','Ngyễn quang phúc','2021-07-15','Ngyễn quang phúc','trần hà Binh Le22222','on'),(75,'03924393321','thanhnam.hum2g93@gmail.com','Sai Gon','Nu','2021-07-01','222222222222222','2021-07-15','','2021-07-15','Ngyễn quang phúc','trần hà Binh Le22222','on'),(76,'0392439344','thanhnam.humg97@gmail.com','266 Doi Can , Ba Dinh , Ha Noi','Nu','2021-06-29','444','2021-07-15','','2021-07-15','Ngyễn quang phúc','MacBook11','on'),(77,'0394555500','Nwwsw734@gmail.com',NULL,NULL,'2004-02-01',NULL,NULL,NULL,'2021-07-15',NULL,'Phuc Nguyen',NULL);
 /*!40000 ALTER TABLE `customers` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `feedback`
+--
+
+DROP TABLE IF EXISTS `feedback`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `feedback` (
+  `id` int NOT NULL,
+  `customer_id` varchar(45) NOT NULL,
+  `created_date` date NOT NULL,
+  `created_by` int NOT NULL,
+  `content` varchar(250) NOT NULL,
+  `response_type` int NOT NULL,
+  `slove` tinyint NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `customer_id_idx` (`created_by`),
+  CONSTRAINT `created_by` FOREIGN KEY (`id`) REFERENCES `staff` (`id`),
+  CONSTRAINT `response_type` FOREIGN KEY (`id`) REFERENCES `response` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `feedback`
+--
+
+LOCK TABLES `feedback` WRITE;
+/*!40000 ALTER TABLE `feedback` DISABLE KEYS */;
+/*!40000 ALTER TABLE `feedback` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -338,6 +352,30 @@ INSERT INTO `products` VALUES (1,'#A','Áo khoác Chino thời thượng SID5670
 UNLOCK TABLES;
 
 --
+-- Table structure for table `response`
+--
+
+DROP TABLE IF EXISTS `response`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `response` (
+  `id` int NOT NULL,
+  `name` varchar(45) NOT NULL,
+  `description` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `response`
+--
+
+LOCK TABLES `response` WRITE;
+/*!40000 ALTER TABLE `response` DISABLE KEYS */;
+/*!40000 ALTER TABLE `response` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `roles`
 --
 
@@ -348,6 +386,11 @@ CREATE TABLE `roles` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(45) DEFAULT NULL,
   `code` varchar(45) DEFAULT NULL,
+  `notes` varchar(45) DEFAULT NULL,
+  `created_date` date DEFAULT NULL,
+  `created_by` varchar(45) DEFAULT NULL,
+  `modified_date` date DEFAULT NULL,
+  `modified_by` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -358,7 +401,7 @@ CREATE TABLE `roles` (
 
 LOCK TABLES `roles` WRITE;
 /*!40000 ALTER TABLE `roles` DISABLE KEYS */;
-INSERT INTO `roles` VALUES (1,'nhân viên bán hàng','STAFF_SALE'),(2,'nhân viên chăm sóc khách hàng','STAFF_CARE'),(3,'chủ cửa hàng','ADMIN');
+INSERT INTO `roles` VALUES (1,'nhân viên bán hàng','STAFF_SALE',NULL,NULL,NULL,NULL,NULL),(2,'nhân viên chăm sóc khách hàng','STAFF_CARE',NULL,NULL,NULL,NULL,NULL),(3,'chủ cửa hàng','ADMIN',NULL,NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `roles` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -424,7 +467,7 @@ UNLOCK TABLES;
 --
 -- Table structure for table `staff_role`
 --
-
+select * from customers;
 DROP TABLE IF EXISTS `staff_role`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
@@ -481,69 +524,6 @@ LOCK TABLES `supplier` WRITE;
 INSERT INTO `supplier` VALUES (1,'QT','Quảng Châu','quangchau@gmail.com','Trung Quốc','0123654789',NULL,NULL,NULL,NULL,NULL),(2,'NH','Ninh Hiệp','nh@gmail.com','Hà Nội-Việt Nam','06325489586',NULL,NULL,NULL,NULL,NULL),(3,'DX','Đồng Xuân','dx@gmail.com','Hà Nội -Việt Nam','0569654852',NULL,NULL,NULL,NULL,NULL),(4,'DN','Đà Nẵng','dn@gmail.com','Tp HCM','0123659854',NULL,NULL,NULL,NULL,NULL),(5,'HCM','Hồ Chí Minh','hcm@gmail.com','Tp HCM','0986532145',NULL,NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `supplier` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Dumping routines for database 'manage_store'
---
-/*!50003 DROP PROCEDURE IF EXISTS `getNewCustomersByDay` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `getNewCustomersByDay`(in d int,in m int, in y int)
-BEGIN
-select count(*) as Khach_hang_moi from customers where day(created_date) = d and month(created_date) =m and year(created_date) =y;
-END ;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `getNewCustomersByMonth` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `getNewCustomersByMonth`(in m int, in y int)
-BEGIN
-select count(*) as Khach_hang_moi from customers where month(created_date) =m and year(created_date) =y;
-END ;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `StatisticsByTime` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `StatisticsByTime`()
-BEGIN
-select customers.name,phone,email,address,customers.created_date as Bat_dau,orders.created_date as Gan_nhat,count(*) as Tong_so_don 
-from orders join customers on customers.id = orders.customer_id group by customers.name,phone,email,address,bat_dau,gan_nhat 
-order by Tong_so_don desc;
-END ;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -554,7 +534,7 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Procedure thống kê số khách hàng mới theo tháng/năm
+-- Dump completed on 2021-07-16  5:15:25
 drop procedure getNewCustomersByMonth
     DELIMITER &&
 CREATE PROCEDURE getNewCustomersByMonth(in m int, in y int)
@@ -564,38 +544,14 @@ END
 &&
 DELIMITER ;
 call getNewCustomersByMonth(2, 2021);
+call getNewCustomersByDay(1,2, 2021);
 
--- Thong ke lich su cua khach hang
-drop procedure StatisticsByTime
-    DELIMITER &&
-CREATE PROCEDURE StatisticsByTime()
+drop procedure getNewCustomersByDay
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getNewCustomersByDay`(in d int,in m int, in y int)
 BEGIN
-select customers.name,phone,email,address,customers.created_date as Bat_dau,orders.created_date as Gan_nhat,count(*) as Tong_so_don 
-from orders join customers on customers.id = orders.customer_id group by customers.name,phone,email,address,bat_dau,gan_nhat 
-order by Tong_so_don desc;
-END
-&&
+select count(*) as Khach_hang_moi from customers where day(created_date) = d and month(created_date) =m and year(created_date) =y
+;
+END ;;
 DELIMITER ;
-call StatisticsByTime();
--- Thống
-update customers set status ='off' where id = 15;
-select * from orders; 
-select * from oder_detail;
-select * from products;
-select * from staff;
-alter table customers add column status varchar(3) ;
-ALTER TABLE customers
-drop column  staff_id;
-ALTER TABLE customers
-drop  FOREIGN KEY fk_customers;
-select staff.full_name from staff join orders on staff.id=orders.staff_id 
-join customers on customers.id = orders.customer_id group by staff.full_name;
-select * from customers where id=20;
-select * from customers where gender='Nam' and ROUND(DATEDIFF(CURDATE(), date_of_birth) / 365, 0) between 18 and 35;
-select distinct gender from customers;
-select * from customers where  ROUND(DATEDIFF(CURDATE(), date_of_birth) / 365, 0)>35;
-UPDATE customers SET date_of_birth = '1982-09-07' WHERE (`id` = '23');
-select * from staff
-
--- Dump completed on 2021-07-13 15:05:39
 

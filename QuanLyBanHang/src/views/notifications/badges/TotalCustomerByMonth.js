@@ -16,6 +16,8 @@ function TotalCustomerByMonth() {
   const [year, setYear] = useState();
   const [listYear, setListYear] = useState([]);
   const [month, setMonth] = useState();
+  const [pageNo, setPageno] = useState(1);
+  const [dataTable, setDataTable] = useState([]);
   const [totalByMonth, setTotalByMonth] = useState([]);
   const getListYear = async () => {
     const API_listYear =
@@ -32,13 +34,26 @@ function TotalCustomerByMonth() {
   };
 
   function handleChangeYear() {
-    let y = document.getElementById("year");
-    setYear(y.value);
+    let item = document.getElementById("year");
+    setYear(item.value);
+    console.log("this year: " + year);
   }
+  function handleChangeMonth() {
+    let item = document.getElementById("month");
+    setMonth(item.value);
+    console.log("this month: " + month);
+  }
+  const getDataTable = async () => {
+    setPageno(pageNo < 0 ? 1 : pageNo);
+    setDataTable(totalByMonth.slice(pageNo * 11, (pageNo + 1) * 11));
+    console.log("data page1:   ", dataTable);
+  };
   const getDataByMonth = async () => {
-    var API_Statistics = `http://localhost:8080/customers/count2?year=${year}&month=${month}`;
-    console.log("API: ", API_Statistics);
+    // if (year !== (null | undefined) && month !== (null | undefined))
+
+    // console.log("API: ", API_Statistics);
     if (year !== undefined && month !== undefined) {
+      var API_Statistics = `http://localhost:8080/customers/count2?month=${month}&year=${year}`;
       axios.get(API_Statistics, { headers }).then((response) => {
         setTotalByMonth(response.data);
         console.log("response:  " + response.data);
@@ -46,14 +61,15 @@ function TotalCustomerByMonth() {
     }
   };
 
-  function handleChangeMonth() {
-    let item = document.getElementById("month");
-    setMonth(item.value);
-  }
+  useEffect(() => {
+    getDataTable();
+  }, [pageNo]);
+
   useEffect(() => {
     getListYear();
     getDataByMonth();
   }, [year, month]);
+
   console.log("list Year Binhf: ", listYear);
   return (
     <CCardGroup columns className="cols-2">
@@ -73,7 +89,11 @@ function TotalCustomerByMonth() {
             Select year
           </option>
           {listYear.map((item) => {
-            return <option value={item}>{item}</option>;
+            return (
+              <option value={item} key={item}>
+                {item}
+              </option>
+            );
           })}
         </select>
 
@@ -88,7 +108,11 @@ function TotalCustomerByMonth() {
             Select month
           </option>
           {dataMonth.map((item) => {
-            return <option value={item}>{item}</option>;
+            return (
+              <option value={item} key={item}>
+                {item}
+              </option>
+            );
           })}
         </select>
         <CCardBody>
@@ -120,9 +144,9 @@ function TotalCustomerByMonth() {
             </tr>
           </thead>
           <tbody>
-            {totalByMonth.map((item, index) => {
+            {dataTable.map((item, index) => {
               return (
-                <tr>
+                <tr key={item}>
                   <td> {index + 1}</td>
                   <td>{item}</td>
                 </tr>

@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.format.annotation.NumberFormat;
 
+import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
@@ -19,20 +20,20 @@ import java.util.Date;
 @NoArgsConstructor
 public class CustomerDto implements Serializable {
     private int id;
-    @Size(min = 5, max = 250, message = "Data Length must between 5 and 250")
+    @Size(min = 2, max = 250, message = "Độ dài của tên phải lớn hơn 2 và nhỏ hơn 250 kí tự")
     private String name;
     @NumberFormat
-    @Length(min = 10, max = 11, message = "So dien thoai khong hop le")
+    @Length(min = 10, max = 11, message = "Số điện thoại không đúng")
 // @UniqueElements(message = "So điện thoại phải là duy nhất")
     private String phone;
-    @Size(min = 5, max = 250, message = "Data Length must between 5 and 250")
+    @Size(min = 5, max = 250, message = "Độ dài của Email phải lớn hơn 2 và nhỏ hơn 250 kí tự")
     //@NotNull(message = "Email Khong duoc de trong")
     // @UniqueElements(message = "Email phai la duy nhat")
     private String email;
     private String gender;
-    @Size(min = 5, max = 250, message = "Data Length must between 5 and 250")
+    @Size(min = 5, max = 250, message = "Độ dài của Địa chỉ phải lớn hơn 2 và nhỏ hơn 250 kí tự")
     private String address;
-    @Past(message = "Birthday must under at the moment")
+    @Past(message = "Ngày sinh không được lớn hơn hiện tại")
     private Date dateOfBirth;
 
     @Past(message = "Date Create must Before Present")
@@ -45,7 +46,7 @@ public class CustomerDto implements Serializable {
     private String modifiedBy;
  //   @NotNull(message = "Status Khong duoc trong")
     private String status;
-
+@Size(max = 250,message = "Nội dung ghi chú phải ít hơn 250 kí tự")
     private String note;
 
     public CustomerDto(String name, String phone, String email, Date dateOfBirth) {

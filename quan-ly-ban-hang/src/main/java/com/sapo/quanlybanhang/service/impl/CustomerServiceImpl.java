@@ -137,11 +137,14 @@ public class CustomerServiceImpl implements CustomerService {
         return customerRepository.getNew(m, n);
     }
 
+//    @Override
+//    public Integer countCustomersByDay(Integer d, Integer m, Integer n) {
+//        return customerRepository.getNewByDay(d, m, n);
+//    }
     @Override
-    public Integer countCustomersByDay(Integer d, Integer m, Integer n) {
-        return customerRepository.getNewByDay(d, m, n);
+    public Integer countCustomersByDay(Integer d,Integer m, Integer y) {
+        return customerRepository.getNewByDay(d, m, y);
     }
-
     @Override
     public List<Object[]> getStatistics(Pageable pageable) {
         return customerRepository.getStatistics(pageable);

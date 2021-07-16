@@ -6,6 +6,7 @@ import "../../apis/css.scss";
 import { reactLocalStorage } from "reactjs-localstorage";
 import Select from "react-select";
 import { dataRecord } from "./data";
+import DisplayResultPagination from "./DisplayResultPagination";
 import {
   CPagination,
   CDropdown,
@@ -20,11 +21,12 @@ function CustomerList() {
     Authorization: "Bearer " + reactLocalStorage.get("token"),
   };
   const [customers, setCustomers] = useState([]);
+  const [totalElements, setTotalElements] = useState(0);
   const [totalPage, setTotalPage] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [gender, setGender] = useState({});
   const [age, setAge] = useState({});
-  const [page, setPage] = useState(2);
+  const [page, setPage] = useState(1);
   const [search, setSearch] = useState({});
   const [limit, setLimit] = useState(5);
   const [status, setStatus] = useState(true);
@@ -63,6 +65,7 @@ function CustomerList() {
 
         // const totalPage = response.data.totalPage;
         setTotalPage(response.data.totalPages);
+        setTotalElements(response.data.totalElements);
         // console.log("totalPage", totalPage);
 
         //  const currentPage = result.pageable.pageNumber;
@@ -134,34 +137,24 @@ function CustomerList() {
         </tbody>
       </table>
       <div className="row">
-        <div className="col-6">
+        <div className="col-6 float-left">
           <CPagination
             id="pagination"
             align="center"
-            // addListClass="some-class"
+            addListClass="some-class"
             activePage={page}
             pages={totalPage}
             onActivePageChange={setPage}
           />
         </div>
-        <div className="row">
-          <span>Hiển thị</span>
-          <Select
-            style={{ height: "28px" }}
-            name="gender"
-            options={dataRecord}
-            placeholder="Chọn số bản ghi hiển thị"
-            defaultValue={{ value: 5, label: "5" }}
-            onChange={(e) => {
-              setPage(1);
-              setLimit(e.value);
-            }}
-          />
-          <span>kết quả</span>
-          <span>
-            Từ {(page - 1) * limit + 1} đến {page * limit} trên tổng{" "}
-            {totalPage * limit}{" "}
-          </span>
+        <div className="col-6 center">
+          <DisplayResultPagination
+            page={page}
+            setPage={setPage}
+            limit={limit}
+            setLimit={setLimit}
+            totalElements={totalElements}
+          ></DisplayResultPagination>
         </div>
       </div>
     </div>

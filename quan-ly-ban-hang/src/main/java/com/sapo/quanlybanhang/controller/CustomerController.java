@@ -234,27 +234,47 @@ public class CustomerController {
         }
         return ResponseEntity.badRequest().body("Khách hàng không tồn tại");
     }
-
     @GetMapping("customers/count")
     ResponseEntity<?> count(@RequestParam("year") Integer year) {
         try {
             List<Integer> listNewNumberOfCustomer = new ArrayList<>();
-            for (int i = 1; i <= 12; i++) {
-                listNewNumberOfCustomer.add(customerService.countCustomersByMonth(i, year));
-            }
+                for (int i = 1; i <= 12; i++) {
+                    listNewNumberOfCustomer.add(customerService.countCustomersByMonth(i, year));
+                }
             return new ResponseEntity<List<Integer>>(listNewNumberOfCustomer, HttpStatus.OK);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Lỗi truy vấn dữ liệu");
         }
     }
+//    @GetMapping("customers/count")
+//    ResponseEntity<?> count(@RequestParam("year") String year, @RequestParam(name = "pageNo", defaultValue = "0") String pageNo) {
+//        try {
+//            List<Integer> listNewNumberOfCustomer = new ArrayList<>();
+//            List<Integer> listResult = new ArrayList<>();
+//            for (int i = 1; i <= 12; i++) {
+//                listNewNumberOfCustomer.add(customerService.countCustomersByMonth(i, Integer.parseInt(year)));
+//            }
+//            if(Integer.parseInt(pageNo)==0){
+//                listResult=   listNewNumberOfCustomer.subList(0,6);
+//            }else if(Integer.parseInt(pageNo)==1){
+//                listResult=   listNewNumberOfCustomer.subList(7,12);
+//            }
+//            return new ResponseEntity<List<Integer>>(listResult, HttpStatus.OK);
+//        } catch (Exception e) {
+//            return ResponseEntity.badRequest().body("Lỗi truy vấn dữ liệu");
+//        }
+//    }
 
     @GetMapping("customers/count2")
-    ResponseEntity<?> count(@RequestParam("year") Integer year, @RequestParam("month") Integer month) {
+    ResponseEntity<?> count( @RequestParam("month") Integer month,
+                             @RequestParam("year") Integer year
+   // @RequestParam()
+    ) {
         try {
             List<Integer> listNewNumberOfCustomer = new ArrayList<>();
             for (int i = 1; i <= 31; i++) {
-                listNewNumberOfCustomer.add(customerService.countCustomersByDay(i, month, year));
-            }
+                listNewNumberOfCustomer.add(customerService.countCustomersByDay( i,month, year));
+           }
             return new ResponseEntity<List<Integer>>(listNewNumberOfCustomer, HttpStatus.OK);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Lỗi truy vấn dữ liệu");
@@ -292,13 +312,12 @@ Integer count(){
     @PostMapping("customers")
     ResponseEntity<?> save(@Valid @RequestBody CustomerDto customerDto) {
         try {
-
             if (customerDto != null) {
                 if (customerDto.getEmail()!=null&&customerService.checkDuplicateEmail(customerDto.getEmail())) {
-                    return new ResponseEntity<>("Email da ton tai", HttpStatus.BAD_REQUEST);
+                    return new ResponseEntity<>("Email đã tồn tại", HttpStatus.BAD_REQUEST);
                 }
                 if (customerDto.getPhone()!=null&&customerService.checkDuplicatePhone(customerDto.getPhone())) {
-                    return new ResponseEntity<>("Phone da ton tai", HttpStatus.BAD_REQUEST);
+                    return new ResponseEntity<>("Số điện thoại đã tồn tại", HttpStatus.BAD_REQUEST);
                 }
                 customerService.save(customerDto);
                 return new ResponseEntity<>("Thêm mới thành công", HttpStatus.OK);

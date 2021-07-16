@@ -1,6 +1,6 @@
 import { reactLocalStorage } from "reactjs-localstorage";
 export const dataGender = [
-  { value: "", label: "All" },
+  { value: "", label: "Khác" },
   { value: "Nam", label: "Nam" },
   { value: "Nu", label: "Nu" },
 ];

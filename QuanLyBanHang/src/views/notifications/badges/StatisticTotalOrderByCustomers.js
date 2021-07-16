@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { CChartBar } from "@coreui/react-chartjs";
+import DisplayResultPagination from "src/components/Customer/DisplayResultPagination";
 import {
   CCard,
   CPagination,
@@ -7,6 +8,8 @@ import {
   CDropdownItem,
   CDropdownMenu,
   CDropdownToggle,
+  CCardHeader,
+  CRow,
 } from "@coreui/react";
 import { header } from "src/components/Customer/data";
 import axios from "axios";
@@ -60,7 +63,13 @@ function StatisticTotalOrderByCustomers() {
   return (
     <div className="row">
       <CCard style={{}} className="col-12">
-        <table className=" table table-striped table-bordered">
+        <CCardHeader className="font-weight-bolder center ">
+          Thống kê Mua sắm Khách hàng
+        </CCardHeader>
+        <table
+          className=" table table-striped table-bordered "
+          style={{ border: "none" }}
+        >
           <thead>
             <tr>
               <th>Tên</th>
@@ -88,15 +97,26 @@ function StatisticTotalOrderByCustomers() {
             })}
           </tbody>
         </table>
-        <CPagination
-          align="center"
-          addListClass="some-class"
-          activePage={pageNo}
-          pages={2}
-          onActivePageChange={setPageNo}
-        />
+        <CRow>
+          <CPagination
+            className="col-6"
+            align="center"
+            addListClass="some-class"
+            activePage={pageNo}
+            pages={2}
+            onActivePageChange={setPageNo}
+          />
+          <DisplayResultPagination
+            className="col-6"
+            page={pageNo}
+            setPage={setPageNo}
+            limit={limit}
+            setLimit={setLimit}
+            totalElements={totalRecord}
+          ></DisplayResultPagination>
+        </CRow>
       </CCard>
-      <CDropdown className="m-1 float-right offset-8">
+      {/* <CDropdown className="m-1 float-right offset-8">
         <CDropdownToggle color="secondary" size="sm">
           Bản ghi
         </CDropdownToggle>
@@ -130,7 +150,7 @@ function StatisticTotalOrderByCustomers() {
             10
           </CDropdownItem>
         </CDropdownMenu>
-      </CDropdown>
+      </CDropdown> */}
     </div>
   );
 }

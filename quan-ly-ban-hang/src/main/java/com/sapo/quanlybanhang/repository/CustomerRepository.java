@@ -61,9 +61,11 @@ public interface CustomerRepository extends JpaRepository<CustomerEntity, Intege
     @Query(value = "call getNewCustomersByMonth(:m,:y)", nativeQuery = true)
     Integer getNew(Integer m, Integer y);
 
-    @Query(value = "call getNewCustomersByDay(:d,:m,:y)", nativeQuery = true)
-    Integer getNewByDay(Integer d, Integer m, Integer y);
+//    @Query(value = "call getNewCustomersByDay(:d,:m,:y)", nativeQuery = true)
+//    Integer getNewByDay(Integer d, Integer m, Integer y);
 
+@Query(value = "call getNewCustomersByDay(:d,:m,:y)", nativeQuery = true)
+Integer getNewByDay(Integer d,Integer m, Integer y);
     @Query(value = "select customers.name,phone,email,address,customers.created_date as Bat_dau,orders.created_date as Gan_nhat,count(*) as Tong_so_don \n" +
             "from orders join customers on customers.id = orders.customer_id group by customers.name,phone,email,address,bat_dau\n" +
             "order by Tong_so_don desc", nativeQuery = true)

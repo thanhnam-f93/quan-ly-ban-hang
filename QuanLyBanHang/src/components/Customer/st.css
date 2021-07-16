@@ -34,7 +34,9 @@ p::before {
   display: inline;
   content: "⚠ ";
 }
-
+/* span{
+  padding-top: 10px;
+} */
 /* input {
   display: block;
   box-sizing: border-box;
