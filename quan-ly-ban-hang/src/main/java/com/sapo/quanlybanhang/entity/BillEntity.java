@@ -18,6 +18,11 @@ public class BillEntity {
    @Column(name = "code")
     private String code;
 
+    @PostPersist
+    public void generateCode(){
+        code = ("RSAPO-000-"+id);
+    }
+
    @Column(name = "modified_date")
     private Timestamp modifiedDate;
 
@@ -30,7 +35,7 @@ public class BillEntity {
    @Column(name = "created_by")
     private String createdBy;
 
-   @Column( name = "total")
+   @Column( name = "price")
      private  Long price;
 
     @ManyToOne

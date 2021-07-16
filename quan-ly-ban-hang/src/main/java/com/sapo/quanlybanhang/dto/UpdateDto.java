@@ -25,7 +25,7 @@ public class UpdateDto {
 
     private String image;
 
-    private float price;
+    private Long price;
 
     private String supplierName;
 

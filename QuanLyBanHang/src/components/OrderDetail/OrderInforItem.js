@@ -8,7 +8,7 @@ const OrderInforItem = (props) => {
         <th scope="row">{item.codeProduct}</th>
         <td>{item.productName}</td>
         <td>{item.quanlity}</td>
-        <td>{item.discount}</td>
+        <td>{item.priceProduct}</td>
         <td>{item.price}</td>
       </tr>
   );

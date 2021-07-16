@@ -3,9 +3,10 @@ import React, { useContext, useState } from "react";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { reactLocalStorage } from "reactjs-localstorage";
-import { callApiNotJwt } from "src/apis/ApiCaller";
+import { callApi, callApiNotJwt } from "src/apis/ApiCaller";
 import { JwtContext } from "src/context/JwtContext";
 import { FormatMoney } from "src/helpers/FormatMoney";
+import Swal from "sweetalert2";
 import CustomerInfor from "../OrderDetail/CustomerInfor";
 import List from "../sale/List";
 import OrderReturnCustomerItem from "./OrderReturnCustomerItem";
@@ -27,8 +28,9 @@ const OrderReturnCustomer = ({ item }) => {
   useEffect(() => {
     console.log("types:" + param.id);
     callApiNotJwt(`order-details/${id}`, "GET", jwt).then((response) => {
+      console.log("trả về:",response);
       if (response.status !== 200) {
-        alert("thao tác thất bại");
+        // alert("thao tác thất bại");
         return;
       }
       response.json().then((data) => {
@@ -60,7 +62,7 @@ const OrderReturnCustomer = ({ item }) => {
     if(orderDetails.length!==0){
       for (const ob of orderDetails) {
         val += ob['amountPay'];
-        totalMoney += ob['amountPay']*((ob.price)*moneyPay/100);
+        totalMoney += ob['amountPay']*((ob.priceProduct)*moneyPay/100);
         setAmount(val);
         setTotal(totalMoney);
       }
@@ -91,6 +93,36 @@ const getOrderDetail = (item)=>{
   }
  
  setIsState(!isState);
+}
+
+const getPay =()=>{
+   let orderDetailDtos = orderDetails.map(item =>{
+    return {
+      id:item.id,
+      amountPay:item.amountPay,
+      price:item.price
+    }
+  })
+  setBillDto({
+    orderId:id,
+    price:total,
+    orderDetailDtos:orderDetailDtos
+  })
+  callApi("bills", "POST",billDto, jwt).then((response) => {
+    // console.log("trả về:",ré)
+    if (response.status !== 200) {
+      alert("thao tác thất bại");
+      return;
+    }else{
+      
+    }
+    response.json().then((data) => {
+      console.log(data);
+      alert("thành công");
+     
+    });
+  });
+
 }
   return (
     <div className="create-return-order">
@@ -160,7 +192,7 @@ const getOrderDetail = (item)=>{
         </div>
       </div>
       <div className = "btn-end">
-      <CButton className = "btn-1" color="primary" >Trả  hàng</CButton>
+      <CButton className = "btn-1" color="primary" onClick = {getPay} >Trả  hàng</CButton>
       </div>
     </div>
   );

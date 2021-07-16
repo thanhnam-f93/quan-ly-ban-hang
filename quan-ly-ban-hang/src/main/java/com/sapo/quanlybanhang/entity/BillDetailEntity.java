@@ -21,7 +21,7 @@ public class BillDetailEntity  {
     @Column(name = "discount")
     private  Long discount;
 
-    @Column(name = "total")
+    @Column(name = "price")
     private Long price;
 
     @ManyToOne

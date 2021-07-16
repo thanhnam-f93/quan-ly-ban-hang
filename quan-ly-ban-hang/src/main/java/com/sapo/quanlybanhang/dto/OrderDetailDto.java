@@ -34,4 +34,5 @@ public class OrderDetailDto {
 
     private String productName;
     private Long price;
+    private  Long priceProduct;
 }

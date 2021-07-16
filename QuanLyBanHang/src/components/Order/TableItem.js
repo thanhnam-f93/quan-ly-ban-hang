@@ -23,7 +23,7 @@ const TableItem = (props) => {
       var location ={};
       if(props.type=="order"){
          location = {
-          pathname: `/order/order-detail/${item.id}/${item.code}`, 
+          pathname: `/order/order-detail/${item.id}/${item.code}/${item.createdDate}`, 
           state:{item:item}  
         }
       }else{

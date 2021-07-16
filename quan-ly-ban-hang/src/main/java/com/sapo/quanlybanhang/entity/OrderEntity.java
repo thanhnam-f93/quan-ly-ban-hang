@@ -41,7 +41,7 @@ public class OrderEntity {
     @Column(name ="modified_by")
     private String modifiedBy;
 
-    @Column(name ="total")
+    @Column(name ="price")
     private Long price;
 
     @Column (name = "state")

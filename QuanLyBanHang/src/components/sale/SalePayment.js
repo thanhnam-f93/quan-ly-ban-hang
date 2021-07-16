@@ -34,27 +34,25 @@ const SalePayment = ({ isShowCustomer, setIsShowCustomer }) => {
   console.log("payment:", isShowCustomer);
   const addCustomer = () => {
     setIsShow(true);
-  
   };
   console.log("mảng lựa chọn là", isCheckTypeDiscount);
   useEffect(() => {
-   
     let val = 0;
-    let discountCv= 0;
-    console.log("payment-value of dismount:",dismount);
+    let discountCv = 0;
+    console.log("payment-value of dismount:", dismount);
     for (const ob of productOption) {
       val += ob["amount"] * ob["price"];
     }
     setTotal(val);
     console.log("tổng :", val);
-    if(isCheckTypeDiscount){
+    if (isCheckTypeDiscount) {
       setDiscountConverter(dismount);
       discountCv = dismount;
-    }else{
-      setDiscountConverter(dismount*val/100);
-      discountCv = dismount*val/100;
+    } else {
+      setDiscountConverter((dismount * val) / 100);
+      discountCv = (dismount * val) / 100;
     }
-    setMoneyOfCustomer(val-discountCv);
+    setMoneyOfCustomer(val - discountCv);
     setGivedMoney(val - discountCv);
     if (MoneyOfCustomer - givedMoney < 0) {
       setLessMoney(0);
@@ -66,17 +64,31 @@ const SalePayment = ({ isShowCustomer, setIsShowCustomer }) => {
       setDismount(0);
       setMoneyOfCustomer(0);
     }
-    console.log("sale-payment-productOption",productOption);
+    console.log("sale-payment-productOption", productOption);
     var orderDetailDtos = productOption.map((item) => {
+      console.log("item.amount * item.priceProduct",item.price);
       return {
-        price: item.amount*item.price,
+        price: item.amount * item.price,
         productId: item.id,
         quanlity: item.amount,
         // dismount: dismount,
       };
     });
-    setOrderDto({discount:discountCv,price:total, orderDetailDtos: orderDetailDtos });
-  }, [productOption, total, amountChange, dismount,isCheckTypeDiscount,isShowCustomer, isCheck]);
+    setOrderDto({
+      customerId:inforCustomer.id,
+      discount: discountCv,
+      price: total,
+      orderDetailDtos: orderDetailDtos,
+    });
+  }, [
+    productOption,
+    total,
+    amountChange,
+    dismount,
+    isCheckTypeDiscount,
+    isShowCustomer,
+    isCheck,
+  ]);
 
   const getMoneyOfCustomer = (e) => {
     console.log("gt", typeof e.target.value);
@@ -135,10 +147,9 @@ const SalePayment = ({ isShowCustomer, setIsShowCustomer }) => {
   };
   // -----------------------------validate input----------------------------
   const getDismount = (e) => {
-    console.log("payment-discount:",isCheckTypeDiscount);
+    console.log("payment-discount:", isCheckTypeDiscount);
     setIsShowDiscount(true);
-    console.log("giá trị của dismount:",dismount);
-   
+    console.log("giá trị của dismount:", dismount);
   };
 
   // -----------------------create bill-----------------------
@@ -147,7 +158,6 @@ const SalePayment = ({ isShowCustomer, setIsShowCustomer }) => {
       alert("Chưa có sản phẩm nào!");
     } else {
       console.log("orderDto,", orderDto);
-      console.log("orderDto", orderDto);
       callApi("orders", "POST", orderDto, jwt).then((response) => {
         if (response.status !== 200) {
           alert("thao tác thất bại");
@@ -263,15 +273,15 @@ const SalePayment = ({ isShowCustomer, setIsShowCustomer }) => {
           <span>Thanh Toán</span>
         </div>
       </div>
-      <SaleAddCustomer isShow={isShow} setIsShow={setIsShow} />
+      <SaleAddCustomer setInforBtn = {setInforBtn} isShow={isShow} setIsShow={setIsShow} />
       <SaleDiscount
         total={total}
         setDismount={setDismount}
         isShowDiscount={isShowDiscount}
         setIsShowDiscount={setIsShowDiscount}
-        isCheckTypeDiscount = {isCheckTypeDiscount}
-        setTypeDiscount = {setTypeDiscount}
-        dismount = {dismount}
+        isCheckTypeDiscount={isCheckTypeDiscount}
+        setTypeDiscount={setTypeDiscount}
+        dismount={dismount}
       />
     </div>
   );

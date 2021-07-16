@@ -82,19 +82,15 @@ public class OrderService implements IOrderService {
         }
             ProductEntity productEntity = productEntities.get(index);
             item.setOrder(orderEntity);
-//            price += item.getDiscount() * item.getQuanlity();
-//            item.setPrice(item.getDiscount() * item.getQuanlity());
             item.setProduct(productEntity);
             item.getProduct().setSellProduct(item.getQuanlity()+item.getProduct().getSellProduct());
             item.getProduct().setNumberProduct(item.getProduct().getNumberProduct()-item.getQuanlity());
             item.setRemainAmount(item.getQuanlity());
-//            item.setPrice(item.getDiscount() * item.getQuanlity());
             index+=1;
         }
         CustomerEntity customerEntity=new CustomerEntity();
         StaffEntity staffEntity =  staffRepository.findOneByPhone(SecurityUtils.getPrincipal().getUsername());
         orderEntity.setCreateBy(SecurityUtils.getPrincipal().getFullName());
-//        orderEntity.setPrice(price);
         orderEntity.setOrderDetailEntities(orderDetailEntities);
         if(orderDto.getCustomId()==null ){
             customerEntity.setName("Khách lẻ");

@@ -70,28 +70,22 @@ public class BillService implements IBillService {
             }
             item.setRemainAmount(item.getRemainAmount()-orderDetailDto.getAmountPay());
             item.getProduct().setNumberProduct(item.getProduct().getNumberProduct()+orderDetailDto.getAmountPay());
-            discount = checkPrice(orderDetailDto, item,orderEntity);
-            price += discount*orderDetailDto.getAmountPay();
-//            price += orderDetailDto.getAmountPay() * orderDetailDto.getDiscount();
             BillDetailEntity billDetailEntity = new BillDetailEntity();
-            billDetailEntity.setDiscount(discount);
             billDetailEntity.setBill(billEntity);
-            billDetailEntity.setPrice(discount*orderDetailDto.getAmountPay());
+            billDetailEntity.setPrice(item.getPrice());
             billDetailEntity.setQuanlity(orderDetailDto.getAmountPay());
             billDetailEntity.setProductBill(item.getProduct());
             billDetailEntities.add(billDetailEntity);
             index +=1;
         }
         StaffEntity staffEntity =  staffRepository.findOneByPhone(SecurityUtils.getPrincipal().getUsername());
-        billEntity.setPrice(price);
+        billEntity.setPrice(billDto.getPrice());
         billEntity.setCreatedBy(SecurityUtils.getPrincipal().getFullName());
         billEntity.setStaffBill(staffEntity);
         billEntity.setCustomerBill(orderEntity.getCustomer());
         billEntity.setOrderEntity(orderEntity);
         billEntity.setBillDetailEntities(billDetailEntities);
         billEntity.setCreatedDate(new Timestamp(System.currentTimeMillis()));
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyMMddHHmmss");
-        billEntity.setCode(this.PREFIX+LocalDateTime.now().format(formatter));
         billEntity = billRepository.save(billEntity);
 
         return BillConverter.toDto(billEntity);

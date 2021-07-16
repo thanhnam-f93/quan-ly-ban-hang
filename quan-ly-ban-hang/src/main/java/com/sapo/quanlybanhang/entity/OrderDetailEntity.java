@@ -35,7 +35,7 @@ public class OrderDetailEntity implements Serializable {
     @Column (name = "remain_quantity")
     private Integer remainAmount;
 
-    @Column (name = "total")
+    @Column (name = "price")
     private Long price;
 
     @ManyToOne

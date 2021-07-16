@@ -9,7 +9,7 @@ const Dashboard = () => {
   // const { jwt } = useContext(JwtContext);
   const [accColumn, setAccColumn] = useState(0);
   const [dto, setDto] = useState({
-    optionTime: "LAST_WEEK",
+    optionTime: "THIS_MONTH",
     dashBoardItems: [],
     price: 0,
     orderNumber: 0,
@@ -104,10 +104,10 @@ const Dashboard = () => {
                 <select onClick={getDate} id="ddlViewBy">
                   <option value="TODAY">Hôm nay </option>
                   <option value="YESTERDAY">hôm qua</option>
-                  <option value="LAST_WEEK" selected="selected">
-                    7 ngày trước
+                  <option value="THIS_WEEK" >
+                    Tuần này
                   </option>
-                  <option value="THIS_MONTH">Tháng này </option>
+                  <option value="THIS_MONTH" selected="selected">Tháng này </option>
                   <option value="LAST_MONTH">Tháng trước </option>
                 </select>
               </div>

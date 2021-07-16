@@ -21,8 +21,10 @@ const OrderReturnCustomerItem = ({ item, dismount,getOrderDetail }) => {
     }
     setQuantity(val);
     item['amountPay'] = val;
+    let _total = val*(item.priceProduct*dismount/100);
+    item['price'] = _total;
+    setTotal(_total);
     getOrderDetail(item);
-    setTotal(val*(item.price*dismount/100));
   };
 
   useEffect(() => {
@@ -42,8 +44,8 @@ const OrderReturnCustomerItem = ({ item, dismount,getOrderDetail }) => {
         </div>
         <span> /{item.remainAmount}</span>
       </td>
-      <td className="td-2">{FormatMoney(item.discount)}</td>
-      <td> {FormatMoney((item.discount * dismount) / 100)}</td>
+      <td className="td-2">{FormatMoney(item.priceProduct)}</td>
+      <td> {FormatMoney((item.priceProduct * dismount) / 100)}</td>
       <td>{total}</td>
     </tr>
   );
