@@ -48,7 +48,7 @@ public interface CustomerService {
     List<CustomerDto> getAll();
 
     //
-    void save(CustomerDto customerDto);
+    CustomerDto save(CustomerDto customerDto);
 
     //
     void delete(Integer id);

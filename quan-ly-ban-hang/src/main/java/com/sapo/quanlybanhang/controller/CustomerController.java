@@ -312,6 +312,7 @@ Integer count(){
     @PostMapping("customers")
     ResponseEntity<?> save(@Valid @RequestBody CustomerDto customerDto) {
         try {
+            CustomerDto customerDtoNew=null;
             if (customerDto != null) {
                 if (customerDto.getEmail()!=null&&customerService.checkDuplicateEmail(customerDto.getEmail())) {
                     return new ResponseEntity<>("Email đã tồn tại", HttpStatus.BAD_REQUEST);
@@ -319,10 +320,10 @@ Integer count(){
                 if (customerDto.getPhone()!=null&&customerService.checkDuplicatePhone(customerDto.getPhone())) {
                     return new ResponseEntity<>("Số điện thoại đã tồn tại", HttpStatus.BAD_REQUEST);
                 }
-                customerService.save(customerDto);
-                return new ResponseEntity<>("Thêm mới thành công", HttpStatus.OK);
+                customerDtoNew    =  customerService.save(customerDto);
+                return new ResponseEntity<>(customerDto, HttpStatus.OK);
             } else {
-                return new ResponseEntity<>("Không có dữ liệu", HttpStatus.NO_CONTENT);
+                return new ResponseEntity<>(customerDtoNew, HttpStatus.NO_CONTENT);
             }
         } catch (Exception e) {
             logger.error("this is: " + e.getMessage());

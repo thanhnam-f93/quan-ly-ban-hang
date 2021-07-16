@@ -7,6 +7,7 @@ import {
   CFormGroup,
   CCardHeader,
   CPagination,
+  CRow,
 } from "@coreui/react";
 import { header, dataMonth, dataDay } from "src/components/Customer/data";
 import axios from "axios";
@@ -26,7 +27,7 @@ function TotalCustomerByMonth() {
       .get(API_listYear, { headers })
       .then((response) => {
         setListYear(response.data);
-        console.log("list Year: ", listYear);
+        console.log("list Year in 2: ", listYear);
       })
       .catch((error) => {
         console.log(error);
@@ -34,25 +35,28 @@ function TotalCustomerByMonth() {
   };
 
   function handleChangeYear() {
+
     let item = document.getElementById("year");
+    alert(item.value);
     setYear(item.value);
     console.log("this year: " + year);
   }
   function handleChangeMonth() {
     let item = document.getElementById("month");
+    alert(item.value);
     setMonth(item.value);
     console.log("this month: " + month);
   }
   const getDataTable = async () => {
     setPageno(pageNo < 0 ? 1 : pageNo);
-    setDataTable(totalByMonth.slice(pageNo * 11, (pageNo + 1) * 11));
+    setDataTable(totalByMonth.slice(pageNo * 10, (pageNo + 1) * 10));
     console.log("data page1:   ", dataTable);
   };
   const getDataByMonth = async () => {
     // if (year !== (null | undefined) && month !== (null | undefined))
 
     // console.log("API: ", API_Statistics);
-    if (year !== undefined && month !== undefined) {
+    if (year !== (undefined | null) && month !== (undefined | null)) {
       var API_Statistics = `http://localhost:8080/customers/count2?month=${month}&year=${year}`;
       axios.get(API_Statistics, { headers }).then((response) => {
         setTotalByMonth(response.data);
@@ -62,11 +66,17 @@ function TotalCustomerByMonth() {
   };
 
   useEffect(() => {
+    getListYear();
+    // return () => {
+    //   cleanup
+    // }
+  }, []);
+  useEffect(() => {
     getDataTable();
   }, [pageNo]);
 
   useEffect(() => {
-    getListYear();
+    //    getListYear();
     getDataByMonth();
   }, [year, month]);
 
@@ -77,44 +87,49 @@ function TotalCustomerByMonth() {
         <CCardHeader className="text-center font-weight-bold">
           Lượng khách hàng mới theo tháng
         </CCardHeader>
-        <CFormGroup></CFormGroup>
-        <select
-          id="year"
-          className="form-control"
-          placeholder="Chọn năm"
-          aria-label="Default select example"
-          onChange={handleChangeYear}
-        >
-          <option selected disabled>
-            Select year
-          </option>
-          {listYear.map((item) => {
-            return (
-              <option value={item} key={item}>
-                {item}
+        <CRow>
+          <div className="col-5 offset-1">
+            <select
+              id="year"
+              className="form-control"
+              placeholder="Chọn năm"
+              aria-label="Default select example"
+              onChange={handleChangeYear}
+            >
+              <option selected disabled>
+                Select year
               </option>
-            );
-          })}
-        </select>
+              {listYear.map((item) => {
+                return (
+                  <option value={item} key={item}>
+                    {item}
+                  </option>
+                );
+              })}
+            </select>
+          </div>
+          <div className="col-5">
+            <select
+              id="month"
+              className="form-control"
+              placeholder="Chọn tháng"
+              aria-label="Default select example"
+              onChange={handleChangeMonth}
+            >
+              <option selected disabled>
+                Select month
+              </option>
+              {dataMonth.map((item) => {
+                return (
+                  <option value={item} key={item}>
+                    {item}
+                  </option>
+                );
+              })}
+            </select>
+          </div>
+        </CRow>
 
-        <select
-          id="month"
-          className="form-control"
-          placeholder="Chọn tháng"
-          aria-label="Default select example"
-          onChange={handleChangeMonth}
-        >
-          <option selected disabled>
-            Select month
-          </option>
-          {dataMonth.map((item) => {
-            return (
-              <option value={item} key={item}>
-                {item}
-              </option>
-            );
-          })}
-        </select>
         <CCardBody>
           <CChartBar
             datasets={[

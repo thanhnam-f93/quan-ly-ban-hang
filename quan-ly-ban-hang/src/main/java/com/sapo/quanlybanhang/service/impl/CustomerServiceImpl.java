@@ -123,8 +123,9 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public void save(CustomerDto customerDto) {
-        customerRepository.save(CustomerConvert.toEntity(customerDto));
+    public CustomerDto save(CustomerDto customerDto) {
+       CustomerEntity customerEntity= customerRepository.save(CustomerConvert.toEntity(customerDto));
+return (CustomerConvert.toDTO(customerEntity));
     }
 
     @Override

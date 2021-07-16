@@ -77,7 +77,7 @@ function NavBar({ setGender, setAge, setSearch, setPage }) {
         </CCol>
         <CCol xs="3" sm="2">
           <Link to="customer/new" className="text-decoration-none">
-            <CButton block color="primary">
+            <CButton block style={{ backgroundColor: "#0089ff" }}>
               Thêm mới
             </CButton>
           </Link>
