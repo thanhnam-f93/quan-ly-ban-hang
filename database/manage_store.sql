@@ -1,11 +1,9 @@
--- MySQL dump 10.13  Distrib 8.0.23, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.24, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: manage_store
+-- Host: localhost    Database: manage_store
 -- ------------------------------------------------------
 -- Server version	8.0.21
-drop database manage_store;
-create database manage_store;
-use manage_store;
+
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
@@ -16,76 +14,6 @@ use manage_store;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-
---
--- Table structure for table `bill_details`
---
-
-DROP TABLE IF EXISTS `bill_details`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `bill_details` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `bill_id` int NOT NULL,
-  `product_id` int NOT NULL,
-  `quanlity` int DEFAULT NULL,
-  `discount` bigint DEFAULT NULL,
-  `code` varchar(45) DEFAULT NULL,
-  `price` bigint DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `bill_id_idx` (`bill_id`),
-  KEY `product_id_idx` (`product_id`),
-  CONSTRAINT `bill_id` FOREIGN KEY (`bill_id`) REFERENCES `bills` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=82 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `bill_details`
---
-
-LOCK TABLES `bill_details` WRITE;
-/*!40000 ALTER TABLE `bill_details` DISABLE KEYS */;
-INSERT INTO `bill_details` VALUES (1,2,1,2,5,NULL,NULL),(2,2,1,10,5,NULL,NULL),(3,2,2,10,5,NULL,NULL),(4,3,1,2,5,NULL,NULL),(5,3,1,10,5,NULL,NULL),(6,3,2,10,5,NULL,NULL),(7,4,1,10,5,NULL,NULL),(8,4,2,10,5,NULL,NULL),(9,4,3,10,5,NULL,NULL),(10,5,1,10,5,NULL,NULL),(11,5,2,10,5,NULL,NULL),(12,5,3,10,5,NULL,NULL),(13,6,1,10,5,NULL,NULL),(14,6,2,10,5,NULL,NULL),(15,6,3,10,5,NULL,NULL),(16,7,1,10,5,NULL,NULL),(17,7,2,10,5,NULL,NULL),(18,7,3,10,5,NULL,NULL),(19,8,2,5,5,NULL,NULL),(20,9,1,5,5,NULL,NULL),(21,9,2,5,5,NULL,NULL),(22,10,1,5,5,NULL,NULL),(23,10,2,5,5,NULL,NULL),(24,11,1,5,5,NULL,NULL),(25,11,2,5,5,NULL,NULL),(26,12,1,5,5,NULL,NULL),(27,12,2,5,5,NULL,NULL),(28,13,1,5,5,NULL,NULL),(29,13,2,5,5,NULL,NULL),(30,14,1,5,5,NULL,NULL),(31,14,2,5,5,NULL,NULL),(32,15,1,5,30,NULL,NULL),(33,15,2,5,30,NULL,NULL),(34,16,1,5,30,NULL,NULL),(35,16,2,5,30,NULL,NULL),(36,17,1,5,30,NULL,NULL),(37,17,2,5,30,NULL,NULL),(38,18,1,5,30,NULL,NULL),(39,18,2,5,30,NULL,NULL),(40,19,1,5,30,NULL,NULL),(41,19,2,5,30,NULL,NULL),(42,20,1,5,30,NULL,NULL),(43,20,2,5,30,NULL,NULL),(44,21,1,5,30,NULL,NULL),(45,21,2,5,30,NULL,NULL),(46,22,1,5,30,NULL,NULL),(47,22,2,5,30,NULL,NULL),(48,23,1,5,30,NULL,NULL),(49,23,2,5,30,NULL,NULL),(50,24,1,5,30,NULL,NULL),(51,24,2,5,30,NULL,NULL),(52,25,1,5,30,NULL,NULL),(53,25,2,5,30,NULL,NULL),(54,26,1,5,30,NULL,NULL),(55,26,2,5,30,NULL,NULL),(56,27,1,5,30,NULL,NULL),(57,27,2,5,30,NULL,NULL),(58,28,1,5,30,NULL,NULL),(59,28,2,6,30,NULL,NULL),(60,29,1,5,30,NULL,105),(61,29,2,5,30,NULL,105),(62,30,1,5,30,NULL,105),(63,30,2,5,30,NULL,105),(64,31,1,5,30,NULL,105),(65,31,2,5,30,NULL,105),(66,32,1,5,30,NULL,150),(67,32,2,5,30,NULL,150),(68,33,1,5,30,NULL,150),(69,33,2,5,30,NULL,150),(70,34,1,5,30,NULL,150),(71,34,2,5,30,NULL,150),(72,35,1,5,30,NULL,150),(73,35,2,5,30,NULL,150),(74,37,1,5,30,NULL,150),(75,37,2,5,30,NULL,150),(76,38,1,5,30,NULL,150),(77,38,2,5,30,NULL,150),(78,47,1,5,30,NULL,21),(79,48,1,5,30,NULL,21),(80,49,1,5,30,NULL,105),(81,50,1,5,21,NULL,105);
-/*!40000 ALTER TABLE `bill_details` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `bills`
---
-
-DROP TABLE IF EXISTS `bills`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `bills` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `code` varchar(255) DEFAULT NULL,
-  `customer_id` int DEFAULT NULL,
-  `staff_id` int NOT NULL,
-  `modified_date` datetime DEFAULT NULL,
-  `modified_by` varchar(200) DEFAULT NULL,
-  `created_date` datetime DEFAULT NULL,
-  `created_by` varchar(200) DEFAULT NULL,
-  `order_id` int NOT NULL,
-  `price` bigint DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `fk_bill_order` (`order_id`),
-  KEY `fk_bill_staff` (`staff_id`),
-  KEY `fk_bill_customer` (`customer_id`),
-  CONSTRAINT `fk_bill_customer` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`),
-  CONSTRAINT `fk_bill_order` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`),
-  CONSTRAINT `fk_bill_staff` FOREIGN KEY (`staff_id`) REFERENCES `staff` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `bills`
---
-
-LOCK TABLES `bills` WRITE;
-/*!40000 ALTER TABLE `bills` DISABLE KEYS */;
-INSERT INTO `bills` VALUES (1,'a',1,1,NULL,NULL,NULL,NULL,1,NULL),(2,NULL,1,1,NULL,NULL,'2021-06-29 13:22:33',NULL,1,100),(3,NULL,1,1,NULL,NULL,'2021-06-29 13:26:24',NULL,1,120),(4,NULL,1,1,NULL,NULL,'2021-06-29 13:31:49',NULL,1,150),(5,NULL,1,1,NULL,NULL,'2021-06-29 13:32:31',NULL,1,150),(6,NULL,1,1,NULL,NULL,'2021-06-29 13:33:30',NULL,1,150),(7,NULL,1,1,NULL,NULL,'2021-06-29 13:51:07',NULL,1,150),(8,NULL,1,1,NULL,NULL,'2021-06-29 14:28:02',NULL,1,25),(9,NULL,1,1,NULL,NULL,'2021-06-29 14:47:08',NULL,1,0),(10,NULL,1,1,NULL,NULL,'2021-06-29 14:48:29',NULL,1,0),(11,NULL,1,1,NULL,NULL,'2021-06-29 14:50:33',NULL,1,0),(12,NULL,1,1,NULL,NULL,'2021-06-29 15:01:50',NULL,1,50),(13,NULL,1,1,NULL,NULL,'2021-06-29 15:57:23',NULL,1,0),(14,NULL,1,1,NULL,NULL,'2021-06-29 16:01:04',NULL,1,0),(15,NULL,1,1,NULL,NULL,'2021-06-29 16:01:37',NULL,1,0),(16,NULL,1,1,NULL,NULL,'2021-06-29 16:04:51',NULL,1,0),(17,NULL,1,1,NULL,NULL,'2021-06-29 16:12:24',NULL,1,0),(18,NULL,1,1,NULL,NULL,'2021-06-29 16:13:08',NULL,1,50),(19,NULL,1,1,NULL,NULL,'2021-06-29 16:19:18',NULL,1,300),(20,NULL,1,1,NULL,NULL,'2021-06-29 16:20:33',NULL,1,140),(21,NULL,1,1,NULL,NULL,'2021-06-29 16:22:26',NULL,1,210),(22,NULL,1,1,NULL,NULL,'2021-06-29 16:23:51',NULL,1,210),(23,NULL,1,1,NULL,NULL,'2021-06-29 16:26:53',NULL,1,210),(24,NULL,1,1,NULL,NULL,'2021-06-29 16:28:51',NULL,1,210),(25,NULL,1,1,NULL,NULL,'2021-06-29 16:47:13',NULL,1,210),(26,NULL,1,1,NULL,NULL,'2021-06-29 16:47:50',NULL,1,210),(27,NULL,1,1,NULL,NULL,'2021-06-29 16:48:11',NULL,1,210),(28,NULL,1,1,NULL,NULL,'2021-06-29 16:49:48',NULL,1,231),(29,NULL,1,1,NULL,NULL,'2021-06-29 22:25:06',NULL,1,210),(30,NULL,1,1,NULL,NULL,'2021-06-29 23:04:12',NULL,1,210),(31,NULL,1,1,NULL,NULL,'2021-06-30 11:36:06',NULL,1,210),(32,NULL,1,1,NULL,NULL,'2021-07-02 11:14:30',NULL,15,300),(33,NULL,1,1,NULL,NULL,'2021-07-02 11:18:36',NULL,15,300),(34,NULL,1,1,NULL,NULL,'2021-07-02 11:37:43',NULL,15,300),(35,NULL,1,1,NULL,NULL,'2021-07-02 11:45:03',NULL,15,300),(36,'HOA210703213245',1,1,NULL,NULL,'2021-07-03 21:32:45',NULL,56,0),(37,'HOA210703231841',1,1,NULL,NULL,'2021-07-03 23:18:42',NULL,15,300),(38,'HOA210704085240',1,1,NULL,NULL,'2021-07-04 08:52:41',NULL,15,300),(39,'HOA210704102728',1,1,NULL,NULL,'2021-07-04 10:27:29',NULL,1,0),(40,'HOA210704103158',1,1,NULL,NULL,'2021-07-04 10:31:58',NULL,1,0),(41,'HOA210704103517',1,1,NULL,NULL,'2021-07-04 10:35:17',NULL,1,0),(42,'HOA210704103618',1,1,NULL,NULL,'2021-07-04 10:36:19',NULL,1,0),(43,'HOA210704103707',1,1,NULL,NULL,'2021-07-04 10:37:07',NULL,1,0),(44,'HOA210704103805',1,1,NULL,NULL,'2021-07-04 10:38:05',NULL,1,0),(45,'HOA210704104443',1,1,NULL,NULL,'2021-07-04 10:44:43',NULL,1,0),(46,'HOA210704105000',1,1,NULL,NULL,'2021-07-04 10:50:01',NULL,1,0),(47,'HOA210704105014',1,1,NULL,NULL,'2021-07-04 10:50:14',NULL,1,105),(48,'HOA210704105457',1,1,NULL,NULL,'2021-07-04 10:54:58',NULL,1,105),(49,'HOA210704105837',1,1,NULL,NULL,'2021-07-06 10:58:38',NULL,1,105),(50,'HOA210704110003',1,1,NULL,NULL,'2021-07-06 11:00:04',NULL,1,105);
-/*!40000 ALTER TABLE `bills` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `brand`
@@ -175,21 +103,19 @@ DROP TABLE IF EXISTS `customers`;
 CREATE TABLE `customers` (
   `id` int NOT NULL AUTO_INCREMENT,
   `phone` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `email` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `address` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `gender` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `date_of_birth` date NOT NULL,
+  `email` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `address` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `gender` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `date_of_birth` date DEFAULT NULL,
   `note` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `created_date` date NOT NULL,
-  `modified_by` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `modified_date` date NOT NULL,
-  `created_by` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `name` varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `status` varchar(3) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `phone` (`phone`),
-  UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=72 DEFAULT CHARSET=utf8;
+  `created_date` date DEFAULT NULL,
+  `modified_by` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `modified_date` date DEFAULT NULL,
+  `created_by` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `name` varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `status` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -198,57 +124,42 @@ CREATE TABLE `customers` (
 
 LOCK TABLES `customers` WRITE;
 /*!40000 ALTER TABLE `customers` DISABLE KEYS */;
-INSERT INTO `customers`(phone,email,address,gender,date_of_birth,note,created_date,modified_by,modified_date,created_by,name,status) 
- VALUES ('321456256','N@gmail.com','Hà Nội','Nam','2001-02-02','adsa','2021-02-02','Nguyễn Văn a','2000-02-02','Nguyễn Văn v','trần hà','on');
-INSERT INTO `customers` (phone,email,address,gender,date_of_birth,note,created_date,modified_by,modified_date,created_by,name,status) VALUES ('321456256','N@gmail.com','Hà Nội','Nu','2002-02-02','adsa','2021-02-02','Nguyễn Văn a','2000-02-02','Nguyễn Văn b','trần hà','on');
-INSERT INTO `customers` (phone,email,address,gender,date_of_birth,note,created_date,modified_by,modified_date,created_by,name,status) VALUES ('321453256','N@gmail.com','Hà Nội','Nam','2003-02-02','adsa','2021-02-02','Nguyễn Văn a','2000-02-02','Nguyễn Văn c','trần hà','on');
-INSERT INTO `customers` (phone,email,address,gender,date_of_birth,note,created_date,modified_by,modified_date,created_by,name,status) VALUES ('32148256','N@gmail.com','Hà Nội','Nam','2010-02-02','adsa','2021-02-02','Nguyễn Văn a','2000-02-02','Nguyễn Văn d','trần hà','on');
-INSERT INTO `customers` (phone,email,address,gender,date_of_birth,note,created_date,modified_by,modified_date,created_by,name,status) VALUES ('321496256','N@gmail.com','Hà Nội','Nam','2004-02-02','adsa','2021-02-02','Nguyễn Văn a','2000-02-02','Nguyễn Văn e','trần hà','on');
-INSERT INTO `customers` (phone,email,address,gender,date_of_birth,note,created_date,modified_by,modified_date,created_by,name,status) VALUES ('321406256','N@gmail.com','Hà Nội','Nam','2005-02-02','adsa','2021-02-02','Nguyễn Văn a','2000-02-02','Nguyễn Văn f','trần hà','on');
-INSERT INTO `customers` (phone,email,address,gender,date_of_birth,note,created_date,modified_by,modified_date,created_by,name,status) VALUES ('321426256','N@gmail.com','Hà Nội','Nam','2006-02-02','adsa','2021-02-02','Nguyễn Văn a','2000-02-02','Nguyễn Văn g','trần hà','on');
-INSERT INTO `customers` (phone,email,address,gender,date_of_birth,note,created_date,modified_by,modified_date,created_by,name,status) VALUES ('321446256','N@gmail.com','Hà Nội','Nam','2007-02-02','adsa','2021-02-02','Nguyễn Văn a','2000-02-02','Nguyễn Văn h','trần hà','on');
-INSERT INTO `customers` (phone,email,address,gender,date_of_birth,note,created_date,modified_by,modified_date,created_by,name,status) VALUES ('321476256','N@gmail.com','Hà Nội','Nu','2008-02-02','adsa','2021-02-02','Nguyễn Văn a','2000-02-02','Nguyễn Văn j','trần hà','on');
-INSERT INTO `customers` (phone,email,address,gender,date_of_birth,note,created_date,modified_by,modified_date,created_by,name,status) VALUES ('321476256','N@gmail.com','Hà Nội','Nam','2013-02-02','adsa','2021-02-02','Nguyễn Văn a','2000-02-02','Nguyễn Văn k','trần hà','on');
-INSERT INTO `customers` (phone,email,address,gender,date_of_birth,note,created_date,modified_by,modified_date,created_by,name,status) VALUES ('321486256','N@gmail.com','Hà Nội','Nam','2012-02-02','adsa','2021-02-02','Nguyễn Văn a','2000-02-02','Nguyễn Văn l','trần hà','on');
-INSERT INTO `customers` (phone,email,address,gender,date_of_birth,note,created_date,modified_by,modified_date,created_by,name,status) VALUES ('321456256','N@gmail.com','Hà Nội','Nu','2011-02-02','adsa','2021-02-02','Nguyễn Văn a','2000-02-02','Nguyễn Văn x','trần hà','on');
-INSERT INTO `customers` (phone,email,address,gender,date_of_birth,note,created_date,modified_by,modified_date,created_by,name,status) VALUES ('321436256','N@gmail.com','Hà Nội','Nam','1983-02-02','adsa','2021-02-02','Nguyễn Văn a','2000-02-02','Nguyễn Văn z','trần hà','on');
-INSERT INTO `customers`(phone,email,address,gender,date_of_birth,note,created_date,modified_by,modified_date,created_by,name,status) VALUES ('321416256','N@gmail.com','Hà Nội','Nam','1988-02-02','adsa','2021-02-02','Nguyễn Văn a','2000-02-02','Nguyễn Văn b','trần hà','on');
-
+INSERT INTO `customers` VALUES (1,'321456256','N@gmail.com','Hà Nội','Nam','2000-02-02','adsa','2021-02-02','Nguyễn Văn a','2000-02-02','Nguyễn Văn a','trần hà','on'),(14,'215245698','N@gmail.com','Hà Nội','Nam','2000-02-02','dsds','2021-02-02','Nguyễn Văn a','2000-02-02','Nguyễn Văn a','quang phuc','on'),(15,'123','ffffffffffffff','Hà Nội','Nam','2000-02-02','dsds','2021-02-02',NULL,NULL,NULL,NULL,NULL),(17,'xxxxx',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Khách lẻ','off'),(18,'xxxxx',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Khách lẻ','off'),(19,'xxxxx',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Khách lẻ','off'),(20,'xxxxx',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Khách lẻ','off'),(21,'xxxxx',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Khách lẻ','off'),(22,'xxxxx',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Khách lẻ','off'),(23,'xxxxx',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Khách lẻ','off'),(24,'xxxxx',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Khách lẻ','off'),(25,'0912121212','haytintoi9x@gmail.com','hello anh','Nam','2021-07-06','hello','2021-07-15','','2021-07-15','Ngyễn quang phúc','aaaaaaaa','on'),(26,'0905050505',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2021-07-15',NULL,'phuc',NULL),(27,'0325272555',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2021-07-15',NULL,'phuc',NULL),(28,'0987655211',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2021-07-15',NULL,'hoa',NULL),(29,'0984553718',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2021-07-15',NULL,'nguyen quang phuc',NULL),(30,'0984256321',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2021-07-15',NULL,'nguyen thi hoa',NULL),(31,'0984256329',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2021-07-15',NULL,'nguyen thi hoa',NULL),(32,'xxxxx',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Khách lẻ','off'),(33,'xxxxx',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Khách lẻ','off'),(34,'xxxxx',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Khách lẻ','off'),(35,'xxxxx',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Khách lẻ','off'),(36,'xxxxx',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Khách lẻ','off'),(37,'xxxxx',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Khách lẻ','off'),(38,'xxxxx',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Khách lẻ','off'),(39,'xxxxx',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Khách lẻ','off'),(40,'xxxxx',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Khách lẻ','off'),(41,'xxxxx',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Khách lẻ','off'),(42,'xxxxx',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Khách lẻ','off'),(43,'xxxxx',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Khách lẻ','off'),(44,'xxxxx',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Khách lẻ','off'),(45,'xxxxx',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Khách lẻ','off'),(46,'xxxxx',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Khách lẻ','off'),(47,'xxxxx',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Khách lẻ','off'),(48,'xxxxx',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Khách lẻ','off'),(49,'0945213225',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2021-07-16',NULL,'kk',NULL);
 /*!40000 ALTER TABLE `customers` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `oder_detail`
+-- Table structure for table `order_detail`
 --
 
-DROP TABLE IF EXISTS `oder_detail`;
+DROP TABLE IF EXISTS `order_detail`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `oder_detail` (
+CREATE TABLE `order_detail` (
   `id` int NOT NULL AUTO_INCREMENT,
   `order_id` int NOT NULL,
   `product_id` int NOT NULL,
   `quanlity` int NOT NULL,
   `discount` bigint DEFAULT NULL,
   `code` varchar(200) DEFAULT NULL,
-  `remain_amount` bigint DEFAULT NULL,
+  `remain_quantity` bigint DEFAULT NULL,
   `price` bigint DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `order_id_idx` (`order_id`),
   KEY `product_id_idx` (`product_id`),
   CONSTRAINT `order_id` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`),
   CONSTRAINT `product_id` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=128 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=181 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `oder_detail`
+-- Dumping data for table `order_detail`
 --
 
-LOCK TABLES `oder_detail` WRITE;
-/*!40000 ALTER TABLE `oder_detail` DISABLE KEYS */;
-INSERT INTO `oder_detail` VALUES (48,1,1,50,500000,NULL,30,NULL),(49,35,1,50,5,NULL,5,NULL),(50,35,2,100,5,NULL,19,NULL),(51,35,3,20,500000,NULL,20,NULL),(57,37,1,5,30,NULL,5,150),(58,37,2,5,30,NULL,5,150),(59,38,1,5,30,NULL,5,150),(60,38,2,5,30,NULL,5,150),(61,38,1,5,30,NULL,5,150),(62,38,2,5,30,NULL,5,150),(63,38,1,5,30,NULL,5,150),(64,38,2,5,30,NULL,5,150),(65,38,1,5,30,NULL,5,150),(66,38,2,5,30,NULL,5,150),(67,42,1,5,30,NULL,5,150),(68,42,2,5,30,NULL,5,150),(69,43,1,5,30,NULL,5,150),(70,43,2,5,30,NULL,5,150),(71,44,1,5,30,NULL,5,150),(72,44,2,5,30,NULL,5,150),(73,45,1,5,30,NULL,5,150),(74,45,2,5,30,NULL,5,150),(75,46,1,5,30,NULL,5,150),(76,46,2,5,30,NULL,5,150),(77,47,1,5,30,NULL,5,150),(78,47,2,5,30,NULL,5,150),(79,48,1,5,30,NULL,5,150),(80,48,2,5,30,NULL,5,150),(81,49,1,5,30,NULL,5,150),(82,49,2,5,30,NULL,5,150),(83,50,1,5,30,NULL,5,150),(84,50,2,5,30,NULL,5,150),(85,51,1,5,30,NULL,5,150),(86,51,2,5,30,NULL,5,150),(87,52,1,5,30,NULL,5,150),(88,52,2,5,30,NULL,5,150),(89,53,1,5,30,NULL,5,150),(90,53,2,5,30,NULL,5,150),(91,54,1,5,30,NULL,5,150),(92,54,2,5,30,NULL,5,150),(93,57,1,5,30,NULL,5,150),(94,57,2,5,30,NULL,5,150),(95,57,1,5,30,NULL,5,150),(96,57,2,5,30,NULL,5,150),(97,57,1,5,30,NULL,5,150),(98,57,2,5,30,NULL,5,150),(119,68,1,4,500,NULL,4,2000),(120,68,2,1,600,NULL,1,600),(121,69,1,4,500,NULL,4,2000),(122,69,2,1,600,NULL,1,600),(123,70,1,4,500,NULL,4,2000),(124,70,2,1,600,NULL,1,600),(125,71,2,1,600,NULL,1,600),(126,71,3,1,300,NULL,1,300),(127,71,5,1,250,NULL,1,250);
-/*!40000 ALTER TABLE `oder_detail` ENABLE KEYS */;
+LOCK TABLES `order_detail` WRITE;
+/*!40000 ALTER TABLE `order_detail` DISABLE KEYS */;
+INSERT INTO `order_detail` VALUES (161,92,2,20,NULL,NULL,20,NULL),(162,92,3,21,NULL,NULL,21,NULL),(163,93,3,30,NULL,NULL,30,NULL),(164,93,12,10,NULL,NULL,10,NULL),(165,94,5,20,NULL,NULL,20,NULL),(166,95,4,51,NULL,NULL,51,NULL),(167,96,1,14,NULL,NULL,14,NULL),(168,97,1,18,NULL,NULL,18,NULL),(169,98,12,15,NULL,NULL,12,NULL),(170,99,2,1,NULL,NULL,0,NULL),(171,99,12,1,NULL,NULL,0,NULL),(172,100,4,8,NULL,NULL,8,NULL),(173,101,2,1,NULL,NULL,1,NULL),(174,102,1,3,NULL,NULL,3,NULL),(175,103,4,10,NULL,NULL,10,NULL),(176,104,2,1,NULL,NULL,1,NULL),(177,105,12,5,NULL,NULL,5,NULL),(178,106,1,7,NULL,NULL,7,NULL),(179,107,4,5,NULL,NULL,5,NULL),(180,108,12,10,NULL,NULL,10,5000);
+/*!40000 ALTER TABLE `order_detail` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -269,12 +180,13 @@ CREATE TABLE `orders` (
   `modified_date` timestamp NULL DEFAULT NULL,
   `state` varchar(200) DEFAULT NULL,
   `price` bigint DEFAULT NULL,
+  `discount` bigint DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `customer_id_idx` (`customer_id`),
   KEY `staff_id_idx` (`staff_id`),
   FULLTEXT KEY `full_text_search_index` (`code`) /*!80000 INVISIBLE */,
   CONSTRAINT `customer_id` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=72 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=109 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -283,7 +195,7 @@ CREATE TABLE `orders` (
 
 LOCK TABLES `orders` WRITE;
 /*!40000 ALTER TABLE `orders` DISABLE KEYS */;
-INSERT INTO `orders` VALUES (1,'phuc12',1,1,'Nguyễn Văn a','2021-02-02','2021-06-24 17:00:00',NULL,'resend',1000),(2,'phuc1',15,1,'Nguyễn Văn b','2021-02-02',NULL,NULL,'resend',NULL),(3,'phuc',15,2,'Nguyễn Văn c','2021-02-03',NULL,NULL,'resend',NULL),(4,'phu',14,2,'Nguyễn Văn e','2021-02-03',NULL,NULL,'complete',NULL),(5,'phuc',25,1,'Nguyễn Văn f','2021-11-11 ',NULL,NULL,'complete',NULL),(6,'@ql3',25,1,'Nguyễn Văn g','2021-05-05',NULL,NULL,'resend',NULL),(7,'@ql3',25,1,'Nguyễn Văn d','2021-05-05','2021-05-04 17:00:00',NULL,'complete',NULL),(8,NULL,25,1,NULL,'2021 - 06 -28',NULL,NULL,NULL,NULL),(9,NULL,25,1,NULL,NULL,NULL,NULL,NULL,1000000),(10,NULL,25,1,NULL,NULL,NULL,NULL,NULL,1000000),(11,NULL,26,1,NULL,NULL,NULL,NULL,NULL,1000000),(12,NULL,26,1,NULL,NULL,NULL,NULL,NULL,1000000),(13,NULL,26,1,NULL,NULL,NULL,NULL,NULL,1000000),(14,NULL,27,1,NULL,NULL,NULL,NULL,NULL,1000000),(15,NULL,27,1,NULL,NULL,'2021-06-27 05:12:16',NULL,NULL,1000000),(16,NULL,28,1,NULL,NULL,NULL,NULL,NULL,1000000),(17,NULL,28,1,NULL,NULL,NULL,NULL,NULL,110),(18,NULL,29,1,NULL,NULL,NULL,NULL,NULL,110),(19,NULL,31,1,NULL,NULL,NULL,NULL,NULL,210),(20,NULL,31,1,NULL,NULL,NULL,NULL,NULL,210),(21,'phuc',31,1,NULL,NULL,'2021-06-27 05:12:16',NULL,NULL,210),(22,'phuc123',31,1,NULL,NULL,'2021-06-27 14:46:12',NULL,NULL,210),(23,'phuc1',32,1,NULL,NULL,'2021-06-27 14:48:39',NULL,NULL,210),(24,'phuc12',32,1,NULL,NULL,'2021-06-28 03:16:06',NULL,NULL,220),(25,NULL,32,1,NULL,NULL,'2021-06-28 03:16:06',NULL,NULL,NULL),(26,NULL,32,1,NULL,NULL,'2021-06-28 09:49:32',NULL,NULL,220),(27,NULL,32,1,NULL,NULL,'2021-06-28 10:01:13',NULL,NULL,470),(28,NULL,32,1,NULL,NULL,'2021-06-28 10:01:43',NULL,NULL,400),(29,NULL,32,1,NULL,NULL,'2021-06-28 10:08:02',NULL,NULL,300),(30,'SON0002',32,1,NULL,NULL,'2021-06-28 10:10:12',NULL,NULL,200),(35,'SON0001',33,1,NULL,NULL,'2021-06-29 03:12:13',NULL,NULL,250),(37,NULL,33,1,NULL,NULL,'2021-07-02 04:52:21',NULL,NULL,300),(38,NULL,33,1,NULL,NULL,'2021-07-02 04:53:04',NULL,NULL,300),(39,NULL,33,1,NULL,NULL,'2021-07-02 04:54:58',NULL,NULL,300),(40,'phuc0001',33,1,NULL,NULL,'2021-07-02 04:58:29',NULL,NULL,300),(41,'phuc0002',33,1,NULL,NULL,'2021-07-02 05:00:03',NULL,NULL,300),(42,NULL,1,1,NULL,NULL,'2021-07-02 05:03:07',NULL,NULL,300),(43,NULL,1,1,NULL,NULL,'2021-07-02 05:05:09',NULL,NULL,300),(44,NULL,1,1,NULL,NULL,'2021-07-03 10:22:17',NULL,NULL,300),(45,NULL,1,1,NULL,NULL,'2021-07-03 12:44:43',NULL,NULL,300),(46,NULL,1,1,NULL,NULL,'2021-07-03 12:53:05',NULL,NULL,300),(47,NULL,33,1,NULL,NULL,'2021-07-03 12:57:32',NULL,NULL,300),(48,NULL,33,1,NULL,NULL,'2021-07-03 12:58:36',NULL,NULL,300),(49,NULL,33,1,NULL,NULL,'2021-07-03 13:01:50',NULL,NULL,300),(50,NULL,26,1,NULL,NULL,'2021-07-03 13:04:19',NULL,NULL,300),(51,NULL,26,1,NULL,NULL,'2021-07-03 13:04:54',NULL,NULL,300),(52,NULL,39,1,NULL,NULL,'2021-07-03 13:05:47',NULL,NULL,300),(53,'210703200713',39,1,NULL,NULL,'2021-07-03 13:07:14',NULL,NULL,300),(54,'210703200718',39,1,NULL,NULL,'2021-07-03 13:07:18',NULL,NULL,300),(55,'210703200720',39,1,NULL,NULL,'2021-07-03 13:07:20',NULL,NULL,300),(56,'210703200721',39,1,NULL,NULL,'2021-07-06 13:07:22',NULL,NULL,300),(57,'210703200722',14,1,NULL,NULL,'2021-07-06 13:07:22',NULL,NULL,300),(68,'210707115557',38,3,'Ngyễn quang phúc',NULL,'2021-07-07 04:55:58',NULL,NULL,2600),(69,'210707115717',38,3,'Ngyễn quang phúc',NULL,'2021-07-07 04:57:17',NULL,NULL,2600),(70,'210707120136',37,3,'Ngyễn quang phúc',NULL,'2021-07-07 05:01:37',NULL,NULL,2600),(71,'210707163340',37,3,'Ngyễn quang phúc',NULL,'2021-07-07 09:33:39',NULL,NULL,1150);
+INSERT INTO `orders` VALUES (92,'SAPO-000-92',32,3,'Ngyễn quang phúc',NULL,'2021-07-15 10:31:11',NULL,NULL,18300,0),(93,'SAPO-000-93',33,3,'Ngyễn quang phúc',NULL,'2021-07-15 10:31:29',NULL,NULL,14000,0),(94,'SAPO-000-94',34,3,'Ngyễn quang phúc',NULL,'2021-07-15 10:31:44',NULL,NULL,5000,0),(95,'SAPO-000-95',35,3,'Ngyễn quang phúc',NULL,'2021-07-15 10:31:56',NULL,NULL,12750,0),(96,'SAPO-000-96',36,3,'Ngyễn quang phúc',NULL,'2021-07-15 10:32:13',NULL,NULL,7000,0),(97,'SAPO-000-97',37,3,'Ngyễn quang phúc',NULL,'2021-07-15 10:32:20',NULL,NULL,9000,0),(98,'SAPO-000-98',38,3,'Ngyễn quang phúc',NULL,'2021-07-15 10:32:27',NULL,NULL,7500,0),(99,'SAPO-000-99',39,3,'Ngyễn quang phúc',NULL,'2021-07-15 10:34:03',NULL,NULL,1100,0),(100,'SAPO-000-100',40,3,'Ngyễn quang phúc',NULL,'2021-07-15 17:01:47',NULL,NULL,2000,400),(101,'SAPO-000-101',41,3,'Ngyễn quang phúc',NULL,'2021-07-15 17:15:37',NULL,NULL,600,0),(102,'SAPO-000-102',42,3,'Ngyễn quang phúc',NULL,'2021-07-15 18:09:21',NULL,NULL,1500,0),(103,'SAPO-000-103',43,3,'Ngyễn quang phúc',NULL,'2021-07-16 03:13:40',NULL,NULL,2500,250),(104,'SAPO-000-104',44,3,'Ngyễn quang phúc',NULL,'2021-07-16 03:16:29',NULL,NULL,600,0),(105,'SAPO-000-105',45,3,'Ngyễn quang phúc',NULL,'2021-07-16 03:19:01',NULL,NULL,2500,0),(106,'SAPO-000-106',46,3,'Ngyễn quang phúc',NULL,'2021-07-16 03:20:11',NULL,NULL,3500,350),(107,'SAPO-000-107',47,3,'Ngyễn quang phúc',NULL,'2021-07-16 03:24:29',NULL,NULL,1250,125),(108,'SAPO-000-108',48,3,'Ngyễn quang phúc',NULL,'2021-07-16 03:26:44',NULL,NULL,5000,1000);
 /*!40000 ALTER TABLE `orders` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -300,31 +212,27 @@ CREATE TABLE `products` (
   `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
   `brand_id` int NOT NULL,
   `number_product` int NOT NULL,
-  `sell_product` int NOT NULL,
+  `sell_product` int NOT NULL DEFAULT '0',
   `image` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
   `price` decimal(8,3) DEFAULT NULL,
   `supplier_id` int NOT NULL,
   `decription` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `color_id` int NOT NULL,
+  `color` varchar(40) NOT NULL,
   `created_date` date DEFAULT NULL,
   `modified_date` date DEFAULT NULL,
-  `size_id` int NOT NULL,
+  `size` varchar(40) NOT NULL,
   `category_id` int NOT NULL,
   `modified_by` varchar(45) DEFAULT NULL,
   `created_by` varchar(45) DEFAULT NULL,
   `state` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `supplier_id_idx` (`supplier_id`),
-  KEY `color_id_idx` (`color_id`),
   KEY `brand_id_idx` (`brand_id`),
-  KEY `size_id_idx` (`size_id`),
   KEY `category_id_idx` (`category_id`),
   CONSTRAINT `brand_id` FOREIGN KEY (`brand_id`) REFERENCES `brand` (`id`),
   CONSTRAINT `cate` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`),
-  CONSTRAINT `color_id` FOREIGN KEY (`color_id`) REFERENCES `colors` (`id`),
-  CONSTRAINT `size_id` FOREIGN KEY (`size_id`) REFERENCES `size` (`id`),
   CONSTRAINT `supplier_id` FOREIGN KEY (`supplier_id`) REFERENCES `supplier` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -333,8 +241,78 @@ CREATE TABLE `products` (
 
 LOCK TABLES `products` WRITE;
 /*!40000 ALTER TABLE `products` DISABLE KEYS */;
-INSERT INTO `products` VALUES (1,'#A','Áo khoác Chino thời thượng SID56708',1,88,137,'aa',500.000,1,'chất vải mát',1,'2021-02-02','2021-02-02',1,1,NULL,NULL,NULL),(2,'#A1','Áo khoác đầm dáng xòe nút bọc 2in1',1,67,259,'aaa',600.000,1,'chất vải mát',2,'2021-02-02','2021-02-02',2,1,NULL,NULL,NULL),(3,'#V','Váy phối sọc cá tính SID62366',2,59,81,'bbbb',300.000,2,'váy ngắn mát',5,'2021-02-02','2021-02-02',2,2,NULL,NULL,NULL),(4,'#V2','Váy phối sọc cá tính SID62366',2,100,0,'vvvv',250.000,2,'váy đầm',4,'2021-02-02','2021-02-02',1,2,NULL,NULL,NULL),(5,'#AT','Áo thun phối sọc cá tính SID62366',3,99,1,'ttt',250.000,3,'áo thun coton',5,'2021-02-02','2021-02-02',3,3,NULL,NULL,NULL),(6,'#AT1','Áo thun phối sọc cá tính SID62366',4,100,0,'tttt',300.000,3,'áo thun dáng xuông',4,'2021-02-02','2021-02-02',3,4,NULL,NULL,NULL);
+INSERT INTO `products` VALUES (1,'#A','Áo khoác Chino thời thượng SID56708',1,26,199,'https://lh3.googleusercontent.com/NevAMsFwOcu9jE1olaVuBh7mOFjiwvX125G0gyU_yeOzFvT4mNodgJxBew33Wc0xJ7wAap9uhayfIcODs5dziCV0bdvAzEGMvHvEAF4f4-L6HDHRxPd4bwXYvztRu5McDOi9V-9xOw=s60-p-k',500.000,1,'chất vải mát','1','2021-02-02','2021-07-16','1',1,NULL,NULL,NULL),(2,'#A1','Áo khoác đầm dáng xòe nút bọc 2in1',1,23,304,'https://tmluxury.vn/wp-content/uploads/Anh-quan-jean-nam-ong-dung-lacoste-tmj17-hinh-lon.jpg',600.000,1,'chất vải mát','2','2021-02-02','2021-07-16','2',1,NULL,NULL,NULL),(3,'#V','Váy phối sọc cá tính SID62366',2,0,142,'https://tmluxury.vn/wp-content/uploads/Anh-quan-jean-nam-ong-dung-lacoste-tmj17-hinh-lon.jpg',300.000,2,'váy ngắn mát','5','2021-02-02','2021-07-15','2',2,NULL,NULL,NULL),(4,'#V2','Váy phối sọc cá tính SID62366',2,16,86,'https://tmluxury.vn/wp-content/uploads/Anh-quan-jean-nam-ong-dung-lacoste-tmj17-hinh-lon.jpg',250.000,2,'váy đầm','4','2021-02-02','2021-07-16','1',2,NULL,NULL,NULL),(5,'#AT','Áo thun phối sọc cá tính SID62366',3,20,80,'https://buway.vn/wp-content/uploads/2018/12/41.jpg',250.000,3,'áo thun coton','5','2021-02-02','2021-07-15','3',3,NULL,NULL,NULL),(6,'#AT1','Áo thun phối sọc cá tính SID62366',4,99,1,'https://buway.vn/wp-content/uploads/2018/12/41.jpg',300.000,3,'áo thun dáng xuông','4','2021-02-02','2021-07-13','3',4,NULL,NULL,NULL),(7,'#AT1','Áo thun phối sọc cá tính SID62366',4,99,1,'chan_393c7cbec47e411ba225cd0665c5fb3b_grande.jpg',300.000,3,'áo thun dáng xuông','4','2021-02-02','2021-07-13','3',4,NULL,NULL,NULL),(8,'#AT1','Áo sơ mi',4,100,0,'https://file.hstatic.net/1000177103/file/tao-dang-vat-cheo-chan_393c7cbec47e411ba225cd0665c5fb3b_grande.jpg',300.000,3,'áo thun dáng xuông','4','2021-02-02','2021-02-02','3',4,NULL,NULL,NULL),(9,'#AT1','Quần short',4,100,0,'http://file.hstatic.net/1000177103/article/tao-dang-vest-khoac-ao-qua-vai_a99203d3a86f421e82fc7d8221573b67_1138eccce7c04378b459eb4af815347c_1024x1024.jpg',300.000,3,'áo thun dáng xuông','4','2021-02-02','2021-02-02','3',4,NULL,NULL,NULL),(10,'#AT1','quần kaki',4,100,0,'https://nhiet.vn/wp-content/uploads/2018/10/shop-%C3%A1o-vest-nam-h%C3%A0-n%E1%BB%99i-4.jpg',300.000,3,'áo thun dáng xuông','4','2021-02-02','2021-02-02','3',4,NULL,NULL,NULL),(11,'#AT1','Áo sơ mi',4,100,0,'chan_393c7cbec47e411ba225cd0665c5fb3b_grande.jpg',300.000,3,'áo thun dáng xuông','4','2021-02-02','2021-02-02','3',4,NULL,NULL,NULL),(12,'a','Ao thun',2,60,45,'https://thoitrangmantis.com/wp-content/uploads/2019/01/ao-phong-co-tron-meo-3d1-ngoc.jpg',500.000,2,'','XANH','2021-07-13','2021-07-16','l',5,NULL,NULL,NULL),(13,'gfdgfd','Ao thun',2,100,0,'https://thoitrangmantis.com/wp-content/uploads/2019/01/ao-phong-co-tron-meo-3d1-ngoc.jpg',500.000,3,'','Xanh','2021-07-13','2021-07-13','L',1,NULL,NULL,'Deleted');
 /*!40000 ALTER TABLE `products` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `return_order_details`
+--
+
+DROP TABLE IF EXISTS `return_order_details`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `return_order_details` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `return_order_id` int NOT NULL,
+  `product_id` int NOT NULL,
+  `quanlity` int DEFAULT NULL,
+  `discount` bigint DEFAULT NULL,
+  `code` varchar(45) DEFAULT NULL,
+  `price` bigint DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `bill_id_idx` (`return_order_id`),
+  KEY `product_id_idx` (`product_id`),
+  CONSTRAINT `bill_id` FOREIGN KEY (`return_order_id`) REFERENCES `return_orders` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=91 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `return_order_details`
+--
+
+LOCK TABLES `return_order_details` WRITE;
+/*!40000 ALTER TABLE `return_order_details` DISABLE KEYS */;
+INSERT INTO `return_order_details` VALUES (87,53,2,1,NULL,NULL,NULL),(88,53,12,1,NULL,NULL,NULL),(89,54,12,2,NULL,NULL,NULL),(90,55,12,1,NULL,NULL,NULL);
+/*!40000 ALTER TABLE `return_order_details` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `return_orders`
+--
+
+DROP TABLE IF EXISTS `return_orders`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `return_orders` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `code` varchar(255) DEFAULT NULL,
+  `customer_id` int DEFAULT NULL,
+  `staff_id` int NOT NULL,
+  `modified_date` datetime DEFAULT NULL,
+  `modified_by` varchar(200) DEFAULT NULL,
+  `created_date` datetime DEFAULT NULL,
+  `created_by` varchar(200) DEFAULT NULL,
+  `order_id` int NOT NULL,
+  `price` bigint DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_bill_order` (`order_id`),
+  KEY `fk_bill_staff` (`staff_id`),
+  KEY `fk_bill_customer` (`customer_id`),
+  CONSTRAINT `fk_bill_customer` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`),
+  CONSTRAINT `fk_bill_order` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`),
+  CONSTRAINT `fk_bill_staff` FOREIGN KEY (`staff_id`) REFERENCES `staff` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `return_orders`
+--
+
+LOCK TABLES `return_orders` WRITE;
+/*!40000 ALTER TABLE `return_orders` DISABLE KEYS */;
+INSERT INTO `return_orders` VALUES (53,'RSAPO-000-53',39,3,NULL,NULL,'2021-07-15 17:43:48','Ngyễn quang phúc',99,1100),(54,'RSAPO-000-54',38,3,NULL,NULL,'2021-07-15 17:46:14','Ngyễn quang phúc',98,1000),(55,'RSAPO-000-55',38,3,NULL,NULL,'2021-07-15 19:33:20','Ngyễn quang phúc',98,500);
+/*!40000 ALTER TABLE `return_orders` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -348,6 +326,11 @@ CREATE TABLE `roles` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(45) DEFAULT NULL,
   `code` varchar(45) DEFAULT NULL,
+  `notes` varchar(45) DEFAULT NULL,
+  `created_date` date DEFAULT NULL,
+  `created_by` varchar(45) DEFAULT NULL,
+  `modified_date` date DEFAULT NULL,
+  `modified_by` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -358,7 +341,7 @@ CREATE TABLE `roles` (
 
 LOCK TABLES `roles` WRITE;
 /*!40000 ALTER TABLE `roles` DISABLE KEYS */;
-INSERT INTO `roles` VALUES (1,'nhân viên bán hàng','STAFF_SALE'),(2,'nhân viên chăm sóc khách hàng','STAFF_CARE'),(3,'chủ cửa hàng','ADMIN');
+INSERT INTO `roles` VALUES (1,'nhân viên bán hàng','STAFF_SALE',NULL,NULL,NULL,NULL,NULL),(2,'nhân viên chăm sóc khách hàng','STAFF_CARE',NULL,NULL,NULL,NULL,NULL),(3,'chủ cửa hàng','ADMIN',NULL,NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `roles` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -481,69 +464,6 @@ LOCK TABLES `supplier` WRITE;
 INSERT INTO `supplier` VALUES (1,'QT','Quảng Châu','quangchau@gmail.com','Trung Quốc','0123654789',NULL,NULL,NULL,NULL,NULL),(2,'NH','Ninh Hiệp','nh@gmail.com','Hà Nội-Việt Nam','06325489586',NULL,NULL,NULL,NULL,NULL),(3,'DX','Đồng Xuân','dx@gmail.com','Hà Nội -Việt Nam','0569654852',NULL,NULL,NULL,NULL,NULL),(4,'DN','Đà Nẵng','dn@gmail.com','Tp HCM','0123659854',NULL,NULL,NULL,NULL,NULL),(5,'HCM','Hồ Chí Minh','hcm@gmail.com','Tp HCM','0986532145',NULL,NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `supplier` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Dumping routines for database 'manage_store'
---
-/*!50003 DROP PROCEDURE IF EXISTS `getNewCustomersByDay` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `getNewCustomersByDay`(in d int,in m int, in y int)
-BEGIN
-select count(*) as Khach_hang_moi from customers where day(created_date) = d and month(created_date) =m and year(created_date) =y;
-END ;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `getNewCustomersByMonth` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `getNewCustomersByMonth`(in m int, in y int)
-BEGIN
-select count(*) as Khach_hang_moi from customers where month(created_date) =m and year(created_date) =y;
-END ;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `StatisticsByTime` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `StatisticsByTime`()
-BEGIN
-select customers.name,phone,email,address,customers.created_date as Bat_dau,orders.created_date as Gan_nhat,count(*) as Tong_so_don 
-from orders join customers on customers.id = orders.customer_id group by customers.name,phone,email,address,bat_dau,gan_nhat 
-order by Tong_so_don desc;
-END ;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -554,48 +474,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Procedure thống kê số khách hàng mới theo tháng/năm
-drop procedure getNewCustomersByMonth
-    DELIMITER &&
-CREATE PROCEDURE getNewCustomersByMonth(in m int, in y int)
-BEGIN
-select count(*) as Khach_hang_moi from customers where month(created_date) =m and year(created_date) =y;
-END
-&&
-DELIMITER ;
-call getNewCustomersByMonth(2, 2021);
-
--- Thong ke lich su cua khach hang
-drop procedure StatisticsByTime
-    DELIMITER &&
-CREATE PROCEDURE StatisticsByTime()
-BEGIN
-select customers.name,phone,email,address,customers.created_date as Bat_dau,orders.created_date as Gan_nhat,count(*) as Tong_so_don 
-from orders join customers on customers.id = orders.customer_id group by customers.name,phone,email,address,bat_dau,gan_nhat 
-order by Tong_so_don desc;
-END
-&&
-DELIMITER ;
-call StatisticsByTime();
--- Thống
-update customers set status ='off' where id = 15;
-select * from orders; 
-select * from oder_detail;
-select * from products;
-select * from staff;
-alter table customers add column status varchar(3) ;
-ALTER TABLE customers
-drop column  staff_id;
-ALTER TABLE customers
-drop  FOREIGN KEY fk_customers;
-select staff.full_name from staff join orders on staff.id=orders.staff_id 
-join customers on customers.id = orders.customer_id group by staff.full_name;
-select * from customers where id=20;
-select * from customers where gender='Nam' and ROUND(DATEDIFF(CURDATE(), date_of_birth) / 365, 0) between 18 and 35;
-select distinct gender from customers;
-select * from customers where  ROUND(DATEDIFF(CURDATE(), date_of_birth) / 365, 0)>35;
-UPDATE customers SET date_of_birth = '1982-09-07' WHERE (`id` = '23');
-select * from staff
-
--- Dump completed on 2021-07-13 15:05:39
-
+-- Dump completed on 2021-07-16 10:47:37
