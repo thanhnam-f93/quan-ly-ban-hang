@@ -364,7 +364,6 @@ public class ProductServiceImpl implements ProductService {
             return productDtos;
         }
         return null;
-
     }
 
     @Override
@@ -376,15 +375,15 @@ public class ProductServiceImpl implements ProductService {
 
 
 
-      if(updateDto.getCode() == ""){
-            ProductEntity productEntity1 = productRepository.findFirstByOrderByIdDesc();
-            updateDto.setCode(("SKU" + String.valueOf(productEntity1.getId()+1)));
-        }
-     else {
-            if(productRepository.existsByCode(updateDto.getCode())){
-                return ResponseEntity.badRequest().body(new Message(" error : code trung "));
-            }
-        }
+//      if(updateDto.getCode() == ""){
+//            ProductEntity productEntity1 = productRepository.findFirstByOrderByIdDesc();
+//            updateDto.setCode(("SKU" + String.valueOf(productEntity1.getId()+1)));
+//        }
+//     else {
+//            if(productRepository.existsByCode(updateDto.getCode())){
+//                return ResponseEntity.badRequest().body(new Message(" error : code trung "));
+//            }
+//        }
 
      if(updateDto.getName() == ""){
             return ResponseEntity.badRequest().body(new Message(" error : ma ko dc trong "));

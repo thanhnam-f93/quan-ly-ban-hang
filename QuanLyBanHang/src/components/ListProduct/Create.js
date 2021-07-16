@@ -47,6 +47,8 @@ function Create(props) {
   const [brandName, setBrandName] = useState("");
   const [numberProduct, setNumber] = useState("");
   const [image, setImage] = useState("");
+  const [picture,setPicture]=useState("");
+  const [nameImage, setNameImage] = useState("");
   const [price, setPrice] = useState("");
   const [supplierName, setSupplierName] = useState("");
   const [description, setDescription] = useState("");
@@ -61,6 +63,7 @@ function Create(props) {
   const [filterOptionCategory, setFilterOptionCategory] = useState([]);
   const [filterOptionBrand, setFilterOptionBrand] = useState([]);
   const [products, setProdut] = useState([]);
+  const [a,seta]=useState([]);
   const [id, setID] = useState([]);
   const [isShowBrand, setBrands] = useState(false);
   const [isShowSupplier, setSuppliers] = useState(false);
@@ -114,14 +117,25 @@ function Create(props) {
       .catch((error) => {
         console.log("aaaaaaaaaaaaaaaa");
         if (error.response.data.mess == " error : code trung ") {
+          console.log("ccc");
           Swal.fire({
             icon: "error",
-            title: "code trùng",
+            title: "mã trùng",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        };
+        if (error.response.data.mess == " error : nha cung cap ko dc trong ") {
+          console.log("nh");
+          Swal.fire({
+            icon: "error",
+            title: "nhà cung cấp không được chống",
             showConfirmButton: false,
             timer: 1500,
           });
         }
         if (error.response.data.mess == " error : ma ko dc trong ") {
+          console.log("ttttt");
           Swal.fire({
             icon: "error",
             title: "tên không được chống",
@@ -129,15 +143,16 @@ function Create(props) {
             timer: 1500,
           });
         }
-        if (error.response.data.mess == " error : so luong ko duoc chong ") {
-          Swal.fire({
-            icon: "error",
-            title: "số lượng không được chống",
-            showConfirmButton: false,
-            timer: 1500,
-          });
-        }
+        // if (error.response.data.mess == " error : so luong ko duoc chong ") {
+        //   Swal.fire({
+        //     icon: "error",
+        //     title: "số lượng không được chống",
+        //     showConfirmButton: false,
+        //     timer: 1500,
+        //   });
+        // }
         if (error.response.data.mess == " error : loai ko dc trong ") {
+          console.log("lllll");
           Swal.fire({
             icon: "error",
             title: "loại không được chống",
@@ -146,6 +161,7 @@ function Create(props) {
           });
         }
         if (error.response.data.mess == " error : nhan hieu ko dc trong ") {
+          console.log("nnnnn");
           Swal.fire({
             icon: "error",
             title: "nhãn hiệu không được chống",
@@ -153,14 +169,7 @@ function Create(props) {
             timer: 1500,
           });
         }
-        if (error.response.data.mess == " error : nha cung cap ko dc trong ") {
-          Swal.fire({
-            icon: "error",
-            title: "nhà cung cấp không được chống",
-            showConfirmButton: false,
-            timer: 1500,
-          });
-        }
+    
       });
   };
 
@@ -302,9 +311,46 @@ function Create(props) {
   const changeNumber = (event) => {
     setNumber(event.target.value);
   };
-  const changeImage = (event) => {
-    setImage(event.target.value);
-  };
+
+  const handleImage = (e) => {
+    console.log(e)
+    console.log(111111111111)
+    setImage(e.target.files[0].name)
+    setPicture(e.target.files[0]);
+    console.log("Data", e.target.files[0])
+
+    console.log("Data Image", Image)
+    console.log("Data Image: 1", e.target.files[0])
+    console.log("Image name", nameImage)
+    console.log("Image name", e.target.files[0].name)
+    // if (e.target.files[0].name !== "") {
+    //     setCheckImage({ display: "inline" })
+    // }
+
+    var axios = require('axios');
+    var FormData = require('form-data');
+    var fs = require('fs');
+    var data = new FormData();
+    data.append('file', e.target.files[0]);
+
+    var config = {
+        method: 'post',
+        url: 'http://localhost:8080/api/v1/uploadFile',
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem("token")}`,
+          'Content-Type': 'application/json'
+      },
+        data: data
+    };
+
+    axios(config)
+        .then(function (response) {
+            console.log("222222222222222", JSON.stringify(response.data));
+        })
+
+    let image = `image/${e.target.files[0].name}`
+    setProdut({ ...products, [e.target.name]: image })
+}
 
   const changePrice = (event) => {
     setPrice(event.target.value);
@@ -481,23 +527,21 @@ function Create(props) {
                 </CFormGroup>
                 <CFormGroup row className="my-0">
                   <CCol xs="10">
-                    <CLabel htmlFor="vat">
-                      Nhà cung cấp <span style={{ color: "red" }}>*</span>
-                    </CLabel>
-                    {/* <CInput id="vat" placeholder="nguồn hàng" onChange={changeSupplier} /> */}
-
-                    <Select
-                      options={filterOptions}
-                      onChange={changeSuppliers}
-                    />
-                  </CCol>
-                 
-                  <CCol xs="2">
                     <CFormGroup>
-                    <i class="fas fa-plus mt-4" style={{ cursor: "pointer" }} onClick={addBrand}></i>
+                      <CLabel htmlFor="company">
+                        Nhà cung cấp <span style={{ color: "red" }}>*</span>
+                      </CLabel>
+                      <Select
+                        options={filterOptionBrand}
+                        onChange={changeSuppliers}
+                      />
                     </CFormGroup>
                   </CCol>
-                
+                  <CCol xs="2">
+                    <CFormGroup>
+                      <i class="fas fa-plus mt-4" style={{ cursor: "pointer" }}  onClick={addBrand}></i>
+                    </CFormGroup>
+                  </CCol>
                 </CFormGroup>
               </CCardBody>
             </CCard>
@@ -514,11 +558,15 @@ function Create(props) {
                         {/* <CInputFile id="file-input" name="file-input"  onChange={changeImage}/> */}
                       </CCol>
                     </CFormGroup>
-                    <CInput
-                      id="vat"
+                    
+                    <CInputFile id="link" name="link" 
+                    onChange={handleImage} accept="image/png, image/jpeg"  />
+
+                    {/* <CInput
+
                       placeholder="link anh"
                       onChange={changeImage}
-                    />
+                    /> */}
                   </CFormGroup>
                 </CFormGroup>
               </CCardBody>
