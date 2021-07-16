@@ -14,6 +14,7 @@ import java.util.List;
 
 public interface ProductService <t>{
     List<t> getAll();
+  List<t> getAll1();
   ResponseEntity<t> create(InputProductDto inputProductDTO);
     ProductDto findById(int id);
     ProductEntity update(int id, ProductEntity productEntity);
@@ -36,7 +37,7 @@ public interface ProductService <t>{
     List<t> searchByNameAndCodeByCategory(String keyword, String filter);
 
 
-    ProductDto updateProduct(int id, UpdateDto productDto);
+  ResponseEntity<t> updateProduct(int id, UpdateDto productDto);
     List<ProductDto> findAll(Pageable pageable);
 
 

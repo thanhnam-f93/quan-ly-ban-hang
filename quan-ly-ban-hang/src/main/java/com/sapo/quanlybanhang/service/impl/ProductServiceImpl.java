@@ -49,6 +49,17 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public List getAll1() {
+        List<ProductEntity> productEntities = productRepository.getAll1();
+        List<ProductDto> productDtos = new ArrayList<>();
+        Converter converter = new Converter();
+        for (ProductEntity item : productEntities) {
+            productDtos.add(converter.ConverterToDtoProduct(item));
+        }
+        return productDtos;
+    }
+
+    @Override
     public ResponseEntity<?> create(InputProductDto inputProductDTO) {
 
         Converter converter = new Converter();
@@ -69,6 +80,25 @@ public class ProductServiceImpl implements ProductService {
             if(productRepository.existsByCode(inputProductDTO.getCode())){
                   return ResponseEntity.badRequest().body(new Message(" error : code trung "));
             }
+        }
+        if(inputProductDTO.getName() == ""){
+            return ResponseEntity.badRequest().body(new Message(" error : ma ko dc trong "));
+        }
+
+//        if(inputProductDTO.getNumberProduct() <= 0){
+//            return ResponseEntity.badRequest().body(new Message(" error : so luong ko duoc chong "));
+//        }
+//        if(inputProductDTO.getPrice() == 0){
+//            return ResponseEntity.badRequest().body(new Message(" error : ma ko dc trong "));
+//        }
+    if(inputProductDTO.getCategoryName() == ""){
+        return ResponseEntity.badRequest().body(new Message(" error : loai ko dc trong "));
+    }
+        if(inputProductDTO.getBrandName() == ""){
+            return ResponseEntity.badRequest().body(new Message(" error : nhan hieu ko dc trong "));
+        }
+        if(inputProductDTO.getSupplierName() == ""){
+            return ResponseEntity.badRequest().body(new Message(" error : nha cung cap ko dc trong "));
         }
 
             productEntity.setCategory(categoriesEntity);
@@ -337,17 +367,34 @@ public class ProductServiceImpl implements ProductService {
 
     }
 
-
     @Override
-    public ProductDto updateProduct(int id, UpdateDto updateDto) {
+    public ResponseEntity<?> updateProduct(int id, UpdateDto updateDto) {
         ProductEntity product = productRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Not found."));
         CategoryEntity categoryEntity = categoryRepository.findByName(updateDto.getCategoryName());
         BrandEntity brandEntity = brandRepository.findByName((updateDto.getBrandName()));
         SupplierEntity supplierEntity = supplierRepository.findByName(updateDto.getSupplierName());
+
+
+
+      if(updateDto.getCode() == ""){
+            ProductEntity productEntity1 = productRepository.findFirstByOrderByIdDesc();
+            updateDto.setCode(("SKU" + String.valueOf(productEntity1.getId()+1)));
+        }
+     else {
+            if(productRepository.existsByCode(updateDto.getCode())){
+                return ResponseEntity.badRequest().body(new Message(" error : code trung "));
+            }
+        }
+
+     if(updateDto.getName() == ""){
+            return ResponseEntity.badRequest().body(new Message(" error : ma ko dc trong "));
+        }
+
         product.setCode(updateDto.getCode());
         product.setName(updateDto.getName());
         product.setCategory(categoryEntity);
         product.setNumberProduct(updateDto.getNumberProduct());
+        product.setSellProduct(updateDto.getSellProduct());
         product.setPrice(updateDto.getPrice());
         product.setDescription(updateDto.getDescription());
         product.setBrand(brandEntity);
@@ -358,9 +405,10 @@ public class ProductServiceImpl implements ProductService {
         product.setImage(updateDto.getImage());
         productRepository.save(product);
         Converter converter = new Converter();
-        return converter.ConverterToDtoProduct(product);
 
-
+        ProductDto productsDTO = converter.ConverterToDtoProduct(product);
+        return ResponseEntity.ok(productsDTO);
+//        return converter.ConverterToDtoProduct(product);
     }
 
     @Override

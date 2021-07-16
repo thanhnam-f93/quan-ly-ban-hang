@@ -45,6 +45,7 @@ function Update(props) {
   const [name, setName] = useState("");
   const [brandID, setBrandID] = useState("");
   const [numberProduct, setNumber] = useState("");
+  const [sellProduct,setSell] = useState("");
   const [image, setImage] = useState("");
   const [price, setPrice] = useState("");
   const [supplierId, setSupplierId] = useState("");
@@ -163,6 +164,7 @@ function Update(props) {
       setName(res.data.name);
       setBrandName(res.data.brandID);
       setNumber(res.data.numberProduct);
+      setSell(res.data.sellProduct)
       setImage(res.data.image);
       setSupplierName(res.data.supplierId);
       setDescription(res.data.description);
@@ -180,6 +182,7 @@ function Update(props) {
       name: name,
       brandName: brandName,
       numberProduct: numberProduct,
+      sellProduct: sellProduct,
       image: image,
       categoryName: categoryName,
       description: description,
@@ -193,10 +196,9 @@ function Update(props) {
     var data = JSON.stringify(category)
     Swal.fire({
       title: 'bạn có muốn thay đổi sản phẩm?',
-      showDenyButton: true,
       showCancelButton: true,
+     confirmButtonColor:"#0089ff",
       confirmButtonText: `lưu`,
-      denyButtonText: `hủy bỏ thao tác`,
     }).then((result) => {
       /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
@@ -213,9 +215,17 @@ function Update(props) {
               showConfirmButton: false,
               timer: 1500
             })
+          };
+          if(error.response.data.mess == " error : ma ko dc trong "){
+            Swal.fire({
+              icon: 'error',
+              title: 'tên không được để trống',
+              showConfirmButton: false,
+              timer: 1500
+            })
           }
-        })
-        ;
+
+        });
         Swal.fire('đã lưu!', '', 'success')
       } else if (result.isDenied) {
         Swal.fire('Sản phẩm vẫn chưa được thay đổi', '', 'info')
@@ -224,6 +234,7 @@ function Update(props) {
     
     
   };
+  
   function format2(n, currency) {
     if (n != "") {
         return n.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') + " " + currency;
@@ -241,6 +252,10 @@ function Update(props) {
   };
   const changeNumber = (event) => {
     setNumber(event.target.value);
+  };
+
+  const changeSell = (event) => {
+    setSell(event.target.value);
   };
   const changeImage = (event) => {
     setImage(event.target.value);
@@ -313,6 +328,15 @@ function Update(props) {
       })
     }
   }
+  const addCategory = () => {
+    props.history.push("/product/add-category");
+  };
+
+  const addSupplier = () => {
+    props.history.push("/add-supplier");
+  };
+
+
   
   const changeonBlurPrice = (event)=>{
     // var a = new RegExp("^[0-9]*$")
@@ -339,11 +363,20 @@ function Update(props) {
   return (
     <div>
       <div>
-      <h1>{name}</h1>
         <CRow>
-          
+        <CCol xs="12" sm="7">
+        <h1>{name}</h1>
+         </CCol>
+         <CCol className="px-0 d-flex justify-content-end" xs="12" sm="5" >
+         <CCol xs="6"  sm="4" >
+           <CButton style={{background:"#0089ff"}} onClick={addCategory}>
+            Thêm sản phẩm
+            </CButton>
+           </CCol>
+         </CCol>
+        </CRow>
+        <CRow>     
       <CCol  xs="12" sm="7">
-      
       <CCard>
        
               <CCardHeader>Sản phẩm</CCardHeader>
@@ -354,7 +387,7 @@ function Update(props) {
                   <span style={{color:"red"}}> {message.code}</span>
                 </CFormGroup>
                 <CFormGroup>
-                  <CLabel htmlFor="vat">Tên</CLabel>
+                  <CLabel htmlFor="vat">Tên <span style={{color:"red"}}>*</span></CLabel>
                   <CInput
                     name="name"
                     placeholder="DE1234567890"
@@ -364,16 +397,44 @@ function Update(props) {
                   />
                    <span style={{color:"red"}}> {message.name}</span>
                 </CFormGroup>
-                <CFormGroup>
-                  <CLabel htmlFor="vat">Số lượng</CLabel>
-                  <CInput
+                <CFormGroup row className="my-0">
+                  <CCol xs="4">
+                    <CFormGroup>
+                      <CLabel htmlFor="city">Số lượng</CLabel>
+                      <CInput
+                         name="price"
+                         placeholder="DE1234567890"
+                         onChange={changeNumber}
+                         value={numberProduct}
+                         onBlur={changeonBlurNumber}
+                      />
+                       <span style={{color:"red"}}> {message.numberProduct}</span>
+                    </CFormGroup>
+                  </CCol>
+                  <CCol xs="4">
+                    <CFormGroup>
+                      <CLabel htmlFor="postal-code">Giá</CLabel>
+                      <CInput
                     name="price"
                     placeholder="DE1234567890"
-                    onChange={changeNumber}
-                    value={numberProduct}
-                    onBlur={changeonBlurNumber}
+                    onChange={changePrice}
+                    value={format2(price,"vnd")}
+                    onBlur={changeonBlurPrice}
                   />
-                   <span style={{color:"red"}}> {message.numberProduct}</span>
+                   <span style={{color:"red"}}> {message.price}</span>
+                    </CFormGroup>
+                  </CCol>
+                  <CCol xs="4">
+                    <CFormGroup>
+                      <CLabel htmlFor="postal-code">Đã bán</CLabel>
+                      <CInput
+                    name="sellproduct"
+                    value={sellProduct}
+   
+                  />
+                  
+                    </CFormGroup>
+                  </CCol>
                 </CFormGroup>
                 <CFormGroup>
                   <CLabel htmlFor="vat">Mô tả</CLabel>
@@ -384,17 +445,6 @@ function Update(props) {
                     placeholder="mô tả"
                     onChange={changeDescription}
                   />
-                </CFormGroup>
-                <CFormGroup>
-                  <CLabel htmlFor="vat">Giá</CLabel>
-                  <CInput
-                    name="price"
-                    placeholder="DE1234567890"
-                    onChange={changePrice}
-                    value={format2(price,"vnd")}
-                    onBlur={changeonBlurPrice}
-                  />
-                   <span style={{color:"red"}}> {message.price}</span>
                 </CFormGroup>
               </CCardBody>
             </CCard>
@@ -455,7 +505,7 @@ function Update(props) {
                 </CCol>
             </CCard>
             <CCard className=" p-4">
-               <img width="100%" height="400px" src={image}/>    
+               <img width="100%" height="300px" src={image}/>    
                <CInput
                     name="price"
                     placeholder="thay đổi link ảnh"
@@ -465,33 +515,6 @@ function Update(props) {
             </CCard>
         </CCol>
     
-        {/* <CCol className="px-0" xs="12" sm="7">
-        <button
-          className="btn btn-secondary"
-          onClick={cancel}
-          style={{ marginLeft: "10px" }}
-        >
-          Quay Lại
-        </button>
-        <button
-          className="btn btn-success"
-          onClick={updateCategory}
-          style={{ marginLeft: "10px" }}
-        >
-          Cập nhật
-        </button>
-       
-        </CCol>
-        <CCol  xs="12" sm="5">
-        <button
-          style={{ marginLeft: "10px" }}
-          onClick={() => deleteCategory(id)}
-          className="btn btn-danger"
-        >
-          Xóa
-        </button>
-        </CCol>
-     */}
         </CRow>
         <CRow>
          <CCol xs="12" sm="7">
@@ -502,7 +525,7 @@ function Update(props) {
             </CButton>
            </CCol>
            <CCol xs="6"  sm="3">
-           <CButton block color="success" onClick={updateCategory}>
+           <CButton style={{background:"#0089ff"}} onClick={updateCategory}>
             Cập nhật
             </CButton>
            </CCol>

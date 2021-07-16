@@ -25,6 +25,7 @@ import Swal from 'sweetalert2'
   
 
   function Update(props) {
+    console.log("vvvvvvvvvv",props)
 
     const [id] = useState(props.match.params.id);
     const [message,setMesage] =useState({

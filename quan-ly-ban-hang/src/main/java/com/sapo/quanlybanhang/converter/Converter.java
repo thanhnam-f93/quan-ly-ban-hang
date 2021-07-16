@@ -38,14 +38,14 @@ public class Converter {
         dto.setModifiedDate(item.getModifiedDate());
         dto.setCreate_by(item.getCreate_by());
         dto.setModified_by(item.getModified_by());
-        List<ProductDto> productDtoList = new ArrayList<>();
-        for ( ProductEntity productEntity: item.getProductEntities())
-        {
-            ProductDto productDto = ConverterToDtoProduct(productEntity);
-            productDtoList.add(productDto);
-
-        }
-        dto.setProductDtoList(productDtoList);
+//        List<ProductDto> productDtoList = new ArrayList<>();
+//        for ( ProductEntity productEntity: item.getProductEntities())
+//        {
+//            ProductDto productDto = ConverterToDtoProduct(productEntity);
+//            productDtoList.add(productDto);
+//
+//        }
+//        dto.setProductDtoList(productDtoList);
 
         return dto;
 

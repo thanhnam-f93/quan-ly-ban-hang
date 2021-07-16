@@ -3,6 +3,7 @@ package com.sapo.quanlybanhang.controller;
 import com.sapo.quanlybanhang.dto.*;
 import com.sapo.quanlybanhang.entity.ProductEntity;
 import com.sapo.quanlybanhang.service.ProductService;
+import com.sapo.quanlybanhang.service.UploadService;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:3000")
@@ -21,11 +24,17 @@ import java.util.List;
 public class ProductController {
     @Autowired
     private ProductService productService;
+    @Autowired
+    private UploadService uploadService;
 
 
     @GetMapping(value = "/products")
     public List<ProductDto> getAll() {
         return productService.getAll();
+    }
+    @GetMapping(value = "/products1")
+    public List<ProductDto> getAll1() {
+        return productService.getAll1();
     }
 
     @GetMapping(value = "/day")
@@ -178,11 +187,11 @@ public List<ProductDto> searchAll(@RequestParam String keyword,@RequestParam Str
     }
 
     @PutMapping(value = "/products/{id}")
-    public ResponseEntity<UpdateDto> updateProduct(@PathVariable int id, @RequestBody UpdateDto updateDto) {
+    public ResponseEntity<?> updateProduct(@PathVariable int id, @RequestBody UpdateDto updateDto) {
 
-        productService.updateProduct(id, updateDto);
+      return  productService.updateProduct(id, updateDto);
 
-        return new ResponseEntity<>(HttpStatus.OK);
+//        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping ("/find-all")
@@ -193,4 +202,9 @@ public List<ProductDto> searchAll(@RequestParam String keyword,@RequestParam Str
             return  productService.findAll(pageable);
         }
 
+        @PostMapping(value = "/image")
+    public void uploadFile(@RequestParam("file") MultipartFile file) throws IOException {
+            uploadService.uploadFile(file);
+
+        }
 }

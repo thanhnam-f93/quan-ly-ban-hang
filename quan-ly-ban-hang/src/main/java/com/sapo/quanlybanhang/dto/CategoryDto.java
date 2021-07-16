@@ -26,6 +26,6 @@ public class CategoryDto {
 
     private String modified_by;
 
-    private List<ProductDto> productDtoList;
+//    private List<ProductDto> productDtoList;
 
 }

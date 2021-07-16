@@ -10,30 +10,39 @@ import {
   CTextarea,
   CInputFile,
   CValidFeedback,
-  CButton
+  CButton,
 } from "@coreui/react";
-import Swal from 'sweetalert2'
+import 'core-js/es/symbol'
+import Swal from "sweetalert2";
 import { useEffect, useState } from "react";
-import swal from 'sweetalert';
+import swal from "sweetalert";
 import {
   getBrand,
   getCate,
   getSupplier,
   createProduct,
-  ApiQuan
+  ApiQuan,
 } from "src/apis/Product";
 import Select from "react-select";
 import axios from "axios";
 import ApiCustomer from "src/apis/ApiCustomer";
-function Create(props) {
-  const [code, setCode] = useState("1");
-  const [name, setName] = useState("");
-  const [message,setMesage] =useState({
-    code : "",
-    name : "",
-    numberProduct:"",
-    price:"",
+import { number } from "prop-types";
+import CIcon from "@coreui/icons-react";
+import AddBrand from "./AddBrand";
+import Upda from "./UpdateBrand";
+import Update from "./Update";
+import UpdateBrand from "./UpdateBrand";
+import AddSupplier from "./AddSupplier";
+import AddCategory from "./AddCategory";
 
+function Create(props) {
+  const [code, setCode] = useState("");
+  const [name, setName] = useState("");
+  const [message, setMesage] = useState({
+    code: "",
+    name: "",
+    numberProduct: "",
+    price: "",
   });
   const [brandName, setBrandName] = useState("");
   const [numberProduct, setNumber] = useState("");
@@ -51,69 +60,133 @@ function Create(props) {
   const [filterOptions, setFilterOptions] = useState([]);
   const [filterOptionCategory, setFilterOptionCategory] = useState([]);
   const [filterOptionBrand, setFilterOptionBrand] = useState([]);
+  const [products, setProdut] = useState([]);
+  const [id, setID] = useState([]);
+  const [isShowBrand, setBrands] = useState(false);
+  const [isShowSupplier, setSuppliers] = useState(false);
+  const [isShowCategory, setCategoryies] = useState(false);
+  const [isShowUpdateBrand, setBrandUpdate] = useState(false);
+
+  useEffect(() => {
+    ApiQuan(`get`, `products1`).then((item) => {
+      setProdut(item.data);
+      console.log("bbbb", item.data);
+    });
+    // products.map(res=>{
+    //  console.log("yyyyy",res.name)
+    // })
+  }, []);
 
   const saveProduct = (e) => {
+    console.log("aaaaa", products[0].id);
     e.preventDefault();
     let product = {
-          code: code,
-          name: name,
-          brandName: brandName,
-          numberProduct: numberProduct,
-          image: image,
-          price: price,
-          description: description,
-          color: color,
-          size: size,
-          categoryName: categoryName,
-          createdDate: createdDate,
-          supplierName: supplierName,
+      code: code,
+      name: name,
+      brandName: brandName,
+      numberProduct: numberProduct,
+      image: image,
+      price: price,
+      description: description,
+      color: color,
+      size: size,
+      categoryName: categoryName,
+      createdDate: createdDate,
+      supplierName: supplierName,
     };
-    var data1 = JSON.stringify(product)
-  console.log(product);
-    ApiQuan('post',`products`,data1).then((item) => {  
-    Swal.fire({
-      icon: 'success',
-      title: 'đã đạo thêm nhà cung cấp',
-      showConfirmButton: false,
-      timer: 1500
-    })
-      props.history.push("/product");
-    })
-    .catch(error=>{
-      console.log("aaaaaaaaaaaaaaaa")
-      if(error.response.data.mess == " error : code trung "){
+    var data1 = JSON.stringify(product);
+    console.log(product);
+    ApiQuan("post", `products`, data1)
+      .then((item) => {
+        ApiQuan(`get`, `products1`).then((item) => {
+          setProdut(item.data);
+          console.log("bbbb", item.data);
+        });
         Swal.fire({
-          icon: 'error',
-          title: 'code trùng',
+          icon: "success",
+          title: "đã đạo thêm sản phẩm",
           showConfirmButton: false,
-          timer: 1500
-        })
-      }
-    })
+          timer: 1500,
+        });
+
+        props.history.push(`/product/update-category/${products[0].id + 1}`);
+      })
+      .catch((error) => {
+        console.log("aaaaaaaaaaaaaaaa");
+        if (error.response.data.mess == " error : code trung ") {
+          Swal.fire({
+            icon: "error",
+            title: "code trùng",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
+        if (error.response.data.mess == " error : ma ko dc trong ") {
+          Swal.fire({
+            icon: "error",
+            title: "tên không được chống",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
+        if (error.response.data.mess == " error : so luong ko duoc chong ") {
+          Swal.fire({
+            icon: "error",
+            title: "số lượng không được chống",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
+        if (error.response.data.mess == " error : loai ko dc trong ") {
+          Swal.fire({
+            icon: "error",
+            title: "loại không được chống",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
+        if (error.response.data.mess == " error : nhan hieu ko dc trong ") {
+          Swal.fire({
+            icon: "error",
+            title: "nhãn hiệu không được chống",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
+        if (error.response.data.mess == " error : nha cung cap ko dc trong ") {
+          Swal.fire({
+            icon: "error",
+            title: "nhà cung cấp không được chống",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
+      });
   };
 
   useEffect(() => {
-    ApiQuan('get',`suppliers`).then((res) => {
+    ApiQuan("get", `suppliers`).then((res) => {
       setSupplier(res.data);
       console.log(res.data);
     });
-  }, []);
+  }, [isShowBrand]);
 
   useEffect(() => {
-    ApiQuan('get',`categories`).then((res) => {
+    ApiQuan("get", `categories`).then((res) => {
       setCategory(res.data);
       console.log(res.data);
     });
-  }, []);
+  }, [isShowCategory]);
 
   useEffect(() => {
-    ApiQuan('get',`brands`).then((res) => {
+    ApiQuan("get", `brands`).then((res) => {
       setBrand(res.data);
       console.log(res.data);
     });
-  }, []);
+  }, [isShowSupplier]);
 
   useEffect(() => {
+    setFilterOptions([])
     supplier.map((item) => {
       setFilterOptions((filterOptions) => [
         ...filterOptions,
@@ -123,6 +196,7 @@ function Create(props) {
   }, [supplier]);
 
   useEffect(() => {
+    setFilterOptionCategory([])
     category.map((item) => {
       setFilterOptionCategory((filterOptions) => [
         ...filterOptions,
@@ -132,6 +206,7 @@ function Create(props) {
   }, [category]);
 
   useEffect(() => {
+    setFilterOptionBrand([])
     brand.map((item) => {
       setFilterOptionBrand((filterOptions) => [
         ...filterOptions,
@@ -144,75 +219,76 @@ function Create(props) {
     props.history.push("/category");
   };
 
+  const changeonBlur = (event) => {
+    if (
+      /((\r\n|\n|\r)$)|(^(\r\n|\n|\r))|^\s*$/.test(event.target.value) != false
+    ) {
+      setMesage({
+        code: " * Mã không được để trống",
+      });
+    } else {
+      setMesage({
+        code: "",
+      });
+    }
+  };
 
-// const changeonBlur = (event)=>{
-// if( /((\r\n|\n|\r)$)|(^(\r\n|\n|\r))|^\s*$/.test(event.target.value)!=false){
-//     setMesage({
-//       code:" * Mã không được để trống"
-//     })
-//   }
-//   else{
-//     setMesage({
-//       code:""
-//     })
-//   }
-// }
+  const changeonBlurName = (event) => {
+    if (
+      /((\r\n|\n|\r)$)|(^(\r\n|\n|\r))|^\s*$/.test(event.target.value) != false
+    ) {
+      setMesage({
+        name: " Tên sản phẩm không được để trống",
+      });
+    } else {
+      setMesage({
+        name: "",
+      });
+    }
+  };
 
-const changeonBlurName = (event)=>{
- if( /((\r\n|\n|\r)$)|(^(\r\n|\n|\r))|^\s*$/.test(event.target.value)!=false){
-    setMesage({
-      name:" Tên sản phẩm không được để trống"
-    })
-  }
-  else{
-    setMesage({
-      name:""
-    })
-  }
-}
+  const changeonBlurNumber = (event) => {
+    var a = new RegExp("^[0-9]*$");
 
-const changeonBlurNumber = (event)=>{
-  var a = new RegExp("^[0-9]*$")
-  
-  if((a.test(event.target.value)==false)){
-    setMesage({
-      numberProduct:"Số lượng không được nhập kí tự"
-    })
-  }
-  else if( /((\r\n|\n|\r)$)|(^(\r\n|\n|\r))|^\s*$/.test(event.target.value)!=false){
-    setMesage({
-      numberProduct:" Số lượng sản phẩm không được để trống"
-    })
-  }
-  else{
-    setMesage({
-      numberProduct:""
-    })
-  }
-}
+    if (a.test(event.target.value) == false) {
+      setMesage({
+        numberProduct: "Số lượng không được nhập kí tự",
+      });
+    } else if (
+      /((\r\n|\n|\r)$)|(^(\r\n|\n|\r))|^\s*$/.test(event.target.value) != false
+    ) {
+      setMesage({
+        numberProduct: " Số lượng sản phẩm không được để trống",
+      });
+    } else {
+      setMesage({
+        numberProduct: "",
+      });
+    }
+  };
 
-const changeonBlurPrice = (event)=>{
-  var a = new RegExp("^[0-9]*$")
-  
-  if((a.test(event.target.value)==false)){
-    setMesage({
-      price:"Số lượng không được nhập kí tự"
-    })
-  }
-  else if( /((\r\n|\n|\r)$)|(^(\r\n|\n|\r))|^\s*$/.test(event.target.value)!=false){
-    setMesage({
-      price:" Số lượng sản phẩm không được để trống"
-    })
-  }
-  else{
-    setMesage({
-      price:""
-    })
-  }
-}
+  const changeonBlurPrice = (event) => {
+    var a = new RegExp("^[0-9]*$");
 
-const changeCode= (event) => {
- setCode(event.target.value)
+    if (a.test(event.target.value) == false) {
+      setMesage({
+        price: "Số lượng không được nhập kí tự",
+      });
+    } else if (
+      /((\r\n|\n|\r)$)|(^(\r\n|\n|\r))|^\s*$/.test(event.target.value) != false
+    ) {
+      setMesage({
+        price: " Số lượng sản phẩm không được để trống",
+      });
+    } else {
+      setMesage({
+        price: "",
+      });
+    }
+  };
+
+  const changeCode = (event) => {
+    setCode(event.target.value);
   };
 
   const changeName = (event) => {
@@ -220,18 +296,16 @@ const changeCode= (event) => {
   };
   const changeBrand = (event) => {
     setBrandName(event.label);
-    console.log(event)
+    console.log(event);
   };
 
   const changeNumber = (event) => {
     setNumber(event.target.value);
   };
   const changeImage = (event) => {
-     setImage(event.target.value)
-    
-  
+    setImage(event.target.value);
   };
- 
+
   const changePrice = (event) => {
     setPrice(event.target.value);
   };
@@ -250,7 +324,19 @@ const changeCode= (event) => {
   const changeSuppliers = (event) => {
     setSupplierName(event.label);
   };
+  const addBrand = () => {
+    setBrands(true);
+  };
+  const addSupplier = () => {
+    setSuppliers(true);
+  };
+  const addCategories = () => {
+    setCategoryies(true);
+  };
 
+  const updateBrand = () => {
+    setBrandUpdate(true);
+  };
 
   return (
     <div>
@@ -268,29 +354,50 @@ const changeCode= (event) => {
                     onChange={changeCode}
                     // onBlur={changeonBlur}
                   />
-                  <span style={{color:"red"}}> {message.code}</span>
+                  <span style={{ color: "red" }}> {message.code}</span>
                 </CFormGroup>
                 <CFormGroup>
-                  <CLabel htmlFor="vat">Tên</CLabel>
+                  <CLabel htmlFor="vat">
+                    Tên <span style={{ color: "red" }}>*</span>
+                  </CLabel>
                   <CInput
                     name="name"
                     placeholder="Nhập tên sản phẩm"
                     onChange={changeName}
                     onBlur={changeonBlurName}
                   />
-                  <span style={{color:"red"}}> {message.name}</span>
+                  <span style={{ color: "red" }}> {message.name}</span>
                 </CFormGroup>
-                <CFormGroup>
-                  <CLabel htmlFor="vat">Số lượng</CLabel>
-                  <CInput
-               
-                    id="vat"
-                    placeholder="Số lượng"
-                    onChange={changeNumber}
-                    onBlur={changeonBlurNumber}
-                  />
-                   <span style={{color:"red"}}> {message.numberProduct}</span>
-
+                <CFormGroup row className="my-0">
+                  <CCol xs="6">
+                    <CFormGroup>
+                      <CLabel htmlFor="city">Số lượng</CLabel>
+                      <CInput
+                        type="number"
+                        id="vat"
+                        placeholder="Số lượng"
+                        onChange={changeNumber}
+                        onBlur={changeonBlurNumber}
+                      />
+                      <span style={{ color: "red" }}>
+                        {" "}
+                        {message.numberProduct}
+                      </span>
+                    </CFormGroup>
+                  </CCol>
+                  <CCol xs="6">
+                    <CFormGroup>
+                      <CLabel htmlFor="postal-code">Giá</CLabel>
+                      <CInput
+                        id="vat"
+                        type="number"
+                        placeholder="nhập giá"
+                        onChange={changePrice}
+                        onBlur={changeonBlurPrice}
+                      />
+                      <span style={{ color: "red" }}> {message.price}</span>
+                    </CFormGroup>
+                  </CCol>
                 </CFormGroup>
                 <CFormGroup>
                   <CLabel htmlFor="vat">Mô tả</CLabel>
@@ -302,16 +409,6 @@ const changeCode= (event) => {
                     onChange={changeDescription}
                   />
                 </CFormGroup>
-                <CFormGroup>
-                  <CLabel htmlFor="vat">Giá</CLabel>
-                  <CInput
-                    id="vat"
-                    placeholder="nhập giá"
-                    onChange={changePrice}
-                    onBlur={changeonBlurPrice}
-                  />
-                   <span style={{color:"red"}}> {message.price}</span>
-                </CFormGroup>
               </CCardBody>
             </CCard>
             <CCard>
@@ -322,106 +419,139 @@ const changeCode= (event) => {
                     <CFormGroup>
                       <CLabel htmlFor="city">Màu sắc</CLabel>
                       <CInput
-                    name="color"
-                    placeholder="Nhập tên màu sắc"
-                    onChange={changeColor}                  
-                  />
-                    
+                        name="color"
+                        placeholder="Nhập tên màu sắc"
+                        onChange={changeColor}
+                      />
                     </CFormGroup>
                   </CCol>
                   <CCol xs="6">
                     <CFormGroup>
                       <CLabel htmlFor="postal-code">Kích cỡ</CLabel>
                       <CInput
-                    name="color"
-                    placeholder="Nhập kích cỡ"
-                    onChange={changeSize}
-                  />
+                        name="color"
+                        placeholder="Nhập kích cỡ"
+                        onChange={changeSize}
+                      />
                     </CFormGroup>
                   </CCol>
                 </CFormGroup>
               </CCardBody>
             </CCard>
-            
           </CCol>
           <CCol xs="12" sm="5">
             <CCard>
               <CCardHeader>Phân loại</CCardHeader>
               <CCardBody>
-                <CFormGroup>
-                  <CLabel htmlFor="company">Nhãn hiệu</CLabel>
-                  <Select options={filterOptionBrand} onChange={changeBrand} />
+                <CFormGroup row className="my-0">
+                  <CCol xs="10">
+                    <CFormGroup>
+                      <CLabel htmlFor="company">
+                        Nhãn hiệu <span style={{ color: "red" }}>*</span>
+                      </CLabel>
+                      <Select
+                        options={filterOptionBrand}
+                        onChange={changeBrand}
+                      />
+                    </CFormGroup>
+                  </CCol>
+                  <CCol xs="2">
+                    <CFormGroup>
+                      <i class="fas fa-plus mt-4" style={{ cursor: "pointer" }}  onClick={addSupplier}></i>
+                    </CFormGroup>
+                  </CCol>
                 </CFormGroup>
-                <CFormGroup>
-                  <CLabel htmlFor="vat">Loại</CLabel>
-                  <Select
-                    options={filterOptionCategory}
-                    onChange={changeCate}
-                  />
-                       {/* <CInput
-                    name="color"
-                    placeholder="Nhập kích cỡ"
-                    onChange={changeCate}
-                  /> */}
-                  
+                <CFormGroup row className="my-0">
+                  <CCol xs="10">
+                    <CFormGroup>
+                      <CLabel htmlFor="vat">
+                        Loại <span style={{ color: "red" }}>*</span>
+                      </CLabel>
+                      <Select
+                        options={filterOptionCategory}
+                        onChange={changeCate}
+                      />
+                    </CFormGroup>
+                  </CCol>
+                  <CCol xs="2">
+                    <CFormGroup>
+                    <i class="fas fa-plus mt-4"  style={{ cursor: "pointer" }} onClick={addCategories}></i>
+                    </CFormGroup>
+                  </CCol>
                 </CFormGroup>
-                <CFormGroup>
-                  <CLabel htmlFor="vat">Nhà cung cấp</CLabel>
-                  {/* <CInput id="vat" placeholder="nguồn hàng" onChange={changeSupplier} /> */}
+                <CFormGroup row className="my-0">
+                  <CCol xs="10">
+                    <CLabel htmlFor="vat">
+                      Nhà cung cấp <span style={{ color: "red" }}>*</span>
+                    </CLabel>
+                    {/* <CInput id="vat" placeholder="nguồn hàng" onChange={changeSupplier} /> */}
 
-                  <Select options={filterOptions} onChange={changeSuppliers} />
+                    <Select
+                      options={filterOptions}
+                      onChange={changeSuppliers}
+                    />
+                  </CCol>
+                 
+                  <CCol xs="2">
+                    <CFormGroup>
+                    <i class="fas fa-plus mt-4" style={{ cursor: "pointer" }} onClick={addBrand}></i>
+                    </CFormGroup>
+                  </CCol>
+                
                 </CFormGroup>
               </CCardBody>
             </CCard>
 
             <CCard>
-            <CCardHeader>Ảnh</CCardHeader>
-            <CCardBody>
-            <CFormGroup >
-            <CFormGroup>
-                      {/* <CLabel htmlFor="city">Chọn ảnh</CLabel>
-                    */}
-                      <CFormGroup row>
-               
-                  <CCol xs="12" md="9">
-                  
-                    {/* <CInputFile id="file-input" name="file-input"  onChange={changeImage}/> */}
-                  
-                  </CCol>
-                </CFormGroup>
-                   <CInput
-                    id="vat"
-                    placeholder="link anh"
-                    onChange={changeImage}
-                  />
-             
-                    
+              <CCardHeader>Ảnh</CCardHeader>
+              <CCardBody>
+                <CFormGroup>
+                  <CFormGroup>
+                    {/* <CLabel htmlFor="city">Chọn ảnh</CLabel>
+                     */}
+                    <CFormGroup row>
+                      <CCol xs="12" md="9">
+                        {/* <CInputFile id="file-input" name="file-input"  onChange={changeImage}/> */}
+                      </CCol>
                     </CFormGroup>
-            </CFormGroup>
-            </CCardBody>
-               </CCard>
-           
+                    <CInput
+                      id="vat"
+                      placeholder="link anh"
+                      onChange={changeImage}
+                    />
+                  </CFormGroup>
+                </CFormGroup>
+              </CCardBody>
+            </CCard>
           </CCol>
         </CRow>
-       <CRow>
-         <CCol xs="12" sm="7">
-           <CRow>
-           <CCol xs="6"  sm="2" >
-           <CButton block color="secondary" onClick={cancel}>
-            Quay lại
-            </CButton>
-           </CCol>
-           <CCol xs="6"  sm="3">
-           <CButton block color="success" onClick={saveProduct}>
-            Thêm sản phẩm
-            </CButton>
-           </CCol>
-
-           </CRow>
-           
-         </CCol>
-       </CRow>
+        <CRow>
+          <CCol xs="12" sm="7">
+            <CRow>
+              <CCol xs="6" sm="2">
+                <CButton block color="secondary" onClick={cancel}>
+                  Quay lại
+                </CButton>
+              </CCol>
+              <CCol xs="6" sm="3">
+                <CButton
+                  style={{ background: "#0089ff" }}
+                  onClick={saveProduct}
+                >
+                  Lưu
+                </CButton>
+              </CCol>
+            </CRow>
+          </CCol>
+        </CRow>
       </div>
+      <AddBrand 
+      isShowBrand={isShowBrand} setBrand={setBrands} />
+      {/* <UpdateBrand isShowUpdateBrand={isShowUpdateBrand} setBrandUpdate={setBrandUpdate}/> */}
+
+      <AddCategory isShowCategory={isShowCategory} setCategoryies={setCategoryies}/>
+      <AddSupplier  isShowSupplier={isShowSupplier} setSuppliers={setSuppliers} />
+      
     </div>
   );
 }

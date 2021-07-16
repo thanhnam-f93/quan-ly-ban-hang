@@ -31,18 +31,21 @@ import swal from 'sweetalert';
 import Select from "react-select";
 
 import axios from "axios";
+import { set } from "react-hook-form";
 
 
 function ListProduct(props) {
   const id = useState(props.match.params.id);
   const [search, setSearch] = useState("");
+  const [option,setOption]= useState("ahihih");
   const [filter, setFilter] = useState("");
   const [product,setProduct] = useState([]);
   const [pageNo, setPageNo] = useState(1);
-  const [pageSize,setPageSize]= useState(3);
+  const [pageSize,setPageSize]= useState(10);
   const [total,setTotal] = useState(1);
-  const [filterCategory, setFilterOptionCategory] = useState([]);
+  const [filterCategory, setFilterOptionCategory] = useState([{value:"", label:"tất cả"}]);
   const [categories, setCategories] = useState([]);
+  
   
   const config = {
     method: 'get',
@@ -114,7 +117,11 @@ useEffect(() => {
         ...filterOptions,
         { value: item.id, label: item.name },
       ]);
+      // if(setFilterOptionCategory(filterCategory)==0){
+      //   setPageNo(1);
+      // }
     });
+
   }, [categories]);
 
   const addCategory = () => {
@@ -129,13 +136,16 @@ useEffect(() => {
 
   const changeSearch = (event) => {
     setSearch(event.target.value)
+    setPageNo(1)
   };
   const changeFilter =(event)=>{
     setFilter(event.value)
+    setPageNo(1);
+  
     console.log(event.value)
   }
   const cancel = (e) => {
-    e.preventDefault();
+    setOption("aaaaaaa")
     setFilter("");
     setSearch("");
     setPageNo(1);
@@ -146,35 +156,35 @@ useEffect(() => {
     <>
       <div>
       <CRow>
-          <CCol xs="7" className="px-0" sm="7">
-            <CFormGroup >
+          <CCol xs="12" className="px-0" sm="7">
+            <CRow>
+              <CCol xs="8">
+              <CFormGroup >
               <CInput
                 name="name"
                 placeholder="tìm kiếm mã, tên"
                 value={search}
                 onChange={changeSearch}
               />  
-          
-               
+
             </CFormGroup>
-          </CCol>
-          <CCol xs="3"  sm="2">
-         <Select placeholder="loại sản phẩm" defaultValue={filter} options={filterCategory} onChange={changeFilter} />  
-          </CCol>
-          <CCol xs="3"  sm="1">
-          <CButton block color="secondary" onClick={cancel}>
-            Đặt lại
+
+              </CCol>
+              <CCol xs="4">
+              <Select placeholder="loại danh mục"  options={filterCategory} onChange={changeFilter} />  
+              </CCol>
+            </CRow>
+         
+          </CCol>   
+          <CCol className="px-0 d-flex justify-content-end" xs="12" sm="5">
+          <CCol xs="6"  sm="4" >
+          <CButton onClick={addCategory} style={{background:"#0089ff"}}>
+           Tạo sản phẩm
             </CButton>
+          </CCol>
           </CCol>
         </CRow>
         <CRow>
-        <CCol xs="1">
-          <CFormGroup row>
-          <CButton block color="success" onClick={addCategory}>
-              Tạo
-            </CButton>
-          </CFormGroup>
-          </CCol>
         </CRow>
 
         <div className="row">
@@ -195,7 +205,7 @@ useEffect(() => {
             {/* {currentPosts.map((item)  */}
               {product.map((item) => (
               
-                 <tr key={item.id} onClick={() => updateCategory(item.id)} className="lits">
+                 <tr key={item.id} style={{ cursor: "pointer" }} onClick={() => updateCategory(item.id)} className="lits">
              
                    <td>
                     {item.code}
@@ -210,8 +220,7 @@ useEffect(() => {
                   </td>
 
                 </tr>
-              
-               
+
               ))}
             </tbody>
           </table>

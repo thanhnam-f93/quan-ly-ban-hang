@@ -3,8 +3,11 @@ package com.sapo.quanlybanhang.service.impl;
 import com.sapo.quanlybanhang.converter.Converter;
 import com.sapo.quanlybanhang.dto.BrandDto;
 import com.sapo.quanlybanhang.entity.BrandEntity;
+import com.sapo.quanlybanhang.entity.SupplierEntity;
 import com.sapo.quanlybanhang.repository.BrandRepository;
 import com.sapo.quanlybanhang.service.BrandService;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,5 +26,17 @@ public class BrandServiceImpl implements BrandService {
             colorDtos.add(converter.ConverterToDtoBrand(item));
         }
         return colorDtos;
+    }
+
+    @Override
+    public BrandDto create(BrandDto brandDto) {
+        ModelMapper modelMapper = new ModelMapper();
+        modelMapper.getConfiguration()
+                .setMatchingStrategy(MatchingStrategies.STRICT);
+        BrandEntity brandEntity = modelMapper.map(brandDto, BrandEntity.class);
+
+        brandRepository.save(brandEntity);
+        Converter converter = new Converter();
+        return converter.ConverterToDtoBrand(brandEntity);
     }
 }
