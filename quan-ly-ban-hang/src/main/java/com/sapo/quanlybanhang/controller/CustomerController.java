@@ -321,9 +321,9 @@ Integer count(){
                     return new ResponseEntity<>("Số điện thoại đã tồn tại", HttpStatus.BAD_REQUEST);
                 }
                 customerDtoNew    =  customerService.save(customerDto);
-                return new ResponseEntity<>(customerDto, HttpStatus.OK);
+                return new ResponseEntity<>(customerDtoNew, HttpStatus.OK);
             } else {
-                return new ResponseEntity<>(customerDtoNew, HttpStatus.NO_CONTENT);
+                return new ResponseEntity<>("No Content", HttpStatus.NO_CONTENT);
             }
         } catch (Exception e) {
             logger.error("this is: " + e.getMessage());
