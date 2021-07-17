@@ -77,7 +77,6 @@ public class StaffServiceImpl implements StaffService {
     @Override
     public Page<StaffDto> getAllStaffByName(String name,Pageable pageable) {
       Page<StaffEntity> listStaffEntity =  staffRepository.findAllStaffByName(name,pageable);
-//        return listStaffEntity.stream().map(item -> StaffConverter.toDto(item)).collect(Collectors.toList());
         Page<StaffDto> staffDtoPage = listStaffEntity.map(item->StaffConverter.toDto(item));
         return  staffDtoPage;
     }

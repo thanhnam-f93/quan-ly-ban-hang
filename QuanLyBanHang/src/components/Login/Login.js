@@ -70,65 +70,30 @@ const Login = () => {
    data: data
  };
 
- const handleSubmit = () => {
-   console.log(category);
-   // callApi("login", "POST", category).then((response) => {
-     axios(config)
-     .then((response) => {
-       console.log("response:", data);
-       reactLocalStorage.set("token", response.data.token);
-       reactLocalStorage.set("name", response.data.fullName);
-       setJwt(data.token);
-       window.location.reload("http://localhost:3000/dashboard");
-   })
-   .catch(function (error) {
-     alert("Tài khoản hoặc mật khẩu không chính xác");
-     console.log(error);
-   });
-
+ const handleSubmit = (e) => {
+   e.preventDefault();
+    console.log(category);
+    // callApi("login", "POST", category).then((response) => {
+      axios(config)
+      .then((response) => {
+        console.log("response:", data);
+        reactLocalStorage.set("token", response.data.token);
+        reactLocalStorage.set("name", response.data.fullName);
+        setJwt(data.token);
+        window.location.reload("http://localhost:3000/dashboard");
+    })
+    .catch(function (error) {
+      alert("Tài khoản hoặc mật khẩu không chính xác");
+      console.log(error);
+    });
+   
  };
 
   return (
     <div className="c-app c-default-layout flex-row align-items-center">
       <CContainer>
         <CRow className="justify-content-center">
-      {/* <div className="container">
-        <div className="login-form">
-          <div className="main-div">
-            <form id="formLogin" name="formLogin">
-              <div className="form-group">
-                <input
-                  type="text"
-                  className="form-control"
-                  name="phone"
-                  id="userName"
-                  placeholder="Tên đăng nhập"
-                  onChange={handleChange}
-                />
-              </div>
-              <div className="form-group">
-                <input
-                  type="password"
-                  name="passWord"
-                  className="form-control"
-                  id="password"
-                  placeholder="Mật khẩu"
-                  onChange={handleChange}
-                />
-              </div>
-              <button
-                type="button"
-                className="btn btn-primary"
-                onClick={handleSubmit}
-              >
-                Đăng nhập
-              </button>
-            </form>
-          </div>
-        </div>
-      </div> */}
-
-
+     
 <CCol xs="12" sm="5">
             <CCard>
 

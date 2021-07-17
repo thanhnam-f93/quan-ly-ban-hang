@@ -24,8 +24,8 @@ const Role = () => {
           <div style = {{ marginLeft: "720px"}}>
           <Link to= '/settings/roles/new-role'>
         <button
-          style={{ marginLeft: "10px" }}
           className="btn btn-success"
+          style={{ marginLeft: "10px", backgroundColor: "#0089ff" }}     
         >
           Thêm mới vai trò
         </button>
@@ -40,14 +40,26 @@ const Role = () => {
       </div>
     <hr />
 
-      <table className=" table table-striped table-bordered" style = {{backgroundColor: "white"}}>
+       {/* Chi tiết vai trò */}
+       <div className="row" style={{ marginTop: "15px" }}>
+
+<div className="col-lg-4">
+  <div style={{ width: "360px" }}>
+    <h5 style={{ marginTop: "12px" }}>Quản lý vai trò và phân quyền</h5>
+    <p></p>
+    <p>Hỗ trợ thêm mới, phân quyền và quản lý sửa các vai trò của cửa hàng</p>
+  </div>
+</div>
+
+<div className="col-lg-8">
+  <div style={{ padding: "13px 20px" }}>
+    <div className="row">
+    <table className=" table table-striped table-bordered" style = {{backgroundColor: "white"}}>
         <thead>
           <tr>
-            <th>Mã vai trò</th>
             <th>Vai trò</th>
             <th>Ghi chú</th>
             <th>Ngày tạo</th>
-            <th>Cập nhật</th>
           </tr>
         </thead>
         <tbody>
@@ -58,6 +70,14 @@ const Role = () => {
           })}
         </tbody>
       </table>
+
+    </div>
+  </div>
+</div>
+</div>
+{/* End - Chi tiết vai trò */}
+
+
     </div>
   )
 }

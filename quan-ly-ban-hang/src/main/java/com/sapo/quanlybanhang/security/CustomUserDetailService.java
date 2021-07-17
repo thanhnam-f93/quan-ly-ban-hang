@@ -1,6 +1,8 @@
 package com.sapo.quanlybanhang.security;
 
 import com.sapo.quanlybanhang.dto.MyUser;
+import com.sapo.quanlybanhang.dto.RoleDto;
+import com.sapo.quanlybanhang.dto.StaffDto;
 import com.sapo.quanlybanhang.entity.RoleEntity;
 import com.sapo.quanlybanhang.entity.StaffEntity;
 import com.sapo.quanlybanhang.repository.StaffRepository;
@@ -13,7 +15,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class CustomUserDetailService implements UserDetailsService {
@@ -35,4 +39,13 @@ public class CustomUserDetailService implements UserDetailsService {
         return myUser;
 
     }
+
+//    private Collection<GrantedAuthority> getAuthorities (StaffDto staff){
+//        List<RoleEntity> roles =  staff.getRoleEntity();
+//        Collection<GrantedAuthority> authorities = new ArrayList<>(roles.size());
+//        for(RoleEntity item : roles){
+//            authorities.add(new SimpleGrantedAuthority(item.getName().toUpperCase()));
+//        }
+//        return  authorities;
+//    }
 }

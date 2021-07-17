@@ -208,7 +208,7 @@ const StaffDetail = (props) => {
           <button
             className="btn btn-success"
             onClick={updateStaff}
-            style={{ marginLeft: "10px", padding: "7px 20px" }}
+            style={{ marginLeft: "10px", padding: "7px 20px", backgroundColor: "#0089ff", borderColor: "#0089ff"  }}
           >
             Lưu
           </button>
