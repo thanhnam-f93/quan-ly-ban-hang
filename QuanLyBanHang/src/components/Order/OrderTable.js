@@ -6,6 +6,7 @@ const OrderTable = (props) => {
   var type = props.type;
      console.log("type:",type);
   const elm = tasks.map((item, index) => {
+    
     return (
       <TableItem
       type = {type}
@@ -21,6 +22,7 @@ const OrderTable = (props) => {
           <tr>
             <th scope="col">Mã đơn hàng </th>
             <th  scope="col">Tên khách hàng</th>
+            <th  scope="col">Chiết khấu</th>
             <th className = 'th-3' scope="col">khách phải trả</th>
             <th scope="col">Ngày tạo đơn</th>
           </tr>

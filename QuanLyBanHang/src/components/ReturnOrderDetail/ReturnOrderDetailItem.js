@@ -7,7 +7,7 @@ const ReturnOrderDetailItem = (props) => {
         <th scope="row">{item.productCode}</th>
         <td>{item.productName}</td>
         <td>{item.quanlity}</td>
-        <td>{item.discount}</td>
+        <td>{item.priceProduct}</td>
         <td>{item.price}</td>
       </tr>
   );

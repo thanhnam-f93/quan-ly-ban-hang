@@ -40,6 +40,7 @@ const TableItem = (props) => {
          <tr className = "table-row" onClick ={redirectDetail}> 
             <th scope="row">{item.code}</th>
             <td>{item.customerName}</td>
+            <td>{FormatMoney(item.discount)}</td>
             <td className = "td-2">{FormatMoney(item.price)}</td>
             <td>{times}</td>
           </tr>

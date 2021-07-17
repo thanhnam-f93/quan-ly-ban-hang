@@ -16,29 +16,35 @@ const SaleProductOptionItem = (props) => {
   const getProductOption= ()=>{
     console.log("hello ap");
     let isCheck = false;
-    if(productOption.length ==0){
-      item.amount = 1;
-      setProductOption([item]);
-      console.log("productOption:",item);
+    if(item.numberProduct<=0){
+      alert("sản phẩm hết hàng");
+      return;
     }else{
-      for (const ob of productOption) {
-        
-        if(  ob['id']== item.id){
-          ob['amount']+=1;
-          isCheck=true;
-          console.log("product option:",ob['amount']);
-          setAmountChange(!amountChange);
-        } 
-      }
-      if(!isCheck){
+      if(productOption.length ==0){
         item.amount = 1;
-        setProductOption([...productOption,item]);
-        console.log("productOption:",productOption);
-        setAmountChange(!amountChange);
-      }
+        setProductOption([item]);
+        console.log("productOption:",item);
+      }else{
+        for (const ob of productOption) {
+          
+          if(  ob['id']== item.id){
+            ob['amount']+=1;
+            isCheck=true;
+            console.log("product option:",ob['amount']);
+            setAmountChange(!amountChange);
+          } 
+        }
+        if(!isCheck){
+          item.amount = 1;
+          setProductOption([...productOption,item]);
+          console.log("productOption:",productOption);
+          setAmountChange(!amountChange);
+        }
     }
+   
     setIsShowProducts(false);
   }
+}
   return (
     <div className="Sale-product-option-item" onClick = {getProductOption}>
       <div className="option-item-left">

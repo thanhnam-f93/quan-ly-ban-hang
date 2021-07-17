@@ -1,7 +1,13 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import DayPickerInput from "react-day-picker/DayPickerInput";
 import "./scss/DropDown.scss";
 import "react-day-picker/lib/style.css";
+import { CInput } from "@coreui/react";
+import DatePicker from "react-datepicker"
+import "react-datepicker/src/stylesheets/datepicker.scss";
+import "./scss/CustomRangePicker.scss"
+import { callApiNotJwt } from "src/apis/ApiCaller";
+import { JwtContext } from "src/context/JwtContext";
 
 const DropDown = (props) => {
   const [optionTime, setOptionTime] = useState();
@@ -9,6 +15,11 @@ const DropDown = (props) => {
   const opDate = props.opDate;
   const [status, setStatus] = useState(false);
   const [datePicker, setDatePicker] = useState(false);
+  const [startedDate, setStartedDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(new Date());
+  const {jwt} = useContext(JwtContext);
+  const [minDate, setMinDate] = useState(new Date());
+  const [maxDate, setMaxDate] = useState(new Date());
   const onShow = () => {
     var dropDown = document.getElementById("drop-down");
     status
@@ -36,7 +47,40 @@ const DropDown = (props) => {
 
   const showDatePicker = () =>{
     setDatePicker(!datePicker);
+ 
   }
+
+  const getStartedDate = (date)=>{
+    setStartedDate(date);
+  }
+
+  const getEndDate = (date)=>{
+    setEndDate(date);
+  }
+
+  const clickStartDate = ()=>{
+    console.log("click start date");
+  }
+
+  const clickEndDate = ()=>{
+    console.log("click end date");
+  }
+
+  useEffect(()=>{
+    callApiNotJwt ("orders/start-time","GET",jwt)
+    .then(response=>{
+      if (response.status !== 200) {
+       
+      }else{
+        response.json().then((data) => {     
+          console.log("size data:",data); 
+          setMinDate(data.timeDate);
+        });
+      }
+    
+    });
+   
+  },[])
   return (
     <div className="drop-down">
       <div className="btn-change">
@@ -73,19 +117,36 @@ const DropDown = (props) => {
             Tùy chọn
           </button>
         </div>
-        <div className="date-picker">
-          {
-            datePicker ?<DayPickerInput
-            selected = {new Date()}
-            placeholder="YYYY/MM/DD"
-            format="YYYY/MM/DD"
-            onDayChange={onDayChange}
-          />:<div />
-          }   
-        </div>
+        {
+          datePicker?
+          <div className="date-picker">  
+         <DatePicker 
+         minDate = {new Date(minDate)}
+         maxDate = {new Date()}
+          dateFormat = "dd/MM/yyyy"
+          selected = {startedDate}
+          onChange = {getStartedDate}
+          onClick = {clickStartDate}
+          isClearable
+          />
+         <DatePicker 
+         minDate = {startedDate}
+         maxDate = {new Date()}
+         dateFormat = "dd/MM/yyyy"
+         selected = {endDate}
+         onChange = {getEndDate}
+         onClick = {clickEndDate}
+         isClearable
+          />
+      </div>
+      :
+      ""
+        }
+       
         <div className="h-5" onClick={onShow}>
           <button onClick={() => opDate(optionTime, orderTime)}>Lọc</button>
         </div>
+    
       </div>
     </div>
   );

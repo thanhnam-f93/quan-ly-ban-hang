@@ -12,6 +12,8 @@ const ReturnOrderDetail = () => {
   const customerInfor = reactLocalStorage.getObject("cInfor");
   const param = useParams();
   const id = param.id;
+  const [quantity, setQuantity] = useState(0);
+  const [totalPrice, setTotalPrice] = useState(0);
   console.log("orderDetail:"+id);
   useEffect(() => {
       console.log("types:"+param.id);
@@ -23,7 +25,17 @@ const ReturnOrderDetail = () => {
         }
         response.json().then((data) => {     
           setOrderDto(data);     
-          console.log(data);           
+          console.log("data of:",data);     
+          let am = 0;
+          let total = 0;
+         for (let i = 0;i<data.length;i++){
+           let item = data[i];
+           am += item['quanlity'];
+           total += item ['price'];
+         }
+          console.log("amount:",am);
+          setQuantity(am);
+          setTotalPrice(total);  
         });
       });
     
@@ -35,7 +47,7 @@ const ReturnOrderDetail = () => {
       <div className="order-detail">
         <div className="row">
           <div className = "col-lg-8 order-infor">
-              <ReturnOrderDetailInfor order = {orderDto} />
+              <ReturnOrderDetailInfor  quantity ={quantity} totalPrice = {totalPrice}  order = {orderDto} />
               <div className = "total-bill"> 
               
               </div>

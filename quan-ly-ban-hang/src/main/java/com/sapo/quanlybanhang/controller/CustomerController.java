@@ -288,7 +288,7 @@ public class CustomerController {
             }
             if(customerDto!=null){
                 customerService.save(customerDto);
-                return new ResponseEntity<>("Thêm mới thành công",HttpStatus.OK);
+                return new ResponseEntity<>(customerDto,HttpStatus.OK);
             }else{
                 return new ResponseEntity<>("Không có dữ liệu",HttpStatus.NO_CONTENT);
             }

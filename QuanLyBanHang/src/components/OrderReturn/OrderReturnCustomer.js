@@ -11,6 +11,7 @@ import CustomerInfor from "../OrderDetail/CustomerInfor";
 import List from "../sale/List";
 import OrderReturnCustomerItem from "./OrderReturnCustomerItem";
 import "./scss/OrderReturnCustomer.scss";
+import WarrantyProduct from "./WarrantyProduct";
 const OrderReturnCustomer = ({ item }) => {
   const { jwt } = useContext(JwtContext);
   const customerInfor = reactLocalStorage.getObject("infor");
@@ -23,6 +24,7 @@ const OrderReturnCustomer = ({ item }) => {
   const [billDto, setBillDto] = useState({});
   const [orderDetails, setOrderDetails] = useState([]);
   const [isState, setIsState] = useState(false);
+  const [isShow, setIsShow] = useState(false);
 
   var date1,date2;
   useEffect(() => {
@@ -43,15 +45,20 @@ const OrderReturnCustomer = ({ item }) => {
     var offset = 60*60*1000*24;
     var myDate = new Date(createdDate);
     var moneyPay = 0;
+    console.log("hello",isShow);
     if(dateNow.getTime()-(offset*30)>myDate.getTime()){
+      setIsShow(true);
+      console.log("hello",isShow);
       console.log("het bao hanh");
       moneyPay=100;
       setPayMoney(100);
     }else if(dateNow.getTime()-(offset*7)<myDate.getTime()){
+      setIsShow(true);
       console.log("trừ 7 ngày:",(dateNow.setDate(dateNow.getDate()-7)));
       console.log("trả 100%");
       moneyPay=100;
       setPayMoney(100);
+     
     }else {
       console.log("trả 70%");
       moneyPay=70;
@@ -70,7 +77,18 @@ const OrderReturnCustomer = ({ item }) => {
       setAmount(0);
       setTotal(0);
     }
-    console.log("length", orderDetails);
+    let orderDetailDtos = orderDetails.map(item =>{
+      return {
+        id:item.id,
+        amountPay:item.amountPay,
+        price:item.price
+      }
+    })
+    setBillDto({
+      orderId:id,
+      price:total,
+      orderDetailDtos:orderDetailDtos
+    })
     
   }, [amount,total, isState]);
 // ------------------------functions------------------------
@@ -96,18 +114,9 @@ const getOrderDetail = (item)=>{
 }
 
 const getPay =()=>{
-   let orderDetailDtos = orderDetails.map(item =>{
-    return {
-      id:item.id,
-      amountPay:item.amountPay,
-      price:item.price
-    }
-  })
-  setBillDto({
-    orderId:id,
-    price:total,
-    orderDetailDtos:orderDetailDtos
-  })
+  console.log("danh sách đơn trả hàng:",orderDetails);
+ 
+  console.log("billDto",billDto);
   callApi("bills", "POST",billDto, jwt).then((response) => {
     // console.log("trả về:",ré)
     if (response.status !== 200) {
@@ -194,6 +203,7 @@ const getPay =()=>{
       <div className = "btn-end">
       <CButton className = "btn-1" color="primary" onClick = {getPay} >Trả  hàng</CButton>
       </div>
+      <WarrantyProduct createdDate = {createdDate} isShow={isShow} setShow= {setIsShow} />
     </div>
   );
 };

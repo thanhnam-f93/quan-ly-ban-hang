@@ -56,16 +56,18 @@ const submit = ()=>{
         document.getElementById("input-phone").focus();
         setPhone(true);
     }else{
-        console.log("customer",customerDto);
+
+        console.log("customerccccc",customerDto);
         callApi("customers", "POST", customerDto, jwt).then((response) => {
             if (response.status !== 200) {
               alert("tạo thất bại");
               return;
             }else{
-              response.json().then((data) => {
+              
+              response.text().then((data) => {
                 alert("thao tác thành công");
                 setInforBtn(data);
-               
+                alert("thành công");
               });
         
             }

@@ -72,5 +72,14 @@ public class OrderController {
         return OrderConverter.toDto(orderService.findById(id));
     }
 
+    @GetMapping("/orders/start-time")
+        public ResponseEntity getStartTime(){
+            return orderService.getStartTime();
+        }
+
+        @GetMapping ("/orders/end-time")
+         public  ResponseEntity getEndTime(){
+            return orderService.getEndTime();
+        }
 
 }

@@ -14,6 +14,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import java.sql.Date;
+import java.sql.Time;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -61,7 +63,7 @@ public class OrderDao extends AbstractDao<OrderEntity>implements IOrderDao {
     public List<DashBoardItem> findAllByTime(LocalDate startTime, LocalDate endTime) {
         List<DashBoardItem> lists = new ArrayList();
         List<Object[]> results = this.entityManager.createQuery("select sum(o.price) as price, " +
-                "o.createdDate from OrderEntity  o\n" +
+                "Date(o.createdDate) from OrderEntity  o\n" +
                 "where Date(o.createdDate) between Date(?1) and Date(?2)\n" +
                 " group by Date(o.createdDate) order by o.createdDate").setParameter(1,startTime).setParameter(2,endTime)
                 .getResultList();
@@ -69,11 +71,12 @@ public class OrderDao extends AbstractDao<OrderEntity>implements IOrderDao {
             DashBoardItem boardItem = new DashBoardItem();
             Long price = (Long) item[0];
             logger.info("giá tiền:"+price);
-            Timestamp time = (Timestamp) item[1];
+            Date time = (Date) item[1];
             logger.info("thoi gian :"+time);
             boardItem.setPrice(price);
             boardItem.setCreatedDate(time);
             lists.add(boardItem);
+
         });
         return lists;
     }

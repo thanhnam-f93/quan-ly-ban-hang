@@ -154,6 +154,7 @@ const SalePayment = ({ isShowCustomer, setIsShowCustomer }) => {
 
   // -----------------------create bill-----------------------
   const getPay = () => {
+    console.log("giá trị orderDto:",orderDto);
     if (productOption.length == 0) {
       alert("Chưa có sản phẩm nào!");
     } else {
