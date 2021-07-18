@@ -278,7 +278,7 @@ public class CustomerController {
     }
 
     @PostMapping("customers")
-    ResponseEntity<?> save( @RequestBody CustomerDto customerDto ) {
+    ResponseEntity<?> save(@Valid @RequestBody CustomerDto customerDto ) {
         try {
             if(customerDto.getEmail()!=null&& customerService.checkDuplicateEmail(customerDto.getEmail())){
                 return new ResponseEntity<>("Email da ton tai",HttpStatus.BAD_REQUEST);

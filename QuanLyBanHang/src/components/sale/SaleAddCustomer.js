@@ -6,7 +6,7 @@ import ModalDialog from "react-bootstrap/ModalDialog";
 import { CButton } from "@coreui/react";
 import { Modal } from "react-bootstrap";
 import { callApi } from "src/apis/ApiCaller";
-import { JwtContext } from "src/context/JwtContext";
+import { JwtContext, SalerContext } from "src/context/JwtContext";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { reactLocalStorage } from "reactjs-localstorage";
@@ -19,6 +19,7 @@ const SaleAddCustomer = ({isShow,setIsShow, setInforBtn}) => {
     const [isPhone,setPhone] = useState(false);
     const [customerDto, setCustomer] = useState({});
     const {jwt} = useContext(JwtContext);
+    const {getNews} = useContext(SalerContext);
 // --------------------------validate input--------------------------
 
 
@@ -62,12 +63,11 @@ const submit = ()=>{
             if (response.status !== 200) {
               alert("tạo thất bại");
               return;
-            }else{
-              
+            }else{              
               response.text().then((data) => {
-                alert("thao tác thành công");
-                setInforBtn(data);
-                alert("thành công");
+                setInforBtn(data);      
+                getNews("Thêm khách hàng thành công");  
+                setIsShow(false);
               });
         
             }

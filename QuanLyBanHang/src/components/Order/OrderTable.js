@@ -12,12 +12,13 @@ const OrderTable = (props) => {
       type = {type}
         key = {index}
         item = {item}
+        index = {index}
       />
     );
   });
   return (
     <div className = "order-table">
-      <table className="table table-striped">
+      <table className="table ">
         <thead>
           <tr>
             <th scope="col">Mã đơn hàng </th>

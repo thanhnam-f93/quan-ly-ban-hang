@@ -8,7 +8,7 @@ const TableItem = (props) => {
   const history = useHistory();
 
     // const {id,code, name, price, createdDate}= props;
-    const item = props.item;
+    const {item,index} = props;
     const d = new Date(item.createdDate);
     var option = {day:"numeric",month:"2-digit",year:'numeric', hour:'2-digit',minute:'2-digit'};
     console.log( );
@@ -37,7 +37,7 @@ const TableItem = (props) => {
     reactLocalStorage.setObject('infor', customerInfor);
     }
     return (   
-         <tr className = "table-row" onClick ={redirectDetail}> 
+         <tr className = "table-row"  onClick ={redirectDetail}> 
             <th scope="row">{item.code}</th>
             <td>{item.customerName}</td>
             <td>{FormatMoney(item.discount)}</td>

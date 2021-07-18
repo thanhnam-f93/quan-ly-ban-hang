@@ -14,7 +14,7 @@ const ReturnOrderList = (props) => {
     });
     return (
       <div className = "order-table">
-        <table className="table table-striped">
+        <table className="table ">
           <thead>
             <tr>
             <th scope="col">Mã đơn trả về </th>

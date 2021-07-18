@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import { SalerContext } from "src/context/JwtContext";
 import "./scss/SaleProductOptionItem.scss";
 const SaleProductOptionItem = (props) => {
-  const {setProductOption,productOption, setIsShowProducts,amountChange,setAmountChange} = useContext (SalerContext);
+  const {getNews,setProductOption,productOption, setIsShowProducts,amountChange,setAmountChange} = useContext (SalerContext);
   const { item } = props;
   const [isCheck,setIsCheck]= useState(false);
   const checkItem = ()=>{
@@ -17,7 +17,7 @@ const SaleProductOptionItem = (props) => {
     console.log("hello ap");
     let isCheck = false;
     if(item.numberProduct<=0){
-      alert("sản phẩm hết hàng");
+      getNews('Sản phẩm hết hàng');
       return;
     }else{
       if(productOption.length ==0){
