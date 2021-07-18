@@ -12,8 +12,7 @@ import java.time.LocalDate;
 public class OrderPageable {
     private Integer page;
     private Integer limit;
-    private LocalDate orderTime;
+    private LocalDate startedTime;
     private String inputOrder;
-    OptionTime optionTime;
-//    private String optionTime;
+    private LocalDate endedTime;
 }

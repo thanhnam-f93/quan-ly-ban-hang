@@ -212,7 +212,7 @@ const routes = [
   { path: '/order/order-detail/:id/:code/:createdDate', exact: true,  name: 'chi-tiet-don-hang', component: OrderDetail },
   { path: '/return', exact: true,  name: 'khach-tra-hang', component: ReturnOrder },
   { path: '/order/return/:id', exact: true,  name: '', component: ReturnOrder },
-  { path: '/return/return-order-detail/:id', exact: true,  name: '', component: ReturnOrderDetail },
+  { path: '/return/return-order-detail/:id/:code/:createdDate/:staffName', exact: true,  name: 'chi-tiet-don-hang', component: ReturnOrderDetail },
   { path: '/product', exact: true,  name: 'Product', component: ListProduct },
   { path: '/category', exact: true,  name: 'Product', component: ListProduct },
   { path: '/product/update-category/:id', exact: true,  name: 'update', component: Update },

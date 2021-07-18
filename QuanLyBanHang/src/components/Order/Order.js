@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { reactLocalStorage } from 'reactjs-localstorage';
 import { callApi } from 'src/apis/ApiCaller';
-import { JwtContext } from 'src/context/JwtContext';
+import { JwtContext, OrderContext } from 'src/context/JwtContext';
 import OrderHeader from './OrderHeader';
 import OrderTable from './OrderTable';
 import './scss/order.scss'
@@ -20,14 +20,14 @@ const Order = () => {
   const [orderPageable, setOrderPageAble] = useState({
     page:1,
     limit:7,
-    inputOrder:"",
-    orderTime:""
   });
 
   const [listOrder, setListOrder] = useState([]);
+  const [startedTime, setStartedTime] = useState("");
+  const [endedTime, setEndTime] = useState("");
 
   useEffect(() => {
-    console.log("useeffect:"+orderPageable);
+    console.log("useeffect:",orderPageable);
     console.log(acc.token);
     callApi("order","post",orderPageable,jwt)
     .then(response=>{
@@ -58,10 +58,11 @@ const getInput = (e)=>{
 
 }
 
-const getDate = (op, da) =>{
+const getDate = (startedTime, endedTime) =>{
+  console.log("------------------started",startedTime);
   console.log("kiểu:",typeof(op));
   setOrderPageAble({
-    ...orderPageable,optionTime:op
+    ...orderPageable,startedTime:startedTime,endedTime:endedTime
   })
 
 }
@@ -77,6 +78,7 @@ const getPage = (page) =>{
 
     return (
         <div className = "list-order">
+          <OrderContext.Provider value = {{setStartedTime, setEndTime}}>
           <OrderHeader inputs  = {getInput} getDate = {getDate} />   
          <OrderTable  type = "order" lists = {listOrder}/>
          <CPagination
@@ -85,7 +87,7 @@ const getPage = (page) =>{
             pages={totalPage}
             onActivePageChange={getPage}
           />  
-          
+          </OrderContext.Provider>
         </div>
 
     );

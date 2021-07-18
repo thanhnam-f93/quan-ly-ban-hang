@@ -22,7 +22,9 @@ const OrderReturnCustomerItem = ({ item, dismount,getOrderDetail }) => {
     setQuantity(val);
     item['amountPay'] = val;
     let _total = val*(item.priceProduct*dismount/100);
+
     item['price'] = _total;
+    console.log("total---------",item);
     setTotal(_total);
     getOrderDetail(item);
   };

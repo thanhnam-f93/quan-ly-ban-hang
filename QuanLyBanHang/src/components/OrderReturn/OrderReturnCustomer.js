@@ -26,13 +26,11 @@ const OrderReturnCustomer = ({ item }) => {
   const [isState, setIsState] = useState(false);
   const [isShow, setIsShow] = useState(false);
 
-  var date1,date2;
   useEffect(() => {
     console.log("types:" + param.id);
     callApiNotJwt(`order-details/${id}`, "GET", jwt).then((response) => {
       console.log("trả về:",response);
       if (response.status !== 200) {
-        // alert("thao tác thất bại");
         return;
       }
       response.json().then((data) => {
@@ -53,7 +51,6 @@ const OrderReturnCustomer = ({ item }) => {
       moneyPay=100;
       setPayMoney(100);
     }else if(dateNow.getTime()-(offset*7)<myDate.getTime()){
-      setIsShow(true);
       console.log("trừ 7 ngày:",(dateNow.setDate(dateNow.getDate()-7)));
       console.log("trả 100%");
       moneyPay=100;
@@ -78,6 +75,7 @@ const OrderReturnCustomer = ({ item }) => {
       setTotal(0);
     }
     let orderDetailDtos = orderDetails.map(item =>{
+      console.log("----------+++++",item);
       return {
         id:item.id,
         amountPay:item.amountPay,
@@ -90,18 +88,22 @@ const OrderReturnCustomer = ({ item }) => {
       orderDetailDtos:orderDetailDtos
     })
     
-  }, [amount,total, isState]);
+  }, [amount,total, isState,orderDetails]);
 // ------------------------functions------------------------
 const getOrderDetail = (item)=>{
+  console.log("++++++++++++++++",item);
   if(orderDetails.length ===0){
     setOrderDetails([item]);
+    console.log ("=0");
     setAmount(item.amount);
   }else{
+    console.log("khac 0");
     let check =false;
     for (const ob of orderDetails) {
       if(ob['id']==item['id']){
         console.log("=nhau");
         ob['amountPay'] = item['amountPay'];
+        ob['price'] = item['price'];
         check= true;
       }
     }
@@ -109,7 +111,8 @@ const getOrderDetail = (item)=>{
       setOrderDetails([...orderDetails,item]);
     }
   }
- 
+ console.log("orderDetail---------",orderDetails);
+console.log("orderBillDto",billDto);
  setIsState(!isState);
 }
 

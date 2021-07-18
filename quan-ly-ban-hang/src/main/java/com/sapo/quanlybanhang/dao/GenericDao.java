@@ -7,6 +7,6 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface GenericDao<T> {
-     Query query(OrderPageable orderPageable, String sql1, String sql2);
-     List<LocalDate> getTime(OrderPageable orderPageable);
+     List<Query> query(OrderPageable orderPageable, String sql1, String sql2,String sql3);
+//     List<LocalDate> getTime(OrderPageable orderPageable);
 }

@@ -28,7 +28,7 @@ useEffect(() => {
   }, [totalPrice]);
   return (
     <div className="order-infor-1">
-      <div class="label-order">Thông tin sản phẩm</div>
+      <div class="label-order-1">Thông tin sản phẩm</div>
       <div className="list-item">
         <table className="table">
           <thead>

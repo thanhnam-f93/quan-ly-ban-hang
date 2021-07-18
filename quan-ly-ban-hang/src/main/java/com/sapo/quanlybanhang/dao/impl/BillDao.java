@@ -23,23 +23,24 @@ public class BillDao extends AbstractDao<BillEntity> implements IBillDao {
         List<BillEntity> billEntities = new ArrayList<>();
         String sql1 = "select o  FROM BillEntity o ";
         String sql2 = "inner join CustomerEntity c on c.id = o.customerBill.id";
-        Query query = this.query(orderPageable,sql1,sql2);
-        if (orderPageable.getOrderTime() == null && orderPageable.getOptionTime() == null ){
-            billEntities = query.setFirstResult((orderPageable.getPage()-1)*orderPageable.getLimit())
-                    .setMaxResults(orderPageable.getLimit()).getResultList();
-        }else if ((orderPageable.getInputOrder() == null || orderPageable.getInputOrder() == "")){
-            billEntities = query
-                    .setFirstResult((orderPageable.getPage()-1)*orderPageable.getLimit())
-                    .setMaxResults(orderPageable.getLimit())
-                    .getResultList();
-        }else{
-            billEntities = query
-                    .setFirstResult((orderPageable.getPage()-1)*orderPageable.getLimit())
-                   .getResultList();
-        }
-            listDto.setTotalItem(query.getMaxResults());
-            listDto.setResultList(billEntities.stream()
-                                    .map(item-> BillConverter.toDto(item)).collect(Collectors.toList()));
-            return listDto;
+//        Query query = this.query(orderPageable,sql1,sql2);
+//        if (orderPageable.getStartedTime() == null && orderPageable.getEndedTime() == null ){
+//            billEntities = query.setFirstResult((orderPageable.getPage()-1)*orderPageable.getLimit())
+//                    .setMaxResults(orderPageable.getLimit()).getResultList();
+//        }else if ((orderPageable.getInputOrder() == null || orderPageable.getInputOrder() == "")){
+//            billEntities = query
+//                    .setFirstResult((orderPageable.getPage()-1)*orderPageable.getLimit())
+//                    .setMaxResults(orderPageable.getLimit())
+//                    .getResultList();
+//        }else{
+//            billEntities = query
+//                    .setFirstResult((orderPageable.getPage()-1)*orderPageable.getLimit())
+//                   .getResultList();
+//        }
+//            listDto.setTotalItem(query.getMaxResults());
+//            listDto.setResultList(billEntities.stream()
+//                                    .map(item-> BillConverter.toDto(item)).collect(Collectors.toList()));
+//            return listDto;
+        return null;
         }
 }

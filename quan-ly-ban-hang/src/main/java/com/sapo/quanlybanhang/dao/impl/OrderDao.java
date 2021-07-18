@@ -33,28 +33,24 @@ public class OrderDao extends AbstractDao<OrderEntity>implements IOrderDao {
     public OrderListDto findByCodeAndCustomer(OrderPageable orderPageable) {
         String sql1 = "SELECT o FROM OrderEntity o ";
         String sql2 = "inner join CustomerEntity c on c.id = o.customer.id";
-        Query query = this.query(orderPageable,sql1,sql2);
+        String sql3 = "select count(o) from OrderEntity o";
+        Long totalItem = 0L;
+        List<Query> queryList = this.query(orderPageable,sql1,sql2,sql3);
+        Query query = queryList.get(0);
+        Query query1 = queryList.get(1);
         OrderListDto orderListDto = new OrderListDto();
         List<OrderDto> orderDtos = new ArrayList<>();
         List<OrderEntity> orderEntities = new ArrayList<>();
-        if (orderPageable.getOrderTime() == null && orderPageable.getOptionTime() == null ){
-            orderEntities = query.setFirstResult((orderPageable.getPage()-1)*orderPageable.getLimit())
+        orderEntities = query.setFirstResult((orderPageable.getPage()-1)*orderPageable.getLimit())
                     .setMaxResults(orderPageable.getLimit()).getResultList();
-        }else if ((orderPageable.getInputOrder() == null || orderPageable.getInputOrder() == "")){
-            orderEntities = query
-                    .setFirstResult((orderPageable.getPage()-1)*orderPageable.getLimit())
-                    .setMaxResults(orderPageable.getLimit())
-                    .getResultList();
-        }else{
-            orderEntities = query
-                    .setFirstResult((orderPageable.getPage()-1)*orderPageable.getLimit())
-                    .getResultList();
-        }
-        orderListDto.setTotalItem(query.getMaxResults());
-        System.out.println(orderEntities);
-        orderListDto.setResultItem(orderEntities.stream().
-                map(item-> OrderConverter.toDto(item)).collect(Collectors.toList()));
 
+        System.out.println(orderEntities);
+         orderListDto.setResultItem(orderEntities.stream().
+                map(item-> OrderConverter.toDto(item)).collect(Collectors.toList()));
+         totalItem = (Long) query1.getResultList().get(0);
+         orderListDto.setTotalItem(totalItem);
+         logger.info("total item:"+totalItem);
+        OrderListDto list = orderListDto;
         return orderListDto;
 
     }

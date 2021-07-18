@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { FormatMoney } from 'src/helpers/FormatMoney';
 import OrderInforItem from '../OrderDetail/OrderInforItem';
 import ReturnOrderDetailItem from './ReturnOrderDetailItem';
-
+import './scss/ReturnOrderDetailInfor.scss'
 const ReturnOrderDetailInfor = ({order, quantity, totalPrice}) => {
 
   console.log("product-------:", order);
@@ -25,9 +25,9 @@ const ReturnOrderDetailInfor = ({order, quantity, totalPrice}) => {
             <tr>
               <th scope="col">mã sản phẩm</th>
               <th scope="col">tên sản phẩm</th>
-              <th scope="col">số lượng </th>
-              <th scope="col">giá hàng trả</th>
-              <th scope="col">Thành tiền</th>
+              <th className = 'th-1' scope="col">số lượng </th>
+              <th  className = 'th-1' scope="col">giá hàng trả</th>
+              <th className = 'th-1' scope="col">Thành tiền</th>
             </tr>
           </thead>
           <tbody>{elm}</tbody>
