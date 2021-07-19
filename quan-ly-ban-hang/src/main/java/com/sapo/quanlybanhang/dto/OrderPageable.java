@@ -13,9 +13,9 @@ import java.time.LocalDate;
 public class OrderPageable {
     private Integer page;
     private Integer limit;
-    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy/MM/dd", timezone="EST")
+//    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy/MM/dd", timezone="EST")
     private LocalDate startedTime;
     private String inputOrder;
-    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy/MM/dd", timezone="EST")
+//    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy/MM/dd", timezone="EST")
     private LocalDate endedTime;
 }

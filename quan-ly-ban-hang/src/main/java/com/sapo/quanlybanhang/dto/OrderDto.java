@@ -18,9 +18,9 @@ public class OrderDto {
     private String code;
 
     private Long price;
-    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy/MM/dd hh:mm a ",timezone = "EST")
+//    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy/MM/dd hh:mm a ",timezone = "EST")
     private Timestamp createdDate;
-    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy/MM/dd hh:mm ", timezone = "UTC")
+//    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy/MM/dd hh:mm ", timezone = "UTC")
     private Timestamp modifiedDate;
 
     private String createBy;

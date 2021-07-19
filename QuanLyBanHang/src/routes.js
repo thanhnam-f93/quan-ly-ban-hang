@@ -14,6 +14,7 @@ import ReturnOrderDetail from './components/ReturnOrderDetail/ReturnOrderDetail'
 import SaleAddCustomer from './components/sale/SaleAddCustomer';
 import OrderReturnCustomer from './components/OrderReturn/OrderReturnCustomer';
 import OrderModal from './components/Order/OrderModal';
+import ReturnOrder from './components/OrderReturn/ReturnOrder';
 
 /*================== Of Template React =================*/
 const Toaster = React.lazy(() => import("./views/notifications/toaster/Toaster"));
