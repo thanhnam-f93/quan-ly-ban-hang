@@ -9,7 +9,7 @@ import Saler from './components/sale/Saler';
 import Setting from './components/Setting/Setting';
 import AddStaff from './components/Staff/AddStaff/AddStaff';
 import StaffDetail from './components/Staff/StaffDetail/StaffDetail';
-import ReturnOrder from './components/ReturnOrder/ReturnOrder';
+// import ReturnOrder from './components/ReturnOrder/ReturnOrder';
 import ReturnOrderDetail from './components/ReturnOrderDetail/ReturnOrderDetail';
 import SaleAddCustomer from './components/sale/SaleAddCustomer';
 import OrderReturnCustomer from './components/OrderReturn/OrderReturnCustomer';
