@@ -49,7 +49,7 @@ function Create(props) {
   const [numberProduct, setNumber] = useState("");
   const [image, setImage] = useState("");
   const [picture, setPicture] = useState("");
-  const [checkImage, setCheckImage] = useState({ display: "none" })
+  const [checkImage, setCheckImage] = useState({ display: "none" });
   const [price, setPrice] = useState("");
   const [supplierName, setSupplierName] = useState("");
   const [description, setDescription] = useState("");
@@ -65,7 +65,7 @@ function Create(props) {
   const [filterOptionBrand, setFilterOptionBrand] = useState([]);
   const [products, setProdut] = useState([]);
   const [a, seta] = useState([]);
-  const [id, setID] = useState([]);
+  // const [id, setID] = useState([]);
   const [isShowBrand, setBrands] = useState(false);
   const [isShowSupplier, setSuppliers] = useState(false);
   const [isShowCategory, setCategoryies] = useState(false);
@@ -324,8 +324,8 @@ function Create(props) {
     console.log("Image: ", e.target.files[0]);
     data.append("file", e.target.files[0]);
     if (e.target.files[0].name !== "") {
-      setCheckImage({ display: "inline" })
-  }
+      setCheckImage({ display: "inline" });
+    }
 
     var config = {
       method: "post",
@@ -388,7 +388,9 @@ function Create(props) {
         <CRow>
           <CCol xs="12" sm="7">
             <CCard>
-              <CCardHeader><h2>Sản phẩm</h2></CCardHeader>
+              <CCardHeader>
+                <h2>Sản phẩm</h2>
+              </CCardHeader>
               <CCardBody>
                 <CFormGroup>
                   <CLabel htmlFor="company">Mã</CLabel>
@@ -415,7 +417,9 @@ function Create(props) {
                 <CFormGroup row className="my-0">
                   <CCol xs="6">
                     <CFormGroup>
-                      <CLabel htmlFor="city">Số lượng</CLabel>
+                      <CLabel htmlFor="city">
+                        Số lượng <span style={{ color: "red" }}>*</span>
+                      </CLabel>
                       <CInput
                         type="number"
                         id="vat"
@@ -431,10 +435,11 @@ function Create(props) {
                   </CCol>
                   <CCol xs="6">
                     <CFormGroup>
-                      <CLabel htmlFor="postal-code">Giá</CLabel>
+                      <CLabel htmlFor="postal-code">
+                        Giá <span style={{ color: "red" }}>*</span>
+                      </CLabel>
                       <CInput
                         id="vat"
-                        type="number"
                         placeholder="nhập giá"
                         onChange={changePrice}
                         onBlur={changeonBlurPrice}
@@ -456,7 +461,9 @@ function Create(props) {
               </CCardBody>
             </CCard>
             <CCard>
-              <CCardHeader><h2>Thuộc tính</h2></CCardHeader>
+              <CCardHeader>
+                <h2>Thuộc tính</h2>
+              </CCardHeader>
               <CCardBody>
                 <CFormGroup row className="my-0">
                   <CCol xs="6">
@@ -485,7 +492,9 @@ function Create(props) {
           </CCol>
           <CCol xs="12" sm="5">
             <CCard>
-              <CCardHeader><h2>Phân loại</h2></CCardHeader>
+              <CCardHeader>
+                <h2>Phân loại</h2>
+              </CCardHeader>
               <CCardBody>
                 <CFormGroup row className="my-0">
                   <CCol xs="10">
@@ -494,7 +503,7 @@ function Create(props) {
                         Nhãn hiệu <span style={{ color: "red" }}>*</span>
                       </CLabel>
                       <Select
-                      className=" mt-2 "
+                        className=" mt-2 "
                         options={filterOptionBrand}
                         onChange={changeBrand}
                       />
@@ -517,7 +526,7 @@ function Create(props) {
                         Loại <span style={{ color: "red" }}>*</span>
                       </CLabel>
                       <Select
-                       className=" mt-2 "
+                        className=" mt-2 "
                         options={filterOptionCategory}
                         onChange={changeCate}
                       />
@@ -540,7 +549,7 @@ function Create(props) {
                         Nhà cung cấp <span style={{ color: "red" }}>*</span>
                       </CLabel>
                       <Select
-                       className=" mt-2 "
+                        className=" mt-2 "
                         options={filterOptions}
                         onChange={changeSuppliers}
                       />
@@ -560,27 +569,25 @@ function Create(props) {
             </CCard>
 
             <CCard>
-              <CCardHeader><h2>Ảnh</h2></CCardHeader>
+              <CCardHeader>
+                <h2>Ảnh</h2>
+              </CCardHeader>
               <CCardBody>
                 <CFormGroup>
                   <CFormGroup>
-                    <CFormGroup row>
-                      <CCol xs="12" md="9">
+                  
                         <CInputFile
-                        className=" px-4"
+                          className=" px-4"
                           onChange={handleImage}
-                          accept="image/png, image/jpeg" 
+                          accept="image/png, image/jpeg"
                         />
-                           <img
-                           className=" px-4"
-                            style={checkImage}
-                         
-                       
-                        src={`${process.env.PUBLIC_URL}/image/${image}`}
-                     
-                      />
-                      </CCol>                   
-                    </CFormGroup>
+                        <img
+                          className=" px-4"
+                          width="100%"
+                          style={checkImage}
+                          src={`${process.env.PUBLIC_URL}/image/${image}`}
+                        />
+                    
                   </CFormGroup>
                 </CFormGroup>
               </CCardBody>

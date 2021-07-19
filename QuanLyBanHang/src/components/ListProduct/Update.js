@@ -236,9 +236,9 @@ function Update(props) {
     
   };
   
-  function format2(n, currency) {
+  function format2(n) {
     if (n != "") {
-        return n.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') + " " + currency;
+        return n.toLocaleString('it-IT', {style : 'currency', currency : 'VND'});
     }
 }
 
@@ -450,8 +450,9 @@ function Update(props) {
                       <CInput
                     name="price"
                     placeholder="0"
+                    disabled
                     onChange={changePrice}
-                    value={format2(price,"vnd")}
+                    value={format2(price)}
                     onBlur={changeonBlurPrice}
                   />
                    <span style={{color:"red"}}> {message.price}</span>
