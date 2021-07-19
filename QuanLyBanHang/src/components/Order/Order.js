@@ -36,6 +36,7 @@ const Order = () => {
         return;
       }
       response.json().then((data) => {     
+        console.log("date  now---------------",new Date());
         console.log("size data:",data.length);
         setOrderDto(data);  
         console.log("order give:",data);

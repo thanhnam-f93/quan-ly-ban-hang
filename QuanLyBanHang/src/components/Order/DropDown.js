@@ -11,14 +11,12 @@ import { IsValidateDate } from "src/helpers/IsValidateDate";
 const DropDown = (props) => {
 
   const opDate = props.opDate;
-  const {setEndTime, setStartedTime} = useContext(OrderContext);
   const [status, setStatus] = useState(false);
   const [datePicker, setDatePicker] = useState(false);
   const [startedDate, setStartedDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
   const { jwt } = useContext(JwtContext);
   const [minDate, setMinDate] = useState(new Date());
-  const [maxDate, setMaxDate] = useState(new Date());
   const [timerStartSearch, setTimeStartSearch] = useState(new Date());
   const [timeEndSearch, setTimeEndSearch] = useState(new Date());
   const onShow = () => {
@@ -115,10 +113,10 @@ const DropDown = (props) => {
     let isCheck = IsValidateDate(val);
     if (isCheck) {
       console.log("nhập đúng");
-      setTimeStartSearch(new Date(val));
-      setStartedDate(val.toLocaleDateString);
+      setTimeStartSearch(val);
+      setStartedDate(val.toLocaleDateString());
     } else {
-      setTimeStartSearch(now);
+      setTimeStartSearch(now.toLocaleDateString('vn-VN'));
       console.log("nhập sai");
     }
   };
@@ -129,10 +127,10 @@ const DropDown = (props) => {
     let isCheck = IsValidateDate(val);
     if (isCheck) {
       console.log("nhập đúng");
-      setTimeEndSearch(new Date(val));
+      setTimeEndSearch(val.toLocaleDateString());
       setEndDate(val.toLocaleDateString);
     } else {
-      setTimeEndSearch(now);
+      setTimeEndSearch(now.toLocaleDateString());
       console.log("nhập sai");
     }
   };
@@ -192,7 +190,7 @@ const DropDown = (props) => {
             <DatePicker
               minDate={new Date(minDate)}
               maxDate={new Date()}
-              dateFormat="yyyy/MM/dd"
+              dateFormat="yyyy-MM-dd"
               selected={startedDate}
               onChange={getStartedDate}
               onClick={clickStartDate}
@@ -203,7 +201,7 @@ const DropDown = (props) => {
               onChangeRaw={validateDateEnd}
               minDate={startedDate}
               maxDate={new Date()}
-              dateFormat="yyyy/MM/dd"
+              dateFormat="yyyy-MM-dd"
               selected={endDate}
               onChange={getEndDate}
               onClick={clickEndDate}

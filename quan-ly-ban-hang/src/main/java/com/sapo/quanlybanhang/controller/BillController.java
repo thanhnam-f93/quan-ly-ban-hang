@@ -47,11 +47,15 @@ public class BillController {
                 || orderPageable.getInputOrder() =="" ) && (orderPageable.getEndedTime()== null)){
             Sort sort = Sort.by("createdDate").descending();
             Pageable pageable = PageRequest.of(orderPageable.getPage()-1,orderPageable.getLimit(),sort);
-            listDto.setTotalItem(billService.getTotalItem());
+            listDto.setTotalItem((long)billService.getTotalItem());
             listDto.setResultList(billService.findAll(pageable));
             return listDto;
         }else {
-            return billService.findByCodeAndCustomer(orderPageable);
+            listDto= billService.findByCodeAndCustomer(orderPageable);
+            if(listDto.getResultList().size()==0){
+                listDto.setTotalItem(0L);
+            }
+            return listDto ;
         }
 
     }

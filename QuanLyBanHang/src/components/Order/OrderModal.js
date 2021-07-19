@@ -65,10 +65,11 @@ const OrderModal = ({show, setShow}) => {
     console.log(orderPageable);
   };
 
-  const getDate = (op, da) => {
+  const getDate = (startedTime,endedTime) => {
     setOrderPageAble({
       ...orderPageable,
-      optionTime: op,
+      startedTime:startedTime,
+      endedTime:endedTime
     });
   };
   console.log();

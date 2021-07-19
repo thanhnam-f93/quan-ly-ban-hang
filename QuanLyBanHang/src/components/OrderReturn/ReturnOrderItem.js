@@ -14,8 +14,10 @@ const ReturnOrderItem = (props) => {
       customerEmail:item.customerEmail
     }
     const redirectDetail = ()=>{
+      var dates = new Date(item.createdDate);
+      var stringDate = dates.getFullYear()+'-'+('0'+(dates.getMonth()+1)).slice(-2)+'-'+('0'+dates.getDate()).slice(-2);
       const location = {
-        pathname: `/return/return-order-detail/${item.id}/${item.code}/${item.createdDate}/${item.staffName}`, 
+        pathname: `/return/return-order-detail/${item.id}/${item.code}/${stringDate}/${item.staffName}`, 
         state:{item:item}  
       }
     history.push (location);

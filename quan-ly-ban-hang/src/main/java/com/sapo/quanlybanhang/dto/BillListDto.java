@@ -6,6 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 @Data
 public class BillListDto {
-    private Integer totalItem;
+    private Long totalItem;
     private List<BillDto> resultList = new ArrayList<>();
 }

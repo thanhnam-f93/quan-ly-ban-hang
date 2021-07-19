@@ -32,8 +32,8 @@ public class OrderDao extends AbstractDao<OrderEntity>implements IOrderDao {
     @Override
     public OrderListDto findByCodeAndCustomer(OrderPageable orderPageable) {
         String sql1 = "SELECT o FROM OrderEntity o ";
-        String sql2 = "inner join CustomerEntity c on c.id = o.customer.id";
-        String sql3 = "select count(o) from OrderEntity o";
+        String sql2 = "inner join o.customer c ";
+        String sql3 = "select count(o) from OrderEntity o ";
         Long totalItem = 0L;
         List<Query> queryList = this.query(orderPageable,sql1,sql2,sql3);
         Query query = queryList.get(0);
@@ -51,6 +51,7 @@ public class OrderDao extends AbstractDao<OrderEntity>implements IOrderDao {
          orderListDto.setTotalItem(totalItem);
          logger.info("total item:"+totalItem);
         OrderListDto list = orderListDto;
+        int xx =0;
         return orderListDto;
 
     }
