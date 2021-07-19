@@ -10,10 +10,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "supplier")
-@NoArgsConstructor
-@Getter
-@Setter
-@AllArgsConstructor
+@Data
 public class SupplierEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -44,6 +41,6 @@ public class SupplierEntity {
     @OneToMany(mappedBy = "supplier", cascade = CascadeType.ALL)
     private List<ProductEntity> productEntities;
 
-
-
+    public SupplierEntity() {
+    }
 }

@@ -21,7 +21,7 @@ public class UpdateDto {
 
     private int numberProduct;
 
-    private int sell_product;
+    private int sellProduct;
 
     private String image;
 

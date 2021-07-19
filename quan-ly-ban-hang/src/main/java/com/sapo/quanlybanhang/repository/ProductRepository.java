@@ -21,7 +21,14 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Integer>
  List<ProductEntity> searchByKey(String keyword);
     @Query(value = "select * from products as p where p.state is null order by p.id desc ", nativeQuery = true)
     List<ProductEntity> getAll();
-   ProductEntity findFirstByOrderByIdDesc();
+
+ @Query(value = "select * from products as p where p.state is null order by p.id desc limit 1", nativeQuery = true)
+ List<ProductEntity> getAll1();
+ @Query(value = "select * from products as p where p.state is null order by p.id desc limit 1", nativeQuery = true)
+ ProductEntity getAll2();
+
+
+ ProductEntity findFirstByOrderByIdDesc();
    Boolean existsByCode(String code);
     @Query(value = "select * from products as p where p.state is null order by p.id desc ", nativeQuery = true)
     List<ProductEntity> getAllPagination(Pageable pageable);

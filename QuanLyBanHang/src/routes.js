@@ -9,7 +9,7 @@ import Saler from './components/sale/Saler';
 import Setting from './components/Setting/Setting';
 import AddStaff from './components/Staff/AddStaff/AddStaff';
 import StaffDetail from './components/Staff/StaffDetail/StaffDetail';
-import ReturnOrder from './components/OrderReturn/ReturnOrder';
+import ReturnOrder from './components/ReturnOrder/ReturnOrder';
 import ReturnOrderDetail from './components/ReturnOrderDetail/ReturnOrderDetail';
 import SaleAddCustomer from './components/sale/SaleAddCustomer';
 import OrderReturnCustomer from './components/OrderReturn/OrderReturnCustomer';
@@ -206,16 +206,16 @@ const routes = [
   /*================== The End code of Team - Quản lý bán hàng =================*/
 /*================== Start code of Team - Quản lý bán hàng =================*/
   { path: '/order', exact: true,  name: 'danh-sach-don-hang', component: Order },
-  {path: '/order/order-detail', exact: true,  name: '', component: OrderDetail },
-  { path: '/dropdown', exact: true,  name: '', component: DropDown },
-  { path: '/order/order-detail/:id/:code/:createdDate', exact: true,  name: 'chi-tiet-don-hang', component: OrderDetail },
-  { path: '/return', exact: true,  name: 'khach-tra-hang', component: ReturnOrder },
-  { path: '/order/return/:id', exact: true,  name: '', component: ReturnOrder },
-  { path: '/return/return-order-detail/:id', exact: true,  name: '', component: ReturnOrderDetail },
-  { path: '/product', exact: true,  name: 'Product', component: ListProduct },
-  { path: '/category', exact: true,  name: 'Product', component: ListProduct },
-  { path: '/product/update-category/:id', exact: true,  name: 'update', component: Update },
-  { path: '/product/add-category', exact: true,  name: 'add', component: Create },
+  { path: '/dropdown', exact: true,  name: 'danh-sach-don-hang', component: DropDown },
+  { path: '/order-detail', exact: true,  name: '', component: OrderDetail },
+  { path: '/order-detail/:id/:type', exact: true,  name: 'chi-tiet-don-hang', component: OrderDetail },
+  // { path: '/order/return', exact: true,  name: 'don-hang-tra-ve ', component: ReturnOrder },
+  // { path: '/order/return/:id', exact: true,  name: '', component: ReturnOrder },
+  { path: '/order/return-order-detail', exact: true,  name: '', component: ReturnOrderDetail },
+  { path: '/product', exact: true,  name: 'Sản phẩm', component: ListProduct },
+  { path: '/category', exact: true,  name: 'Sản phẩm', component: ListProduct },
+  { path: '/product/update-category/:id', exact: true,  name: 'Chi tiết sản phẩm', component: Update },
+  { path: '/product/add-category', exact: true,  name: 'thêm sản phẩm', component: Create },
   { path: '/supplier', exact: true,  name: 'Supplier', component: ListSupplier },
   // { path: '/binhlogins', exact: true,  name: '', component: Logins },
   { path: '/saler', exact: true,  name: 'ban-hang', component: Saler },
