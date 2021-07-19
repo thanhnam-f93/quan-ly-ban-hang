@@ -1,0 +1,14 @@
+.report-table-time{
+    .table{
+        thead{
+            tr{
+                th{
+                    text-align: right;
+                    &:first-child{
+                        text-align: left;
+                    }
+                }
+            }
+        }
+    }
+}

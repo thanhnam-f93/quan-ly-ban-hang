@@ -156,22 +156,28 @@ const SalePayment = ({ isShowCustomer, setIsShowCustomer }) => {
   // -----------------------create bill-----------------------
   const getPay = () => {
     console.log("giá trị orderDto:",orderDto);
-    if (productOption.length == 0) {
-      getNews("chưa có sản phẩm nào");
-    } else {
-      console.log("orderDto,", orderDto);
-      callApi("orders", "POST", orderDto, jwt).then((response) => {
-        if (response.status !== 200) {
-          return;
-        }
-        response.json().then((data) => {
-          console.log(data.content);
-          setCustomer(data.content);
-          setProductOption([]);
-          getNews("Tạo hóa đơn thành công");
+    console.log()
+    if(MoneyOfCustomer < givedMoney){ 
+      getNews("Tiền khách đưa nhỏ hơn tiền khách trả");
+    }else{
+      if (productOption.length == 0) {
+        getNews("chưa có sản phẩm nào");
+      } else {
+        console.log("orderDto,", orderDto);
+        callApi("orders", "POST", orderDto, jwt).then((response) => {
+          if (response.status !== 200) {
+            return;
+          }
+          response.json().then((data) => {
+            console.log(data.content);
+            setCustomer(data.content);
+            setProductOption([]);
+            getNews("Tạo hóa đơn thành công");
+          });
         });
-      });
+      }
     }
+
   };
 
   const isShowInforCustomer = () => {
