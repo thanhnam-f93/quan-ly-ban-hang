@@ -52,7 +52,6 @@ public class Converter {
     }
     public SupplierDto ConverterToDtoSupplier(SupplierEntity item) {
         SupplierDto dto = new SupplierDto();
-
         dto.setId(item.getId());
         dto.setCode(item.getCode());
         dto.setName(item.getName());

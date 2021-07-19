@@ -11,8 +11,9 @@ import {
   CInputFile,
   CValidFeedback,
   CButton,
+  CImg,
 } from "@coreui/react";
-import 'core-js/es/symbol'
+import "core-js/es/symbol";
 import Swal from "sweetalert2";
 import { useEffect, useState } from "react";
 import swal from "sweetalert";
@@ -47,8 +48,8 @@ function Create(props) {
   const [brandName, setBrandName] = useState("");
   const [numberProduct, setNumber] = useState("");
   const [image, setImage] = useState("");
-  const [picture,setPicture]=useState("");
-  const [nameImage, setNameImage] = useState("");
+  const [picture, setPicture] = useState("");
+  const [checkImage, setCheckImage] = useState({ display: "none" })
   const [price, setPrice] = useState("");
   const [supplierName, setSupplierName] = useState("");
   const [description, setDescription] = useState("");
@@ -63,7 +64,7 @@ function Create(props) {
   const [filterOptionCategory, setFilterOptionCategory] = useState([]);
   const [filterOptionBrand, setFilterOptionBrand] = useState([]);
   const [products, setProdut] = useState([]);
-  const [a,seta]=useState([]);
+  const [a, seta] = useState([]);
   const [id, setID] = useState([]);
   const [isShowBrand, setBrands] = useState(false);
   const [isShowSupplier, setSuppliers] = useState(false);
@@ -72,7 +73,7 @@ function Create(props) {
 
   useEffect(() => {
     ApiQuan(`get`, `products1`).then((item) => {
-      setProdut(item.data);
+      seta(item.data);
       console.log("bbbb", item.data);
     });
     // products.map(res=>{
@@ -81,7 +82,7 @@ function Create(props) {
   }, []);
 
   const saveProduct = (e) => {
-    console.log("aaaaa", products[0].id);
+    console.log("aaaaa", a[0].id);
     e.preventDefault();
     let product = {
       code: code,
@@ -112,7 +113,7 @@ function Create(props) {
           timer: 1500,
         });
 
-        props.history.push(`/product/update-category/${products[0].id + 1}`);
+        props.history.push(`/product/update-category/${a[0].id + 1}`);
       })
       .catch((error) => {
         console.log("aaaaaaaaaaaaaaaa");
@@ -121,15 +122,6 @@ function Create(props) {
           Swal.fire({
             icon: "error",
             title: "mã trùng",
-            showConfirmButton: false,
-            timer: 1500,
-          });
-        };
-        if (error.response.data.mess == " error : nha cung cap ko dc trong ") {
-          console.log("nh");
-          Swal.fire({
-            icon: "error",
-            title: "nhà cung cấp không được chống",
             showConfirmButton: false,
             timer: 1500,
           });
@@ -143,6 +135,16 @@ function Create(props) {
             timer: 1500,
           });
         }
+        if (error.response.data.mess == " error : ko dc trong ") {
+          console.log("ttttt");
+          Swal.fire({
+            icon: "error",
+            title: "nhà cung cấp không được chống",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
+
         // if (error.response.data.mess == " error : so luong ko duoc chong ") {
         //   Swal.fire({
         //     icon: "error",
@@ -169,7 +171,6 @@ function Create(props) {
             timer: 1500,
           });
         }
-    
       });
   };
 
@@ -195,7 +196,7 @@ function Create(props) {
   }, [isShowSupplier]);
 
   useEffect(() => {
-    setFilterOptions([])
+    setFilterOptions([]);
     supplier.map((item) => {
       setFilterOptions((filterOptions) => [
         ...filterOptions,
@@ -205,7 +206,7 @@ function Create(props) {
   }, [supplier]);
 
   useEffect(() => {
-    setFilterOptionCategory([])
+    setFilterOptionCategory([]);
     category.map((item) => {
       setFilterOptionCategory((filterOptions) => [
         ...filterOptions,
@@ -215,7 +216,7 @@ function Create(props) {
   }, [category]);
 
   useEffect(() => {
-    setFilterOptionBrand([])
+    setFilterOptionBrand([]);
     brand.map((item) => {
       setFilterOptionBrand((filterOptions) => [
         ...filterOptions,
@@ -311,46 +312,43 @@ function Create(props) {
   const changeNumber = (event) => {
     setNumber(event.target.value);
   };
+  const changeImage = (event) => {
+    setImage(event.target.value);
+  };
 
   const handleImage = (e) => {
-    console.log(e)
-    console.log(111111111111)
-    setImage(e.target.files[0].name)
-    setPicture(e.target.files[0]);
-    console.log("Data", e.target.files[0])
-
-    console.log("Data Image", Image)
-    console.log("Data Image: 1", e.target.files[0])
-    console.log("Image name", nameImage)
-    console.log("Image name", e.target.files[0].name)
-    // if (e.target.files[0].name !== "") {
-    //     setCheckImage({ display: "inline" })
-    // }
-
-    var axios = require('axios');
-    var FormData = require('form-data');
-    var fs = require('fs');
+    var axios = require("axios");
+    var FormData = require("form-data");
+    var fs = require("fs");
     var data = new FormData();
-    data.append('file', e.target.files[0]);
+    console.log("Image: ", e.target.files[0]);
+    data.append("file", e.target.files[0]);
+    if (e.target.files[0].name !== "") {
+      setCheckImage({ display: "inline" })
+  }
 
     var config = {
-        method: 'post',
-        url: 'http://localhost:8080/api/v1/uploadFile',
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem("token")}`,
-          'Content-Type': 'application/json'
+      method: "post",
+      url: "http://localhost:8080/api/v1/uploadFile",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        "Content-Type": "application/json",
       },
-        data: data
+      data: data,
     };
 
     axios(config)
-        .then(function (response) {
-            console.log("222222222222222", JSON.stringify(response.data));
-        })
+      .then(function (response) {
+        console.log(JSON.stringify(response.data));
+      })
+      .catch(function (error) {
+        console.log(error);
+        setImage(e.target.files[0].name);
+      });
 
-    let image = `image/${e.target.files[0].name}`
-    setProdut({ ...products, [e.target.name]: image })
-}
+    let image = `image/${e.target.files[0].name}`;
+    setProdut({ ...products, [e.target.name]: image });
+  };
 
   const changePrice = (event) => {
     setPrice(event.target.value);
@@ -390,7 +388,7 @@ function Create(props) {
         <CRow>
           <CCol xs="12" sm="7">
             <CCard>
-              <CCardHeader>Sản phẩm</CCardHeader>
+              <CCardHeader><h2>Sản phẩm</h2></CCardHeader>
               <CCardBody>
                 <CFormGroup>
                   <CLabel htmlFor="company">Mã</CLabel>
@@ -458,7 +456,7 @@ function Create(props) {
               </CCardBody>
             </CCard>
             <CCard>
-              <CCardHeader>Thuộc tính</CCardHeader>
+              <CCardHeader><h2>Thuộc tính</h2></CCardHeader>
               <CCardBody>
                 <CFormGroup row className="my-0">
                   <CCol xs="6">
@@ -487,7 +485,7 @@ function Create(props) {
           </CCol>
           <CCol xs="12" sm="5">
             <CCard>
-              <CCardHeader>Phân loại</CCardHeader>
+              <CCardHeader><h2>Phân loại</h2></CCardHeader>
               <CCardBody>
                 <CFormGroup row className="my-0">
                   <CCol xs="10">
@@ -496,6 +494,7 @@ function Create(props) {
                         Nhãn hiệu <span style={{ color: "red" }}>*</span>
                       </CLabel>
                       <Select
+                      className=" mt-2 "
                         options={filterOptionBrand}
                         onChange={changeBrand}
                       />
@@ -503,7 +502,11 @@ function Create(props) {
                   </CCol>
                   <CCol xs="2">
                     <CFormGroup>
-                      <i class="fas fa-plus mt-4" style={{ cursor: "pointer" }}  onClick={addSupplier}></i>
+                      <i
+                        className="fas fa-plus mt-5 "
+                        style={{ cursor: "pointer" }}
+                        onClick={addSupplier}
+                      ></i>
                     </CFormGroup>
                   </CCol>
                 </CFormGroup>
@@ -514,6 +517,7 @@ function Create(props) {
                         Loại <span style={{ color: "red" }}>*</span>
                       </CLabel>
                       <Select
+                       className=" mt-2 "
                         options={filterOptionCategory}
                         onChange={changeCate}
                       />
@@ -521,7 +525,11 @@ function Create(props) {
                   </CCol>
                   <CCol xs="2">
                     <CFormGroup>
-                    <i class="fas fa-plus mt-4"  style={{ cursor: "pointer" }} onClick={addCategories}></i>
+                      <i
+                        class="fas fa-plus mt-5"
+                        style={{ cursor: "pointer" }}
+                        onClick={addCategories}
+                      ></i>
                     </CFormGroup>
                   </CCol>
                 </CFormGroup>
@@ -532,14 +540,19 @@ function Create(props) {
                         Nhà cung cấp <span style={{ color: "red" }}>*</span>
                       </CLabel>
                       <Select
-                        options={filterOptionBrand}
+                       className=" mt-2 "
+                        options={filterOptions}
                         onChange={changeSuppliers}
                       />
                     </CFormGroup>
                   </CCol>
                   <CCol xs="2">
                     <CFormGroup>
-                      <i class="fas fa-plus mt-4" style={{ cursor: "pointer" }}  onClick={addBrand}></i>
+                      <i
+                        class="fas fa-plus mt-5"
+                        style={{ cursor: "pointer" }}
+                        onClick={addBrand}
+                      ></i>
                     </CFormGroup>
                   </CCol>
                 </CFormGroup>
@@ -547,26 +560,27 @@ function Create(props) {
             </CCard>
 
             <CCard>
-              <CCardHeader>Ảnh</CCardHeader>
+              <CCardHeader><h2>Ảnh</h2></CCardHeader>
               <CCardBody>
                 <CFormGroup>
                   <CFormGroup>
-                    {/* <CLabel htmlFor="city">Chọn ảnh</CLabel>
-                     */}
                     <CFormGroup row>
                       <CCol xs="12" md="9">
-                        {/* <CInputFile id="file-input" name="file-input"  onChange={changeImage}/> */}
-                      </CCol>
+                        <CInputFile
+                        className=" px-4"
+                          onChange={handleImage}
+                          accept="image/png, image/jpeg" 
+                        />
+                           <img
+                           className=" px-4"
+                            style={checkImage}
+                         
+                       
+                        src={`${process.env.PUBLIC_URL}/image/${image}`}
+                     
+                      />
+                      </CCol>                   
                     </CFormGroup>
-                    
-                    <CInputFile id="link" name="link" 
-                    onChange={handleImage} accept="image/png, image/jpeg"  />
-
-                    {/* <CInput
-
-                      placeholder="link anh"
-                      onChange={changeImage}
-                    /> */}
                   </CFormGroup>
                 </CFormGroup>
               </CCardBody>
@@ -593,13 +607,17 @@ function Create(props) {
           </CCol>
         </CRow>
       </div>
-      <AddBrand 
-      isShowBrand={isShowBrand} setBrand={setBrands} />
+      <AddBrand isShowBrand={isShowBrand} setBrand={setBrands} />
       {/* <UpdateBrand isShowUpdateBrand={isShowUpdateBrand} setBrandUpdate={setBrandUpdate}/> */}
 
-      <AddCategory isShowCategory={isShowCategory} setCategoryies={setCategoryies}/>
-      <AddSupplier  isShowSupplier={isShowSupplier} setSuppliers={setSuppliers} />
-      
+      <AddCategory
+        isShowCategory={isShowCategory}
+        setCategoryies={setCategoryies}
+      />
+      <AddSupplier
+        isShowSupplier={isShowSupplier}
+        setSuppliers={setSuppliers}
+      />
     </div>
   );
 }

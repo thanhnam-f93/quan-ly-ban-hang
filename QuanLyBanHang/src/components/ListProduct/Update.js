@@ -9,7 +9,8 @@ import {
   CSelect,
   CRow,
   CTextarea,
-  CButton
+  CButton,
+  CInputFile
  
 } from "@coreui/react";
 import swal from 'sweetalert';
@@ -226,9 +227,9 @@ function Update(props) {
           }
 
         });
-        Swal.fire('đã lưu!', '', 'success')
+        Swal.fire({title: 'Đã lưu',  confirmButtonColor:"#0089ff"})
       } else if (result.isDenied) {
-        Swal.fire('Sản phẩm vẫn chưa được thay đổi', '', 'info')
+        Swal.fire('Sản phẩm vẫn chưa được thay đổi', '', '#0089ff')
       }
     })
     
@@ -257,9 +258,41 @@ function Update(props) {
   const changeSell = (event) => {
     setSell(event.target.value);
   };
-  const changeImage = (event) => {
-    setImage(event.target.value);
+  // const changeImage = (event) => {
+  //   setImage(event.target.value);
+  // };
+  const handleImage = (e) => {
+    var axios = require("axios");
+    var FormData = require("form-data");
+    var fs = require("fs");
+    var data = new FormData();
+    console.log("Image: ", e.target.files[0]);
+    data.append("file", e.target.files[0]);
+
+    var config = {
+      method: "post",
+      url: "http://localhost:8080/api/v1/uploadFile",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        "Content-Type": "application/json",
+      },
+      data: data,
+    };
+
+    axios(config)
+      .then(function (response) {
+        console.log(JSON.stringify(response.data));
+      })
+      .catch(function (error) {
+        console.log(error);
+        setImage(e.target.files[0].name);
+      });
+
+    let image = `image/${e.target.files[0].name}`;
+    setProduct({ ...product, [e.target.name]: image });
   };
+
+
   const changeSupplier = (event) => {
     setSupplierName(event.label);
   };
@@ -379,7 +412,7 @@ function Update(props) {
       <CCol  xs="12" sm="7">
       <CCard>
        
-              <CCardHeader>Sản phẩm</CCardHeader>
+              <CCardHeader><h2>Sản phẩm</h2></CCardHeader>
               <CCardBody>
                 <CFormGroup>
                   <CLabel htmlFor="company">Mã</CLabel>
@@ -416,7 +449,7 @@ function Update(props) {
                       <CLabel htmlFor="postal-code">Giá</CLabel>
                       <CInput
                     name="price"
-                    placeholder="DE1234567890"
+                    placeholder="0"
                     onChange={changePrice}
                     value={format2(price,"vnd")}
                     onBlur={changeonBlurPrice}
@@ -449,7 +482,7 @@ function Update(props) {
               </CCardBody>
             </CCard>
         <CCard>
-          <CCardHeader>Thuộc tính</CCardHeader>
+          <CCardHeader><h2>Thuộc tính</h2></CCardHeader>
           <CCardBody>
             <CFormGroup row className="my-0">
               <CCol xs="6">
@@ -483,7 +516,7 @@ function Update(props) {
       </CCol>
          <CCol xs="12" sm="5">   
             <CCard>
-              <CCardHeader>Phân loại</CCardHeader>
+              <CCardHeader><h2>Phân loại</h2></CCardHeader>
                     <CCol xs="12"> <CFormGroup>
                   <CLabel htmlFor="company">Nhãn hiệu</CLabel>
                   <Select placeholder={brandName} options={filterOptionBrand} onChange={changeBrand} />
@@ -505,13 +538,14 @@ function Update(props) {
                 </CCol>
             </CCard>
             <CCard className=" p-4">
-               <img width="100%" height="300px" src={image}/>    
-               <CInput
-                    name="price"
-                    placeholder="thay đổi link ảnh"
-                    onChange={changeImage}
-                   
-                  />        
+
+            <CInputFile
+                          id="link"
+                          name="link"
+                          onChange={handleImage}
+                          accept="image/png, image/jpeg"
+                        />
+               <img src={`${process.env.PUBLIC_URL}/image/${image}`}/>    
             </CCard>
         </CCol>
     

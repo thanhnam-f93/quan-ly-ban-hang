@@ -96,7 +96,7 @@ function AddCategory({isShowCategory ,setCategoryies}) {
           <Modal.Body>
           <CRow>
           <CCol xs="12">
-            <CCard>
+           
               <CCardBody>
                 <CFormGroup>
                   <CLabel htmlFor="company">Mã</CLabel>
@@ -120,7 +120,7 @@ function AddCategory({isShowCategory ,setCategoryies}) {
                 </CFormGroup>
 
               </CCardBody>
-            </CCard>
+            
           </CCol>
        </CRow>
           </Modal.Body>
@@ -130,7 +130,7 @@ function AddCategory({isShowCategory ,setCategoryies}) {
             <CRow>
               <CCol >
                 <CButton block color="secondary" onClick={handleClose}>
-                 hủy
+                 Hủy
                 </CButton>
               </CCol>
               <CCol >

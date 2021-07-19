@@ -2,10 +2,11 @@ package com.sapo.quanlybanhang.service;
 
 import com.sapo.quanlybanhang.dto.BrandDto;
 import com.sapo.quanlybanhang.dto.SupplierDto;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
 public interface BrandService <t>{
     List<t> getAll();
-    BrandDto create(BrandDto brandDto);
+    ResponseEntity<t> create(BrandDto brandDto);
 }

@@ -24,7 +24,7 @@ public class SupplierServiceImpl implements SupplierService {
 
     @Override
     public List<SupplierDto> getAll() {
-        List<SupplierEntity> supplierEntities = supplierRepository.getAll();
+        List<SupplierEntity> supplierEntities = supplierRepository.findAll();
         List<SupplierDto> supplierDtos = new ArrayList<>();
         Converter converter = new Converter();
         for (SupplierEntity item : supplierEntities) {

@@ -4,6 +4,7 @@ import com.sapo.quanlybanhang.dto.BrandDto;
 import com.sapo.quanlybanhang.dto.SupplierDto;
 import com.sapo.quanlybanhang.service.BrandService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,8 +23,8 @@ public class BrandController {
 
 
     @PostMapping(value = "/brands")
-    public BrandDto create(@RequestBody BrandDto brandDto) {
-        brandService.create(brandDto);
-        return brandDto;
+    public ResponseEntity<?> create(@RequestBody BrandDto brandDto) {
+      return  brandService.create(brandDto);
+
     }
 }

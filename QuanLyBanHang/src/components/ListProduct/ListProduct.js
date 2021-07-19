@@ -162,7 +162,7 @@ useEffect(() => {
               <CFormGroup >
               <CInput
                 name="name"
-                placeholder="tìm kiếm mã, tên"
+                placeholder="Tìm kiếm theo tên sản phẩm, mã sản phẩm"
                 value={search}
                 onChange={changeSearch}
               />  
@@ -171,7 +171,7 @@ useEffect(() => {
 
               </CCol>
               <CCol xs="4">
-              <Select placeholder="loại danh mục"  options={filterCategory} onChange={changeFilter} />  
+              <Select placeholder="Loại danh mục"  options={filterCategory} onChange={changeFilter} />  
               </CCol>
             </CRow>
          
@@ -210,7 +210,7 @@ useEffect(() => {
                    <td>
                     {item.code}
                   </td>
-                <td><img src={item.image} width="40px" height="40px" />  </td>
+                <td><img src={`${process.env.PUBLIC_URL}/image/${item.image}`} width="40px" height="40px" />  </td>
                   <td style={{color:"blue"}} > {item.name}</td>
                   <td>{item.categoryId}</td>
                   <td>{item.brandID}</td>

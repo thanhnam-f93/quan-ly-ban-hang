@@ -162,7 +162,7 @@ function AddBrand({isShowBrand ,setBrand}) {
           <Modal.Body>
           <CRow>
           <CCol xs="12">
-            <CCard>
+           
               <CCardBody>
                 <CFormGroup>
                   <CLabel htmlFor="company">Mã</CLabel>
@@ -201,7 +201,7 @@ function AddBrand({isShowBrand ,setBrand}) {
                   <CLabel htmlFor="vat">Địa chỉ</CLabel>
                   <CInput
                     id="vat"
-                    placeholder="nhập giá"
+                    placeholder="Tên địa chỉ"
                     onChange={changeAddress}
                     
                   />
@@ -218,7 +218,7 @@ function AddBrand({isShowBrand ,setBrand}) {
                   <span style={{color:"red"}}> {message.email}</span>
                 </CFormGroup>
               </CCardBody>
-            </CCard>
+          
           </CCol>
        </CRow>
           </Modal.Body>
@@ -229,7 +229,7 @@ function AddBrand({isShowBrand ,setBrand}) {
             <CRow>
               <CCol >
                 <CButton block color="secondary" onClick={handleClose}>
-                 hủy
+                 Hủy
                 </CButton>
               </CCol>
               <CCol >

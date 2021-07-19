@@ -72,16 +72,15 @@ public class ProductServiceImpl implements ProductService {
         ProductEntity productEntity = modelMapper.map(inputProductDTO, ProductEntity.class);
 
 
-        if(inputProductDTO.getCode() == ""){
+        if (inputProductDTO.getCode() == "") {
             ProductEntity productEntity1 = productRepository.findFirstByOrderByIdDesc();
-            productEntity.setCode(("SKU" + String.valueOf(productEntity1.getId()+1)));
-        }
-        else {
-            if(productRepository.existsByCode(inputProductDTO.getCode())){
-                  return ResponseEntity.badRequest().body(new Message(" error : code trung "));
+            productEntity.setCode(("SKU" + String.valueOf(productEntity1.getId() + 1)));
+        } else {
+            if (productRepository.existsByCode(inputProductDTO.getCode())) {
+                return ResponseEntity.badRequest().body(new Message(" error : code trung "));
             }
         }
-        if(inputProductDTO.getName() == ""){
+        if (inputProductDTO.getName() == "") {
             return ResponseEntity.badRequest().body(new Message(" error : ma ko dc trong "));
         }
 
@@ -91,23 +90,22 @@ public class ProductServiceImpl implements ProductService {
 //        if(inputProductDTO.getPrice() == 0){
 //            return ResponseEntity.badRequest().body(new Message(" error : ma ko dc trong "));
 //        }
-    if(inputProductDTO.getCategoryName() == ""){
-        return ResponseEntity.badRequest().body(new Message(" error : loai ko dc trong "));
-    }
-        if(inputProductDTO.getBrandName() == ""){
+        if (inputProductDTO.getCategoryName() == "") {
+            return ResponseEntity.badRequest().body(new Message(" error : loai ko dc trong "));
+        }
+        if (inputProductDTO.getBrandName() == "") {
             return ResponseEntity.badRequest().body(new Message(" error : nhan hieu ko dc trong "));
         }
-        if(inputProductDTO.getSupplierName() == ""){
-            return ResponseEntity.badRequest().body(new Message(" error : nha cung cap ko dc trong "));
+        if (inputProductDTO.getSupplierName() == "") {
+            return ResponseEntity.badRequest().body(new Message(" error : ko dc trong "));
         }
 
-            productEntity.setCategory(categoriesEntity);
-            productEntity.setBrand(brandEntity);
-            productEntity.setSupplier(supplierEntity);
-            productRepository.save(productEntity);
-            ProductDto productsDTO = converter.ConverterToDtoProduct(productEntity);
-            return ResponseEntity.ok(productsDTO);
-
+        productEntity.setCategory(categoriesEntity);
+        productEntity.setBrand(brandEntity);
+        productEntity.setSupplier(supplierEntity);
+        productRepository.save(productEntity);
+        ProductDto productsDTO = converter.ConverterToDtoProduct(productEntity);
+        return ResponseEntity.ok(productsDTO);
 
 
     }
@@ -162,10 +160,10 @@ public class ProductServiceImpl implements ProductService {
 
 
     @Override
-    public List<ProductDto> filterAll(int keyword, int pageNo,int pageSize) {
+    public List<ProductDto> filterAll(int keyword, int pageNo, int pageSize) {
         if (keyword != 0) {
             Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
-            List<ProductEntity> productEntities = productRepository.filterAll(keyword,pageable);
+            List<ProductEntity> productEntities = productRepository.filterAll(keyword, pageable);
             List<ProductDto> productDtos = new ArrayList<>();
             Converter converter = new Converter();
             for (ProductEntity item : productEntities) {
@@ -289,10 +287,10 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<ProductDto>  searchByCategories(int keyword, int pageNo, int pageSize) {
+    public List<ProductDto> searchByCategories(int keyword, int pageNo, int pageSize) {
         if (keyword != 0) {
             Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
-            List<ProductEntity> productEntities = productRepository.filterAll(keyword,pageable);
+            List<ProductEntity> productEntities = productRepository.filterAll(keyword, pageable);
             List<ProductDto> productDtos = new ArrayList<>();
             Converter converter = new Converter();
             for (ProductEntity item : productEntities) {
@@ -340,9 +338,9 @@ public class ProductServiceImpl implements ProductService {
         List<ProductDto> productDtos = new ArrayList<>();
         List<ProductEntity> productEntities = new ArrayList<>();
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
-         if(keyword !="" && filter !=""){
-             productEntities = productRepository.searchByNameAndCodeByCategoryPagination(filter,keyword,pageable);
-         }
+        if (keyword != "" && filter != "") {
+            productEntities = productRepository.searchByNameAndCodeByCategoryPagination(filter, keyword, pageable);
+        }
         Converter converter = new Converter();
         for (ProductEntity item : productEntities) {
             productDtos.add(converter.ConverterToDtoProduct(item));
@@ -352,11 +350,11 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<ProductDto> searchByNameAndCodeByCategory(String filter,String keyword) {
+    public List<ProductDto> searchByNameAndCodeByCategory(String filter, String keyword) {
 
-        if(keyword !="" && filter !=""){
+        if (keyword != "" && filter != "") {
             List<ProductDto> productDtos = new ArrayList<>();
-            List<ProductEntity> productEntities = productRepository.searchByNameAndCodeByCategory(filter,keyword);
+            List<ProductEntity> productEntities = productRepository.searchByNameAndCodeByCategory(filter, keyword);
             Converter converter = new Converter();
             for (ProductEntity item : productEntities) {
                 productDtos.add(converter.ConverterToDtoProduct(item));
@@ -374,7 +372,6 @@ public class ProductServiceImpl implements ProductService {
         SupplierEntity supplierEntity = supplierRepository.findByName(updateDto.getSupplierName());
 
 
-
 //      if(updateDto.getCode() == ""){
 //            ProductEntity productEntity1 = productRepository.findFirstByOrderByIdDesc();
 //            updateDto.setCode(("SKU" + String.valueOf(productEntity1.getId()+1)));
@@ -385,7 +382,7 @@ public class ProductServiceImpl implements ProductService {
 //            }
 //        }
 
-     if(updateDto.getName() == ""){
+        if (updateDto.getName() == "") {
             return ResponseEntity.badRequest().body(new Message(" error : ma ko dc trong "));
         }
 
@@ -414,7 +411,7 @@ public class ProductServiceImpl implements ProductService {
     public List<ProductDto> findAll(Pageable pageable) {
         return productRepository.
                 findAll(pageable).getContent().stream()
-                .map(item ->ProductConverter.toDto(item)).collect(Collectors.toList());
+                .map(item -> ProductConverter.toDto(item)).collect(Collectors.toList());
     }
 }
 

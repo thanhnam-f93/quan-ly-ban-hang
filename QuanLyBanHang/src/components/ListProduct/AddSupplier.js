@@ -47,7 +47,18 @@ function AddSupplier({isShowSupplier ,setSuppliers}) {
           timer: 1500
         })
         setSuppliers(false)
-        });
+        }).catch((error)=>{
+          if (error.response.data.mess == "error : name not null") {
+            console.log("ccc");
+            Swal.fire({
+              icon: "error",
+              title: "tên không được để chống",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+          }
+
+        })
       };
   
     
@@ -84,7 +95,7 @@ function AddSupplier({isShowSupplier ,setSuppliers}) {
           <Modal.Body>
           <CRow>
           <CCol xs="12">
-            <CCard>
+          
               <CCardBody>
           
                 <CFormGroup>
@@ -98,7 +109,7 @@ function AddSupplier({isShowSupplier ,setSuppliers}) {
                   <span style={{color:"red"}}> {message.name}</span>
                 </CFormGroup>
               </CCardBody>
-            </CCard>
+            
           </CCol>
        </CRow>
           </Modal.Body>
@@ -108,7 +119,7 @@ function AddSupplier({isShowSupplier ,setSuppliers}) {
             <CRow>
               <CCol >
                 <CButton block color="secondary" onClick={handleClose}>
-                 hủy
+                 Hủy
                 </CButton>
               </CCol>
               <CCol >
