@@ -22,24 +22,18 @@ public class BillDao extends AbstractDao<BillEntity> implements IBillDao {
         BillListDto listDto = new BillListDto();
         List<BillEntity> billEntities = new ArrayList<>();
         String sql1 = "select o  FROM BillEntity o ";
-        String sql2 = "inner join CustomerEntity c on c.id = o.customerBill.id";
-        Query query = this.query(orderPageable,sql1,sql2);
-        if (orderPageable.getOrderTime() == null && orderPageable.getOptionTime() == null ){
+        String sql2 = "inner join o.customerBill c ";
+        String sql3 = "select count(o)  FROM BillEntity o ";
+        List<Query> listQuery = this.query(orderPageable,sql1,sql2,sql3);
+        Query query = listQuery.get(0);
+        Query queryCount = listQuery.get(1);
             billEntities = query.setFirstResult((orderPageable.getPage()-1)*orderPageable.getLimit())
                     .setMaxResults(orderPageable.getLimit()).getResultList();
-        }else if ((orderPageable.getInputOrder() == null || orderPageable.getInputOrder() == "")){
-            billEntities = query
-                    .setFirstResult((orderPageable.getPage()-1)*orderPageable.getLimit())
-                    .setMaxResults(orderPageable.getLimit())
-                    .getResultList();
-        }else{
-            billEntities = query
-                    .setFirstResult((orderPageable.getPage()-1)*orderPageable.getLimit())
-                   .getResultList();
-        }
-            listDto.setTotalItem(query.getMaxResults());
+            Long a =(Long) queryCount.getResultList().get(0);
+            listDto.setTotalItem(a);
             listDto.setResultList(billEntities.stream()
                                     .map(item-> BillConverter.toDto(item)).collect(Collectors.toList()));
             return listDto;
+
         }
 }

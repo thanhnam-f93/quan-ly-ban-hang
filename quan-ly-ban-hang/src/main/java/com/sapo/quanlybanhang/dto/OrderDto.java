@@ -1,10 +1,12 @@
 package com.sapo.quanlybanhang.dto;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.TimeZone;
 
 @Getter
 @Setter
@@ -16,9 +18,9 @@ public class OrderDto {
     private String code;
 
     private Long price;
-
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy/MM/dd hh:mm a ",timezone = "EST")
     private Timestamp createdDate;
-
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy/MM/dd hh:mm ", timezone = "UTC")
     private Timestamp modifiedDate;
 
     private String createBy;

@@ -10,10 +10,11 @@ import { callApi, callApiNotJwt } from "src/apis/ApiCaller";
 import List from "./List";
 import SaleSearchCustomer from "./SaleSearchCustomer";
 import SaleDiscount from "./SaleDiscount";
+import InformNew from "src/helpers/InformNew";
 const SalePayment = ({ isShowCustomer, setIsShowCustomer }) => {
   const { jwt } = useContext(JwtContext);
   const [isShow, setIsShow] = useState(false);
-  const { productOption, amountChange, setProductOption } =
+  const { productOption, amountChange, setProductOption ,getNews} =
     useContext(SalerContext);
   const handleClose = () => setIsShow(false);
   const [total, setTotal] = useState(0);
@@ -154,20 +155,20 @@ const SalePayment = ({ isShowCustomer, setIsShowCustomer }) => {
 
   // -----------------------create bill-----------------------
   const getPay = () => {
+    console.log("giá trị orderDto:",orderDto);
     if (productOption.length == 0) {
-      alert("Chưa có sản phẩm nào!");
+      getNews("chưa có sản phẩm nào");
     } else {
       console.log("orderDto,", orderDto);
       callApi("orders", "POST", orderDto, jwt).then((response) => {
         if (response.status !== 200) {
-          alert("thao tác thất bại");
           return;
         }
         response.json().then((data) => {
-          alert("thao tác thành công");
           console.log(data.content);
           setCustomer(data.content);
           setProductOption([]);
+          getNews("Tạo hóa đơn thành công");
         });
       });
     }
@@ -178,6 +179,7 @@ const SalePayment = ({ isShowCustomer, setIsShowCustomer }) => {
   };
   return (
     <div className="sale-payment">
+      {/* <InformNew /> */}
       <div className="customer">
         {isShowInfor ? (
           <div className="show-customer">
@@ -283,6 +285,7 @@ const SalePayment = ({ isShowCustomer, setIsShowCustomer }) => {
         setTypeDiscount={setTypeDiscount}
         dismount={dismount}
       />
+     
     </div>
   );
 };

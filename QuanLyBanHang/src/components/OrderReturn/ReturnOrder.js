@@ -24,13 +24,14 @@ const ReturnOrder = () => {
     orderTime: "",
   });
 
-  const getDate = (op, da) => {
+  const getDate = (startedTime, endedTime) =>{
+    console.log("------------------started",startedTime);
+    console.log("kiểu:",typeof(op));
     setOrderPageAble({
-      ...orderPageable,
-      optionTime: op,
-    });
-  };
-
+      ...orderPageable,startedTime:startedTime,endedTime:endedTime
+    })
+    
+  }
   const [listOrder, setListOrder] = useState([]);
 
   useEffect(() => {
@@ -41,14 +42,16 @@ const ReturnOrder = () => {
       if (response.status !== 200) {
         alert("thao tác thất bại");
         return;
-      }
-      response.json().then((data) => {
+      }else{
+          response.json().then((data) => {
         console.log(data);
         console.log(data.length);
         setListOrder(data.resultList);
         setTotalPage(Math.ceil(data.totalItem/orderPageable.limit));
       
       });
+      }
+    
     });
 
   }, [orderPageable,show]);
@@ -66,6 +69,9 @@ const ReturnOrder = () => {
 
   const getPage = (page) =>{
     console.log("trang:",page);
+    if(page==0){ 
+      page = 1;
+    }
     setOrderPageAble({...orderPageable, page:page});
   }
 

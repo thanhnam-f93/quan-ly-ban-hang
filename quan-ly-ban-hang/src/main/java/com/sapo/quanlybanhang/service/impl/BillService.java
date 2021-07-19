@@ -17,8 +17,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -51,6 +49,7 @@ public class BillService implements IBillService {
         Integer index =0;
         Integer amount = 0;
         List<BillDetailEntity> billDetailEntities = new ArrayList();
+
         OrderEntity orderEntity = orderRepository.findOneById(billDto.getOrderId());
         BillEntity billEntity = BillConverter.toEntity(billDto);
         List<OrderDetailDto> orderDetailDtos = billDto.getOrderDetailDtos();
@@ -72,7 +71,7 @@ public class BillService implements IBillService {
             item.getProduct().setNumberProduct(item.getProduct().getNumberProduct()+orderDetailDto.getAmountPay());
             BillDetailEntity billDetailEntity = new BillDetailEntity();
             billDetailEntity.setBill(billEntity);
-            billDetailEntity.setPrice(item.getPrice());
+            billDetailEntity.setPrice(orderDetailDto.getPrice());
             billDetailEntity.setQuanlity(orderDetailDto.getAmountPay());
             billDetailEntity.setProductBill(item.getProduct());
             billDetailEntities.add(billDetailEntity);

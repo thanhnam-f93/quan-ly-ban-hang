@@ -43,15 +43,19 @@ public class BillController {
     public BillListDto findAll(@RequestBody OrderPageable orderPageable){
         Integer totalItem = 0;
         BillListDto listDto = new BillListDto();
-        if(orderPageable.getOrderTime() == null && (orderPageable.getInputOrder() == null
-                || orderPageable.getInputOrder() =="" ) && (orderPageable.getOptionTime() == null)){
+        if(orderPageable.getStartedTime() == null && (orderPageable.getInputOrder() == null
+                || orderPageable.getInputOrder() =="" ) && (orderPageable.getEndedTime()== null)){
             Sort sort = Sort.by("createdDate").descending();
             Pageable pageable = PageRequest.of(orderPageable.getPage()-1,orderPageable.getLimit(),sort);
-            listDto.setTotalItem(billService.getTotalItem());
+            listDto.setTotalItem((long)billService.getTotalItem());
             listDto.setResultList(billService.findAll(pageable));
             return listDto;
         }else {
-            return billService.findByCodeAndCustomer(orderPageable);
+            listDto= billService.findByCodeAndCustomer(orderPageable);
+            if(listDto.getResultList().size()==0){
+                listDto.setTotalItem(0L);
+            }
+            return listDto ;
         }
 
     }

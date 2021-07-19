@@ -7,6 +7,7 @@ import OrderTable from "./OrderTable";
 import { CPagination } from "@coreui/react";
 import { Modal } from "react-bootstrap";
 import ReturnOrder from "../OrderReturn/ReturnOrder";
+import './scss/OrderModal.scss'
 const OrderModal = ({show, setShow}) => {
   const [totalPage,setTotalPage] = useState(5);
   const [isShow, setIsShow] = useState(true);
@@ -64,21 +65,22 @@ const OrderModal = ({show, setShow}) => {
     console.log(orderPageable);
   };
 
-  const getDate = (op, da) => {
+  const getDate = (startedTime,endedTime) => {
     setOrderPageAble({
       ...orderPageable,
-      optionTime: op,
+      startedTime:startedTime,
+      endedTime:endedTime
     });
   };
   console.log();
 
   return (
-    <div className="list-order">
+    
       <Modal 
         show={isShow}
         scrollable="auto"
         onHide={handleClose}
-        // backdrop="static"
+        dialogClassName = "list-order-1"
         size="lg"
         aria-labelledby="contained-modal-title-vcenter"
         centered
@@ -100,7 +102,7 @@ const OrderModal = ({show, setShow}) => {
           />
         </Modal.Footer>
       </Modal>
-    </div>
+    
   );
 };
 

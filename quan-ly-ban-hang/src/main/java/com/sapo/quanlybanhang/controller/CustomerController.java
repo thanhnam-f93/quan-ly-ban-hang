@@ -278,7 +278,7 @@ public class CustomerController {
     }
 
     @PostMapping("customers")
-    ResponseEntity<?> save( @RequestBody CustomerDto customerDto ) {
+    ResponseEntity<?> save(@Valid @RequestBody CustomerDto customerDto ) {
         try {
             if(customerDto.getEmail()!=null&& customerService.checkDuplicateEmail(customerDto.getEmail())){
                 return new ResponseEntity<>("Email da ton tai",HttpStatus.BAD_REQUEST);
@@ -288,7 +288,7 @@ public class CustomerController {
             }
             if(customerDto!=null){
                 customerService.save(customerDto);
-                return new ResponseEntity<>("Thêm mới thành công",HttpStatus.OK);
+                return new ResponseEntity<>(customerDto,HttpStatus.OK);
             }else{
                 return new ResponseEntity<>("Không có dữ liệu",HttpStatus.NO_CONTENT);
             }

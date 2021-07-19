@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.sql.Date;
 import java.time.LocalDate;
 
 public interface OrderRepository extends JpaRepository<OrderEntity, Integer> {
@@ -17,5 +18,10 @@ public interface OrderRepository extends JpaRepository<OrderEntity, Integer> {
              "from OrderEntity o where date(o.createdDate)= Date(?1)")
      public OrderItem findPrice(LocalDate optionTime);
 
+     @Query(value = "select Date(o.created_date) from orders o limit 1",nativeQuery = true)
+     Date getStartTime();
+
+     @Query (value = "select Date(o.created_date) from orders o order by o.id DESC  limit 1",nativeQuery = true)
+     Date getEndTime();
 
 }
