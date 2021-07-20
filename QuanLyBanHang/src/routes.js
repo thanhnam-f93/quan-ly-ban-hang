@@ -91,9 +91,9 @@ const CustomerNew = React.lazy(() =>
 const CustomerList = React.lazy(() =>
   import("./components/Customer/CustomerList")
 );
-const ListProduct = React.lazy(() =>
-  import("./components/ListProduct/ListProduct")
-);
+// const ListProduct = React.lazy(() =>
+//   import("./components/ListProduct/ListProduct")
+// );
 const FeedBackList = React.lazy(() =>
   import("./components/Feedback/FeedbackList")
 );
@@ -103,8 +103,8 @@ const FeedBackNew = React.lazy(() =>
 const FeedbackDetail = React.lazy(() =>
   import("./components/Feedback/FeedbackDetail")
 );
-const Update = React.lazy(() => import("./components/ListProduct/Update"));
-const Create = React.lazy(() => import("./components/ListProduct/Create"));
+// const Update = React.lazy(() => import("./components/ListProduct/Update"));
+// const Create = React.lazy(() => import("./components/ListProduct/Create"));
 
 /*================== The End code of Team - Quản lý bán hàng =================*/
 
@@ -183,8 +183,8 @@ const routes = [
   { path: "/users", exact: true, name: "Users", component: Users },
   { path: "/users/:id", exact: true, name: "User Details", component: User },
   /*================== The End Of Template React =================*/
-  // { path: '/', exact: true, name: 'trang-chu' },
-  // { path: '/dashboard', name: 'Dashboard', component: Dashboard },
+  { path: '/', exact: true, name: 'trang-chu' },
+  { path: '/dashboard', name: 'Dashboard', component: Dashboard },
   { path: "/theme", name: "Theme", component: Colors, exact: true },
   { path: "/theme/colors", name: "Colors", component: Colors },
   { path: "/theme/typography", name: "Typography", component: Typography },
@@ -295,8 +295,8 @@ const routes = [
   { path: '/dropdown', exact: true,  name: 'danh-sach-don-hang', component: DropDown },
   { path: '/order-detail', exact: true,  name: '', component: OrderDetail },
   { path: '/order-detail/:id/:type', exact: true,  name: 'chi-tiet-don-hang', component: OrderDetail },
-  // { path: '/order/return', exact: true,  name: 'don-hang-tra-ve ', component: ReturnOrder },
-  // { path: '/order/return/:id', exact: true,  name: '', component: ReturnOrder },
+  { path: '/order/return', exact: true,  name: 'don-hang-tra-ve ', component: ReturnOrder },
+  { path: '/order/return/:id', exact: true,  name: '', component: ReturnOrder },
   { path: '/order/return-order-detail', exact: true,  name: '', component: ReturnOrderDetail },
   { path: '/product', exact: true,  name: 'Sản phẩm', component: ListProduct },
   { path: '/category', exact: true,  name: 'Sản phẩm', component: ListProduct },
@@ -311,8 +311,6 @@ const routes = [
     name: "ban-hang",
     component: SaleAddCustomer,
   },
-{ path: '/statistical', exact: true,  name: 'Thống kê sản phẩm', component: StatisticalProduct },
-
 
   { path: "/settings", exact: true, name: "Cấu hình", component: Setting },
   {
