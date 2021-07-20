@@ -16,6 +16,7 @@ import OrderReturnCustomer from './components/OrderReturn/OrderReturnCustomer';
 import OrderModal from './components/Order/OrderModal';
 import ReturnOrder from './components/OrderReturn/ReturnOrder';
 import Report from './components/Report/Report';
+import ReturnOrderDetailPush from './components/ReturnOrderDetail/ReturnOrderDetailPush';
 
 /*================== Of Template React =================*/
 const Toaster = React.lazy(() => import("./views/notifications/toaster/Toaster"));
@@ -236,6 +237,7 @@ const routes = [
   { path: '/create-order-return/:id/:code/:createdDate', exact: true,  name: 'add', component: OrderReturnCustomer },
   { path: '/order-list', exact: true,  name: 'add', component: OrderModal },
   { path: '/report', exact: true,  name: 'bao-cao-ban-hang', component: Report },
+  { path: '/return/return-order-detail', exact: true,  name: 'chi-tiet-don-hang', component: ReturnOrderDetailPush },
 
 
  

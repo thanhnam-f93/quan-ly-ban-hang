@@ -11,4 +11,5 @@ public class BillDetailDto {
     private Long discount;
     private String productCode;
     private Long priceProduct;
+
 }

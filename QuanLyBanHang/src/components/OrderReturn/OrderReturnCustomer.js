@@ -1,7 +1,7 @@
 import { CButton } from "@coreui/react";
 import React, { useContext, useState } from "react";
 import { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { reactLocalStorage } from "reactjs-localstorage";
 import { callApi, callApiNotJwt } from "src/apis/ApiCaller";
 import { JwtContext } from "src/context/JwtContext";
@@ -25,7 +25,7 @@ const OrderReturnCustomer = ({ item }) => {
   const [orderDetails, setOrderDetails] = useState([]);
   const [isState, setIsState] = useState(false);
   const [isShow, setIsShow] = useState(false);
-
+ const history = useHistory();
   useEffect(() => {
     console.log("types:" + param.id);
     callApiNotJwt(`order-details/${id}`, "GET", jwt).then((response) => {
@@ -130,7 +130,9 @@ const getPay =()=>{
     }
     response.json().then((data) => {
       console.log(data);
+      history.push("/return/return-order-detail")
       alert("thành công");
+
      
     });
   });

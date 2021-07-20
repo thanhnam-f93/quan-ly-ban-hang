@@ -23,4 +23,8 @@ public class BillDetailController {
         return ResponseEntity.ok(list);
 
     }
+    @GetMapping ("/bill-details")
+    public ResponseEntity findAllById(){
+        return ResponseEntity.ok(billDetailService.findByid());
+    }
 }

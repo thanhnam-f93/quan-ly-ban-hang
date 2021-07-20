@@ -11,6 +11,7 @@ import List from "./List";
 import SaleSearchCustomer from "./SaleSearchCustomer";
 import SaleDiscount from "./SaleDiscount";
 import InformNew from "src/helpers/InformNew";
+import NewNotSearch from "src/helpers/NewNotSearch";
 const SalePayment = ({ isShowCustomer, setIsShowCustomer }) => {
   const { jwt } = useContext(JwtContext);
   const [isShow, setIsShow] = useState(false);
@@ -136,7 +137,7 @@ const SalePayment = ({ isShowCustomer, setIsShowCustomer }) => {
     callApiNotJwt(`customers/search?input=${val}`, "GET", jwt).then(
       (response) => {
         if (response.status !== 200) {
-          alert("thao tác thất bại");
+         setCustomer([]);
           return;
         }
         response.json().then((data) => {
@@ -223,7 +224,7 @@ const SalePayment = ({ isShowCustomer, setIsShowCustomer }) => {
         )}
         {isShowCustomer ? (
           <div className="search-customer">
-            <List
+           {listCustomer.length!=0? <List
               data={listCustomer}
               render={(item, index) => (
                 <SaleSearchCustomer
@@ -234,6 +235,9 @@ const SalePayment = ({ isShowCustomer, setIsShowCustomer }) => {
                 />
               )}
             />
+              :
+              <NewNotSearch />
+}
           </div>
         ) : (
           ""

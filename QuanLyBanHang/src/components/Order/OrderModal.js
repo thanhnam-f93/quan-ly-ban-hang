@@ -8,11 +8,13 @@ import { CPagination } from "@coreui/react";
 import { Modal } from "react-bootstrap";
 import ReturnOrder from "../OrderReturn/ReturnOrder";
 import './scss/OrderModal.scss'
+import NewNotOrder from "src/helpers/NewNotOrder";
 const OrderModal = ({show, setShow}) => {
   const [totalPage,setTotalPage] = useState(5);
   const [isShow, setIsShow] = useState(true);
   const { jwt } = useContext(JwtContext);
   const acc = reactLocalStorage.getObject("acc");
+  const [isCheck, setIsCheck] = useState(false);
   console.log(acc);
   const [orderPageable, setOrderPageAble] = useState({
     page: 1,
@@ -46,7 +48,13 @@ const OrderModal = ({show, setShow}) => {
       }
       response.json().then((data) => {
         console.log(data);
-        setListOrder(data.resultItem);
+       
+        if(data.resultItem.length==0){
+          setIsCheck(true);
+        }else{
+          setListOrder(data.resultItem);
+          setIsCheck(false);
+        }
         // alert("thao tác thành công");
         console.log("list order", data);
         setTotalPage(Math.ceil(data.totalItem/orderPageable.limit));
@@ -88,9 +96,17 @@ const OrderModal = ({show, setShow}) => {
         <Modal.Header closeButton>
           <Modal.Title>Chọn đơn để trả hàng</Modal.Title>
         </Modal.Header>
+        
         <Modal.Body>
           <ModalHeaders inputs={getInput} getDate={getDate} />
-          <OrderTable type = "return "lists={listOrder} />
+          {
+            !isCheck 
+            ?
+            <OrderTable type = "return "lists={listOrder} />
+            :
+            <NewNotOrder />
+          }
+          
          
         </Modal.Body>
         <Modal.Footer>

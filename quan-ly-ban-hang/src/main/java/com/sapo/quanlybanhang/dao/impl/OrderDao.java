@@ -2,10 +2,7 @@ package com.sapo.quanlybanhang.dao.impl;
 
 import com.sapo.quanlybanhang.converter.OrderConverter;
 import com.sapo.quanlybanhang.dao.IOrderDao;
-import com.sapo.quanlybanhang.dto.DashBoardItem;
-import com.sapo.quanlybanhang.dto.OrderDto;
-import com.sapo.quanlybanhang.dto.OrderListDto;
-import com.sapo.quanlybanhang.dto.OrderPageable;
+import com.sapo.quanlybanhang.dto.*;
 import com.sapo.quanlybanhang.entity.OrderEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -76,6 +73,38 @@ public class OrderDao extends AbstractDao<OrderEntity>implements IOrderDao {
 
         });
         return lists;
+    }
+
+    @Override
+    public List<OrderResultSet> reportByMonth(ReportOffsetTime offsetTime) {
+        List<ReportDto> reportDtoList = new ArrayList();
+        String sql = "select new com.sapo.quanlybanhang.dto.OrderResultSet(MONTH(o.createdDate)," +
+                "YEAR(o.createdDate), sum(o.price),sum(o.discount), count(od.quanlity),count (o)) " +
+                "from OrderEntity o inner join o.orderDetailEntities od " +
+                "where Date(o.createdDate) between Date(?1) and Date(?2) " +
+                "group by MONTH(o.createdDate),YEAR(o.createdDate) ";
+        List<OrderResultSet> list = entityManager.createQuery(sql)
+                .setParameter(1, offsetTime.getStartedTime())
+                .setParameter(2, offsetTime.getEndedTime())
+                .getResultList();
+        return list;
+    }
+
+    @Override
+    public List<OrderResultSet> reportByOrder(ReportOffsetTime offsetTime) {
+        String sql = "select  new com.sapo.quanlybanhang.dto.OrderResultSet( o.code ,sum(o.price)," +
+                "sum(o.discount), count(od.quanlity), count(ro), sum(ro.price) ,sum(rod.quanlity))\n" +
+                " from OrderDetailEntity od \n" +
+                "  left JOIN  od.order o \n" +
+                "   left JOIN  o.billEntities ro\n" +
+                " left join ro.billDetailEntities rod\n" +
+                " where DATE(o.createdDate) between Date(?1) and Date(?2)\n" +
+                "  group by o.code ";
+        List<OrderResultSet> list = entityManager.createQuery(sql)
+                .setParameter(1,offsetTime.getStartedTime())
+                .setParameter(2, offsetTime.getEndedTime())
+                .getResultList();
+            return list;
     }
 
 
