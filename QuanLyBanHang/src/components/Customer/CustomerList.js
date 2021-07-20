@@ -2,22 +2,18 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import CustomerItem from "./CustomerItem";
 import NavBar from "./NavBar";
-import { useHistory } from "react-router-dom";
+import "../../apis/css.scss";
 import { reactLocalStorage } from "reactjs-localstorage";
-import Swal from "sweetalert2";
+import DisplayResultPagination from "./DisplayResultPagination";
 import {
   CPagination,
-  CDropdown,
-  CDropdownItem,
-  CDropdownMenu,
-  CDropdownToggle,
 } from "@coreui/react";
 function CustomerList() {
-  const history = useHistory();
   const headers = {
     Authorization: "Bearer " + reactLocalStorage.get("token"),
   };
   const [customers, setCustomers] = useState([]);
+  const [totalElements, setTotalElements] = useState(0);
   const [totalPage, setTotalPage] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [gender, setGender] = useState({});
@@ -58,19 +54,10 @@ function CustomerList() {
       .get(URL, { headers })
       .then((response) => {
         const result = response.data;
-
-        // const totalPage = response.data.totalPage;
         setTotalPage(response.data.totalPages);
-        // console.log("totalPage", totalPage);
-
-        //  const currentPage = result.pageable.pageNumber;
-        //  setPage(currentPage);
-        //   console.log("currentPage", currentPage);
-
+        setTotalElements(response.data.totalElements);
         const cus = result.content;
         setCustomers(cus);
-        //    console.log("cus", customers);
-
         setIsLoading(false);
       })
       .catch((error) => {
@@ -110,11 +97,11 @@ function CustomerList() {
         <thead>
           <tr className="row">
             <th className="col-1">STT</th>
-            <th className="col-2">Name</th>
-            <th className="col-1">Gender</th>
-            <th className="col-2">Phone</th>
+            <th className="col-2">Tên</th>
+            <th className="col-2">Số điện thoai</th>
+            <th className="col-1">Giới tính</th>
             <th className="col-3">Email</th>
-            <th className="col-3">Address</th>
+            <th className="col-3">Địa chỉ</th>
           </tr>
         </thead>
         <tbody>
@@ -132,53 +119,26 @@ function CustomerList() {
         </tbody>
       </table>
       <div className="row">
-        <CPagination
-          align="center"
-          addListClass="some-class"
-          activePage={page}
-          pages={totalPage}
-          onActivePageChange={setPage}
-        />
-
-        <CDropdown className="m-1 float-right offset-8">
-          <CDropdownToggle color="secondary" size="sm">
-            Bản ghi
-          </CDropdownToggle>
-          <CDropdownMenu>
-            <CDropdownItem header>Chọn số bản ghi hiển thị</CDropdownItem>
-            <CDropdownItem
-              onClick={() => {
-                setPage(1);
-                setLimit(5);
-              }}
-            >
-              5
-            </CDropdownItem>
-            <CDropdownItem
-              onClick={() => {
-                setPage(1);
-                setLimit(8);
-              }}
-            >
-              8
-            </CDropdownItem>
-            <CDropdownItem
-              onClick={() => {
-                setPage(1);
-                setLimit(10);
-              }}
-            >
-              10
-            </CDropdownItem>
-          </CDropdownMenu>
-        </CDropdown>
+        <div className="col-6 float-left">
+          <CPagination
+            id="pagination"
+            align="center"
+            addListClass="some-class"
+            activePage={page}
+            pages={totalPage}
+            onActivePageChange={setPage}
+          />
+        </div>
+        <div className="col-6 center">
+          <DisplayResultPagination
+            page={page}
+            setPage={setPage}
+            limit={limit}
+            setLimit={setLimit}
+            totalElements={totalElements}
+          ></DisplayResultPagination>
+        </div>
       </div>
-
-      {/* <Paginations
-        totalPages={totalPage}
-        currentPage={page}
-        setCurrentPage={setPage}
-      ></Paginations> */}
     </div>
   );
 }

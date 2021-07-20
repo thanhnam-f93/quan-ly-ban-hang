@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface BrandRepository extends JpaRepository<BrandEntity,Integer> {
+public interface BrandRepository extends JpaRepository<BrandEntity, Integer> {
     BrandEntity findByName(String name);
 
     @Query(value = "select * from brand order by id desc",nativeQuery = true)

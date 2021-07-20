@@ -9,11 +9,11 @@ import java.util.List;
 
 @Data
 public class DashBoarDto {
-private LocalDate optionDate;
-private Long price;
-private Integer orderNumber;
-private Integer billNumber;
-private Long totalPrice;
-List<DashBoardItem> dashBoardItems = new ArrayList();
-OptionTime optionTime;
+    List<DashBoardItem> dashBoardItems = new ArrayList();
+    OptionTime optionTime;
+    private LocalDate optionDate;
+    private Long price;
+    private Integer orderNumber;
+    private Integer billNumber;
+    private Long totalPrice;
 }

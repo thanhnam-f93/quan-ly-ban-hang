@@ -33,6 +33,7 @@ const Logins = () => {
         console.log("response:", data);
         reactLocalStorage.set("token", data.token);
         reactLocalStorage.set("name", data.fullName);
+        reactLocalStorage.set("id", data.id);
         setJwt(data.token);
         console.log("login:", jwt);
         history.push("/404");

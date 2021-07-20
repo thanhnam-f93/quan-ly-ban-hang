@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface CategoryRepository extends JpaRepository<CategoryEntity,Integer> {
+public interface CategoryRepository extends JpaRepository<CategoryEntity, Integer> {
     CategoryEntity findByName(String name);
     @Query(value = "select * from categories order by id desc",nativeQuery = true)
     List<CategoryEntity> getAll();

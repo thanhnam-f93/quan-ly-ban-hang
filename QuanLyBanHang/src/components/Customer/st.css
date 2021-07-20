@@ -23,7 +23,9 @@ h1 {
   max-width: 400px;
   margin: 0 auto;
 } */
-
+/* #pagination li a {
+background-color:#0089ff;
+} */
 p {
   color: #bf1650;
 }
@@ -32,7 +34,9 @@ p::before {
   display: inline;
   content: "⚠ ";
 }
-
+/* span{
+  padding-top: 10px;
+} */
 /* input {
   display: block;
   box-sizing: border-box;

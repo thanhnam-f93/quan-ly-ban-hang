@@ -16,97 +16,26 @@ import {
   CDataTable,
   CBadge,
 } from "@coreui/react";
-import { header, dataMonth, dataDay } from "src/components/Customer/data";
-import axios from "axios";
-function CustomerReport() {
-  const headers = header;
-  const [year, setYear] = useState();
-  const [listYear, setListYear] = useState([]);
-  const [month, setMonth] = useState();
-  const [totalByYear, setTotalByYear] = useState([]);
-  const [totalByMonth, setTotalByMonth] = useState([]);
-  const getListYear = async () => {
-    const API_listYear =
-      "http://localhost:8080/customers/getYearCreateCustomer";
-    axios
-      .get(API_listYear, { headers })
-      .then((response) => {
-        setListYear(response.data);
-        console.log("list Year: ", listYear);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-  const getDataByYear = async () => {
-    var API_Statistics = `http://localhost:8080/customers/count?year=${year}`;
-    console.log("API: ", API_Statistics);
-    axios.get(API_Statistics, { headers }).then((response) => {
-      setTotalByYear(response.data);
-      console.log("response:  " + response.data);
-    });
-  };
-  const getDataByMonth = async () => {
-    var API_Statistics = `http://localhost:8080/customers/count2?year=${year}&month=${month}`;
-    console.log("API: ", API_Statistics);
-    axios.get(API_Statistics, { headers }).then((response) => {
-      setTotalByMonth(response.data);
-      console.log("response:  " + response.data);
-    });
-  };
-  function handleChangeYear() {
-    let y = document.getElementById("year");
-    setYear(y.value);
-    getDataByYear();
-  }
-  function handleChangeMonth() {
-    let item = document.getElementById("month");
-    setMonth(item.value);
-  }
-  useEffect(() => {
-    getListYear();
-    getDataByYear();
-    getDataByMonth();
-  }, [year, month]);
-  console.log("list Year Binhf: ", listYear);
-  const fields = ["Tháng", "Số Khách Mới"];
+import TotalCustomerByYear from "./TotalCustomerByYear";
+import TotalCustomerByMonth from "./TotalCustomerByMonth";
+import StatisticTotalOrderByCustomers from "./StatisticTotalOrderByCustomers";
+function Badges() {
   return (
-    <CCardGroup columns className="cols-2">
-      <CCard>
-        <CCardHeader>Chọn Năm</CCardHeader>
-        <CFormGroup></CFormGroup>
-        <select
-          id="year"
-          className="form-control"
-          placeholder="Chọn năm"
-          aria-label="Default select example"
-          onChange={handleChangeYear}
-        >
-          {listYear.map((item) => {
-            return <option value={item}>{item}</option>;
-          })}
-        </select>
+    <div>
+      <TotalCustomerByYear></TotalCustomerByYear>
+      <hr />
+      <TotalCustomerByMonth></TotalCustomerByMonth>
+      <hr />
 
-        <CCardBody>
-          <CChartBar
-            datasets={[
-              {
-                label: "Lượng Khách Hàng",
-                backgroundColor: "#f87979",
-                data: totalByYear,
-              },
-            ]}
-            labels="months"
-            options={{
-              tooltips: {
-                enabled: true,
-              },
-            }}
-          />
-        </CCardBody>
-      </CCard>
+      <StatisticTotalOrderByCustomers></StatisticTotalOrderByCustomers>
+    </div>
+  );
+}
 
-      {/* <CCard>
+export default Badges;
+
+{
+  /* <CCard>
         <CCardHeader>Simple Table</CCardHeader>
         <CCardBody>
           <CDataTable
@@ -116,9 +45,11 @@ function CustomerReport() {
             pagination
           />
         </CCardBody>
-      </CCard> */}
+      </CCard> */
+}
 
-      <CCard>
+{
+  /* <CCard>
         <CCardHeader>Chọn Năm</CCardHeader>
         <CFormGroup></CFormGroup>
         <select
@@ -162,7 +93,7 @@ function CustomerReport() {
           />
         </CCardBody>
       </CCard>
-      {/*
+
         <CCard>
           <CCardHeader>Doughnut Chart</CCardHeader>
           <CCardBody>
@@ -317,12 +248,13 @@ function CustomerReport() {
               ]}
             />
           </CCardBody>
-        </CCard> */}
+        </CCard>
     </CCardGroup>
   );
 }
 export default CustomerReport;
-
+*/
+}
 //
 // import {
 //   CBadge,

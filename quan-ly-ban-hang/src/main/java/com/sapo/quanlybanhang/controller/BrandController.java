@@ -17,7 +17,7 @@ public class BrandController {
     private BrandService brandService;
 
     @GetMapping(value = "/brands")
-    public List<BrandDto> getAll(){
+    public List<BrandDto> getAll() {
         return brandService.getAll();
     }
 

@@ -10,10 +10,15 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface IOrderService {
-    public List<OrderDto> findAll( Pageable pageable);
-    public OrderDto save (OrderDto orderDto);
+    public List<OrderDto> findAll(Pageable pageable);
+
+    public OrderDto save(OrderDto orderDto);
+
     OrderListDto findByCodeAndCustomer(OrderPageable orderPageable);
+
     public List<Long> findPrice(LocalDate optionTime);
+
     public OrderEntity findById(Integer id);
-    public  Integer getTotalItem ();
+
+    public Integer getTotalItem();
 }

@@ -3,7 +3,6 @@ package com.sapo.quanlybanhang.dto;
 
 import lombok.*;
 
-
 import java.util.Date;
 
 @Getter

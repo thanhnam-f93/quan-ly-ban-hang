@@ -6,7 +6,7 @@ import com.sapo.quanlybanhang.entity.StaffEntity;
 import java.util.stream.Collectors;
 
 public class StaffConverter {
-    public static StaffDto toDto(StaffEntity staffEntity){
+    public static StaffDto toDto(StaffEntity staffEntity) {
         StaffDto staffDto = new StaffDto();
         staffDto.setId(staffEntity.getId());
         staffDto.setFullName(staffEntity.getFullName());
@@ -20,8 +20,8 @@ public class StaffConverter {
         staffDto.setModifiedDate(staffEntity.getModifiedDate());
         staffDto.setCreateBy(staffEntity.getCreateBy());
         staffDto.setModifiedBy(staffEntity.getModifiedBy());
-        staffDto.setRoleName(staffEntity.getRoles().stream().map(item ->item.getName()).collect(Collectors.toList()));
-        staffDto.setRoleId(staffEntity.getRoles().stream().map(item->item.getId()).collect(Collectors.toList()));
+        staffDto.setRoleName(staffEntity.getRoles().stream().map(item -> item.getName()).collect(Collectors.toList()));
+        staffDto.setRoleId(staffEntity.getRoles().stream().map(item -> item.getId()).collect(Collectors.toList()));
         return staffDto;
     }
 

@@ -2,12 +2,12 @@ package com.sapo.quanlybanhang.controller;
 
 import com.sapo.quanlybanhang.dto.BrandDto;
 import com.sapo.quanlybanhang.dto.CategoryDto;
-import com.sapo.quanlybanhang.dto.ProductDto;
 import com.sapo.quanlybanhang.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping(value = "api/v1")
@@ -16,7 +16,7 @@ public class CategoryController {
     private CategoryService categoryService;
 
     @GetMapping(value = "/categories")
-    public List<CategoryDto> getAll(){
+    public List<CategoryDto> getAll() {
         return categoryService.getAll();
     }
 

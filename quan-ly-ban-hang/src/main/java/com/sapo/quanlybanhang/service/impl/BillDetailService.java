@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
 public class BillDetailService implements IBillDetailService {
     @Autowired
     private BillDetailRepository billDetailRepository;
+
     @Override
     public List<BillDetailDto> findAllOrder(Integer id) {
         return billDetailRepository.findAllByBillId(id)

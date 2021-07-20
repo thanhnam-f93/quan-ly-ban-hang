@@ -12,8 +12,8 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 })
 public class QuanLyBanHangApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(QuanLyBanHangApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(QuanLyBanHangApplication.class, args);
+    }
 
 }

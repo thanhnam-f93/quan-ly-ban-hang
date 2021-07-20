@@ -1,7 +1,9 @@
 package com.sapo.quanlybanhang.dto;
 
 
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -40,8 +42,6 @@ public class OrderDto {
     private String customerEmail;
 
     private Long discount;
-
-
 
 
 }

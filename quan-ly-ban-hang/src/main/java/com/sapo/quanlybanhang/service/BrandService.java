@@ -6,7 +6,7 @@ import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
-public interface BrandService <t>{
+public interface BrandService<t> {
     List<t> getAll();
     ResponseEntity<t> create(BrandDto brandDto);
 }

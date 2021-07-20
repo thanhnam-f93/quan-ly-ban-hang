@@ -1,23 +1,32 @@
 package com.sapo.quanlybanhang.dto;
 
-import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 
 import java.util.Collection;
+
 public class MyUser extends User {
+
+    String fullName;
+
     public MyUser(String username, String password, boolean enabled,
                   boolean accountNonExpired, boolean credentialsNonExpired,
                   boolean accountNonLocked, Collection<? extends GrantedAuthority> authorities) {
         super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
     }
-    String fullName;
 
     public String getFullName() {
         return fullName;
     }
 
+    public int id;
     public void setFullName(String fullName) {
         this.fullName = fullName;
+    }
+    public void setId(int id){
+        this.id =id;
+    }
+    public int getId(){
+        return id;
     }
 }

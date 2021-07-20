@@ -9,7 +9,9 @@ import java.util.List;
 
 public interface CustomerService {
     CustomerDto findById(Integer id);
+
     Page<CustomerDto> getPage(Pageable pageable);
+
     //
     Page<CustomerDto> search(String input, Pageable pageable);
 
@@ -27,35 +29,46 @@ public interface CustomerService {
 
     //
     Page<CustomerDto> findAgeUnder18(Pageable pageable);
-    Page<CustomerDto> findAgeUnder18optionGender(String gender,Pageable pageable);
+
+    Page<CustomerDto> findAgeUnder18optionGender(String gender, Pageable pageable);
 
     //
     Page<CustomerDto> findByAgeBetween18and35(Pageable pageable);
-    Page<CustomerDto> findByAgeBetween18and35optionGender(String gender,Pageable pageable);
+
+    Page<CustomerDto> findByAgeBetween18and35optionGender(String gender, Pageable pageable);
 
     //
     Page<CustomerDto> findByAgeOver35(Pageable pageable);
-    Page<CustomerDto> findByAgeOver35optionGender(String gender,Pageable pageable);
+
+    Page<CustomerDto> findByAgeOver35optionGender(String gender, Pageable pageable);
 
     //
 
 
     //
     List<CustomerDto> getAll();
+
     //
-    void save(CustomerDto customerDto);
+    CustomerDto save(CustomerDto customerDto);
 
     //
     void delete(Integer id);
+
     //
     Integer countCustomersByMonth(Integer m, Integer n);
 
-    Integer countCustomersByDay(Integer d,Integer m, Integer n);
+//    Integer countCustomersByDay(Integer d, Integer m, Integer n);
+
+public Integer countCustomersByDay(Integer d,Integer m, Integer y) ;
+
     //
-    Page<Object[]> getStatistics(Pageable pageable);
+    List<Object[]> getStatistics(Pageable pageable);
+    List<Object[]> getStatistics1();
 
     List<Integer> getYearCreateCustomer();
+
     boolean checkDuplicatePhone(String phone);
+
     boolean checkDuplicateEmail(String email);
     CustomerEntity save(CustomerEntity customerEntity);
 }

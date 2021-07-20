@@ -124,11 +124,14 @@ function CustomerDetail(props) {
       </div>
       <div className="row">
         <div className=" card col-lg-6">
-          <CCard>
+          <CCard style={{ border: "none" }}>
             <CCardHeader>Thông tin Khách hàng</CCardHeader>
             <CCardBody>
               <CFormGroup>
-                <CLabel htmlFor="vat">Tên</CLabel>
+                <CLabel htmlFor="vat">
+                  Tên{" "}
+                  <span style={{ color: "red", fontWeight: "bolder" }}>*</span>
+                </CLabel>
                 <CInput
                   // {...register("name", {
                   //   required: true,
@@ -165,7 +168,10 @@ function CustomerDetail(props) {
                 />
               </CFormGroup>
               <CFormGroup>
-                <CLabel htmlFor="phone">Số điện thoại</CLabel>
+                <CLabel htmlFor="phone">
+                  Số điện thoại{" "}
+                  <span style={{ color: "red", fontWeight: "bolder" }}>*</span>
+                </CLabel>
                 <CInput
                   // {...register("phone", {
                   //   required: true,
@@ -194,7 +200,10 @@ function CustomerDetail(props) {
                 )}
               </CFormGroup>
               <CFormGroup>
-                <CLabel htmlFor="email">Email</CLabel>
+                <CLabel htmlFor="email">
+                  Email{" "}
+                  <span style={{ color: "red", fontWeight: "bolder" }}>*</span>
+                </CLabel>
                 <CInput
                   // {...register("email", {
                   //   required: true,
@@ -261,7 +270,7 @@ function CustomerDetail(props) {
           </CCard>
         </div>
         <div className=" card col-lg-6 mx-auto">
-          <CCard>
+          <CCard style={{ border: "none" }}>
             <CCardHeader>Lịch sử</CCardHeader>
             <CCardBody>
               <CFormGroup>
@@ -309,9 +318,9 @@ function CustomerDetail(props) {
               <CFormGroup>
                 <CLabel htmlFor="note">Thông tin bổ sung về khách hàng</CLabel>
                 <CTextarea
-                  {...register("note", {
-                    maxLength: 250,
-                  })}
+                  // {...register("note", {
+                  //   maxLength: 250,
+                  // })}
                   style={{ height: "120px" }}
                   name="note"
                   placeholder="Ghi chú thông tin Khách hàng"
@@ -330,27 +339,31 @@ function CustomerDetail(props) {
       <div className="row">
         <div className="col-6">
           <button
-            className="btn btn-danger"
+            className="btn btn-primary"
             onClick={resetForm}
-            style={{ marginLeft: "10px" }}
+            style={{ marginLeft: "10px", backgroundColor: "#0089ff" }}
           >
             Hủy
           </button>
           <button
-            className="btn btn-success"
+            className="btn btn-primary"
             onClick={handleSubmit(updateCustomer)}
-            style={{ marginLeft: "10px" }}
+            style={{ marginLeft: "10px", backgroundColor: "#0089ff" }}
           >
             Cập nhật
           </button>
         </div>
         <div className="col-6">
           <button
-            style={{ marginLeft: "10px", width: "55px" }}
+            style={{
+              marginLeft: "10px",
+              width: "55px",
+              backgroundColor: "#0089ff",
+            }}
             onClick={() => {
               deleteCustomer(customer.id);
             }}
-            className="btn btn-danger  float-right"
+            className="btn btn-primary  float-right"
           >
             Xóa
           </button>
