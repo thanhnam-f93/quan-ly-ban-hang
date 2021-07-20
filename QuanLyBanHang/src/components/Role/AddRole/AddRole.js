@@ -345,6 +345,13 @@ const AddRole = () => {
           timer: 2000
         });
         history.goBack() })
+        .catch(error =>  {
+          console.log('error Bình kiểm', error.response.data.status);
+          if(error.response.data.status == 403){
+            history.push("/error");
+          }
+        })
+
   }
 
  
