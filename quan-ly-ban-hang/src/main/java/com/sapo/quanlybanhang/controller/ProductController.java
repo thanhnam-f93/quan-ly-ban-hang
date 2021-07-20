@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -27,47 +28,56 @@ public class ProductController {
     @Autowired
     private UploadService uploadService;
 
-
+    @PreAuthorize("hasAuthority('VIEW_PRODUCT')")
     @GetMapping(value = "/products")
     public List<ProductDto> getAll() {
         return productService.getAll();
     }
+
+    @PreAuthorize("hasAuthority('VIEW_PRODUCT')")
     @GetMapping(value = "/products1")
     public List<ProductDto> getAll1() {
         return productService.getAll1();
     }
 
+    @PreAuthorize("hasAuthority('VIEW_PRODUCT')")
     @GetMapping(value = "/day")
     public List<ProductDto> filterByDay() {
         return productService.getAllByDay();
     }
-    @GetMapping(value = "/month")
 
+    @PreAuthorize("hasAuthority('VIEW_PRODUCT')")
+    @GetMapping(value = "/month")
     public List<ProductDto> filterByMonth() {
         return productService.getAllByMonth();
     }
 
+    @PreAuthorize("hasAuthority('VIEW_PRODUCT')")
     @GetMapping(value = "/products/name")
     public List<ProductDto> sortByName() {
         return productService.sortByName();
     }
 
+    @PreAuthorize("hasAuthority('VIEW_PRODUCT')")
     @GetMapping(value = "/products/price")
     public List<ProductDto> sortByPrice() {
         return productService.sortByPrice();
     }
 
+    @PreAuthorize("hasAuthority('VIEW_PRODUCT')")
     @GetMapping(value = "/products/number")
     public List<ProductDto> sortByNumber() {
         return productService.sortByNumber();
     }
 
+    @PreAuthorize("hasAuthority('CREATE_PRODUCT')")
     @PostMapping(value = "/products")
     public ResponseEntity<?> create(@RequestBody InputProductDto productDto) {
         return productService.create(productDto);
 
     }
 
+    @PreAuthorize("hasAuthority('VIEW_PRODUCT')")
     @GetMapping(value = "/products/{id}")
     public ProductDto getById(@PathVariable int id) {
 

@@ -5,6 +5,8 @@ import org.springframework.security.core.userdetails.User;
 
 import java.util.Collection;
 
+import java.util.List;
+
 public class MyUser extends User {
 
     String fullName;
@@ -19,14 +21,18 @@ public class MyUser extends User {
         return fullName;
     }
 
-    public int id;
     public void setFullName(String fullName) {
         this.fullName = fullName;
     }
-    public void setId(int id){
-        this.id =id;
+
+    List<GrantedAuthority> code;
+
+    public List<GrantedAuthority> getCode() {
+        return code;
     }
-    public int getId(){
-        return id;
+
+    public void setCode(List<GrantedAuthority> code) {
+        this.code = code;
     }
+
 }

@@ -1,5 +1,6 @@
 import React from 'react'
 import { useHistory } from 'react-router-dom'
+import './StaffItem.css'
 
 const StaffItem = ({staff}) => {
   let history = useHistory();
@@ -13,21 +14,13 @@ const StaffItem = ({staff}) => {
   
   return (
     <>
-       <tr >
+       <tr onClick={() => updateStaff(staff)} >
               <td>{staff.fullName}</td>
               <td>{staff.status}</td>
+              <td>{staff.roleName}</td>
               <td>{staff.mail}</td>
               <td>{staff.phone}</td>
-              <td>{staff.roleName}</td>
-
-              <td>
-                <button
-                onClick={() => updateStaff(staff)}
-                className="btn btn-success"
-                >
-                  Cập nhật
-                </button>
-              </td>
+              <td>{staff.address}</td>
             </tr>
     </>
   )

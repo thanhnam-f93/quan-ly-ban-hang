@@ -10,6 +10,7 @@ import {
 
 } from '@coreui/react'
 import { useHistory } from 'react-router-dom';
+import swal from 'sweetalert';
 // import {useForm} from 'react-hook-form';
 
 const StaffDetail = (props) => {
@@ -20,7 +21,10 @@ const StaffDetail = (props) => {
   useEffect(() => {
    callApi('get', 'roles')
       .then(response => { setRoles(response.data) })
-      .catch(error => console.log('error'))
+      .catch(error =>{
+        if(error.response.data.status == 403){
+          history.push("/error");
+        }})
   }, []);
 
   let history = useHistory();
@@ -61,7 +65,14 @@ const StaffDetail = (props) => {
   var data = JSON.stringify(staff);
   const updateStaff = () => {
     callApi('put', `staffs/${staffDetail.id}`, data)
-      .then(response => { history.goBack() })
+      .then(response => {
+        swal({
+          title: "Tốt lắm!",
+          text: "Cập nhật nhân viên thành công!",
+          icon: "success",
+          timer: 2000
+        });
+        history.goBack() })
       .catch(error => { console.log(error) })
   }
   /* End - Code */
@@ -208,7 +219,7 @@ const StaffDetail = (props) => {
           <button
             className="btn btn-success"
             onClick={updateStaff}
-            style={{ marginLeft: "10px", padding: "7px 20px" }}
+            style={{ marginLeft: "10px", padding: "7px 20px", backgroundColor: "#0089ff", borderColor: "#0089ff"  }}
           >
             Lưu
           </button>

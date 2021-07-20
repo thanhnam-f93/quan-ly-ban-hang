@@ -1,18 +1,21 @@
-import React from "react";
-import Logins from "./components/Login/Login";
-import DropDown from "./components/Order/DropDown";
-import OrderDetail from "./components/OrderDetail/OrderDetail";
-import AddRole from "./components/Role/AddRole/AddRole";
-import Role from "./components/Role/Role";
-import RoleDetail from "./components/Role/RoleDetail/RoleDetail";
-import Saler from "./components/sale/Saler";
-import Setting from "./components/Setting/Setting";
-import AddStaff from "./components/Staff/AddStaff/AddStaff";
-import StaffDetail from "./components/Staff/StaffDetail/StaffDetail";
-import ReturnOrder from "./components/OrderReturn/ReturnOrder";
-import ReturnOrderDetail from "./components/ReturnOrderDetail/ReturnOrderDetail";
-import SaleAddCustomer from "./components/sale/SaleAddCustomer";
-import OrderReturnCustomer from "./components/OrderReturn/OrderReturnCustomer";
+
+import React from 'react';
+import Logins from './components/Login/Login';
+import DropDown from './components/Order/DropDown';
+import OrderDetail from './components/OrderDetail/OrderDetail';
+import AddRole from './components/Role/AddRole/AddRole';
+import Role from './components/Role/Role';
+import RoleDetail from './components/Role/RoleDetail/RoleDetail';
+import Saler from './components/sale/Saler';
+import Setting from './components/Setting/Setting';
+import AddStaff from './components/Staff/AddStaff/AddStaff';
+import StaffDetail from './components/Staff/StaffDetail/StaffDetail';
+import PageError from './components/PageError/PageError';
+// import ReturnOrder from './components/Ordereturn/ReturnOrder';
+import ReturnOrderDetail from './components/ReturnOrderDetail/ReturnOrderDetail';
+import ReturnOrder from './components/OrderReturn/ReturnOrder';
+import SaleAddCustomer from './components/sale/SaleAddCustomer';
+import OrderReturnCustomer from './components/OrderReturn/OrderReturnCustomer';
 /*================== Of Template React =================*/
 const Toaster = React.lazy(() =>
   import("./views/notifications/toaster/Toaster")
@@ -105,19 +108,15 @@ const Create = React.lazy(() => import("./components/ListProduct/Create"));
 
 /*================== The End code of Team - Quản lý bán hàng =================*/
 
-const ListSupplier = React.lazy(() =>
-  import("./components/ListSupplier/ListSupplier")
-);
-const UpdateSupplier = React.lazy(() =>
-  import("./components/ListSupplier/UpdateSupplier")
-);
-const CreateSupplier = React.lazy(() =>
-  import("./components/ListSupplier/CreateSupplier")
-);
-const Order = React.lazy(() => import("./components/Order/Order"));
-/*================== The End coimport FeedBackNew from './components/Feedback/FeedBackNew';
-de of Team - Quản lý bán hàng =import FeedBackItem from './components/Feedback/FeedBackItem';
-================*/
+
+const ListSupplier = React.lazy(() => import('./components/ListSupplier/ListSupplier'));
+const UpdateSupplier = React.lazy(() => import('./components/ListSupplier/UpdateSupplier'));
+const CreateSupplier = React.lazy(() => import('./components/ListSupplier/CreateSupplier'));
+const Order = React.lazy(() => import('./components/Order/Order'));
+
+// const PageError = React.lazy(() => import('./components/PageError/PageError'));
+/*================== The End code of Team - Quản lý bán hàng =================*/
+
 
 const routes = [
   /*================== Of Template React =================*/
@@ -340,6 +339,7 @@ const routes = [
     component: SaleAddCustomer,
   },
 
+
   { path: "/settings", exact: true, name: "Cấu hình", component: Setting },
   {
     path: "/settings/staffs",
@@ -390,8 +390,9 @@ const routes = [
     name: "add",
     component: OrderReturnCustomer,
   },
-
+  { path: '/error', exact: true,  name: 'Lỗi', component: PageError }
   /*================== The End code of Team - Quản lý bán hàng =================*/
+
 ];
 
 export default routes;

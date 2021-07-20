@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "roles")
@@ -39,8 +40,15 @@ public class RoleEntity {
 
     @Column(name = "modified_by")
     private String modifiedBy;
+
     @ManyToMany(mappedBy = "roles", fetch = FetchType.LAZY)
     private Collection<StaffEntity> staffEntities;
 
+
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "role_permission",
+            joinColumns = @JoinColumn(name = "role_id"),
+            inverseJoinColumns = @JoinColumn(name = "permission_id"))
+    private List<PermissionEntity> permissions;
 
 }

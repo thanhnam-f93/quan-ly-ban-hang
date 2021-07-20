@@ -2,14 +2,18 @@
 import React from 'react'
 import { useState, useEffect } from 'react';
 import StaffItem from './StaffItem/StaffItem';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import {
   CPagination,
 } from '@coreui/react'
 import { callApi } from 'src/apis/Apis';
 
+
 const Staff = () => {
 
+  let history = useHistory();
+
+  console.log('anh nam 1');
   const [clickSearch, setClickSearch] = useState(0);
 
   const [keySearch, setKeySearch] = useState("");
@@ -22,6 +26,7 @@ const Staff = () => {
 
 const searchStaffByName = () => {
     setClickSearch(clickSearch + 1);
+    setCurrentPage(1);
   }
 
   const [staffs, setStaffs] = useState([]);
@@ -30,18 +35,26 @@ const searchStaffByName = () => {
 
   var URL = ""
   if(clickSearch > 0) {
-    URL = `staffs/search?name=${keySearch}`
+    URL = `staffs/search?name=${keySearch}&page=${currentPage - 1}`
   }else {
     URL = `staffs/?page=${currentPage - 1}`
   }
+
 
   useEffect(() => {
     callApi('get', URL)
       .then(response => {
         setStaffs(response.data.content);
         setTotalPages(response.data.totalPages);
+        console.log("anh nam 2")
       })
-      .catch(error => console.log('error'))
+      .catch(error =>  {
+          console.log('error Bình kiểm', error.response.data.status);
+          if(error.response.data.status == 403){
+            history.push("/error");
+          }
+        }
+       )
   }, [currentPage, clickSearch]);
 
   return (
@@ -52,12 +65,12 @@ const searchStaffByName = () => {
         </div>
     
     {/* Search */}
-        <div style={{ marginLeft: "500px", marginRight: "10px" }}>
+        <div style={{ marginLeft: "517px", marginRight: "10px" }}>
                 <input onChange={getKeySearch} 
-                    type="text" placeholder="Search by name" style={{ height: "34px", width: "289px", padding: "10px 15px 10px 15px", border: "none" }} />
+                    type="text" placeholder="Tìm kiếm theo tên" style={{ height: "34px", width: "289px", padding: "10px 15px 10px 15px", border: "none" }} />
                 <button onClick={searchStaffByName}
                     style={{ padding: "1px 10px 0px 10px", height: "34px", border: "none", backgroundColor: "white" }}>
-                    <i class="fas fa-search" style={{ color: "green", fontSize: "19px" }}></i>
+                    <i class="fas fa-search" style={{ color: "#0089ff", fontSize: "19px" }}></i>
                 </button>
             </div>
     
@@ -66,18 +79,12 @@ const searchStaffByName = () => {
         <div style={{ margin: "0px" }} >
           <Link to='/settings/staffs/new-staff'>
             <button
-              style={{ marginLeft: "10px" }}
               className="btn btn-success"
+              style={{ marginLeft: "10px", backgroundColor: "#0089ff", borderColor: "#0089ff" }}
             >
               Thêm mới nhân viên
             </button>
           </Link>
-          {/* <button
-            style={{ marginLeft: "10px" }}
-            className="btn btn-secondary"
-          >
-            Trợ giúp
-          </button> */}
         </div>
       </div>
       <hr />
@@ -86,10 +93,10 @@ const searchStaffByName = () => {
           <tr>
             <th>Họ và tên</th>
             <th>Trạng thái</th>
-            <th>Email</th>
-            <th>Số điện thoại</th>
             <th>Vai trò</th>
-            <th>Cập nhật</th>
+            <th>Email</th>
+            <th>Số điện thoại</th>   
+            <th>Địa chỉ</th>
           </tr>
         </thead>
         <tbody>

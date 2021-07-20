@@ -49,34 +49,8 @@ public class LoginController {
                 );
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = jwtProvider.generateJwtToken(authentication);
-        return ResponseEntity.ok(new JwtRespone(jwt, SecurityUtils.getPrincipal().getFullName()));
+        return ResponseEntity.ok(new JwtRespone(jwt, SecurityUtils.getPrincipal().getFullName(), SecurityUtils.getPrincipal().getCode()));
 
-    }
-
-    @PostMapping("/signup")
-    public ResponseEntity<?> registerUser(@Validated @RequestBody StaffDto staffDto) {
-        if (staffRepository.existsByPhone(staffDto.getPhone())) {
-            return ResponseEntity
-                    .badRequest()
-                    .body("Error: Số điện thoại đã được sử dụng");
-        }
-
-        // Create new user's account
-        StaffDto dto = new StaffDto();
-//       dto.set staffDto.getId(),
-        dto.setFullName(staffDto.getFullName());
-        dto.setPassWord(encoder.encode(staffDto.getPassWord()));
-        dto.setAddress(staffDto.getAddress());
-        dto.setMail(staffDto.getMail());
-        dto.setPhone(staffDto.getPhone());
-        dto.setDateOfBirth(staffDto.getDateOfBirth());
-        dto.setStatus(staffDto.getStatus());
-        dto.setCreatedDate(staffDto.getCreatedDate());
-        dto.setModifiedDate(staffDto.getModifiedDate());
-        dto.setCreateBy(staffDto.getCreateBy());
-        dto.setModifiedBy(staffDto.getModifiedBy());
-        dto.setRoleEntity(staffDto.getRoleEntity());
-        return new ResponseEntity(staffService.createStaff(dto), HttpStatus.OK);
     }
 
 

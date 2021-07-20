@@ -46,11 +46,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/**").permitAll()
-                .antMatchers("/dashboard/**", "admin/staffs/**").hasAuthority("ADMIN")
-                .antMatchers("/bill/**", "/bill-details/**",
-                        "/order/**", "/orders/**", "/order-details/**")
-                .hasAnyAuthority("ADMIN", "STAFF_SALE")
+
+                .antMatchers("/login").permitAll()
+                .antMatchers("/dashboard/**").permitAll()
+//                .antMatchers("/bill/**","/bill-details/**",
+//                        "/order/**","/orders/**","/order-details/**")
+//                .hasAnyAuthority("ADMIN","STAFF_SALE")
                 .anyRequest().authenticated().and()
                 .exceptionHandling().authenticationEntryPoint(jwtAuthEntryPoint)
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);

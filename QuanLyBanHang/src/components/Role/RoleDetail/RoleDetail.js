@@ -70,7 +70,7 @@ const updateRole = () => {
                   />
                 </CFormGroup>
                 <button className="btn btn-danger btn-light" type="reset" style={{ marginLeft: "10px" }}  onClick={() => {history.goBack()}}>Hủy</button>
-                <button className="btn btn-success"  style={{ marginLeft: "10px" }} onClick = {updateRole}>Lưu</button>
+                <button className="btn btn-success"  style={{ marginLeft: "10px", backgroundColor: "#0089ff" }} onClick = {updateRole}>Lưu</button>
              
               </CCardBody>
             </CCard>

@@ -58,36 +58,41 @@ const Login = () => {
 
   var data = JSON.stringify(category);
   var config = {
-    method: "POST",
-    url: `http://localhost:8080/login`,
-    headers: {
-      "Content-Type": "application/json",
-    },
-    data: data,
-  };
 
-  const handleSubmit = () => {
+   method: "POST",
+   url: `http://localhost:8080/login`,
+   headers: {
+     'Content-Type': 'application/json'
+   },
+   data: data
+ };
+
+ const handleSubmit = (e) => {
+   e.preventDefault();
     console.log(category);
     // callApi("login", "POST", category).then((response) => {
-    axios(config)
+      axios(config)
       .then((response) => {
         console.log("response:", data);
         reactLocalStorage.set("token", response.data.token);
-        reactLocalStorage.set("id", response.data.id);
         reactLocalStorage.set("name", response.data.fullName);
         setJwt(data.token);
         window.location.reload("http://localhost:3000/dashboard");
-      })
-      .catch(function (error) {
-        alert("Tài khoản hoặc mật khẩu không chính xác");
-        console.log(error);
-      });
-  };
+    })
+    .catch(function (error) {
+      alert("Tài khoản hoặc mật khẩu không chính xác");
+      console.log(error);
+    });
+   
+ };
+
 
   return (
     <div className="c-app c-default-layout flex-row align-items-center">
       <CContainer>
         <CRow className="justify-content-center">
+     
+
           {/* <div className="container">
         <div className="login-form">
           <div className="main-div">

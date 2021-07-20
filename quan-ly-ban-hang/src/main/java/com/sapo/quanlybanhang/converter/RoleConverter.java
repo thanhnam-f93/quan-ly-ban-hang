@@ -3,6 +3,8 @@ package com.sapo.quanlybanhang.converter;
 import com.sapo.quanlybanhang.dto.RoleDto;
 import com.sapo.quanlybanhang.entity.RoleEntity;
 
+import java.util.stream.Collectors;
+
 public class RoleConverter {
     public static RoleDto toDto(RoleEntity roleEntity) {
         RoleDto roleDto = new RoleDto();
@@ -14,6 +16,8 @@ public class RoleConverter {
         roleDto.setModifiedDate(roleEntity.getModifiedDate());
         roleDto.setCreateBy(roleEntity.getCreateBy());
         roleDto.setModifiedBy(roleEntity.getModifiedBy());
+        roleDto.setPermissionName(roleEntity.getPermissions().stream().map(item ->item.getName()).collect(Collectors.toList()));
+        roleDto.setPermissionId(roleEntity.getPermissions().stream().map(item->item.getId()).collect(Collectors.toList()));
         return roleDto;
     }
 
@@ -27,6 +31,7 @@ public class RoleConverter {
         roleEntity.setModifiedDate(roleDto.getModifiedDate());
         roleEntity.setCreateBy(roleDto.getCreateBy());
         roleEntity.setModifiedBy(roleDto.getModifiedBy());
+        roleEntity.setPermissions(roleDto.getPermissionEntity());
         return roleEntity;
     }
 }
