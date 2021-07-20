@@ -20,7 +20,7 @@ public class BillEntity {
 
     @PostPersist
     public void generateCode(){
-        code = ("RSAPO-000-"+id);
+        code = ("RSAPO000"+id);
     }
 
    @Column(name = "modified_date")

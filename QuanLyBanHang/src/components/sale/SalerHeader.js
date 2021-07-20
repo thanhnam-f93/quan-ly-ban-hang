@@ -53,7 +53,7 @@ const OrderHeader = () => {
     setShow(false);
     let val = e.target.value;
     // console.log("order-header-value input form:", val);
-    callApiNotJwt(`api/v1/productSearchByKey?keyword=${val}`, "Get", jwt).then(
+    callApiNotJwt(`api/v1/productSearchByKeys?keyword=${val}`, "Get", jwt).then(
       (response) => {
         if (response.status !== 200) {
           alert("thao tác thất bại");

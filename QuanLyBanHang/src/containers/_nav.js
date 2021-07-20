@@ -90,7 +90,7 @@ const _nav = [
       {
         _tag: "CSidebarNavItem",
         name: "Báo cáo bán hàng",
-        to: "/notifications/alerts",
+        to: "/report",
       },
       {
         _tag: "CSidebarNavItem",

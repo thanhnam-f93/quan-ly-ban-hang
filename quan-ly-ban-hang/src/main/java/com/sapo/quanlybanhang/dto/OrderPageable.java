@@ -1,9 +1,11 @@
 package com.sapo.quanlybanhang.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
 
 @AllArgsConstructor
@@ -13,7 +15,9 @@ public class OrderPageable {
     OptionTime optionTime;
     private Integer page;
     private Integer limit;
-    private LocalDate orderTime;
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy/MM/dd")
+    private Timestamp startedTime;
     private String inputOrder;
-//    private String optionTime;
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy/MM/dd")
+    private Timestamp endedTime;
 }

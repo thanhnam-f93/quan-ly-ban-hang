@@ -8,27 +8,32 @@ const TableItem = (props) => {
   const history = useHistory();
 
     // const {id,code, name, price, createdDate}= props;
-    const item = props.item;
+    const {item,index, type} = props;
     const d = new Date(item.createdDate);
-    var option = {day:"numeric",month:"2-digit",year:'numeric', hour:'2-digit',minute:'2-digit'};
-    console.log( );
-    const times=d.toLocaleDateString("ja-JP", option);
+    var option = {day:"numeric",month:"2-digit",year:'numeric', hour:'2-digit',minute:'2-digit',hour24 :true};
+    var options = {day:"numeric",month:"2-digit",year:'numeric'}
+    const times=d.toLocaleDateString();
+    console.log("**********",item.createdDate);
     var customerInfor = {
       customerName: item.customerName,
       customerPhone:item.customerPhone,
       customerEmail:item.customerEmail
     }
-    console.log("customInf:",customerInfor);
+    console.log("customInf:",item.createdDate);
+    var dates = new Date(item.createdDate);
+    var dateString = dates.getFullYear()+'-'+('0'+(dates.getMonth()+1)).slice(-2)+'-'+('0'+dates.getDate()).slice(-2);
+    console.log("------------",dates);
     const redirectDetail = ()=>{
       var location ={};
-      if(props.type=="order"){
+      if(type=="order"){
+        console.log("-----type order");
          location = {
-          pathname: `/order/order-detail/${item.id}/${item.code}/${item.createdDate}`, 
+          pathname: `/order/order-detail/${item.id}/${item.code}/${dateString}/${item.staffName}`, 
           state:{item:item}  
         }
       }else{
          location = {
-          pathname: `/create-order-return/${item.id}/${item.code}/${item.createdDate}`, 
+          pathname: `/create-order-return/${item.id}/${item.code}/${dateString}`, 
           state:{item:item}  
         }
       }
@@ -37,11 +42,12 @@ const TableItem = (props) => {
     reactLocalStorage.setObject('infor', customerInfor);
     }
     return (   
-         <tr className = "table-row" onClick ={redirectDetail}> 
+         <tr className = "table-row"  onClick ={redirectDetail}> 
             <th scope="row">{item.code}</th>
             <td>{item.customerName}</td>
+            <td>{FormatMoney(item.discount)}</td>
             <td className = "td-2">{FormatMoney(item.price)}</td>
-            <td>{times}</td>
+            <td>{item.createdDate}</td>
           </tr>
     );
 };

@@ -3,10 +3,7 @@ package com.sapo.quanlybanhang.service.impl;
 import com.sapo.quanlybanhang.converter.OrderConverter;
 import com.sapo.quanlybanhang.converter.OrderDetailConverter;
 import com.sapo.quanlybanhang.dao.IOrderDao;
-import com.sapo.quanlybanhang.dto.OrderDetailDto;
-import com.sapo.quanlybanhang.dto.OrderDto;
-import com.sapo.quanlybanhang.dto.OrderListDto;
-import com.sapo.quanlybanhang.dto.OrderPageable;
+import com.sapo.quanlybanhang.dto.*;
 import com.sapo.quanlybanhang.entity.*;
 import com.sapo.quanlybanhang.repository.*;
 import com.sapo.quanlybanhang.service.IOrderService;
@@ -16,9 +13,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -138,6 +137,33 @@ public class OrderService implements IOrderService {
     @Override
     public Integer getTotalItem() {
         return (int) orderRepository.count();
+    }
+
+    @Override
+    public ResponseEntity getStartTime() {
+        Date date = orderRepository.getStartTime();
+        OrderDate dt = new OrderDate();
+        if(date == null){
+            dt.setTimeDate(Date.valueOf(LocalDate.now()));
+            return  ResponseEntity.ok(dt);
+        }else{
+            dt.setTimeDate(date);
+            return ResponseEntity.ok(dt);
+        }
+
+    }
+
+    @Override
+    public ResponseEntity getEndTime() {
+        Date date = orderRepository.getEndTime();
+        OrderDate dt = new OrderDate();
+        if(date == null){
+            dt.setTimeDate(Date.valueOf(LocalDate.now()));
+            return  ResponseEntity.ok(dt);
+        }else{
+            dt.setTimeDate(date);
+            return ResponseEntity.ok(dt);
+        }
     }
 
 

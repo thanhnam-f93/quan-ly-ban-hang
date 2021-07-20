@@ -129,16 +129,17 @@ public class ProductController {
        else
            return  null;
     }
-//    @GetMapping(value = "/productSearchByKey")
-//    public List<ProductDto> searchAll(@RequestParam String keyword) {
-//        if( keyword == "" ){
-//            return productService.getAll();
-//        }
-//        else {
-//            return productService.searchByKey(keyword);
-//        }
-//    }
+    @GetMapping(value = "/productSearchByKeys")
+    public List<ProductDto> searchAll(@RequestParam String keyword) {
+        if( keyword == "" ){
+            return productService.getAll();
+        }
+        else {
+            return productService.searchByKey(keyword);
+        }
+    }
 @GetMapping(value = "/productSearchByKey")
+
 public List<ProductDto> searchAll(@RequestParam String keyword,@RequestParam String filter) {
     if( keyword == "" && filter==""){
         return productService.getAll();

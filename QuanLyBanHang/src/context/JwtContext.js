@@ -7,4 +7,6 @@ const SalerContext = React.createContext(null);
 SalerContext.displayName = "salerProduct";
 const LayoutContext = React.createContext(null);
 LayoutContext.displayName = "LayoutContext";
-export {JwtContext, ProductContext, SalerContext,LayoutContext};
+const OrderContext = React.createContext(null);
+OrderContext.displayName= "OrderContext";
+export {JwtContext, ProductContext, SalerContext,LayoutContext,OrderContext};

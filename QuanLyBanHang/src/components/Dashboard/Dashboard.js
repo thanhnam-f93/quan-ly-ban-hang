@@ -116,7 +116,7 @@ const Dashboard = () => {
               <div className="char-layout">{elm}</div>
               <div className="count">
                 <span>Tổng doanh thu:</span>
-                <spa>{dto.totalPrice}</spa>
+                <spa>{FormatMoney(dto.totalPrice)}</spa>
               </div>
             </div>
           </div>

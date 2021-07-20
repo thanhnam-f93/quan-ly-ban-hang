@@ -10,12 +10,16 @@ import Saler from './components/sale/Saler';
 import Setting from './components/Setting/Setting';
 import AddStaff from './components/Staff/AddStaff/AddStaff';
 import StaffDetail from './components/Staff/StaffDetail/StaffDetail';
-import PageError from './components/PageError/PageError';
-// import ReturnOrder from './components/Ordereturn/ReturnOrder';
+import ReturnOrder from './components/ReturnOrder/ReturnOrder';
 import ReturnOrderDetail from './components/ReturnOrderDetail/ReturnOrderDetail';
 import ReturnOrder from './components/OrderReturn/ReturnOrder';
 import SaleAddCustomer from './components/sale/SaleAddCustomer';
 import OrderReturnCustomer from './components/OrderReturn/OrderReturnCustomer';
+import OrderModal from './components/Order/OrderModal';
+import ReturnOrder from './components/OrderReturn/ReturnOrder';
+import Report from './components/Report/Report';
+import ReturnOrderDetailPush from './components/ReturnOrderDetail/ReturnOrderDetailPush';
+
 /*================== Of Template React =================*/
 const Toaster = React.lazy(() =>
   import("./views/notifications/toaster/Toaster")
@@ -292,78 +296,34 @@ const routes = [
   /*================== The End code of Team - Quản lý bán hàng =================*/
 /*================== Start code of Team - Quản lý bán hàng =================*/
   { path: '/order', exact: true,  name: 'danh-sach-don-hang', component: Order },
-  { path: '/dropdown', exact: true,  name: 'danh-sach-don-hang', component: DropDown },
-  { path: '/order-detail', exact: true,  name: '', component: OrderDetail },
-  { path: '/order-detail/:id/:type', exact: true,  name: 'chi-tiet-don-hang', component: OrderDetail },
-  { path: '/order/return', exact: true,  name: 'don-hang-tra-ve ', component: ReturnOrder },
+  {path: '/order/order-detail', exact: true,  name: '', component: OrderDetail },
+  { path: '/dropdown', exact: true,  name: '', component: DropDown },
+  { path: '/order/order-detail/:id/:code/:createdDate/:staffName', exact: true,  name: 'chi-tiet-don-hang', component: OrderDetail },
+  { path: '/return', exact: true,  name: 'khach-tra-hang', component: ReturnOrder },
   { path: '/order/return/:id', exact: true,  name: '', component: ReturnOrder },
-  { path: '/order/return-order-detail', exact: true,  name: '', component: ReturnOrderDetail },
-  { path: '/product', exact: true,  name: 'Sản phẩm', component: ListProduct },
-  { path: '/category', exact: true,  name: 'Sản phẩm', component: ListProduct },
-  { path: '/product/update-category/:id', exact: true,  name: 'Chi tiết sản phẩm', component: Update },
-  { path: '/product/add-category', exact: true,  name: 'thêm sản phẩm', component: Create },
+  { path: '/return/return-order-detail/:id/:code/:createdDate/:staffName', exact: true,  name: 'chi-tiet-don-hang', component: ReturnOrderDetail },
+  { path: '/product', exact: true,  name: 'Product', component: ListProduct },
+  { path: '/category', exact: true,  name: 'Product', component: ListProduct },
+  { path: '/product/update-category/:id', exact: true,  name: 'update', component: Update },
+  { path: '/product/add-category', exact: true,  name: 'add', component: Create },
   { path: '/supplier', exact: true,  name: 'Supplier', component: ListSupplier },
   { path: '/logins', exact: true,  name: '', component: Logins },
   { path: '/saler', exact: true,  name: 'ban-hang', component: Saler },
-{
-    path: "/them-khach-hang",
-    exact: true,
-    name: "ban-hang",
-    component: SaleAddCustomer,
-  },
-
-  { path: "/settings", exact: true, name: "Cấu hình", component: Setting },
-  {
-    path: "/settings/staffs",
-    exact: true,
-    name: "Nhân viên",
-    component: Staff,
-  },
-  {
-    path: "/settings/staffs/new-staff",
-    exact: true,
-    name: "Thêm mới",
-    component: AddStaff,
-  },
-  {
-    path: "/settings/staffs/:id",
-    exact: true,
-    name: "Chỉnh sửa",
-    component: StaffDetail,
-  },
-  { path: "/settings/roles", exact: true, name: "Vai trò", component: Role },
-  {
-    path: "/settings/roles/new-role",
-    exact: true,
-    name: "Thêm mới",
-    component: AddRole,
-  },
-  {
-    path: "/settings/roles/:id",
-    exact: true,
-    name: "Chỉnh sửa",
-    component: RoleDetail,
-  },
-  {
-    path: "/update-supplier/:id",
-    exact: true,
-    name: "update",
-    component: UpdateSupplier,
-  },
-  {
-    path: "/add-supplier",
-    exact: true,
-    name: "add",
-    component: CreateSupplier,
-  },
-  {
-    path: "/create-order-return/:id/:code",
-    exact: true,
-    name: "add",
-    component: OrderReturnCustomer,
-  },
-  { path: '/error', exact: true,  name: 'Lỗi', component: PageError }
-  /*================== The End code of Team - Quản lý bán hàng =================*/
+  { path: '/them-khach-hang', exact: true,  name: 'ban-hang', component: SaleAddCustomer },
+  
+  { path: '/settings', exact: true,  name: 'Cấu hình', component: Setting },
+  { path: '/settings/staffs', exact: true,  name: 'Nhân viên', component: Staff },
+  { path: '/settings/staffs/new-staff', exact: true,  name: 'Thêm mới', component: AddStaff },
+  { path: '/settings/staffs/:id', exact: true,  name: 'Chỉnh sửa', component: StaffDetail },
+  { path: '/settings/roles', exact: true,  name: 'Vai trò', component: Role },
+  { path: '/settings/roles/new-role', exact: true,  name: 'Thêm mới', component: AddRole },
+  { path: '/settings/roles/:id', exact: true,  name: 'Chỉnh sửa', component: RoleDetail },
+  { path: '/update-supplier/:id', exact: true,  name: 'update', component: UpdateSupplier },
+  { path: '/add-supplier', exact: true,  name: 'add', component: CreateSupplier },
+  { path: '/create-order-return/:id/:code/:createdDate', exact: true,  name: 'add', component: OrderReturnCustomer },
+  { path: '/order-list', exact: true,  name: 'add', component: OrderModal },
+  { path: '/report', exact: true,  name: 'bao-cao-ban-hang', component: Report },
+  { path: '/return/return-order-detail', exact: true,  name: 'chi-tiet-don-hang', component: ReturnOrderDetailPush },
 
 ];
 
