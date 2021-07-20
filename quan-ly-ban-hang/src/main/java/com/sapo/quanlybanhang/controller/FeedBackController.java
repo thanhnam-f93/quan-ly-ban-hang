@@ -7,6 +7,7 @@ import com.sapo.quanlybanhang.dto.CustomerDto;
 import com.sapo.quanlybanhang.dto.FeedBackDto;
 import com.sapo.quanlybanhang.entity.CustomerEntity;
 import com.sapo.quanlybanhang.entity.FeedBackEntity;
+import com.sapo.quanlybanhang.repository.FeedBackRepository;
 import com.sapo.quanlybanhang.service.CustomerService;
 import com.sapo.quanlybanhang.service.FeedBackService;
 import com.sapo.quanlybanhang.service.StaffService;
@@ -33,16 +34,17 @@ import java.util.Map;
 @RequestMapping("/")
 public class FeedBackController {
     private final FeedBackService feedBackService;
+    private final FeedBackRepository feedBackRepository;
     private final CustomerService customerService;
     private final StaffService staffService;
     Logger logger = LoggerFactory.getLogger(CustomerController.class);
 
-    public FeedBackController(FeedBackService feedBackService, CustomerService customerService, StaffService staffService) {
+    public FeedBackController(FeedBackService feedBackService, FeedBackRepository feedBackRepository, CustomerService customerService, StaffService staffService) {
         this.feedBackService = feedBackService;
+        this.feedBackRepository = feedBackRepository;
         this.customerService = customerService;
         this.staffService = staffService;
     }
-
 
 
     @GetMapping("feedbacks/desc/{id}")
@@ -136,6 +138,30 @@ public class FeedBackController {
             return ResponseEntity.badRequest().body("Page Empty");
         }
         return null;
+    }
+    @GetMapping("feedbacks/search")
+    ResponseEntity<?> getByCustomerName(
+            @RequestParam("customerName") String customerName,
+            @RequestParam(value = "slove",required = false) String slove,
+            @RequestParam(name = "pageNo", defaultValue = "0") String pageNo,
+            @RequestParam(name = "limit", defaultValue = "5") String limit
+    ) {
+        try {
+            PageRequest pageRequest = PageRequest.of(Integer.parseInt(pageNo), Integer.parseInt(limit));
+            Page<FeedBackDto> dtoPage=null;
+            if(slove!=null){
+                dtoPage = feedBackService.findByCustomerNameAndSlove(customerName,slove,pageRequest);
+            }else {
+                dtoPage = feedBackService.findByCustomerName(customerName,pageRequest);
+            }
+            if (dtoPage.hasContent()) {
+                return new ResponseEntity<>(dtoPage, new HttpHeaders(), HttpStatus.OK);
+           }
+        } catch (Exception e) {
+            logger.error("Error: : " + e.getMessage());
+            return ResponseEntity.badRequest().body("Page Empty");
+        }
+       return null;
     }
     @GetMapping("feedbacks/range")
     ResponseEntity<?> getByCustomerAndStaffAsc(

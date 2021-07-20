@@ -13,6 +13,7 @@ public class FeedBackConverter {
        FeedBackDto feedBackDto = new FeedBackDto();
        feedBackDto.setId(feedBackEntity.getId());
        feedBackDto.setCreatedDate(feedBackEntity.getCreatedDate());
+       feedBackDto.setCreatedBy(feedBackEntity.getCreatedBy());
        feedBackDto.setContent(feedBackEntity.getContent());
        feedBackDto.setSlove(feedBackEntity.getSlove());
        feedBackDto.setTitle(feedBackEntity.getTitle());

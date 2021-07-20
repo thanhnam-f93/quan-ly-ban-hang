@@ -20,7 +20,8 @@ public interface FeedBackService {
     Page<FeedBackDto> findByCustomer(Integer id,Pageable pageable);
 
     Page<FeedBackDto> findBySlove(String slove,Pageable pageable);
-
+    Page<FeedBackDto> findByCustomerName(String name, Pageable pageable);
+    Page<FeedBackDto> findByCustomerNameAndSlove(String name,String slove,Pageable pageable);
     List<FeedBackDto> getAll();
     //
     Page<FeedBackDto> getByDate(Date date, Pageable pageable);

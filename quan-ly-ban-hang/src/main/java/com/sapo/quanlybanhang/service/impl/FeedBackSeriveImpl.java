@@ -60,6 +60,20 @@ private  final CustomerRepository customerRepository;
     }
 
     @Override
+    public Page<FeedBackDto> findByCustomerName(String name, Pageable pageable) {
+        Page<FeedBackEntity> entityPage = feedBackRepository.getAllByCustomerName(name,pageable);
+        Page<FeedBackDto> dtoPage = entityPage.map(FeedBackConverter::toDto);
+        return entityPage.hasContent() ? dtoPage : null;
+    }
+
+    @Override
+    public Page<FeedBackDto> findByCustomerNameAndSlove(String name, String slove, Pageable pageable) {
+        Page<FeedBackEntity> entityPage = feedBackRepository.getAllByCustomerNameAndSlove(name,slove,pageable);
+        Page<FeedBackDto> dtoPage = entityPage.map(FeedBackConverter::toDto);
+        return entityPage.hasContent() ? dtoPage : null;
+    }
+
+    @Override
     public List<FeedBackDto> getAll() {
         return null;
     }

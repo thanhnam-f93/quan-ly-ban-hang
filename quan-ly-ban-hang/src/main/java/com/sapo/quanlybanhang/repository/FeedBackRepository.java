@@ -13,8 +13,17 @@ import java.util.Date;
 public interface FeedBackRepository extends JpaRepository<FeedBackEntity,Integer> {
     @Query(value = "select f from FeedBackEntity f")
     Page<FeedBackEntity> getAll(Pageable pageable);
+
+    @Query(value = "select f from FeedBackEntity f where f.customerEntity.name like %:customerName% and f.slove=:slove")
+    Page<FeedBackEntity> getAllByCustomerNameAndSlove(@Param("customerName") String customerName,
+                                                      @Param("slove") String slove,Pageable pageable);
+
+   @Query(value = "select f from FeedBackEntity f where f.customerEntity.name like %:customerName%")
+    Page<FeedBackEntity> getAllByCustomerName(@Param("customerName") String customerName,Pageable pageable);
+
     @Query(value = "select f from FeedBackEntity f where f.slove =:slove")
     Page<FeedBackEntity> getAllBySlove(@Param("slove") String slove,Pageable pageable);
+
     @Query(value = "select f from FeedBackEntity f where f.createdBy =:createBy")
     Page<FeedBackEntity> getAllByStaff(@Param("createBy") String createBy,Pageable pageable);
 

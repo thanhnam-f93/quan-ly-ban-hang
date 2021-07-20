@@ -92,7 +92,7 @@ public class CustomerEntity {
     @OneToMany(mappedBy = "customerBill")
     private List<BillEntity> billEntities = new ArrayList();
 
-//    @OneToMany(mappedBy = "customerEntity")
+//    @OneToMany(mappedBy = "customerEntity",fetch = FetchType.LAZY)
 //    private List<FeedBackEntity> feedBackEntities = new ArrayList();
 
     public CustomerEntity() {
