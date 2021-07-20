@@ -19,12 +19,6 @@ const _nav = [
     icon: "cil-laptop",
   },
   {
-    _tag: "CSidebarNavItem",
-    name: "Bán hàng",
-    to: "/saler",
-    icon: "cil-laptop",
-  },
-  {
     _tag: "CSidebarNavDropdown",
     name: "Đơn hàng",
     route: "/buttons",
