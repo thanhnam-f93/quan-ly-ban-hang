@@ -9,7 +9,8 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import javax.websocket.server.PathParam;
-import java.util.Date;
+
+import java.sql.Date;
 import java.util.List;
 
 @Repository
@@ -61,21 +62,21 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Integer>
 
 
      @Query(value = "select  p.code,p.image, p.name,c.name as danh,sum(od.quanlity) quanlity\n" +
-             "from orders o\n" +
-             "left join oder_detail od on o.id = od.order_id\n" +
-             "join products p on p.id = od.product_id join categories c on c.id =p.category_id\n" +
-             "where date(o.created_date) between :start and :to\n" +
-             "group by p.id order by quanlity desc\n", nativeQuery = true)
-     List<Object[]> statistical(@Param("start") java.sql.Date start, @Param("to") Date to);
+             "         from orders o\n" +
+             "         left join order_detail od on o.id = od.order_id\n" +
+             "         join products p on p.id = od.product_id join categories c on c.id =p.category_id\n" +
+             "         where date(o.created_date) between :start and :to \n" +
+             "         group by p.id order by quanlity desc", nativeQuery = true)
+     List<Object[]> statistical(@Param("start") Date start, @Param("to") Date to);
 
 
  @Query(value = "select  p.code,p.image, p.name,c.name as danh,sum(od.quanlity) quanlity\n" +
-         "from orders o\n" +
-         "left join oder_detail od on o.id = od.order_id\n" +
-         "join products p on p.id = od.product_id join categories c on c.id =p.category_id\n" +
-         "where date(o.created_date) between :start and :to\n" +
-         "group by p.id order by quanlity desc\n", nativeQuery = true)
- List<Object[]> statisticalPagination(@Param("start") java.sql.Date start, @Param("to") Date to,Pageable pageable);
+         "         from orders o\n" +
+         "         left join order_detail od on o.id = od.order_id\n" +
+         "         join products p on p.id = od.product_id join categories c on c.id =p.category_id\n" +
+         "         where date(o.created_date) between :start and :to\n" +
+         "         group by p.id order by quanlity desc", nativeQuery = true)
+ List<Object[]> statisticalPagination(@Param("start") Date start, @Param("to") Date to, Pageable pageable);
 
 
 

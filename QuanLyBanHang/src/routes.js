@@ -10,13 +10,11 @@ import Saler from './components/sale/Saler';
 import Setting from './components/Setting/Setting';
 import AddStaff from './components/Staff/AddStaff/AddStaff';
 import StaffDetail from './components/Staff/StaffDetail/StaffDetail';
-import ReturnOrder from './components/ReturnOrder/ReturnOrder';
 import ReturnOrderDetail from './components/ReturnOrderDetail/ReturnOrderDetail';
 import ReturnOrder from './components/OrderReturn/ReturnOrder';
 import SaleAddCustomer from './components/sale/SaleAddCustomer';
 import OrderReturnCustomer from './components/OrderReturn/OrderReturnCustomer';
 import OrderModal from './components/Order/OrderModal';
-import ReturnOrder from './components/OrderReturn/ReturnOrder';
 import Report from './components/Report/Report';
 import ReturnOrderDetailPush from './components/ReturnOrderDetail/ReturnOrderDetailPush';
 
@@ -115,6 +113,8 @@ const FeedbackDetail = React.lazy(() =>
 const ListProduct = React.lazy(() => import('./components/ListProduct/ListProduct'));
 const Update = React.lazy(() => import('./components/ListProduct/Update'));
 const Create = React.lazy(() => import('./components/ListProduct/Create'));
+const StatisticalProduct = React.lazy(() => import('./components/ListProduct/StatisticalProduct'));
+
 
 /*================== The End code of Team - Quản lý bán hàng =================*/
 
@@ -307,6 +307,7 @@ const routes = [
   { path: '/product/update-category/:id', exact: true,  name: 'update', component: Update },
   { path: '/product/add-category', exact: true,  name: 'add', component: Create },
   { path: '/supplier', exact: true,  name: 'Supplier', component: ListSupplier },
+  { path: '/statistical', exact: true,  name: 'Thống kê sản phẩm', component: StatisticalProduct },
   { path: '/logins', exact: true,  name: '', component: Logins },
   { path: '/saler', exact: true,  name: 'ban-hang', component: Saler },
   { path: '/them-khach-hang', exact: true,  name: 'ban-hang', component: SaleAddCustomer },
