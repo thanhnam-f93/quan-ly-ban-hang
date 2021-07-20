@@ -27,17 +27,17 @@ public class OrderController {
     public OrderListDto findAll(@RequestBody OrderPageable orderPageable) {
         Integer totalItem = 0;
         OrderListDto listDto = new OrderListDto();
-        if (orderPageable.getOrderTime() == null && (orderPageable.getInputOrder() == null
-                || orderPageable.getInputOrder() == "") && orderPageable.getOptionTime() == null) {
+        if(orderPageable.getStartedTime() == null && (orderPageable.getInputOrder() == null
+                || orderPageable.getInputOrder() =="" ) && (orderPageable.getEndedTime()==null)){
             Sort sort = Sort.by("createdDate").descending();
-            Pageable pageable = PageRequest.of(orderPageable.getPage() - 1, orderPageable.getLimit(), sort);
-            listDto.setTotalItem(orderService.getTotalItem());
+            Pageable pageable = PageRequest.of(orderPageable.getPage()-1,orderPageable.getLimit(),sort);
+            listDto.setTotalItem(orderService.getTotalItem().longValue());
             listDto.setResultItem(orderService.findAll(pageable));
             return listDto;
         } else {
             listDto = orderService.findByCodeAndCustomer(orderPageable);
-            if (listDto.getResultItem().size() == 0) {
-                listDto.setTotalItem(0);
+            if(listDto.getResultItem().size()==0){
+                listDto.setTotalItem(0L);
             }
             return listDto;
         }
@@ -70,5 +70,14 @@ public class OrderController {
         return OrderConverter.toDto(orderService.findById(id));
     }
 
+    @GetMapping("/orders/start-time")
+        public ResponseEntity getStartTime(){
+            return orderService.getStartTime();
+        }
+
+        @GetMapping ("/orders/end-time")
+         public  ResponseEntity getEndTime(){
+            return orderService.getEndTime();
+        }
 
 }

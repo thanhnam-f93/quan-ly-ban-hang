@@ -10,10 +10,12 @@ import { callApi, callApiNotJwt } from "src/apis/ApiCaller";
 import List from "./List";
 import SaleSearchCustomer from "./SaleSearchCustomer";
 import SaleDiscount from "./SaleDiscount";
+import InformNew from "src/helpers/InformNew";
+import NewNotSearch from "src/helpers/NewNotSearch";
 const SalePayment = ({ isShowCustomer, setIsShowCustomer }) => {
   const { jwt } = useContext(JwtContext);
   const [isShow, setIsShow] = useState(false);
-  const { productOption, amountChange, setProductOption } =
+  const { productOption, amountChange, setProductOption ,getNews} =
     useContext(SalerContext);
   const handleClose = () => setIsShow(false);
   const [total, setTotal] = useState(0);
@@ -135,7 +137,7 @@ const SalePayment = ({ isShowCustomer, setIsShowCustomer }) => {
     callApiNotJwt(`customers/search?input=${val}`, "GET", jwt).then(
       (response) => {
         if (response.status !== 200) {
-          alert("thao tác thất bại");
+         setCustomer([]);
           return;
         }
         response.json().then((data) => {
@@ -154,23 +156,29 @@ const SalePayment = ({ isShowCustomer, setIsShowCustomer }) => {
 
   // -----------------------create bill-----------------------
   const getPay = () => {
-    if (productOption.length == 0) {
-      alert("Chưa có sản phẩm nào!");
-    } else {
-      console.log("orderDto,", orderDto);
-      callApi("orders", "POST", orderDto, jwt).then((response) => {
-        if (response.status !== 200) {
-          alert("thao tác thất bại");
-          return;
-        }
-        response.json().then((data) => {
-          alert("thao tác thành công");
-          console.log(data.content);
-          setCustomer(data.content);
-          setProductOption([]);
+    console.log("giá trị orderDto:",orderDto);
+    console.log()
+    if(MoneyOfCustomer < givedMoney){ 
+      getNews("Tiền khách đưa nhỏ hơn tiền khách trả");
+    }else{
+      if (productOption.length == 0) {
+        getNews("chưa có sản phẩm nào");
+      } else {
+        console.log("orderDto,", orderDto);
+        callApi("orders", "POST", orderDto, jwt).then((response) => {
+          if (response.status !== 200) {
+            return;
+          }
+          response.json().then((data) => {
+            console.log(data.content);
+            setCustomer(data.content);
+            setProductOption([]);
+            getNews("Tạo hóa đơn thành công");
+          });
         });
-      });
+      }
     }
+
   };
 
   const isShowInforCustomer = () => {
@@ -178,6 +186,7 @@ const SalePayment = ({ isShowCustomer, setIsShowCustomer }) => {
   };
   return (
     <div className="sale-payment">
+      {/* <InformNew /> */}
       <div className="customer">
         {isShowInfor ? (
           <div className="show-customer">
@@ -215,7 +224,7 @@ const SalePayment = ({ isShowCustomer, setIsShowCustomer }) => {
         )}
         {isShowCustomer ? (
           <div className="search-customer">
-            <List
+           {listCustomer.length!=0? <List
               data={listCustomer}
               render={(item, index) => (
                 <SaleSearchCustomer
@@ -226,6 +235,9 @@ const SalePayment = ({ isShowCustomer, setIsShowCustomer }) => {
                 />
               )}
             />
+              :
+              <NewNotSearch />
+}
           </div>
         ) : (
           ""
@@ -283,6 +295,7 @@ const SalePayment = ({ isShowCustomer, setIsShowCustomer }) => {
         setTypeDiscount={setTypeDiscount}
         dismount={dismount}
       />
+     
     </div>
   );
 };

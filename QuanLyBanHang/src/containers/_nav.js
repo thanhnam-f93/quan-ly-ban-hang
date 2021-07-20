@@ -19,12 +19,6 @@ const _nav = [
     icon: "cil-laptop",
   },
   {
-    _tag: "CSidebarNavItem",
-    name: "Bán hàng",
-    to: "/saler",
-    icon: "cil-laptop",
-  },
-  {
     _tag: "CSidebarNavDropdown",
     name: "Đơn hàng",
     route: "/buttons",
@@ -96,7 +90,7 @@ const _nav = [
       {
         _tag: "CSidebarNavItem",
         name: "Báo cáo bán hàng",
-        to: "/notifications/alerts",
+        to: "/report",
       },
       {
         _tag: "CSidebarNavItem",
@@ -106,7 +100,7 @@ const _nav = [
       {
         _tag: "CSidebarNavItem",
         name: "Báo cáo sản phẩm",
-        to: "/notifications/toaster",
+        to: "/statistical",
       },
       {
         _tag: "CSidebarNavItem",

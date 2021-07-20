@@ -7,6 +7,6 @@ import java.util.List;
 
 @Data
 public class OrderListDto {
-    private Integer totalItem;
+    private Long totalItem;
     private List<OrderDto> resultItem = new ArrayList<>();
 }

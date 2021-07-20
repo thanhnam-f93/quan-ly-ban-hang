@@ -21,6 +21,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.modelmapper.ModelMapper;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -57,6 +58,11 @@ public class ProductServiceImpl implements ProductService {
             productDtos.add(converter.ConverterToDtoProduct(item));
         }
         return productDtos;
+    }
+
+    @Override
+    public List getAll3() {
+        return null;
     }
 
     @Override
@@ -198,6 +204,18 @@ public class ProductServiceImpl implements ProductService {
         }
         return productDtos;
     }
+
+    @Override
+    public List<Object[]> statistical(Date start, Date to) {
+        return productRepository.statistical(start,to);
+    }
+
+    @Override
+    public List<Object[]> statisticalPagination(Date start, Date to, int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+        return productRepository.statisticalPagination(start,to,pageable);
+    }
+
 
     @Override
     public List getAllByMonth() {

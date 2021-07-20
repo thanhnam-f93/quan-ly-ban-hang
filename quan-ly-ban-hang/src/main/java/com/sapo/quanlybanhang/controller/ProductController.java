@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+
+import java.sql.Date;
 import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:3000")
@@ -39,6 +41,16 @@ public class ProductController {
     public List<ProductDto> getAll1() {
         return productService.getAll1();
     }
+
+    @GetMapping(value = "/statistical")
+    public List<Object[]> statistical(@RequestParam Date start, @RequestParam Date to) {
+        return productService.statistical(start,to);
+    }
+    @GetMapping(value = "/statisticals")
+    public List<Object[]> statisticalPagination(@RequestParam Date start, @RequestParam Date to,@RequestParam int pageNo,@RequestParam int pageSize) {
+        return productService.statisticalPagination(start,to,pageNo,pageSize);
+    }
+
 
     @PreAuthorize("hasAuthority('VIEW_PRODUCT')")
     @GetMapping(value = "/day")
@@ -117,16 +129,17 @@ public class ProductController {
        else
            return  null;
     }
-//    @GetMapping(value = "/productSearchByKey")
-//    public List<ProductDto> searchAll(@RequestParam String keyword) {
-//        if( keyword == "" ){
-//            return productService.getAll();
-//        }
-//        else {
-//            return productService.searchByKey(keyword);
-//        }
-//    }
+    @GetMapping(value = "/productSearchByKeys")
+    public List<ProductDto> searchAll(@RequestParam String keyword) {
+        if( keyword == "" ){
+            return productService.getAll();
+        }
+        else {
+            return productService.searchByKey(keyword);
+        }
+    }
 @GetMapping(value = "/productSearchByKey")
+
 public List<ProductDto> searchAll(@RequestParam String keyword,@RequestParam String filter) {
     if( keyword == "" && filter==""){
         return productService.getAll();

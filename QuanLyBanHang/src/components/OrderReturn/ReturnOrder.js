@@ -10,6 +10,7 @@ import Order from "../Order/Order";
 import Logins from "../Login/Login";
 import OrderModal from "../Order/OrderModal";
 import { CPagination } from "@coreui/react";
+import NewNotOrder from "src/helpers/NewNotOrder";
 
 const ReturnOrder = () => {
   const [show, setShow] = useState(false);
@@ -23,35 +24,43 @@ const ReturnOrder = () => {
     inputOrder: "",
     orderTime: "",
   });
-
-  const getDate = (op, da) => {
+ const [isCheck, setIscheck] = useState(false);
+  const getDate = (startedTime, endedTime) => {
+    console.log("------------------started", startedTime);
+    console.log("kiểu:", typeof op);
     setOrderPageAble({
       ...orderPageable,
-      optionTime: op,
+      startedTime: startedTime,
+      endedTime: endedTime,
     });
   };
-
   const [listOrder, setListOrder] = useState([]);
 
   useEffect(() => {
     console.log("useeffect:" + orderPageable);
 
     callApi("bill", "post", orderPageable, jwt).then((response) => {
-      console.log("trả về:",response);
+      console.log("trả về:", response);
       if (response.status !== 200) {
         alert("thao tác thất bại");
+        setListOrder([]);
         return;
+      } else {
+        response.json().then((data) => {
+          console.log(data);
+          console.log("length",(data.resultList.length));
+          if(data.resultList.length==0){
+            setListOrder([]);
+            setIscheck(true);
+          }else{
+            setIscheck(false);
+            setListOrder(data.resultList);      
+          }
+          setTotalPage(Math.ceil(data.totalItem / orderPageable.limit));
+        });
       }
-      response.json().then((data) => {
-        console.log(data);
-        console.log(data.length);
-        setListOrder(data.resultList);
-        setTotalPage(Math.ceil(data.totalItem/orderPageable.limit));
-      
-      });
     });
-
-  }, [orderPageable,show]);
+  }, [orderPageable, show]);
 
   /**
    * filter and search order
@@ -64,35 +73,39 @@ const ReturnOrder = () => {
     console.log(orderPageable);
   };
 
-  const getPage = (page) =>{
-    console.log("trang:",page);
-    setOrderPageAble({...orderPageable, page:page});
-  }
+  const getPage = (page) => {
+    console.log("trang:", page);
+    if (page == 0) {
+      page = 1;
+    }
+    setOrderPageAble({ ...orderPageable, page: page });
+  };
 
   return (
     <div className="list-order">
       <div className="order-1 ">
         <OrderHeader inputs={getInput} getDate={getDate} />
         <div className="btn-create">
-          <button onClick={handleShow}>
-            Trả hàng
-          </button>
+          <button onClick={handleShow}>Trả hàng</button>
         </div>
       </div>
-      <ReturnOrderList lists={listOrder} />
-      <CPagination         
-            doubleArrows = {true}
+      {!isCheck? (
+        <div className="order-pagination">
+          <ReturnOrderList lists={listOrder} />
+          <CPagination
+            doubleArrows={true}
             activePage={orderPageable.page}
             pages={totalPage}
             onActivePageChange={getPage}
-          />  
-       {
-         show ?  <OrderModal show = {show}  setShow = {setShow} /> :""
-       }   
- 
+          />
+        </div>
+      ) : (
+        <NewNotOrder />
+      )}
+
+      {show ? <OrderModal show={show} setShow={setShow} /> : ""}
     </div>
   );
 };
-
 
 export default ReturnOrder;

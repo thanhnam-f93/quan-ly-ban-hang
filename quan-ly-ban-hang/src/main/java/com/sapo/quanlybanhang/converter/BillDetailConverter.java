@@ -10,6 +10,8 @@ public class BillDetailConverter {
         entity.setDiscount(dto.getDiscount());
         entity.setId(dto.getId());
         entity.setPrice(dto.getPrice());
+        entity.setPrice(dto.getPrice());
+
         return entity;
     }
 

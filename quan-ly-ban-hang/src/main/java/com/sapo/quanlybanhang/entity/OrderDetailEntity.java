@@ -28,7 +28,7 @@ public class OrderDetailEntity implements Serializable {
     @Column (name = "code")
     private  String code;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "order_id")
     private OrderEntity order;
 

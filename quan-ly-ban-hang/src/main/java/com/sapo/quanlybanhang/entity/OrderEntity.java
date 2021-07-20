@@ -26,7 +26,7 @@ public class OrderEntity {
 
     @PostPersist
     public void generateCode(){
-        code = ("SAPO-000-"+id);
+        code = ("SAPO000"+id);
     }
 
     @Column(name ="created_date")

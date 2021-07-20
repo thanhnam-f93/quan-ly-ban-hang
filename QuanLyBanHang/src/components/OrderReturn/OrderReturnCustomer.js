@@ -1,7 +1,7 @@
 import { CButton } from "@coreui/react";
 import React, { useContext, useState } from "react";
 import { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { reactLocalStorage } from "reactjs-localstorage";
 import { callApi, callApiNotJwt } from "src/apis/ApiCaller";
 import { JwtContext } from "src/context/JwtContext";
@@ -11,6 +11,7 @@ import CustomerInfor from "../OrderDetail/CustomerInfor";
 import List from "../sale/List";
 import OrderReturnCustomerItem from "./OrderReturnCustomerItem";
 import "./scss/OrderReturnCustomer.scss";
+import WarrantyProduct from "./WarrantyProduct";
 const OrderReturnCustomer = ({ item }) => {
   const { jwt } = useContext(JwtContext);
   const customerInfor = reactLocalStorage.getObject("infor");
@@ -23,14 +24,13 @@ const OrderReturnCustomer = ({ item }) => {
   const [billDto, setBillDto] = useState({});
   const [orderDetails, setOrderDetails] = useState([]);
   const [isState, setIsState] = useState(false);
-
-  var date1,date2;
+  const [isShow, setIsShow] = useState(false);
+ const history = useHistory();
   useEffect(() => {
     console.log("types:" + param.id);
     callApiNotJwt(`order-details/${id}`, "GET", jwt).then((response) => {
       console.log("trả về:",response);
       if (response.status !== 200) {
-        // alert("thao tác thất bại");
         return;
       }
       response.json().then((data) => {
@@ -43,7 +43,10 @@ const OrderReturnCustomer = ({ item }) => {
     var offset = 60*60*1000*24;
     var myDate = new Date(createdDate);
     var moneyPay = 0;
+    console.log("hello",isShow);
     if(dateNow.getTime()-(offset*30)>myDate.getTime()){
+      setIsShow(true);
+      console.log("hello",isShow);
       console.log("het bao hanh");
       moneyPay=100;
       setPayMoney(100);
@@ -52,6 +55,7 @@ const OrderReturnCustomer = ({ item }) => {
       console.log("trả 100%");
       moneyPay=100;
       setPayMoney(100);
+     
     }else {
       console.log("trả 70%");
       moneyPay=70;
@@ -70,20 +74,36 @@ const OrderReturnCustomer = ({ item }) => {
       setAmount(0);
       setTotal(0);
     }
-    console.log("length", orderDetails);
+    let orderDetailDtos = orderDetails.map(item =>{
+      console.log("----------+++++",item);
+      return {
+        id:item.id,
+        amountPay:item.amountPay,
+        price:item.price
+      }
+    })
+    setBillDto({
+      orderId:id,
+      price:total,
+      orderDetailDtos:orderDetailDtos
+    })
     
-  }, [amount,total, isState]);
+  }, [amount,total, isState,orderDetails]);
 // ------------------------functions------------------------
 const getOrderDetail = (item)=>{
+  console.log("++++++++++++++++",item);
   if(orderDetails.length ===0){
     setOrderDetails([item]);
+    console.log ("=0");
     setAmount(item.amount);
   }else{
+    console.log("khac 0");
     let check =false;
     for (const ob of orderDetails) {
       if(ob['id']==item['id']){
         console.log("=nhau");
         ob['amountPay'] = item['amountPay'];
+        ob['price'] = item['price'];
         check= true;
       }
     }
@@ -91,23 +111,15 @@ const getOrderDetail = (item)=>{
       setOrderDetails([...orderDetails,item]);
     }
   }
- 
+ console.log("orderDetail---------",orderDetails);
+console.log("orderBillDto",billDto);
  setIsState(!isState);
 }
 
 const getPay =()=>{
-   let orderDetailDtos = orderDetails.map(item =>{
-    return {
-      id:item.id,
-      amountPay:item.amountPay,
-      price:item.price
-    }
-  })
-  setBillDto({
-    orderId:id,
-    price:total,
-    orderDetailDtos:orderDetailDtos
-  })
+  console.log("danh sách đơn trả hàng:",orderDetails);
+ 
+  console.log("billDto",billDto);
   callApi("bills", "POST",billDto, jwt).then((response) => {
     // console.log("trả về:",ré)
     if (response.status !== 200) {
@@ -118,7 +130,9 @@ const getPay =()=>{
     }
     response.json().then((data) => {
       console.log(data);
+      history.push("/return/return-order-detail")
       alert("thành công");
+
      
     });
   });
@@ -194,6 +208,7 @@ const getPay =()=>{
       <div className = "btn-end">
       <CButton className = "btn-1" color="primary" onClick = {getPay} >Trả  hàng</CButton>
       </div>
+      <WarrantyProduct createdDate = {createdDate} isShow={isShow} setShow= {setIsShow} />
     </div>
   );
 };

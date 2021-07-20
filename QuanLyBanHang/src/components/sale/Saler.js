@@ -5,6 +5,7 @@ import {
   LayoutContext,
   SalerContext,
 } from "src/context/JwtContext";
+import InformNew from "src/helpers/InformNew";
 import SaleProductOption from "./SaleProductOption";
 import SalerContent from "./SalerContent";
 import SalerHeader from "./SalerHeader";
@@ -22,6 +23,8 @@ const Saler = () => {
   const { isShow, setShow } = useContext(LayoutContext);
   const [isFocus, setFocus] = useState(false);
   const [isShowCustomer, setIsShowCustomer] = useState(false);
+  const [isNews, setIsNews] = useState(false);
+  const [news,setNews] = useState();
   const orderPageable = {
     page: 1,
     limit: 20,
@@ -46,10 +49,18 @@ const Saler = () => {
       }
     }
   };
+
+  const getNews =(news)=>{
+
+    setNews(news);
+    setIsNews(true);
+    setTimeout(()=>setIsNews(false),2000);
+  }
   return (
     <div>
       <SalerContext.Provider
         value={{
+          getNews,
           setIsShowCustomer,
           isFocus,
           setFocus,
@@ -77,6 +88,10 @@ const Saler = () => {
            setIsShowCustomer = {setIsShowCustomer}
           /> 
         </div>
+        {
+          isNews ?  <InformNew news = {news}/>:""
+        }
+      
       </SalerContext.Provider>
     </div>
   );
