@@ -108,6 +108,11 @@ const Create = React.lazy(() => import("./components/ListProduct/Create"));
 
 /*================== The End code of Team - Quản lý bán hàng =================*/
 
+const ListProduct = React.lazy(() => import('./components/ListProduct/ListProduct'));
+const Update = React.lazy(() => import('./components/ListProduct/Update'));
+const Create = React.lazy(() => import('./components/ListProduct/Create'));
+
+/*================== The End code of Team - Quản lý bán hàng =================*/
 
 const ListSupplier = React.lazy(() => import('./components/ListSupplier/ListSupplier'));
 const UpdateSupplier = React.lazy(() => import('./components/ListSupplier/UpdateSupplier'));
@@ -266,7 +271,6 @@ const routes = [
     name: "Danh sách",
     component: CustomerList,
   },
-
   {
     path: "/feedback/detail",
     exact: true,
@@ -285,59 +289,29 @@ const routes = [
     name: "Danh sách",
     component: FeedBackList,
   },
-
   /*================== The End code of Team - Quản lý bán hàng =================*/
-  /*================== Start code of Team - Quản lý bán hàng =================*/
-  { path: "/order", exact: true, name: "danh-sach-don-hang", component: Order },
-  {
-    path: "/dropdown",
-    exact: true,
-    name: "danh-sach-don-hang",
-    component: DropDown,
-  },
-  { path: "/order-detail", exact: true, name: "", component: OrderDetail },
-  {
-    path: "/order-detail/:id/:type",
-    exact: true,
-    name: "chi-tiet-don-hang",
-    component: OrderDetail,
-  },
-  {
-    path: "/order/return",
-    exact: true,
-    name: "don-hang-tra-ve ",
-    component: ReturnOrder,
-  },
-  { path: "/order/return/:id", exact: true, name: "", component: ReturnOrder },
-  {
-    path: "/order/return-order-detail",
-    exact: true,
-    name: "",
-    component: ReturnOrderDetail,
-  },
-  { path: "/product", exact: true, name: "Product", component: ListProduct },
-  { path: "/category", exact: true, name: "Product", component: ListProduct },
-  {
-    path: "/product/update-category/:id",
-    exact: true,
-    name: "update",
-    component: Update,
-  },
-  {
-    path: "/product/add-category",
-    exact: true,
-    name: "add",
-    component: Create,
-  },
-  { path: "/supplier", exact: true, name: "Supplier", component: ListSupplier },
-  // { path: '/binhlogins', exact: true,  name: '', component: Logins },
-  { path: "/saler", exact: true, name: "ban-hang", component: Saler },
-  {
+/*================== Start code of Team - Quản lý bán hàng =================*/
+  { path: '/order', exact: true,  name: 'danh-sach-don-hang', component: Order },
+  { path: '/dropdown', exact: true,  name: 'danh-sach-don-hang', component: DropDown },
+  { path: '/order-detail', exact: true,  name: '', component: OrderDetail },
+  { path: '/order-detail/:id/:type', exact: true,  name: 'chi-tiet-don-hang', component: OrderDetail },
+  // { path: '/order/return', exact: true,  name: 'don-hang-tra-ve ', component: ReturnOrder },
+  // { path: '/order/return/:id', exact: true,  name: '', component: ReturnOrder },
+  { path: '/order/return-order-detail', exact: true,  name: '', component: ReturnOrderDetail },
+  { path: '/product', exact: true,  name: 'Sản phẩm', component: ListProduct },
+  { path: '/category', exact: true,  name: 'Sản phẩm', component: ListProduct },
+  { path: '/product/update-category/:id', exact: true,  name: 'Chi tiết sản phẩm', component: Update },
+  { path: '/product/add-category', exact: true,  name: 'thêm sản phẩm', component: Create },
+  { path: '/supplier', exact: true,  name: 'Supplier', component: ListSupplier },
+  { path: '/logins', exact: true,  name: '', component: Logins },
+  { path: '/saler', exact: true,  name: 'ban-hang', component: Saler },
+{
     path: "/them-khach-hang",
     exact: true,
     name: "ban-hang",
     component: SaleAddCustomer,
   },
+{ path: '/statistical', exact: true,  name: 'Thống kê sản phẩm', component: StatisticalProduct },
 
 
   { path: "/settings", exact: true, name: "Cấu hình", component: Setting },

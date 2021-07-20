@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import javax.websocket.server.PathParam;
+import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -22,10 +23,13 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Integer>
     @Query(value = "select * from products as p where p.state is null order by p.id desc ", nativeQuery = true)
     List<ProductEntity> getAll();
 
- @Query(value = "select * from products as p where p.state is null order by p.id desc limit 1", nativeQuery = true)
+ @Query(value = "select * from products as p order by p.id desc limit 1", nativeQuery = true)
  List<ProductEntity> getAll1();
  @Query(value = "select * from products as p where p.state is null order by p.id desc limit 1", nativeQuery = true)
  ProductEntity getAll2();
+
+ @Query(value = "select p.code,p.name,c.name,SUM(o.quanlity) from products as p join oder_detail  as o on p.id = o.product_id join categories as c on c.id = p.category_id where p.state is null group by p.name", nativeQuery = true)
+ ProductEntity getAll3();
 
 
  ProductEntity findFirstByOrderByIdDesc();
@@ -55,6 +59,27 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Integer>
     List<ProductEntity> getALLByMonth();
 
 
+
+     @Query(value = "select  p.code,p.image, p.name,c.name as danh,sum(od.quanlity) quanlity\n" +
+             "from orders o\n" +
+             "left join oder_detail od on o.id = od.order_id\n" +
+             "join products p on p.id = od.product_id join categories c on c.id =p.category_id\n" +
+             "where date(o.created_date) between :start and :to\n" +
+             "group by p.id order by quanlity desc\n", nativeQuery = true)
+     List<Object[]> statistical(@Param("start") java.sql.Date start, @Param("to") Date to);
+
+
+ @Query(value = "select  p.code,p.image, p.name,c.name as danh,sum(od.quanlity) quanlity\n" +
+         "from orders o\n" +
+         "left join oder_detail od on o.id = od.order_id\n" +
+         "join products p on p.id = od.product_id join categories c on c.id =p.category_id\n" +
+         "where date(o.created_date) between :start and :to\n" +
+         "group by p.id order by quanlity desc\n", nativeQuery = true)
+ List<Object[]> statisticalPagination(@Param("start") java.sql.Date start, @Param("to") Date to,Pageable pageable);
+
+
+
+
     @Query(value = "SELECT * FROM products as p order by p.price desc ", nativeQuery = true)
     List<ProductEntity> sortByPrice();
 
@@ -66,6 +91,8 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Integer>
 
     @Query(value = "select * from products as p where p.state is null and p.name LIKE %?1% ", nativeQuery = true)
     List<ProductEntity> searchAllName(String keyword);
+
+
 
 
     @Query(value = "select * from products as p where p.state is null and  p.category_id =?1", nativeQuery = true)

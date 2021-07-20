@@ -9,12 +9,14 @@ import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
 import java.util.List;
 
 
 public interface ProductService <t>{
     List<t> getAll();
   List<t> getAll1();
+  List<t> getAll3();
   ResponseEntity<t> create(InputProductDto inputProductDTO);
     ProductDto findById(int id);
     ProductEntity update(int id, ProductEntity productEntity);
@@ -22,6 +24,8 @@ public interface ProductService <t>{
     List<t> filterAll(int keyword, int pageNo,int pageSize);
     List<t> searchByKey(String keyword);
     List<t> getAllByDay();
+    List<Object[]> statistical(Date start, Date to);
+  List<Object[]>statisticalPagination(Date start, Date to,int pageNo,int pageSize);
     List<t> getAllByMonth();
     List<t> sortByName();
     List<t> sortByPrice();

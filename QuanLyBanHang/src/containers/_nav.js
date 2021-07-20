@@ -100,7 +100,7 @@ const _nav = [
       {
         _tag: "CSidebarNavItem",
         name: "Báo cáo sản phẩm",
-        to: "/notifications/toaster",
+        to: "/statistical",
       },
       {
         _tag: "CSidebarNavItem",
