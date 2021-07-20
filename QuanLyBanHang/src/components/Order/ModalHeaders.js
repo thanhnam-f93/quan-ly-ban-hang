@@ -20,7 +20,8 @@ const ModalHeaders = (props) => {
             placeholder="Tìm kiếm theo mã đơn hàng, tên, SĐT khách hàng"
           />
         </div>
-        <Dropdown />
+        <DropDown />
+      
       </div>
     );
 }

@@ -2,17 +2,38 @@
     position: absolute;
     height: calc(100%-50px);
     background-color: white;
-    width: calc(100% - 460px);
+    padding-right: 5px;
+    padding-left: 5px;
+    width: 100%;    
     top:50px;
-    
+    display: flex;
     left:0;
     right: 0;
     bottom: 0;
-    .content-right{
-        width: calc(100%-460px);
+    display: flex;
+    .content-left{  
+      position: absolute;
+      padding-left:7px;
+      padding-right: 7px;
+      right: 430px;
+      height: 100%;
+      left: 0;
+      bottom:0;
+      border-right-style: solid;
+      border-right-width: 7px;
+      border-right-color: #e5e5e5;
+      overflow-y: auto;
+      overflow-x:hidden;
+
     }
-    .content-left{
-        width: 460px;
+    .content-right{
+      position: absolute;
+      right:0;
+      width: 430px;
+      height: 100%;
+     padding:5px 15px 0 15px;
+     bottom:0;
+     overflow:hidden;
     }
     
 }

@@ -1,7 +1,6 @@
 package com.sapo.quanlybanhang.service;
 
 import com.sapo.quanlybanhang.dto.BillDetailDto;
-import com.sapo.quanlybanhang.entity.BillDetailEntity;
 
 import java.util.List;
 

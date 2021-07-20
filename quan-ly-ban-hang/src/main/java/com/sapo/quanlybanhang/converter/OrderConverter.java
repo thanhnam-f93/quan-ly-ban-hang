@@ -15,6 +15,7 @@ public class OrderConverter {
         entity.setCreateBy(dto.getCreateBy());
         entity.setCreatedDate(dto.getCreatedDate());
         entity.setPrice(dto.getPrice());
+        entity.setDiscount(dto.getDiscount());
         return entity;
     }
 
@@ -28,6 +29,7 @@ public class OrderConverter {
         dto.setCreatedDate(entity.getCreatedDate());
         dto.setPrice(entity.getPrice());
         dto.setStaffId(entity.getStaff().getId());
+        dto.setDiscount(entity.getDiscount());
         if(entity.getCustomer() != null) {
             dto.setCustomId(entity.getCustomer().getId());
             dto.setCustomerName(entity.getCustomer().getName());

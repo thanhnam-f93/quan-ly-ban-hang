@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { CCard, CCardBody, CPagination } from "@coreui/react";
 
 const Paginations = ({ totalPages, currentPage, setCurrentPage }) => {
@@ -10,7 +10,7 @@ const Paginations = ({ totalPages, currentPage, setCurrentPage }) => {
             align="center"
             addListClass="some-class"
             activePage={currentPage}
-            pages={totalPages - 1}
+            pages={totalPages}
             onActivePageChange={setCurrentPage}
           />
         </CCardBody>

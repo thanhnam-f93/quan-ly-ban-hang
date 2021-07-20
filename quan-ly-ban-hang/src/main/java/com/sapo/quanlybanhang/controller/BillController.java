@@ -11,23 +11,22 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin()
 public class BillController {
     @Autowired
     private IBillService billService;
 
     @PostMapping("/bills")
-    public ResponseEntity save (@RequestBody BillDto  billDto){
+    public ResponseEntity save(@RequestBody BillDto billDto) {
         List<OrderDetailDto> orderDetailDtos = billDto.getOrderDetailDtos();
-        if (orderDetailDtos.size()== 0){
+        if (orderDetailDtos.size() == 0) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN)
                     .body(new OrderResponse(" sản phẩm không hợp lệ hoặc quá thời hạn bảo hành"));
         }
-        if((billDto= billService.save(billDto))!= null){
+        if ((billDto = billService.save(billDto)) != null) {
             return ResponseEntity.ok(billDto);
         }
         return ResponseEntity.status(HttpStatus.FORBIDDEN)
@@ -36,27 +35,28 @@ public class BillController {
     }
 
     /**
-     paging of order . sort descending, sortyby created date
-     search and filter
+     * paging of order . sort descending, sortyby created date
+     * search and filter
      */
-    @PostMapping ("/bill")
-    public BillListDto findAll(@RequestBody OrderPageable orderPageable){
+    @PostMapping("/bill")
+    public BillListDto findAll(@RequestBody OrderPageable orderPageable) {
         Integer totalItem = 0;
         BillListDto listDto = new BillListDto();
-        if(orderPageable.getOrderTime() == null && (orderPageable.getInputOrder() == null
-                || orderPageable.getInputOrder() =="" ) && (orderPageable.getOptionTime() == null)){
+        if (orderPageable.getOrderTime() == null && (orderPageable.getInputOrder() == null
+                || orderPageable.getInputOrder() == "") && (orderPageable.getOptionTime() == null)) {
             Sort sort = Sort.by("createdDate").descending();
-            Pageable pageable = PageRequest.of(orderPageable.getPage()-1,orderPageable.getLimit(),sort);
+            Pageable pageable = PageRequest.of(orderPageable.getPage() - 1, orderPageable.getLimit(), sort);
             listDto.setTotalItem(billService.getTotalItem());
             listDto.setResultList(billService.findAll(pageable));
             return listDto;
-        }else {
+        } else {
             return billService.findByCodeAndCustomer(orderPageable);
         }
 
     }
+
     @GetMapping("/bill/{id}")
-    public  BillDto findById(@PathVariable (name = "id") Integer id){
+    public BillDto findById(@PathVariable(name = "id") Integer id) {
         return BillConverter.toDto(billService.findById(id));
     }
 

@@ -89,7 +89,7 @@ const Login = () => {
                           <CIcon name="cil-user" />
                         </CInputGroupText>
                       </CInputGroupPrepend>
-                      <CInput type="text" placeholder="Username" autoComplete="username" />
+                      <CInput type="text" placeholder="Username"vname = "username" autoComplete="username" onChange= {handleChange} />
                     </CInputGroup>
                     <CInputGroup className="mb-4">
                       <CInputGroupPrepend>
@@ -97,11 +97,11 @@ const Login = () => {
                           <CIcon name="cil-lock-locked" />
                         </CInputGroupText>
                       </CInputGroupPrepend>
-                      <CInput type="password" placeholder="Password" autoComplete="current-password" />
+                      <CInput type="password" name = "password" placeholder="Password" autoComplete="current-password" onChange = {handleChange}/>
                     </CInputGroup>
                     <CRow>
                       <CCol xs="6">
-                        <CButton color="primary" className="px-4">Login</CButton>
+                        <CButton color="primary" className="px-4" onClick = {getUser}>Login</CButton>
                       </CCol>
                       <CCol xs="6" className="text-right">
                         <CButton color="link" className="px-0">Forgot password?</CButton>
@@ -117,7 +117,7 @@ const Login = () => {
                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
                       labore et dolore magna aliqua.</p>
                     <Link to="/register">
-                      <CButton color="primary" className="mt-3" active tabIndex={-1}>Register Now!</CButton>
+                      <CButton color="primary" className="mt-3" active tabIndex={-1} >Register Now!</CButton>
                     </Link>
                   </div>
                 </CCardBody>

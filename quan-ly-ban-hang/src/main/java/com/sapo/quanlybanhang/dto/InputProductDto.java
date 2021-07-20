@@ -1,14 +1,12 @@
 package com.sapo.quanlybanhang.dto;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
+import lombok.*;
 
 import java.util.Date;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class InputProductDto {
@@ -23,7 +21,7 @@ public class InputProductDto {
 
     private int numberProduct;
 
-    private int sell_product;
+    private int sellProduct;
 
     private String image;
 
@@ -37,7 +35,7 @@ public class InputProductDto {
 
     private Date createdDate;
 
-    private Date modified_date;
+    private Date modifiedDate;
 
     private String size;
 

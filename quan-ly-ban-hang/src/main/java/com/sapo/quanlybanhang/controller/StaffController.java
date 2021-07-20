@@ -1,40 +1,31 @@
 package com.sapo.quanlybanhang.controller;
 
-import com.sapo.quanlybanhang.converter.StaffConverter;
 import com.sapo.quanlybanhang.dto.StaffDto;
-import com.sapo.quanlybanhang.entity.StaffEntity;
-import com.sapo.quanlybanhang.repository.StaffRepository;
 import com.sapo.quanlybanhang.service.StaffService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.FieldError;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @CrossOrigin
 @RestController
 @RequestMapping("/admin")
 public class StaffController {
 
+    private final StaffService staffService;
     @Autowired
     PasswordEncoder encoder;
-
-    private final StaffService staffService;
 
     public StaffController(StaffService staffService) {
         this.staffService = staffService;
@@ -55,8 +46,8 @@ public class StaffController {
             @RequestParam(name = "page", defaultValue = "0") Integer page,
             @RequestParam(name = "limit", defaultValue = "7") Integer limit,
             @RequestParam(name = "sortBy", defaultValue = "id") String sortBy
-            ){
-        PageRequest pageResult = PageRequest.of(page,limit,Sort.by(sortBy).descending());
+    ) {
+        PageRequest pageResult = PageRequest.of(page, limit, Sort.by(sortBy).descending());
         Page<StaffDto> staffDtoPage = staffService.getAllStaff(pageResult);
         return staffDtoPage;
     }
@@ -64,7 +55,7 @@ public class StaffController {
     //Lấy 1 staff theo id
     @PreAuthorize("hasAuthority('VIEW_STAFF')")
     @GetMapping("/staffs/{id}")
-    public ResponseEntity getStaffById(@PathVariable("id") int id){
+    public ResponseEntity getStaffById(@PathVariable("id") int id) {
         StaffDto staffDto = staffService.findStaffById(id);
         return new ResponseEntity(staffDto, HttpStatus.OK);
     }
@@ -93,7 +84,7 @@ public class StaffController {
     //Cập nhật 1 Staff
     @PreAuthorize("hasAuthority('UPDATE_STAFF')")
     @PutMapping("/staffs/{id}")
-    public ResponseEntity updateStaff(@PathVariable ("id") int id, @Valid @RequestBody StaffDto staffDto){
+    public ResponseEntity updateStaff(@PathVariable("id") int id, @Valid @RequestBody StaffDto staffDto) {
         StaffDto dto = staffService.updateStaff(id, staffDto);
         return new ResponseEntity(dto, HttpStatus.OK);
     }
@@ -111,6 +102,7 @@ public class StaffController {
         PageRequest pageResult = PageRequest.of(page, limit, Sort.by(sortBy).descending());
         Page<StaffDto> staffDtoPage = staffService.getAllStaffByName(name,pageResult);
         return staffDtoPage;
+
     }
 
     //Tìm kiếm staff theo tên

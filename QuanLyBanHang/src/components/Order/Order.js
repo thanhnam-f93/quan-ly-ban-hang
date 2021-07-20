@@ -18,7 +18,7 @@ const Order = () => {
   console.log(acc);
   const [orderPageable, setOrderPageAble] = useState({
     page:1,
-    limit:20,
+    limit:7,
     inputOrder:"",
     orderTime:""
   });
@@ -67,13 +67,17 @@ const getDate = (op, da) =>{
 
 const getPage = (page) =>{
   console.log("trang:",page);
+  if(page==0){
+   
+    page = 1;
+  }
   setOrderPageAble({...orderPageable, page:page});
 }
 
     return (
         <div className = "list-order">
           <OrderHeader inputs  = {getInput} getDate = {getDate} />   
-         <OrderTable lists = {listOrder}/>
+         <OrderTable  type = "order" lists = {listOrder}/>
          <CPagination
             doubleArrows = {true}
             activePage={orderPageable.page}

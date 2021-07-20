@@ -1,7 +1,8 @@
 import React from 'react';
 import {useHistory} from 'react-router-dom'
 import { reactLocalStorage } from 'reactjs-localstorage';
-
+import { FormatMoney } from 'src/helpers/FormatMoney';
+import "./scss/TableItem.scss"
 const TableItem = (props) => {  
  
   const history = useHistory();
@@ -19,10 +20,19 @@ const TableItem = (props) => {
     }
     console.log("customInf:",customerInfor);
     const redirectDetail = ()=>{
-      const location = {
-        pathname: `/order-detail/${item.id}/1`, 
-        state:{item:item}  
+      var location ={};
+      if(props.type=="order"){
+         location = {
+          pathname: `/order/order-detail/${item.id}/${item.code}/${item.createdDate}`, 
+          state:{item:item}  
+        }
+      }else{
+         location = {
+          pathname: `/create-order-return/${item.id}/${item.code}/${item.createdDate}`, 
+          state:{item:item}  
+        }
       }
+     
     history.push (location);
     reactLocalStorage.setObject('infor', customerInfor);
     }
@@ -30,7 +40,7 @@ const TableItem = (props) => {
          <tr className = "table-row" onClick ={redirectDetail}> 
             <th scope="row">{item.code}</th>
             <td>{item.customerName}</td>
-            <td>{item.price}</td>
+            <td className = "td-2">{FormatMoney(item.price)}</td>
             <td>{times}</td>
           </tr>
     );

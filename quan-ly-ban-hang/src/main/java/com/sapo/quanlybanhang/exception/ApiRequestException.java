@@ -14,12 +14,12 @@ import java.util.Map;
 @ControllerAdvice
 public class ApiRequestException {
     @ExceptionHandler(BindException.class)
-    public ResponseEntity<Object> handleValidatorException(org.springframework.validation.BindException ex, WebRequest request){
+    public ResponseEntity<Object> handleValidatorException(org.springframework.validation.BindException ex, WebRequest request) {
         Map<String, String> erorrs = new HashMap<>();
-        ex.getBindingResult().getAllErrors().forEach((error)->{
-            String filed = ((FieldError ) error).getField();
+        ex.getBindingResult().getAllErrors().forEach((error) -> {
+            String filed = ((FieldError) error).getField();
             String errorMessage = error.getDefaultMessage();
-            erorrs.put(filed,errorMessage);
+            erorrs.put(filed, errorMessage);
         });
         return new ResponseEntity(erorrs, HttpStatus.CONFLICT);
     }

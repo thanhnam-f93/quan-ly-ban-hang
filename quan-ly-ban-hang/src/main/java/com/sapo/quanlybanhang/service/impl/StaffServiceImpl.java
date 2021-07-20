@@ -19,10 +19,9 @@ import java.util.stream.Collectors;
 public class StaffServiceImpl implements StaffService {
 
 
+    private final StaffRepository staffRepository;
     @Autowired
     private RoleRepository roleRepository;
-
-    private final StaffRepository staffRepository;
 
     public StaffServiceImpl(StaffRepository staffRepository) {
         this.staffRepository = staffRepository;
@@ -30,7 +29,7 @@ public class StaffServiceImpl implements StaffService {
 
     @Override
     public List<StaffDto> findAll() {
-        return staffRepository.findAll().stream().map(item-> StaffConverter.toDto(item)).collect(Collectors.toList());
+        return staffRepository.findAll().stream().map(item -> StaffConverter.toDto(item)).collect(Collectors.toList());
     }
 
     @Override
@@ -40,7 +39,7 @@ public class StaffServiceImpl implements StaffService {
 
     @Override
     public StaffDto createStaff(StaffDto staffDto) {
-        List<RoleEntity>  roleEntities = roleRepository.findAllById(staffDto.getRoleId());
+        List<RoleEntity> roleEntities = roleRepository.findAllById(staffDto.getRoleId());
         StaffEntity staffEntity = StaffConverter.toEntity(staffDto);
         staffEntity.setRoles(roleEntities);
         return StaffConverter.toDto(staffRepository.save(staffEntity));
@@ -68,10 +67,9 @@ public class StaffServiceImpl implements StaffService {
     @Override
     public Page<StaffDto> getAllStaff(Pageable pageable) {
         Page<StaffEntity> staffEntityPage = staffRepository.findAll(pageable);
-        Page<StaffDto> staffDtoPage = staffEntityPage.map(item->StaffConverter.toDto(item));
+        Page<StaffDto> staffDtoPage = staffEntityPage.map(item -> StaffConverter.toDto(item));
         return staffDtoPage;
     }
-
 
 
     @Override
@@ -79,6 +77,7 @@ public class StaffServiceImpl implements StaffService {
       Page<StaffEntity> listStaffEntity =  staffRepository.findAllStaffByName(name,pageable);
         Page<StaffDto> staffDtoPage = listStaffEntity.map(item->StaffConverter.toDto(item));
         return  staffDtoPage;
+
     }
 
     @Override

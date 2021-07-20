@@ -5,11 +5,10 @@ import com.sapo.quanlybanhang.dto.StaffDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-
 import java.util.List;
 
 public interface RoleService {
- 
+
     //Lấy danh sách Role
     public List<RoleDto> findAll();
 
@@ -20,5 +19,5 @@ public interface RoleService {
     public RoleDto createRole(RoleDto roleDto);
 
     //Cập nhật một Role
-    public RoleDto updateRole(int id , RoleDto roleDto);
+    public RoleDto updateRole(int id, RoleDto roleDto);
 }

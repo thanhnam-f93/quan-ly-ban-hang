@@ -26,18 +26,14 @@ import org.springframework.web.bind.annotation.RestController;
 public class LoginController {
 
 
+    private final JwtProvider jwtProvider;
+    private final AuthenticationManager authenticationManager;
     @Autowired
     StaffRepository staffRepository;
-
     @Autowired
     PasswordEncoder encoder;
-
     @Autowired
     StaffService staffService;
-
-
-    private final JwtProvider jwtProvider;
-    private  final AuthenticationManager authenticationManager;
 
     public LoginController(JwtProvider jwtProvider, AuthenticationManager authenticationManager) {
         this.jwtProvider = jwtProvider;
@@ -45,7 +41,7 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity authenticateUser(@Validated @RequestBody LoginForm loginForm){
+    public ResponseEntity authenticateUser(@Validated @RequestBody LoginForm loginForm) {
         Authentication authentication = authenticationManager
                 .authenticate(new UsernamePasswordAuthenticationToken(
                         loginForm.getPhone(),

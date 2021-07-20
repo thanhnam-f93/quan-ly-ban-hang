@@ -2,8 +2,6 @@ package com.sapo.quanlybanhang.dto;
 
 import lombok.*;
 
-import javax.persistence.criteria.CriteriaBuilder;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -33,4 +31,5 @@ public class OrderDetailDto {
 
     private String productName;
     private Long price;
+    private  Long priceProduct;
 }

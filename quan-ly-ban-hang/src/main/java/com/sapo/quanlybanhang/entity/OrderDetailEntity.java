@@ -7,7 +7,7 @@ import java.io.Serializable;
 
 
 @Entity
-@Table(name = "oder_detail")
+@Table(name = "order_detail")
 @Data
 @EqualsAndHashCode
 @NoArgsConstructor
@@ -32,7 +32,7 @@ public class OrderDetailEntity implements Serializable {
     @JoinColumn(name = "order_id")
     private OrderEntity order;
 
-    @Column (name = "remain_amount")
+    @Column (name = "remain_quantity")
     private Integer remainAmount;
 
     @Column (name = "price")

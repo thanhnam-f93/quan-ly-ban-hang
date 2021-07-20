@@ -1,5 +1,5 @@
 import React from "react";
-import "./scss/order.scss";
+import "./scss/OrderHeader.scss";
 import DropDown from "./DropDown";
 import "./scss/DropDown.scss";
 

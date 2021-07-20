@@ -1,5 +1,5 @@
 import React from "react";
-import "./scss/OrderInfor.css"
+import "./scss/OrderInfor.scss"
 
 const OrderInforItem = (props) => {
     const item = props.item;
@@ -8,7 +8,7 @@ const OrderInforItem = (props) => {
         <th scope="row">{item.codeProduct}</th>
         <td>{item.productName}</td>
         <td>{item.quanlity}</td>
-        <td>{item.discount}</td>
+        <td>{item.priceProduct}</td>
         <td>{item.price}</td>
       </tr>
   );

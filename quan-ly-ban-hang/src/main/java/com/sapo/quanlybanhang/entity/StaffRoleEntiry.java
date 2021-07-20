@@ -1,11 +1,5 @@
 package com.sapo.quanlybanhang.entity;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
-
-import javax.persistence.*;
-
 //@Entity
 //@Table(name = "staff_role")
 //@Data

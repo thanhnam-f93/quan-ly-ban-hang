@@ -5,7 +5,7 @@ import lombok.Data;
 import javax.persistence.*;
 
 @Entity
-@Table (name = "bill_details")
+@Table (name = "return_order_details")
 @Data
 public class BillDetailEntity  {
     @Id
@@ -29,7 +29,7 @@ public class BillDetailEntity  {
     private ProductEntity productBill;
 
     @ManyToOne
-    @JoinColumn(name = "bill_id")
+    @JoinColumn(name = "return_order_id")
     private BillEntity bill;
 
 

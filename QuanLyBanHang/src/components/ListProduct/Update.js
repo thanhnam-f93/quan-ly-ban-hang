@@ -8,7 +8,9 @@ import {
   CLabel,
   CSelect,
   CRow,
-  CTextarea
+  CTextarea,
+  CButton,
+  CInputFile
  
 } from "@coreui/react";
 import swal from 'sweetalert';
@@ -25,6 +27,7 @@ import {
   getSize,
   DeleteCategory,
   getCategory,
+  ApiQuan,
 } from "src/apis/Product";
 import Select from "react-select";
 import axios from "axios";
@@ -43,6 +46,7 @@ function Update(props) {
   const [name, setName] = useState("");
   const [brandID, setBrandID] = useState("");
   const [numberProduct, setNumber] = useState("");
+  const [sellProduct,setSell] = useState("");
   const [image, setImage] = useState("");
   const [price, setPrice] = useState("");
   const [supplierId, setSupplierId] = useState("");
@@ -65,15 +69,16 @@ function Update(props) {
   const [brandName, setBrandName] = useState("");
   const [product, setProduct] = useState([]);
 
+
   useEffect(() => {
-    getSupplier().then((res) => {
+    ApiQuan('get',`suppliers`).then((res) => {
       setSupplier(res.data);
       console.log(res.data);
     });
   }, []);
 
   useEffect(() => {
-    getCate().then((res) => {
+    ApiQuan('get',`categories`).then((res) => {
       setCategory(res.data);
       console.log(res.data);
     });
@@ -81,7 +86,7 @@ function Update(props) {
 
 
   useEffect(() => {
-    getBrand().then((res) => {
+    ApiQuan('get',`brands`).then((res) => {
       setBrand(res.data);
       console.log(res.data);
     });
@@ -92,7 +97,7 @@ function Update(props) {
   };
 
   useEffect(() => {
-    getCategory().then((item) => {
+    ApiQuan('get',`products`).then((item) => {
       setProduct(item.data);
       console.log(item);
     });
@@ -107,7 +112,7 @@ function Update(props) {
     })
     .then((willDelete) => {
       if (willDelete) {
-        DeleteCategory(id).then(() => {
+        ApiQuan('delete',`products/${id}`).then(() => {
           setProduct(product.filter((item) => item.id !== id))
           props.history.push("/category");
         });
@@ -154,11 +159,13 @@ function Update(props) {
   }, [brand]);
 
   useEffect(() => {
-    getCategoryByID(id).then((res) => {
+    // getCategoryByID(id).then((res) => {
+      ApiQuan('get',`products/${id}`).then((res) => {
       setCode(res.data.code);
       setName(res.data.name);
       setBrandName(res.data.brandID);
       setNumber(res.data.numberProduct);
+      setSell(res.data.sellProduct)
       setImage(res.data.image);
       setSupplierName(res.data.supplierId);
       setDescription(res.data.description);
@@ -176,6 +183,7 @@ function Update(props) {
       name: name,
       brandName: brandName,
       numberProduct: numberProduct,
+      sellProduct: sellProduct,
       image: image,
       categoryName: categoryName,
       description: description,
@@ -186,27 +194,53 @@ function Update(props) {
       createdDate: createdDate,
     };
 
+    var data = JSON.stringify(category)
     Swal.fire({
       title: 'bạn có muốn thay đổi sản phẩm?',
-      showDenyButton: true,
       showCancelButton: true,
+     confirmButtonColor:"#0089ff",
       confirmButtonText: `lưu`,
-      denyButtonText: `hủy bỏ thao tác`,
     }).then((result) => {
       /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
-        UpdateCategory(category, id).then((res) => {
+        // UpdateCategory(category, id).then((res) => {
+          ApiQuan('put',`products/${id}`,data).then((res)=>{
           // props.history.push("/category");
           console.log(category);
+        }) .catch(error=>{
+          console.log("aaaaaaaaaaaaaaaa")
+          if(error.response.data.mess == " error : code trung "){
+            Swal.fire({
+              icon: 'error',
+              title: 'code trùng',
+              showConfirmButton: false,
+              timer: 1500
+            })
+          };
+          if(error.response.data.mess == " error : ma ko dc trong "){
+            Swal.fire({
+              icon: 'error',
+              title: 'tên không được để trống',
+              showConfirmButton: false,
+              timer: 1500
+            })
+          }
+
         });
-        Swal.fire('đã lưu!', '', 'success')
+        Swal.fire({title: 'Đã lưu',  confirmButtonColor:"#0089ff"})
       } else if (result.isDenied) {
-        Swal.fire('Sản phẩm vẫn chưa được thay đổi', '', 'info')
+        Swal.fire('Sản phẩm vẫn chưa được thay đổi', '', '#0089ff')
       }
     })
     
     
   };
+  
+  function format2(n) {
+    if (n != "") {
+        return n.toLocaleString('it-IT', {style : 'currency', currency : 'VND'});
+    }
+}
 
   const changeCode = (event) => {
     setCode(event.target.value);
@@ -220,9 +254,45 @@ function Update(props) {
   const changeNumber = (event) => {
     setNumber(event.target.value);
   };
-  const changeImage = (event) => {
-    setImage(event.target.value);
+
+  const changeSell = (event) => {
+    setSell(event.target.value);
   };
+  // const changeImage = (event) => {
+  //   setImage(event.target.value);
+  // };
+  const handleImage = (e) => {
+    var axios = require("axios");
+    var FormData = require("form-data");
+    var fs = require("fs");
+    var data = new FormData();
+    console.log("Image: ", e.target.files[0]);
+    data.append("file", e.target.files[0]);
+
+    var config = {
+      method: "post",
+      url: "http://localhost:8080/api/v1/uploadFile",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        "Content-Type": "application/json",
+      },
+      data: data,
+    };
+
+    axios(config)
+      .then(function (response) {
+        console.log(JSON.stringify(response.data));
+      })
+      .catch(function (error) {
+        console.log(error);
+        setImage(e.target.files[0].name);
+      });
+
+    let image = `image/${e.target.files[0].name}`;
+    setProduct({ ...product, [e.target.name]: image });
+  };
+
+
   const changeSupplier = (event) => {
     setSupplierName(event.label);
   };
@@ -291,16 +361,26 @@ function Update(props) {
       })
     }
   }
+  const addCategory = () => {
+    props.history.push("/product/add-category");
+  };
+
+  const addSupplier = () => {
+    props.history.push("/add-supplier");
+  };
+
+
   
   const changeonBlurPrice = (event)=>{
-    var a = new RegExp("^[0-9]*$")
+    // var a = new RegExp("^[0-9]*$")
     
-    if((a.test(event.target.value)==false)){
-      setMesage({
-        price:"Giá không được nhập kí tự"
-      })
-    }
-    else if( /((\r\n|\n|\r)$)|(^(\r\n|\n|\r))|^\s*$/.test(event.target.value)!=false){
+    // if((a.test(event.target.value)==false)){
+    //   setMesage({
+    //     price:"Giá không được nhập kí tự"
+    //   })
+    // }
+    // else 
+    if( /((\r\n|\n|\r)$)|(^(\r\n|\n|\r))|^\s*$/.test(event.target.value)!=false){
       setMesage({
         price:" Giá sản phẩm không được để trống"
       })
@@ -316,14 +396,23 @@ function Update(props) {
   return (
     <div>
       <div>
-      <h1>{name}</h1>
         <CRow>
-          
+        <CCol xs="12" sm="7">
+        <h1>{name}</h1>
+         </CCol>
+         <CCol className="px-0 d-flex justify-content-end" xs="12" sm="5" >
+         <CCol xs="6"  sm="4" >
+           <CButton style={{background:"#0089ff"}} onClick={addCategory}>
+            Thêm sản phẩm
+            </CButton>
+           </CCol>
+         </CCol>
+        </CRow>
+        <CRow>     
       <CCol  xs="12" sm="7">
-      
       <CCard>
        
-              <CCardHeader>Sản phẩm</CCardHeader>
+              <CCardHeader><h2>Sản phẩm</h2></CCardHeader>
               <CCardBody>
                 <CFormGroup>
                   <CLabel htmlFor="company">Mã</CLabel>
@@ -331,7 +420,7 @@ function Update(props) {
                   <span style={{color:"red"}}> {message.code}</span>
                 </CFormGroup>
                 <CFormGroup>
-                  <CLabel htmlFor="vat">Tên</CLabel>
+                  <CLabel htmlFor="vat">Tên <span style={{color:"red"}}>*</span></CLabel>
                   <CInput
                     name="name"
                     placeholder="DE1234567890"
@@ -341,16 +430,45 @@ function Update(props) {
                   />
                    <span style={{color:"red"}}> {message.name}</span>
                 </CFormGroup>
-                <CFormGroup>
-                  <CLabel htmlFor="vat">Số lượng</CLabel>
-                  <CInput
+                <CFormGroup row className="my-0">
+                  <CCol xs="4">
+                    <CFormGroup>
+                      <CLabel htmlFor="city">Số lượng</CLabel>
+                      <CInput
+                         name="price"
+                         placeholder="DE1234567890"
+                         onChange={changeNumber}
+                         value={numberProduct}
+                         onBlur={changeonBlurNumber}
+                      />
+                       <span style={{color:"red"}}> {message.numberProduct}</span>
+                    </CFormGroup>
+                  </CCol>
+                  <CCol xs="4">
+                    <CFormGroup>
+                      <CLabel htmlFor="postal-code">Giá</CLabel>
+                      <CInput
                     name="price"
-                    placeholder="DE1234567890"
-                    onChange={changeNumber}
-                    value={numberProduct}
-                    onBlur={changeonBlurNumber}
+                    placeholder="0"
+                    disabled
+                    onChange={changePrice}
+                    value={format2(price)}
+                    onBlur={changeonBlurPrice}
                   />
-                   <span style={{color:"red"}}> {message.numberProduct}</span>
+                   <span style={{color:"red"}}> {message.price}</span>
+                    </CFormGroup>
+                  </CCol>
+                  <CCol xs="4">
+                    <CFormGroup>
+                      <CLabel htmlFor="postal-code">Đã bán</CLabel>
+                      <CInput
+                    name="sellproduct"
+                    value={sellProduct}
+   
+                  />
+                  
+                    </CFormGroup>
+                  </CCol>
                 </CFormGroup>
                 <CFormGroup>
                   <CLabel htmlFor="vat">Mô tả</CLabel>
@@ -362,21 +480,10 @@ function Update(props) {
                     onChange={changeDescription}
                   />
                 </CFormGroup>
-                <CFormGroup>
-                  <CLabel htmlFor="vat">Giá</CLabel>
-                  <CInput
-                    name="price"
-                    placeholder="DE1234567890"
-                    onChange={changePrice}
-                    value={price}
-                    onBlur={changeonBlurPrice}
-                  />
-                   <span style={{color:"red"}}> {message.price}</span>
-                </CFormGroup>
               </CCardBody>
             </CCard>
         <CCard>
-          <CCardHeader>Thuộc tính</CCardHeader>
+          <CCardHeader><h2>Thuộc tính</h2></CCardHeader>
           <CCardBody>
             <CFormGroup row className="my-0">
               <CCol xs="6">
@@ -406,31 +513,11 @@ function Update(props) {
             </CFormGroup>
           </CCardBody>
         </CCard>
-        <button
-          className="btn btn-secondary"
-          onClick={cancel}
-          style={{ marginLeft: "10px" }}
-        >
-          Quay Lại
-        </button>
-        <button
-          className="btn btn-success"
-          onClick={updateCategory}
-          style={{ marginLeft: "10px" }}
-        >
-          Cập nhật
-        </button>
-        <button
-          style={{ marginLeft: "10px" }}
-          onClick={() => deleteCategory(id)}
-          className="btn btn-danger"
-        >
-          Xóa
-        </button>
+    
       </CCol>
          <CCol xs="12" sm="5">   
             <CCard>
-              <CCardHeader>Phân loại</CCardHeader>
+              <CCardHeader><h2>Phân loại</h2></CCardHeader>
                     <CCol xs="12"> <CFormGroup>
                   <CLabel htmlFor="company">Nhãn hiệu</CLabel>
                   <Select placeholder={brandName} options={filterOptionBrand} onChange={changeBrand} />
@@ -445,23 +532,48 @@ function Update(props) {
                 </CFormGroup>
                     
                 <CFormGroup>
-                  <CLabel htmlFor="vat">Nhà phân phối</CLabel>
+                  <CLabel htmlFor="vat">Nhà cung cấp</CLabel>
                   <Select placeholder={supplierName} 
                   options={filterSupplier} onChange={changeSupplier} />
                 </CFormGroup>
                 </CCol>
             </CCard>
             <CCard className=" p-4">
-               <img width="100%" height="400px" src={image}/>    
-               <CInput
-                    name="price"
-                    placeholder="thay đổi link ảnh"
-                    onChange={changeImage}
-                   
-                  />        
+
+            <CInputFile
+                          id="link"
+                          name="link"
+                          onChange={handleImage}
+                          accept="image/png, image/jpeg"
+                        />
+               <img src={`${process.env.PUBLIC_URL}/image/${image}`}/>    
             </CCard>
         </CCol>
+    
         </CRow>
+        <CRow>
+         <CCol xs="12" sm="7">
+           <CRow>
+           <CCol xs="6"  sm="3" >
+           <CButton block color="secondary" onClick={cancel}>
+            Quay lại
+            </CButton>
+           </CCol>
+           <CCol xs="6"  sm="3">
+           <CButton style={{background:"#0089ff"}} onClick={updateCategory}>
+            Cập nhật
+            </CButton>
+           </CCol>
+           </CRow>
+         </CCol>
+         <CCol className="px-0 d-flex justify-content-end" xs="12" sm="5" >
+         <CCol xs="6"  sm="3" >
+           <CButton block color="danger" onClick={() => deleteCategory(id)}>
+            Xóa
+            </CButton>
+           </CCol>
+         </CCol>
+       </CRow>
       </div>
     </div>
   );

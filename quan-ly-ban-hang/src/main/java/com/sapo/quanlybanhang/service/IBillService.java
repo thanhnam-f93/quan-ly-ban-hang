@@ -13,9 +13,14 @@ import java.util.List;
 
 public interface IBillService {
     public BillDto save(BillDto billDto);
-    public Long checkPrice (OrderDetailDto dto, OrderDetailEntity entity, OrderEntity orderEntity);
+
+    public Long checkPrice(OrderDetailDto dto, OrderDetailEntity entity, OrderEntity orderEntity);
+
     public List<BillDto> findAll(Pageable pageable);
+
     public BillListDto findByCodeAndCustomer(OrderPageable orderPageable);
+
     public BillEntity findById(Integer id);
+
     public Integer getTotalItem();
 }

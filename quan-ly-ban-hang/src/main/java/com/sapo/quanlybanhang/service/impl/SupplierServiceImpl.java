@@ -1,15 +1,13 @@
 package com.sapo.quanlybanhang.service.impl;
 
 import com.sapo.quanlybanhang.converter.Converter;
-import com.sapo.quanlybanhang.dto.*;
-import com.sapo.quanlybanhang.entity.ProductEntity;
+import com.sapo.quanlybanhang.dto.SupplierDto;
 import com.sapo.quanlybanhang.entity.SupplierEntity;
 import com.sapo.quanlybanhang.repository.SupplierRepository;
 import com.sapo.quanlybanhang.service.SupplierService;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -24,7 +22,7 @@ public class SupplierServiceImpl implements SupplierService {
 
     @Override
     public List<SupplierDto> getAll() {
-        List<SupplierEntity> supplierEntities = supplierRepository.getAll();
+        List<SupplierEntity> supplierEntities = supplierRepository.findAll();
         List<SupplierDto> supplierDtos = new ArrayList<>();
         Converter converter = new Converter();
         for (SupplierEntity item : supplierEntities) {
@@ -49,7 +47,6 @@ public class SupplierServiceImpl implements SupplierService {
         supplierDto.setModifiedBy(supplierEntity.getModifiedBy());
         return supplierDto;
     }
-
     @Override
     public List<SupplierDto> findAll(String keyword) {
         if (keyword != null) {

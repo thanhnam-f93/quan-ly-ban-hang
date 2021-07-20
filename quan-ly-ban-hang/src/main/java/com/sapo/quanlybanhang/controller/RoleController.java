@@ -7,9 +7,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
+<<<<<<< HEAD
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+=======
+>>>>>>> 5ad64b351baefbc1005c39f6d27b0018211f5d79
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -25,11 +29,18 @@ public class RoleController {
     }
 
     //Lấy danh sách roles
+<<<<<<< HEAD
     @PreAuthorize("hasAuthority('VIEW_STAFF')")
     @GetMapping("/listRoles")
     public ResponseEntity getAllRoles(){
      List<RoleDto> list = roleService.findAll();
      ResponseEntity responseEntity = new ResponseEntity<>(list , HttpStatus.OK);
+=======
+    @GetMapping("/roles")
+    public ResponseEntity getAllRoles() {
+        List<RoleDto> list = roleService.findAll();
+        ResponseEntity responseEntity = new ResponseEntity<>(list, HttpStatus.OK);
+>>>>>>> 5ad64b351baefbc1005c39f6d27b0018211f5d79
         return responseEntity;
     }
 
@@ -49,14 +60,14 @@ public class RoleController {
     //Thêm mới 1 Role
     @PreAuthorize("hasAuthority('CREATE_ROLE')")
     @PostMapping("/roles")
-    public ResponseEntity createRole( @RequestBody RoleDto roleDto){
+    public ResponseEntity createRole(@RequestBody RoleDto roleDto) {
         RoleDto dto = roleService.createRole(roleDto);
         return new ResponseEntity(dto, HttpStatus.OK);
     }
 
     //Cập nhật 1 Role
     @PutMapping("/roles/{id}")
-    public ResponseEntity updateRole(@PathVariable ("id") int id, @Valid @RequestBody RoleDto roleDto){
+    public ResponseEntity updateRole(@PathVariable("id") int id, @Valid @RequestBody RoleDto roleDto) {
         RoleDto dto = roleService.updateRole(id, roleDto);
         return new ResponseEntity(dto, HttpStatus.OK);
     }

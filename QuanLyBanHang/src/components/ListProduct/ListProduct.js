@@ -10,6 +10,7 @@ import {
   Search,
   getCate,
   Filter,
+  ApiQuan,
 
 } from "../../apis/Product";
 import {
@@ -26,43 +27,84 @@ import {
   CCard
 } from "@coreui/react";
 import swal from 'sweetalert';
-import { DocsLink } from "src/reusable";
+
 import Select from "react-select";
-import CIcon from "@coreui/icons-react";
+
 import axios from "axios";
+import { set } from "react-hook-form";
 
 
 function ListProduct(props) {
   const id = useState(props.match.params.id);
   const [search, setSearch] = useState("");
+  const [option,setOption]= useState("ahihih");
+  const [filter, setFilter] = useState("");
   const [product,setProduct] = useState([]);
   const [pageNo, setPageNo] = useState(1);
-  const [pageSize,setPageSize]= useState(5);
+  const [pageSize,setPageSize]= useState(10);
   const [total,setTotal] = useState(1);
-  const [filterCategory, setFilterOptionCategory] = useState([]);
+  const [filterCategory, setFilterOptionCategory] = useState([{value:"", label:"tất cả"}]);
   const [categories, setCategories] = useState([]);
   
+  
+  const config = {
+    method: 'get',
+    url: `http://localhost:8080/api/v1/productSearch?keyword=${search}&filter=${filter}&pageNo=${pageNo}&pageSize=${pageSize}`,
+    headers: {
+        'Authorization': `Bearer ${localStorage.getItem("token")}`,
+        'Content-Type': 'application/json'
+    }
+};
+const config3 = {
+  method: 'get',
+  url: `http://localhost:8080/api/v1/product_searchByCategories?keyword=${search}&pageNo=${pageNo}&pageSize=${pageSize}`,
+  headers: {
+      'Authorization': `Bearer ${localStorage.getItem("token")}`,
+      'Content-Type': 'application/json'
+  }
+};
+
+const config1 = {
+  method: 'get',
+  url: `http://localhost:8080/api/v1/productSearchByKey?keyword=${search}&filter=${filter}`,
+  headers: {
+      'Authorization': `Bearer ${localStorage.getItem("token")}`,
+      'Content-Type': 'application/json'
+  }
+};
+
+
+const config2 = {
+  method: 'get',
+  url: `http://localhost:8080/api/v1/categories`,
+  headers: {
+      'Authorization': `Bearer ${localStorage.getItem("token")}`,
+      'Content-Type': 'application/json'
+  }
+};
+
 
  useEffect(() => {
-  axios.get(`http://localhost:8080/api/v1/productSearch?keyword=${search}&pageNo=${pageNo}&pageSize=${pageSize}`)
-    .then((item) => {
+  // axios.get(`http://localhost:8080/api/v1/productSearch?keyword=${search}&pageNo=${pageNo}&pageSize=${pageSize}`)
+   axios(config).then((item) => {
       setProduct(item.data);
       console.log(item)
     });
-}, [search,pageNo,pageSize]);
+}, [search,pageNo,pageSize,filter]);
 
 
 useEffect(() => {
-  axios.get(`http://localhost:8080/api/v1/productSearchByKey?keyword=${search}`)
+ // axios.get(`http://localhost:8080/api/v1/productSearchByKey?keyword=${search}`)
+ axios(config1)
      .then((item) => {
        setTotal(Math.ceil(item.data.length/pageSize));
      });
- }, [search]);
+ }, [search,filter]);
 
 
 
   useEffect(() => {
-    getCate().then((res) => {
+    axios(config2).then((res) => {
       setCategories(res.data);
       console.log(res.data);
     });
@@ -75,7 +117,11 @@ useEffect(() => {
         ...filterOptions,
         { value: item.id, label: item.name },
       ]);
+      // if(setFilterOptionCategory(filterCategory)==0){
+      //   setPageNo(1);
+      // }
     });
+
   }, [categories]);
 
   const addCategory = () => {
@@ -87,17 +133,22 @@ useEffect(() => {
   };
 
 
-  const changeCate = (event) => {
-    // setCategory_Id(event.value);
-   Filter(event.value).then((item) => {
-      setProduct(item.data);
-      console.log(event.value)
-    });
-   
-  };
 
   const changeSearch = (event) => {
     setSearch(event.target.value)
+    setPageNo(1)
+  };
+  const changeFilter =(event)=>{
+    setFilter(event.value)
+    setPageNo(1);
+  
+    console.log(event.value)
+  }
+  const cancel = (e) => {
+    setOption("aaaaaaa")
+    setFilter("");
+    setSearch("");
+    setPageNo(1);
   };
 
   return (
@@ -105,29 +156,35 @@ useEffect(() => {
     <>
       <div>
       <CRow>
-          <CCol xs="7" className="px-0" sm="7">
-            <CFormGroup >
+          <CCol xs="12" className="px-0" sm="7">
+            <CRow>
+              <CCol xs="8">
+              <CFormGroup >
               <CInput
                 name="name"
-                placeholder="tìm kiếm mã, tên"
+                placeholder="Tìm kiếm theo tên sản phẩm, mã sản phẩm"
+                value={search}
                 onChange={changeSearch}
               />  
-          
-               
+
             </CFormGroup>
+
+              </CCol>
+              <CCol xs="4">
+              <Select placeholder="Loại danh mục"  options={filterCategory} onChange={changeFilter} />  
+              </CCol>
+            </CRow>
+         
+          </CCol>   
+          <CCol className="px-0 d-flex justify-content-end" xs="12" sm="5">
+          <CCol xs="6"  sm="4" >
+          <CButton onClick={addCategory} style={{background:"#0089ff"}}>
+           Tạo sản phẩm
+            </CButton>
           </CCol>
-          <CCol xs="3"  sm="3">
-         <Select placeholder="loại sản phẩm" options={filterCategory} onChange={changeCate} />  
           </CCol>
         </CRow>
         <CRow>
-        <CCol xs="1">
-          <CFormGroup row>
-          <CButton block color="success" onClick={addCategory}>
-              Tạo
-            </CButton>
-          </CFormGroup>
-          </CCol>
         </CRow>
 
         <div className="row">
@@ -148,12 +205,12 @@ useEffect(() => {
             {/* {currentPosts.map((item)  */}
               {product.map((item) => (
               
-                 <tr key={item.id} onClick={() => updateCategory(item.id)} className="lits">
+                 <tr key={item.id} style={{ cursor: "pointer" }} onClick={() => updateCategory(item.id)} className="lits">
              
                    <td>
                     {item.code}
                   </td>
-                <td><img src={item.image} width="40px" height="40px" />  </td>
+                <td><img src={`${process.env.PUBLIC_URL}/image/${item.image}`} width="40px" height="40px" />  </td>
                   <td style={{color:"blue"}} > {item.name}</td>
                   <td>{item.categoryId}</td>
                   <td>{item.brandID}</td>
@@ -163,8 +220,7 @@ useEffect(() => {
                   </td>
 
                 </tr>
-              
-               
+
               ))}
             </tbody>
           </table>

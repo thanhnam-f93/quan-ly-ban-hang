@@ -1,9 +1,13 @@
 package com.sapo.quanlybanhang.dto;
 
+import com.sapo.quanlybanhang.entity.FeedBackEntity;
 import com.sapo.quanlybanhang.entity.RoleEntity;
 import lombok.Data;
+
 import javax.validation.constraints.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 @Data
 public class StaffDto {
@@ -13,7 +17,7 @@ public class StaffDto {
     @NotBlank(message = "FullName is mandatory")
     private String fullName;
 
-//    @NotBlank(message = "PassWord is mandatory")
+    //    @NotBlank(message = "PassWord is mandatory")
 //    @Size(min = 6, max = 30, message = "Password must be 6-20 characters ")
     private String passWord;
 
@@ -39,22 +43,24 @@ public class StaffDto {
 
     private String status;
 
-//    @NotNull(message = "CreatedDate is mandatory")
+    //    @NotNull(message = "CreatedDate is mandatory")
 //    @Past(message = "Date input is invalid for created Date.")
     private Date createdDate;
 
-//    @Past(message = "Date input is invalid for modified Date.")
+    //    @Past(message = "Date input is invalid for modified Date.")
     private Date modifiedDate;
 
-//    @NotBlank(message = "CreateBy is mandatory")
+    //    @NotBlank(message = "CreateBy is mandatory")
     private String createBy;
 
     private String modifiedBy;
 
     private List<Integer> roleId;
 
-    private  List<String> roleName= new ArrayList();
+    private List<String> roleName = new ArrayList();
 
     private List<RoleEntity> roleEntity = new ArrayList<>();
+
+    private List<FeedBackEntity> feedBackEntities = new ArrayList<>();
 
 }

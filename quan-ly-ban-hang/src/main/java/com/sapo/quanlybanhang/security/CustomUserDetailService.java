@@ -24,12 +24,14 @@ import java.util.Set;
 public class CustomUserDetailService implements UserDetailsService {
     @Autowired
     private StaffRepository staffRepository;
+
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
         StaffEntity staffEntity = staffRepository.findOneByPhone(s);
-        if(staffEntity==null){
-            throw  new UsernameNotFoundException("user not found");
+        if (staffEntity == null) {
+            throw new UsernameNotFoundException("user not found");
         }
+
             List<GrantedAuthority> authorities = new ArrayList();
 //        for(RoleEntity item : staffEntity.getRoles()){
 //            authorities.add(new SimpleGrantedAuthority(item.getCode()));
@@ -38,12 +40,15 @@ public class CustomUserDetailService implements UserDetailsService {
             for(PermissionEntity itemPermissons : itemRole.getPermissions()){
                 authorities.add(new SimpleGrantedAuthority(itemPermissons.getCode()));
             }
+
         }
 
         MyUser myUser = new MyUser(staffEntity.getPhone(), staffEntity.getPassWord(),
                 true, true, true, true, authorities);
         myUser.setFullName(staffEntity.getFullName());
+
         myUser.setCode(authorities);
+        myUser.setId(staffEntity.getId());
         return myUser;
 
     }

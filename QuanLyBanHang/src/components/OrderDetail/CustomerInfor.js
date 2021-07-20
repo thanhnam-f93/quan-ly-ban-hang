@@ -1,4 +1,6 @@
 import React from 'react';
+import { reactLocalStorage } from 'reactjs-localstorage';
+import "./scss/CustomerInfor.scss"
 
 const CustomerInfor = (props) => {
     var list = props.list;

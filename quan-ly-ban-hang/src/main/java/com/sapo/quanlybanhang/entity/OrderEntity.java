@@ -24,6 +24,11 @@ public class OrderEntity {
     @Column(name = "code")
     private String code;
 
+    @PostPersist
+    public void generateCode(){
+        code = ("SAPO-000-"+id);
+    }
+
     @Column(name ="created_date")
     private Timestamp createdDate;
 
@@ -55,6 +60,9 @@ public class OrderEntity {
 
     @OneToMany(mappedBy = "orderEntity", cascade = CascadeType.ALL)
     private List<BillEntity> billEntities = new ArrayList();
+
+    @Column(name = "discount")
+    private Long discount;
 
 
 }

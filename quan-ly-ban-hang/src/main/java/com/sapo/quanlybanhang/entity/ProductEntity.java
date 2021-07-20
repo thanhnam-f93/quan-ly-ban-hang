@@ -1,6 +1,9 @@
 package com.sapo.quanlybanhang.entity;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -40,25 +43,25 @@ public class ProductEntity {
     private String size;
 
     @Column(name = "price")
-    private float price;
+    private Long price;
 
     @Column(name = "decription")
     private String description;
-    @Column(name ="created_date")
+    @Column(name = "created_date")
     @CreationTimestamp
     private Date createdDate;
 
 
-    @Column(name ="modified_date")
+    @Column(name = "modified_date")
     @UpdateTimestamp
     private Date modifiedDate;
 
-    @Column(name ="modified_by")
+    @Column(name = "modified_by")
     private String modifiedBy;
 
-    @Column(name ="created_by")
+    @Column(name = "created_by")
     private String createdBy;
-    @Column(name ="state")
+    @Column(name = "state")
     private String state;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -78,6 +81,6 @@ public class ProductEntity {
 
     @OneToMany(mappedBy = "productBill", cascade = CascadeType.ALL)
     private Collection<BillDetailEntity> billDetailEntities;
-    
+
 
 }

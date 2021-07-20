@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "bills")
+@Table(name = "return_orders")
 @Data
 public class BillEntity {
    @Id
@@ -17,6 +17,11 @@ public class BillEntity {
 
    @Column(name = "code")
     private String code;
+
+    @PostPersist
+    public void generateCode(){
+        code = ("RSAPO-000-"+id);
+    }
 
    @Column(name = "modified_date")
     private Timestamp modifiedDate;
