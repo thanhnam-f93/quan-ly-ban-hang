@@ -50,8 +50,9 @@ function App(){
          {jwt == null?
         (<Fragment><Redirect from="*" to="/login" />
          <Route exact path="/login" name="Login Page" render={props => <Login {...props}/>} />
+         
          </Fragment>)
-         : ( <Route path="/" name="Home" render={props => <TheLayout {...props}/>} />)}
+         : ( <Route path="/" name="Home" render={props => <TheLayout {...props}/>} /> )}
           </JwtContext.Provider>
         </Switch>
       </React.Suspense>

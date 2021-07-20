@@ -19,8 +19,11 @@ import java.sql.Timestamp;
 @Component
 public class JwtProvider {
     private Logger logger = LoggerFactory.getLogger(JwtProvider.class);
+
+    /** * Tạo ra token từ chuỗi authentication    */
     public String generateJwtToken(Authentication auth) {
         MyUser user = (MyUser) auth.getPrincipal();
+        /**  Mã hóa token   */
         return Jwts.builder()
                 .setSubject(user.getUsername())
                 .setIssuedAt(new Timestamp(System.currentTimeMillis()))
@@ -29,6 +32,7 @@ public class JwtProvider {
                 .compact();
     }
 
+    /**  Lấy Username từ token đã được mã hóa   */
     public String getUserNameFormJwtToken(String token) {
 
         try {
@@ -44,6 +48,7 @@ public class JwtProvider {
 
     }
 
+    /**  Check token   */
     public boolean validateJwtToken(String authToken) {
         try {
             Jwts.parser().setSigningKey(JwtConstant.SECRET).parseClaimsJws(authToken);

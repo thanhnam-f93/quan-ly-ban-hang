@@ -1,10 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.24, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.21, for Win64 (x86_64)
 --
--- Host: localhost    Database: quan_ly
+-- Host: localhost    Database: manage_store
 -- ------------------------------------------------------
 -- Server version	8.0.21
-
-use manage_store;
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -270,6 +268,31 @@ INSERT INTO `orders` VALUES (1,'phuc12',1,1,'Nguyễn Văn a','2021-02-02','202
 UNLOCK TABLES;
 
 --
+-- Table structure for table `permissions`
+--
+
+DROP TABLE IF EXISTS `permissions`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `permissions` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `code` varchar(45) COLLATE utf8_bin DEFAULT NULL,
+  `name` varchar(45) COLLATE utf8_bin DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `permissions`
+--
+
+LOCK TABLES `permissions` WRITE;
+/*!40000 ALTER TABLE `permissions` DISABLE KEYS */;
+INSERT INTO `permissions` VALUES (1,'VIEW_STAFF','Xem nhân viên'),(2,'CREATE_STAFF','Tạo nhân viên'),(3,'UPDATE_STAFF','Cập nhật nhân viên'),(4,'SEARCH_STAFF','Tìm kiếm nhân viên'),(5,'VIEW_PRODUCT','Xem sản phẩm'),(6,'CREATE_PRODUCT','Tạo sản phẩm'),(7,'UPDATE_PRODUCT','Cập nhật sản phẩm'),(8,'DELETE_PRODUCT','Xóa sản phẩm'),(9,'SEARCH_PRODUCT','Tìm kiếm sản phẩm'),(10,'FILTER_PRODUCT','Lọc sản phẩm'),(11,'VIEW_CUSTOMER','Xem khách hàng'),(12,'CREATE_CUSTOMER','Tạo khách hàng'),(13,'UPDATE_CUSTOMER','Cập nhật khách hàng'),(14,'DELETE_CUSTOMER','Xóa khách hàng'),(15,'SEARCH_CUSTOMER','Tìm kiếm khách hàng'),(16,'FILTER_CUSTOMER','Lọc khách hàng'),(17,'VIEW_ORDER','Xem hóa đơn'),(18,'CREATE_ORDER','Tạo hóa đơn'),(19,'SEARCH_ORDER','Tìm kiếm hóa đơn'),(20,'FILTER_ORDER','Lọc hóa đơn'),(21,'VIEW_STATISTICAL','Xem báo cáo'),(22,'VIEW_ROLE','Xem vai trò'),(23,'CREATE_ROLE','Tạo vai trò'),(24,'UPDATE_ROLE','Cập nhật vai trò');
+/*!40000 ALTER TABLE `permissions` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `products`
 --
 
@@ -320,6 +343,33 @@ INSERT INTO `products` VALUES (1,'#A','Áo khoác Chino thời thượng SID5670
 UNLOCK TABLES;
 
 --
+-- Table structure for table `role_permission`
+--
+
+DROP TABLE IF EXISTS `role_permission`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `role_permission` (
+  `role_id` int NOT NULL,
+  `permission_id` int NOT NULL,
+  PRIMARY KEY (`role_id`,`permission_id`),
+  KEY `fk_permission_idx` (`permission_id`),
+  CONSTRAINT `fk_permission` FOREIGN KEY (`permission_id`) REFERENCES `permissions` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `fk_role` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `role_permission`
+--
+
+LOCK TABLES `role_permission` WRITE;
+/*!40000 ALTER TABLE `role_permission` DISABLE KEYS */;
+INSERT INTO `role_permission` VALUES (1,1),(3,1),(4,1),(17,1),(18,1),(19,1),(24,1),(25,1),(26,1),(27,1),(28,1),(29,1),(2,2),(3,2),(4,2),(18,2),(19,2),(24,2),(25,2),(26,2),(27,2),(28,2),(3,3),(19,3),(24,3),(28,3),(28,5),(28,6),(28,7),(28,12),(28,13),(28,14),(28,15),(28,18),(28,19),(28,21);
+/*!40000 ALTER TABLE `role_permission` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `roles`
 --
 
@@ -330,8 +380,13 @@ CREATE TABLE `roles` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(45) DEFAULT NULL,
   `code` varchar(45) DEFAULT NULL,
+  `created_date` date DEFAULT NULL,
+  `created_by` varchar(45) DEFAULT NULL,
+  `modified_date` date DEFAULT NULL,
+  `modified_by` varchar(45) DEFAULT NULL,
+  `notes` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -340,7 +395,7 @@ CREATE TABLE `roles` (
 
 LOCK TABLES `roles` WRITE;
 /*!40000 ALTER TABLE `roles` DISABLE KEYS */;
-INSERT INTO `roles` VALUES (1,'nhân viên bán hàng','STAFF_SALE'),(2,'nhân viên chăm sóc khách hàng','STAFF_CARE'),(3,'chủ cửa hàng','ADMIN');
+INSERT INTO `roles` VALUES (1,'nhân viên bán hàng','STAFF_SALE',NULL,NULL,NULL,NULL,NULL),(2,'nhân viên chăm sóc khách hàng','STAFF_CARE',NULL,NULL,NULL,NULL,NULL),(3,'chủ cửa hàng','ADMIN',NULL,NULL,NULL,NULL,NULL),(4,'Nhân viên test',NULL,NULL,'chủ cửa hàng','2021-07-10','chủ cửa hàng','Có nhiệm vụ đi '),(5,'Nhan vien test 6',NULL,NULL,'chủ cửa hàng','2021-07-10','chủ cửa hàng','co nhiem vu test 3 nha ban hien'),(6,'Nhan vien test 5',NULL,NULL,'chủ cửa hàng','2021-07-10','chủ cửa hàng','test 5df'),(7,NULL,NULL,'2021-07-19','Ngyễn quang phúc',NULL,NULL,NULL),(8,NULL,NULL,'2021-07-19','Ngyễn quang phúc',NULL,NULL,NULL),(9,'Nhan Vien A1',NULL,'2021-07-19','Ngyễn quang phúc',NULL,NULL,'Quyen view, creat product'),(10,'Nhan vien A2',NULL,'2021-07-19','Ngyễn quang phúc',NULL,NULL,'co quyen xem staff, tao staff'),(11,'Nhan Vien A3',NULL,'2021-07-19','Ngyễn quang phúc',NULL,NULL,'co quyen tao va xem staff'),(12,'Nhan Vien A5',NULL,'2021-07-19','Ngyễn quang phúc',NULL,NULL,'co quyen xem va tao staff'),(13,'Nhan Vien A6',NULL,'2021-07-19','Ngyễn quang phúc',NULL,NULL,'co quyen tao va xem staff'),(14,'Nhan vien A7',NULL,'2021-07-19','Ngyễn quang phúc',NULL,NULL,'co quyen tao va xem staff'),(15,'Nhan Vien A8',NULL,'2021-07-19','Ngyễn quang phúc',NULL,NULL,'co quyen'),(16,'Nhan vien A9',NULL,'2021-07-19','Ngyễn quang phúc',NULL,NULL,'c'),(17,'Nhan Vien B',NULL,'2021-07-19','Ngyễn quang phúc',NULL,NULL,'co'),(18,'Nhan vien B2',NULL,'2021-07-19','Ngyễn quang phúc',NULL,NULL,'co'),(19,'Nhan vien B2',NULL,'2021-07-19','Ngyễn quang phúc',NULL,NULL,'co'),(20,'Nhan vien B3',NULL,'2021-07-19','Ngyễn quang phúc',NULL,NULL,'co'),(21,'Nhan vien B3',NULL,'2021-07-19','Ngyễn quang phúc',NULL,NULL,'co'),(22,'Nhan vien B4',NULL,'2021-07-19','Ngyễn quang phúc',NULL,NULL,'co'),(23,'nhan vien B5',NULL,'2021-07-19','Ngyễn quang phúc',NULL,NULL,'co'),(24,'nhan vien B5',NULL,'2021-07-19','Ngyễn quang phúc',NULL,NULL,'co'),(25,'Nhan vien B7',NULL,'2021-07-19','Ngyễn quang phúc',NULL,NULL,'co'),(26,'Nhan vien B8',NULL,'2021-07-19','Ngyễn quang phúc',NULL,NULL,'co'),(27,'Nhan vien C',NULL,'2021-07-19','Tran Dinh Cong',NULL,NULL,'co'),(28,'Nhan vien C2',NULL,'2021-07-19','Tran Dinh Cong',NULL,NULL,'co'),(29,'Nhan vien D1',NULL,'2021-07-20','Tran Dinh Cong',NULL,NULL,'co');
 /*!40000 ALTER TABLE `roles` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -386,11 +441,10 @@ CREATE TABLE `staff` (
   `status` varchar(250) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
   `created_date` date DEFAULT NULL,
   `created_by` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
-  `modifed_by` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `modified_date` date DEFAULT NULL,
   `modified_by` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -399,7 +453,7 @@ CREATE TABLE `staff` (
 
 LOCK TABLES `staff` WRITE;
 /*!40000 ALTER TABLE `staff` DISABLE KEYS */;
-INSERT INTO `staff` VALUES (1,'Nguyễn Văn a','12345678','Hà Nội','A@gmail.com','123652458','2000-02-02','làm việc','2121-02-02','Admin','Admin',NULL,NULL),(2,'Nguyễn Văn B','12345678','Hà Nội','B@gmail.com','87654321','2000-02-02','làm việc','2021-02-02','Admin','Admin',NULL,NULL),(3,'Ngyễn quang phúc','$2a$10$DYrVLl77vG3V9s3PqCYZUeEi9VBFsVzmCt.1MJTf3V3DpdlaayY3q','Hà Nội','admin@gmail.com','123','2000-02-02','chủ','2020-02-02','Admin','Admin',NULL,NULL);
+INSERT INTO `staff` VALUES (1,'Nguyễn Văn a',NULL,'Hà Nội','A@gmail.com','0376655733','2000-01-31','làm việc',NULL,'Admin','2021-07-08',NULL),(2,'Nguyễn Văn Binh3',NULL,'Hà Nội','B@gmail.com','0376655733','2000-01-28','làm việc',NULL,'Admin','2021-07-14','Nguyen Van Binh 4'),(3,'Ngyễn quang phúc','$2a$10$d0rNNxckKUpNDc7O06gIKOP2n0mp9o4IeVrgbB854iK9ld2DrDjGa','Hà Nội','admin@gmail.com','123','2000-02-02','chủ','2020-02-02','Admin',NULL,NULL),(4,'Tran Van Dong',NULL,'Ho Chi Minh','B@gmail.com','0376655733','1998-09-06','Đang làm việc',NULL,'chủ cửa hàng','2021-07-08',NULL),(5,'Tran Van AiV',NULL,'Hà Nội','A@gmail.com','0376655733','1999-04-02','Đang làm việc',NULL,'chủ cửa hàng','2021-07-08',NULL),(6,'Tran Van BC',NULL,'Hà Nội ve','AB@gmail.com','0376655735','1996-04-23','Đang làm việc nen',NULL,'chủ cửa hàng','2021-07-08',NULL),(7,'Tran Van C','12345678','Ho Chi Minh','B@gmail.com','0376655733','1997-05-03','Đang làm việc','2021-07-08','chủ cửa hàng',NULL,NULL),(8,'Tran Van DCV',NULL,'Hà Nội V','A@gmail.com','0376655734','1998-10-03','Đang làm việc',NULL,'chủ cửa hàng','2021-07-08','chủ cửa hàng'),(9,'Tran Van E','12345678','Hà Nội ','A@gmail.com','0376655734','1998-07-02','Đang làm việc','2021-07-08','chủ cửa hàng',NULL,NULL),(10,'Tran Van F','12345678','Hà Nội','A@gmail.com','0376655735','1998-05-03','Đang làm việc','2021-07-08','chủ cửa hàng',NULL,NULL),(11,'Tran Van G','12345678','Hà Nội vy','ABV@gmail.com','0376655734','1992-04-01','Đang làm việc',NULL,'chủ cửa hàng','2021-07-08','chủ cửa hàng'),(12,'Tran Van G1','12345678','Hà Nội','A@gmail.com','0376655735','2002-07-02','Đang làm việc',NULL,'chủ cửa hàng','2021-07-08','chủ cửa hàng'),(13,'Tran Van G5','12345678','Hà Nội','A@gmail.com','0376655734','2001-07-21','Đang làm việc','2021-07-08','chủ cửa hàng',NULL,NULL),(14,'Tran Van G6','12345678','Hà Nội ve roi troi nha','AB@gmail.com','0376655735','2002-09-25','Đa nghi viec',NULL,'chủ cửa hàng','2021-07-08','chủ cửa hàng'),(15,'Tran Van G7','12345678','Hà Nội','AB@gmail.com','0376655734','2001-10-03','Đang làm việc','2021-07-08','chủ cửa hàng',NULL,NULL),(16,'Ho Van Ban','12345678','Can Tho','chieunayvangbongem@gmail.com','0376655735','2001-05-24','Đang làm việc','2021-07-09','chủ cửa hàng',NULL,NULL),(17,'Hồ anh 11','1234567890','Hà Nội','hoanh@gmail.com','0376655733','2003-02-21','Đang làm việc','2021-07-10','chủ cửa hàng',NULL,NULL),(18,'Ho Anh Binh','12345678','Hà Nộisdfsd','AB@gmail.comdsfdsf','0376655734','1999-03-20','Đang làm việc','2021-07-10','chủ cửa hàng',NULL,NULL),(19,'Ho Anh Binh 2','12345678','Hà Nội','AB@gmail.com','0376655735','1999-04-23','Đang làm việc','2021-07-10','chủ cửa hàng',NULL,NULL),(20,'Nguyen Thanh Tam','12345678','Hà Nội','A@gmail.com','0376655734','1998-07-20','Đang làm việc','2021-07-10','chủ cửa hàng',NULL,NULL),(21,'Ho Anh Binh 3','12345678','Hà Nội','AB@gmail.com','0376655734','2007-02-21','Đang làm việc','2021-07-10','chủ cửa hàng',NULL,NULL),(22,'Tran Van Khoi Hai','12345678','Hà Nội ve','abcd@gmail.com','0376655735','2009-06-22','Da nghi viec',NULL,'chủ cửa hàng','2021-07-10','chủ cửa hàng'),(23,'Tran Van Thao','12345678','Hà Nội','AB@gmail.com','0376655734','2004-09-23','Đang làm việc','2021-07-10','chủ cửa hàng',NULL,NULL),(24,'Tran Van G9','12345678','Hà Nội','AB@gmail.com','0376655735','2002-10-18','Đang làm việc','2021-07-10','chủ cửa hàng','2021-07-12','chủ cửa hàng'),(25,'Nguyễn Văn Binh 2','12345678','Hà Nội','AB@gmail.com','0376655736','2000-01-10','Đang làm việc','2021-07-13','Ngyễn quang phúc',NULL,NULL),(26,'Nguyen Van Binh 4','$2a$10$bv/H0rrKvl1chTJySyf4l.ojSCbDopWzfrRHGD1gEPTyvAAoZ91Pu','Hà Nội','A@gmail.com','0376655737','2002-03-21','Đang làm việc','2021-07-13','Ngyễn quang phúc',NULL,NULL),(27,'Nguyen Van Binh 5','$2a$10$JFZhERTTr0hQ0cJcAVchLuZZX/rAHaQBOsC2MFL0A4DJoDRDrcNu6','Hà Nội','ABC@gmail.com','0376655739','1998-04-17','Đang làm việc','2021-07-13','Nguyen Van Binh 4',NULL,NULL),(28,'Ho Anh Binh Năm','$2a$10$CKKIKA0XOIbPWjaFMg0DRuEWforX77IHDtkNdrcwH9Jc4RtF4azzq','Hà Nội','AB@gmail.com','0376655741','2007-02-19','Đang làm việc',NULL,NULL,NULL,NULL),(29,'Nguyen Van Tran','$2a$10$.CCQVNhQjBuWY2FfVtFpGe4aZJF2.prPq0MLRJzPzH2Mr/jAMGkC6','Hà Nội','ABC@gmail.com','0376655742','1998-04-16',NULL,NULL,NULL,NULL,NULL),(30,'Nguyen Van Tran 2','$2a$10$zPEq3WvvYhnlgeaUUWkX9uvTKUjHpU3kDVoP9henj1M5kpzW1dWOy','Hà Nội','ABC@gmail.com','0376655743','1998-04-16',NULL,NULL,NULL,NULL,NULL),(31,'Ho Dinh Cong ','$2a$10$pAa1qEWNMkVOcN.aM8fv/e3X1cR77BD7tvktXUJn4DiwtfHjrWNb.','Hà Nội','AB@gmail.com','0376655744','2002-05-21','Đang làm việc','2021-07-19','Ngyễn quang phúc',NULL,NULL),(32,'Ho Dinh Trang','$2a$10$kzeCMThF6pkI3g7NC.0h0.rbbLrUKajHGd17rmVszq1pm2WyaeHI2','Hà Nội','AB@gmail.com','0376655745','2002-04-19','Đang làm việc','2021-07-19','Ngyễn quang phúc',NULL,NULL),(33,'Ho Dinh Nam','$2a$10$uwjPNrWC1F5kVEJArV8BaO/mZ3iyUBGBYjymYw.WeFT9cM/ddwIba','Hà Nội','AB@gmail.com','0376655746','2001-03-22','Đang làm việc','2021-07-19','Ngyễn quang phúc',NULL,NULL),(34,'Tran Dinh Cong','$2a$10$aH4mDbiM8a1P6Q8xHMlQQ.NPM5hs91rZTwBXIargRYKTwyNFaE7qm','Hà Nội','AB@gmail.com','0376655747','2001-02-19','Đang làm việc','2021-07-19','Ngyễn quang phúc',NULL,NULL),(35,'Tran Van Minh','$2a$10$cXuub1gBdY1f6oIx3rMxWueOE1Q/5UgCz7QmreUUak1JWjykcqVge','Hà Nội','AB@gmail.com','0376655748','2003-12-19','Đang làm việc','2021-07-19','Tran Dinh Cong',NULL,NULL),(36,'Tran Van BC','$2a$10$uIcqVxRR6ndcRDkU9Xhk7OmZ.5WsB5f.CnnAEqMQcz6rBbRVHfRVe','Hà Nội','AB@gmail.com','0376655750','2021-07-02','Đang làm việc','2021-07-20','Tran Dinh Cong',NULL,NULL),(37,'Tran Van B','$2a$10$CpY0gsA6nb5Hk9Ukg2V26eu9./3hveeUfM18Cd26JgcK8Roso6GJK','Hà Nội','AB@gmail.com','0376655751','2002-07-14','Đang làm việc','2021-07-20','Tran Dinh Cong',NULL,NULL),(38,'Tran Van H1','$2a$10$op6bn31H08mLFOXm0ElaPuqn.mim0pgw8WeIeFlHcIoJ5d1MdGfSu','Hà Nội','AB@gmail.com','0376655752','2005-01-17','Đang làm việc','2021-07-20','Tran Dinh Cong',NULL,NULL),(39,'Tran Van K1','$2a$10$/QqZhtSf90wRM3XtW5duQeLe0nbnNZ4iF1SiJNKTtzvBOvtiswyMa','Hà Nội','AB@gmail.com','0376655753','1999-11-20','Đang làm việc','2021-07-20','Tran Dinh Cong',NULL,NULL);
 /*!40000 ALTER TABLE `staff` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -427,7 +481,7 @@ CREATE TABLE `staff_role` (
 
 LOCK TABLES `staff_role` WRITE;
 /*!40000 ALTER TABLE `staff_role` DISABLE KEYS */;
-INSERT INTO `staff_role` VALUES (1,1),(2,2),(3,3);
+INSERT INTO `staff_role` VALUES (1,1),(2,2),(3,3),(4,1),(5,1),(6,1),(7,1),(8,2),(10,1),(11,2),(12,1),(13,1),(14,2),(15,1),(16,1),(17,1),(18,1),(19,1),(20,1),(21,1),(22,1),(23,2),(24,1),(25,2),(26,2),(27,1),(28,1),(29,2),(30,2),(31,9),(32,10),(33,11),(34,26),(35,2),(36,1),(37,1),(38,1),(39,1);
 /*!40000 ALTER TABLE `staff_role` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -472,7 +526,5 @@ UNLOCK TABLES;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
--- Dump completed on 2021-07-08 10:43:19
--- ----------------------------------------------------------Update By Thanh Nam----------------------------------------------------------------------
 
--- Dump completed on 2021-07-08 10:43:19
+-- Dump completed on 2021-07-20 17:03:23

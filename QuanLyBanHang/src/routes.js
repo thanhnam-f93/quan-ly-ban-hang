@@ -9,6 +9,7 @@ import Saler from './components/sale/Saler';
 import Setting from './components/Setting/Setting';
 import AddStaff from './components/Staff/AddStaff/AddStaff';
 import StaffDetail from './components/Staff/StaffDetail/StaffDetail';
+import PageError from './components/PageError/PageError';
 import ReturnOrder from './components/ReturnOrder/ReturnOrder';
 import ReturnOrderDetail from './components/ReturnOrderDetail/ReturnOrderDetail';
 
@@ -69,6 +70,8 @@ const ListSupplier = React.lazy(() => import('./components/ListSupplier/ListSupp
 const UpdateSupplier = React.lazy(() => import('./components/ListSupplier/UpdateSupplier'));
 const CreateSupplier = React.lazy(() => import('./components/ListSupplier/CreateSupplier'));
 const Order = React.lazy(() => import('./components/Order/Order'));
+
+// const PageError = React.lazy(() => import('./components/PageError/PageError'));
 /*================== The End code of Team - Quản lý bán hàng =================*/
 
 const routes = [
@@ -224,9 +227,9 @@ const routes = [
   { path: '/settings/roles/new-role', exact: true,  name: 'Thêm mới', component: AddRole },
   { path: '/settings/roles/:id', exact: true,  name: 'Chỉnh sửa', component: RoleDetail },
   { path: '/update-supplier/:id', exact: true,  name: 'update', component: UpdateSupplier },
-  { path: '/add-supplier', exact: true,  name: 'add', component: CreateSupplier }
+  { path: '/add-supplier', exact: true,  name: 'add', component: CreateSupplier },
  
-
+  { path: '/error', exact: true,  name: 'Lỗi', component: PageError }
 /*================== The End code of Team - Quản lý bán hàng =================*/
 ];
 

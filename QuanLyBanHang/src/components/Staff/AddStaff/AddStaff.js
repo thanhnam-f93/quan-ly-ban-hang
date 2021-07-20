@@ -12,19 +12,27 @@ import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import {useForm} from 'react-hook-form';
 import { callApi } from 'src/apis/Apis';
+import swal from 'sweetalert';
 
 const AddStaff = () => {
 
   /* Code */
+  let history = useHistory();
+
   const [roles, setRoles] = useState([]);
 
   useEffect(() => {
-    callApi('get', 'roles')
+    callApi('get', 'listRoles')
       .then(response => { setRoles(response.data) })
-      .catch(error => console.log('error'))
+      .catch(error => {
+        console.log('error', error.response.status)
+        if(error.response.data.status == 403){
+          history.push("/error");
+        }
+      }
+        )
   }, []);
 
-  let history = useHistory();
 
   const [staff, setStaff] = useState({ createdDate: new Date(), createBy: localStorage.getItem("name"), roleId: [1], status: "Đang làm việc" })
 
@@ -52,11 +60,25 @@ const AddStaff = () => {
     data: data
   };
 
+const [errorCheckUnique, setErrorCheckUnique] = useState();
   const createStaff = () => {
     axios(config)
-      .then(response => { history.goBack() })
-      .catch(error => { console.log(error) })
+      .then(response => { 
+        swal({
+          title: "Tốt lắm!",
+          text: "Thêm nhân viên thành công!",
+          icon: "success",
+          timer: 2000
+        });
+        history.goBack() })
+      .catch(function (error) {
+        if(error.response){
+          setErrorCheckUnique(error.response.data);
+          console.log("ahihi:",error.response.data)
+        }
+      });
   }
+  console.log("binh kiem loi ", errorCheckUnique)
   /* End - Code */
 
 /* Validation */
@@ -150,6 +172,7 @@ const tagViewError = (messageError) => {
                   />
                   {errors.phone?.type === 'required' && tagViewError("Số điện thoại không được bỏ trống")}
                   {errors.phone?.type === 'pattern' && tagViewError("Số điện thoại không đúng định dạng")}
+                  {errorCheckUnique == null? "" : tagViewError("Số điện thoại không được trùng")}
                 </CFormGroup>
 
                 <CFormGroup>
@@ -191,7 +214,7 @@ const tagViewError = (messageError) => {
           <button
             className="btn btn-success"
             onClick={handleSubmit(createStaff)}
-            style={{ marginLeft: "10px", padding: "7px 20px" }}
+            style={{ marginLeft: "10px", padding: "7px 20px", backgroundColor: "#0089ff" }}
           >
             Thêm
           </button>

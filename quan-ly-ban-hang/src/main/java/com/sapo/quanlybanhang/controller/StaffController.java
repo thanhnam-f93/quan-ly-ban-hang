@@ -12,6 +12,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
@@ -48,10 +49,11 @@ public class StaffController {
 //    }
 
     //Phân trang danh sách staffs
+    @PreAuthorize("hasAuthority('VIEW_STAFF')")
     @GetMapping("/staffs")
     Page<StaffDto> getStaff(
             @RequestParam(name = "page", defaultValue = "0") Integer page,
-            @RequestParam(name = "limit", defaultValue = "5") Integer limit,
+            @RequestParam(name = "limit", defaultValue = "7") Integer limit,
             @RequestParam(name = "sortBy", defaultValue = "id") String sortBy
             ){
         PageRequest pageResult = PageRequest.of(page,limit,Sort.by(sortBy).descending());
@@ -60,6 +62,7 @@ public class StaffController {
     }
 
     //Lấy 1 staff theo id
+    @PreAuthorize("hasAuthority('VIEW_STAFF')")
     @GetMapping("/staffs/{id}")
     public ResponseEntity getStaffById(@PathVariable("id") int id){
         StaffDto staffDto = staffService.findStaffById(id);
@@ -73,6 +76,7 @@ public class StaffController {
 //        return new ResponseEntity(dto, HttpStatus.OK);
 //    }
 
+    @PreAuthorize("hasAuthority('CREATE_STAFF')")
     @PostMapping("/staffs")
     public ResponseEntity createStaff(@Valid @RequestBody StaffDto staffDto) {
         if (staffService.existsByPhone(staffDto.getPhone())) {
@@ -87,6 +91,7 @@ public class StaffController {
     }
 
     //Cập nhật 1 Staff
+    @PreAuthorize("hasAuthority('UPDATE_STAFF')")
     @PutMapping("/staffs/{id}")
     public ResponseEntity updateStaff(@PathVariable ("id") int id, @Valid @RequestBody StaffDto staffDto){
         StaffDto dto = staffService.updateStaff(id, staffDto);
@@ -95,6 +100,7 @@ public class StaffController {
 
 
     //Tìm kiếm staff theo tên
+    @PreAuthorize("hasAuthority('SEARCH_STAFF')")
     @GetMapping("/staffs/search")
     public Page<StaffDto>  getAllStaffsByName(
             @RequestParam(name = "name",required = true) String name,

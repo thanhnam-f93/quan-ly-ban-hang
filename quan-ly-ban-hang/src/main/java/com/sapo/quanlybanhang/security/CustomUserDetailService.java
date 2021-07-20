@@ -3,6 +3,7 @@ package com.sapo.quanlybanhang.security;
 import com.sapo.quanlybanhang.dto.MyUser;
 import com.sapo.quanlybanhang.dto.RoleDto;
 import com.sapo.quanlybanhang.dto.StaffDto;
+import com.sapo.quanlybanhang.entity.PermissionEntity;
 import com.sapo.quanlybanhang.entity.RoleEntity;
 import com.sapo.quanlybanhang.entity.StaffEntity;
 import com.sapo.quanlybanhang.repository.StaffRepository;
@@ -30,12 +31,19 @@ public class CustomUserDetailService implements UserDetailsService {
             throw  new UsernameNotFoundException("user not found");
         }
             List<GrantedAuthority> authorities = new ArrayList();
-        for(RoleEntity item : staffEntity.getRoles()){
-            authorities.add(new SimpleGrantedAuthority(item.getCode()));
+//        for(RoleEntity item : staffEntity.getRoles()){
+//            authorities.add(new SimpleGrantedAuthority(item.getCode()));
+//        }
+        for(RoleEntity itemRole : staffEntity.getRoles()){
+            for(PermissionEntity itemPermissons : itemRole.getPermissions()){
+                authorities.add(new SimpleGrantedAuthority(itemPermissons.getCode()));
+            }
         }
+
         MyUser myUser = new MyUser(staffEntity.getPhone(), staffEntity.getPassWord(),
                 true, true, true, true, authorities);
         myUser.setFullName(staffEntity.getFullName());
+        myUser.setCode(authorities);
         return myUser;
 
     }

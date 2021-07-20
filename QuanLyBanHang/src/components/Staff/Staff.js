@@ -2,13 +2,16 @@
 import React from 'react'
 import { useState, useEffect } from 'react';
 import StaffItem from './StaffItem/StaffItem';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import {
   CPagination,
 } from '@coreui/react'
 import { callApi } from 'src/apis/Apis';
 
+
 const Staff = () => {
+
+  let history = useHistory();
 
   console.log('anh nam 1');
   const [clickSearch, setClickSearch] = useState(0);
@@ -37,6 +40,7 @@ const searchStaffByName = () => {
     URL = `staffs/?page=${currentPage - 1}`
   }
 
+
   useEffect(() => {
     callApi('get', URL)
       .then(response => {
@@ -44,7 +48,13 @@ const searchStaffByName = () => {
         setTotalPages(response.data.totalPages);
         console.log("anh nam 2")
       })
-      .catch(error => console.log('error'))
+      .catch(error =>  {
+          console.log('error Bình kiểm', error.response.data.status);
+          if(error.response.data.status == 403){
+            history.push("/error");
+          }
+        }
+       )
   }, [currentPage, clickSearch]);
 
   return (
@@ -55,7 +65,7 @@ const searchStaffByName = () => {
         </div>
     
     {/* Search */}
-        <div style={{ marginLeft: "500px", marginRight: "10px" }}>
+        <div style={{ marginLeft: "517px", marginRight: "10px" }}>
                 <input onChange={getKeySearch} 
                     type="text" placeholder="Tìm kiếm theo tên" style={{ height: "34px", width: "289px", padding: "10px 15px 10px 15px", border: "none" }} />
                 <button onClick={searchStaffByName}
@@ -69,18 +79,12 @@ const searchStaffByName = () => {
         <div style={{ margin: "0px" }} >
           <Link to='/settings/staffs/new-staff'>
             <button
-              className="btn btn-primary"
+              className="btn btn-success"
               style={{ marginLeft: "10px", backgroundColor: "#0089ff", borderColor: "#0089ff" }}
             >
               Thêm mới nhân viên
             </button>
           </Link>
-          {/* <button
-            style={{ marginLeft: "10px" }}
-            className="btn btn-secondary"
-          >
-            Trợ giúp
-          </button> */}
         </div>
       </div>
       <hr />
