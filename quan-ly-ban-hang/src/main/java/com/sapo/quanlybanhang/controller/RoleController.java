@@ -7,13 +7,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
-<<<<<<< HEAD
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-=======
->>>>>>> 5ad64b351baefbc1005c39f6d27b0018211f5d79
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+
 
 import javax.validation.Valid;
 import java.util.List;
@@ -29,18 +26,11 @@ public class RoleController {
     }
 
     //Lấy danh sách roles
-<<<<<<< HEAD
     @PreAuthorize("hasAuthority('VIEW_STAFF')")
     @GetMapping("/listRoles")
     public ResponseEntity getAllRoles(){
      List<RoleDto> list = roleService.findAll();
      ResponseEntity responseEntity = new ResponseEntity<>(list , HttpStatus.OK);
-=======
-    @GetMapping("/roles")
-    public ResponseEntity getAllRoles() {
-        List<RoleDto> list = roleService.findAll();
-        ResponseEntity responseEntity = new ResponseEntity<>(list, HttpStatus.OK);
->>>>>>> 5ad64b351baefbc1005c39f6d27b0018211f5d79
         return responseEntity;
     }
 

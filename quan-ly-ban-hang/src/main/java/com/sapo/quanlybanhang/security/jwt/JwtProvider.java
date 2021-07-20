@@ -27,7 +27,6 @@ public class JwtProvider {
         /**  Mã hóa token   */
         return Jwts.builder()
                 .setSubject(user.getUsername())
-                .setSubject(String.valueOf(user.getId()))
                 .setIssuedAt(new Timestamp(System.currentTimeMillis()))
                 .setExpiration(new Timestamp(System.currentTimeMillis() + JwtConstant.EXPIRATON))
                 .signWith(SignatureAlgorithm.HS256, JwtConstant.SECRET)

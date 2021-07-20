@@ -21,11 +21,9 @@ public class MyUser extends User {
         return fullName;
     }
 
-    public int id;
     public void setFullName(String fullName) {
         this.fullName = fullName;
     }
-
 
     List<GrantedAuthority> code;
 
@@ -36,11 +34,5 @@ public class MyUser extends User {
     public void setCode(List<GrantedAuthority> code) {
         this.code = code;
     }
-    public void setId(int id){
-        this.id =id;
-    }
-    public int getId(){
-        return id;
 
-    }
 }

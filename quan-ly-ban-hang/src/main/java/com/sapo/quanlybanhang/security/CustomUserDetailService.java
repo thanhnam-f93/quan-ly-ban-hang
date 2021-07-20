@@ -48,7 +48,6 @@ public class CustomUserDetailService implements UserDetailsService {
         myUser.setFullName(staffEntity.getFullName());
 
         myUser.setCode(authorities);
-        myUser.setId(staffEntity.getId());
         return myUser;
 
     }
