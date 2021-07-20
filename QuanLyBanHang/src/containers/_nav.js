@@ -54,6 +54,12 @@ const _nav = [
     icon: "cil-people",
   },
   {
+    _tag: "CSidebarNavItem",
+    name: "Phản hồi",
+    to: "/feedback",
+    icon: "cil-people",
+  },
+  {
     _tag: "CSidebarNavDropdown",
     name: "Sản phẩm",
     route: "/base",

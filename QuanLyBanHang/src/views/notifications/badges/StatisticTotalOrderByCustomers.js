@@ -63,7 +63,7 @@ function StatisticTotalOrderByCustomers() {
   return (
     <div className="row">
       <CCard style={{}} className="col-12">
-        <CCardHeader className="font-weight-bolder center ">
+        <CCardHeader className="font-weight-bolder text-center">
           Thống kê Mua sắm Khách hàng
         </CCardHeader>
         <table
@@ -79,6 +79,7 @@ function StatisticTotalOrderByCustomers() {
               <th>Ngày bắt đầu</th>
               <th>Ngày gần nhất</th>
               <th>Tổng số đơn</th>
+              <th>Tổng số tiền</th>
             </tr>
           </thead>
           <tbody>
@@ -92,6 +93,7 @@ function StatisticTotalOrderByCustomers() {
                   <td>{item[4]}</td>
                   <td>{item[5]}</td>
                   <td>{item[6]}</td>
+                  <td>{item[7]}</td>
                 </tr>
               );
             })}

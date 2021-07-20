@@ -7,6 +7,7 @@ import {
   CFormGroup,
   CCardHeader,
   CPagination,
+  CRow,
 } from "@coreui/react";
 import { header } from "src/components/Customer/data";
 import axios from "axios";
@@ -44,7 +45,7 @@ function TotalCustomerByYear() {
       setDataTable(totalByYear.slice(0, 6));
       console.log("data page1:   ", dataTable);
     } else {
-      setDataTable(totalByYear.slice(7, 12));
+      setDataTable(totalByYear.slice(6, 12));
       console.log("data page2:   ", dataTable);
     }
   };
@@ -69,9 +70,9 @@ function TotalCustomerByYear() {
   }, []);
 
   return (
-    <div className="row">
-      <CCardGroup columns className="cols-2" style={{}}>
-        <CCard style={{}}>
+    <div>
+      <CRow>
+        <CCard className="col-lg-9">
           <CCardHeader className="text-center font-weight-bold">
             Lượng khách hàng mới theo tháng
           </CCardHeader>
@@ -88,7 +89,11 @@ function TotalCustomerByYear() {
             </option>
             {listYear.map((item) => {
               return (
-                <option value={item} key={item}>
+                <option
+                  value={item}
+                  key={item}
+                  //  defaultValue={{ value: "", label: "Tìm kiếm Giới tính" }}
+                >
                   {item}
                 </option>
               );
@@ -113,34 +118,38 @@ function TotalCustomerByYear() {
             />
           </CCardBody>
         </CCard>
-        <CCard style={{}}>
-          <table className=" table table-striped table-bordered">
-            <thead>
-              <tr>
-                <th>Tháng ... Năm {year}</th>
-                <th>Số lượng khách theo tháng </th>
+
+        <CCard className="col-lg-3">
+          <table
+            className="table table-striped text-center"
+            style={{ lineHeight: "1.2" }}
+          >
+            <thead style={{ border: "none !important" }}>
+              <tr className="row">
+                <th className="col-4">Tháng</th>
+                <th className="col-8">Số lượng</th>
               </tr>
             </thead>
-            <tbody>
-              {dataTable.map((item, index) => {
+            <tbody style={{ border: "none !important" }}>
+              {totalByYear.map((item, index) => {
                 return (
-                  <tr>
-                    <td> {index + 1}</td>
-                    <td>{item}</td>
+                  <tr className="row">
+                    <td className="col-4"> {index + 1}</td>
+                    <td className="col-8">{item}</td>
                   </tr>
                 );
               })}
             </tbody>
           </table>
-          <CPagination
+          {/* <CPagination
             align="center"
             addListClass="some-class"
             activePage={pageNo}
             pages={2}
             onActivePageChange={setPageno}
-          />
+          /> */}
         </CCard>
-      </CCardGroup>
+      </CRow>
     </div>
   );
 }

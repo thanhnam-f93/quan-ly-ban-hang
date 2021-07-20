@@ -200,9 +200,10 @@ function CustomerDetail(props) {
                 )}
               </CFormGroup>
               <CFormGroup>
-                <CLabel htmlFor="email">Email  <span style={{ color: "red", fontWeight: "bolder" }}>
-                     *
-                  </span></CLabel>
+                <CLabel htmlFor="email">
+                  Email{" "}
+                  <span style={{ color: "red", fontWeight: "bolder" }}>*</span>
+                </CLabel>
                 <CInput
                   // {...register("email", {
                   //   required: true,

@@ -92,6 +92,8 @@ public class CustomerEntity {
     @OneToMany(mappedBy = "customerBill")
     private List<BillEntity> billEntities = new ArrayList();
 
+//    @OneToMany(mappedBy = "customerEntity")
+//    private List<FeedBackEntity> feedBackEntities = new ArrayList();
 
     public CustomerEntity() {
 

@@ -115,11 +115,11 @@ function CustomerList() {
         <thead>
           <tr className="row">
             <th className="col-1">STT</th>
-            <th className="col-2">Name</th>
-            <th className="col-2">Phone</th>
-            <th className="col-1">Gender</th>
+            <th className="col-2">Tên</th>
+            <th className="col-2">Số điện thoai</th>
+            <th className="col-1">Giới tính</th>
             <th className="col-3">Email</th>
-            <th className="col-3">Address</th>
+            <th className="col-3">Địa chỉ</th>
           </tr>
         </thead>
         <tbody>

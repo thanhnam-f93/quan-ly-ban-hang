@@ -48,6 +48,7 @@ function CustomerNew() {
     for (const input of inputs) {
       input.value = "";
     }
+    document.getElementsByTagName("textarea")[0].value = "";
   }
   const Save = async () => {
     console.log("this is cate", customer);
@@ -236,14 +237,18 @@ function CustomerNew() {
                     Thông tin bổ sung về khách hàng
                   </CLabel>
                   <CTextarea
-                    // {...register("note", {
-                    //   maxLength: 250,
-                    // })}
+                    {...register("note", {
+                      required: true,
+                      maxLength: 250,
+                    })}
                     style={{ height: "100px" }}
                     name="note"
                     placeholder="Ghi chú thông tin Khách hàng"
                     onChange={handleChange}
                   />
+                  {errors?.note?.type === "required" && (
+                    <p>Không được để trống</p>
+                  )}
                   {errors?.note?.type === "maxLength" && (
                     <p>Độ dài không được vượt quá 250 kí tự</p>
                   )}

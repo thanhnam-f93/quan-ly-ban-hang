@@ -35,21 +35,20 @@ function TotalCustomerByMonth() {
   };
 
   function handleChangeYear() {
+    let item = document.getElementById("y");
 
-    let item = document.getElementById("year");
-    alert(item.value);
     setYear(item.value);
     console.log("this year: " + year);
   }
   function handleChangeMonth() {
     let item = document.getElementById("month");
-    alert(item.value);
+
     setMonth(item.value);
     console.log("this month: " + month);
   }
   const getDataTable = async () => {
-    setPageno(pageNo < 0 ? 1 : pageNo);
-    setDataTable(totalByMonth.slice(pageNo * 10, (pageNo + 1) * 10));
+    console.log("totalMonth", totalByMonth);
+    setDataTable(totalByMonth.slice((pageNo - 1) * 12, pageNo * 12));
     console.log("data page1:   ", dataTable);
   };
   const getDataByMonth = async () => {
@@ -82,102 +81,104 @@ function TotalCustomerByMonth() {
 
   console.log("list Year Binhf: ", listYear);
   return (
-    <CCardGroup columns className="cols-2">
-      <CCard>
-        <CCardHeader className="text-center font-weight-bold">
-          Lượng khách hàng mới theo tháng
-        </CCardHeader>
-        <CRow>
-          <div className="col-5 offset-1">
-            <select
-              id="year"
-              className="form-control"
-              placeholder="Chọn năm"
-              aria-label="Default select example"
-              onChange={handleChangeYear}
-            >
-              <option selected disabled>
-                Select year
-              </option>
-              {listYear.map((item) => {
+    <div>
+      <CRow>
+        <CCard className="col-9">
+          <CCardHeader className="text-center font-weight-bold">
+            Lượng khách hàng mới theo tháng
+          </CCardHeader>
+          <CRow>
+            <div className="col-5 offset-1">
+              <select
+                id="y"
+                className="form-control"
+                placeholder="Chọn năm"
+                aria-label="Default select example"
+                onChange={handleChangeYear}
+              >
+                <option selected disabled>
+                  Select year
+                </option>
+                {listYear.map((item) => {
+                  return (
+                    <option value={item} key={item}>
+                      {item}
+                    </option>
+                  );
+                })}
+              </select>
+            </div>
+            <div className="col-5">
+              <select
+                id="month"
+                className="form-control"
+                placeholder="Chọn tháng"
+                aria-label="Default select example"
+                onChange={handleChangeMonth}
+              >
+                <option selected disabled>
+                  Select month
+                </option>
+                {dataMonth.map((item) => {
+                  return (
+                    <option value={item} key={item}>
+                      {item}
+                    </option>
+                  );
+                })}
+              </select>
+            </div>
+          </CRow>
+          <CCardBody>
+            <CChartBar
+              datasets={[
+                {
+                  label: "Lượng Khách Hàng",
+                  backgroundColor: "#f87979",
+                  data: totalByMonth,
+                },
+              ]}
+              labels={dataDay}
+              options={{
+                tooltips: {
+                  enabled: true,
+                },
+              }}
+            />
+          </CCardBody>
+        </CCard>
+        <CCard className="col-3" style={{}}>
+          <table
+            className="table table-striped text-center"
+            style={{ lineHeight: "1.2" }}
+          >
+            <thead style={{ border: "none !important" }}>
+              <tr>
+                <th>Ngày</th>
+                <th>Số lượng </th>
+              </tr>
+            </thead>
+            <tbody style={{ border: "none !important" }}>
+              {dataTable.map((item, index) => {
                 return (
-                  <option value={item} key={item}>
-                    {item}
-                  </option>
+                  <tr key={index}>
+                    <td> {12 * (pageNo - 1) + (index + 1)}</td>
+                    <td>{item}</td>
+                  </tr>
                 );
               })}
-            </select>
-          </div>
-          <div className="col-5">
-            <select
-              id="month"
-              className="form-control"
-              placeholder="Chọn tháng"
-              aria-label="Default select example"
-              onChange={handleChangeMonth}
-            >
-              <option selected disabled>
-                Select month
-              </option>
-              {dataMonth.map((item) => {
-                return (
-                  <option value={item} key={item}>
-                    {item}
-                  </option>
-                );
-              })}
-            </select>
-          </div>
-        </CRow>
-
-        <CCardBody>
-          <CChartBar
-            datasets={[
-              {
-                label: "Lượng Khách Hàng",
-                backgroundColor: "#f87979",
-                data: totalByMonth,
-              },
-            ]}
-            labels={dataDay}
-            options={{
-              tooltips: {
-                enabled: true,
-              },
-            }}
+            </tbody>
+          </table>
+          <CPagination
+            align="center"
+            addListClass="some-class"
+            activePage={pageNo}
+            pages={3}
+            onActivePageChange={setPageno}
           />
-        </CCardBody>
-      </CCard>
-      <CCard style={{}}>
-        <table className=" table table-striped table-bordered">
-          <thead>
-            <tr>
-              <th>
-                Ngày ... Tháng {month} - Năm {year}
-              </th>
-              <th>Số lượng khách theo ngày </th>
-            </tr>
-          </thead>
-          <tbody>
-            {dataTable.map((item, index) => {
-              return (
-                <tr key={item}>
-                  <td> {index + 1}</td>
-                  <td>{item}</td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-        <CPagination
-          align="center"
-          addListClass="some-class"
-          activePage={1}
-          pages={2}
-          onActivePageChange
-        />
-      </CCard>
-    </CCardGroup>
+        </CCard>
+      </CRow>
+    </div>
   );
 }
 

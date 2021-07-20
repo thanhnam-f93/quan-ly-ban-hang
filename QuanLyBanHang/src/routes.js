@@ -13,7 +13,6 @@ import ReturnOrder from "./components/OrderReturn/ReturnOrder";
 import ReturnOrderDetail from "./components/ReturnOrderDetail/ReturnOrderDetail";
 import SaleAddCustomer from "./components/sale/SaleAddCustomer";
 import OrderReturnCustomer from "./components/OrderReturn/OrderReturnCustomer";
-
 /*================== Of Template React =================*/
 const Toaster = React.lazy(() =>
   import("./views/notifications/toaster/Toaster")
@@ -92,6 +91,15 @@ const CustomerList = React.lazy(() =>
 const ListProduct = React.lazy(() =>
   import("./components/ListProduct/ListProduct")
 );
+const FeedBackList = React.lazy(() =>
+  import("./components/Feedback/FeedbackList")
+);
+const FeedBackNew = React.lazy(() =>
+  import("./components/Feedback/FeedBackNew")
+);
+const FeedbackDetail = React.lazy(() =>
+  import("./components/Feedback/FeedbackDetail")
+);
 const Update = React.lazy(() => import("./components/ListProduct/Update"));
 const Create = React.lazy(() => import("./components/ListProduct/Create"));
 
@@ -107,7 +115,9 @@ const CreateSupplier = React.lazy(() =>
   import("./components/ListSupplier/CreateSupplier")
 );
 const Order = React.lazy(() => import("./components/Order/Order"));
-/*================== The End code of Team - Quản lý bán hàng =================*/
+/*================== The End coimport FeedBackNew from './components/Feedback/FeedBackNew';
+de of Team - Quản lý bán hàng =import FeedBackItem from './components/Feedback/FeedBackItem';
+================*/
 
 const routes = [
   /*================== Of Template React =================*/
@@ -257,6 +267,26 @@ const routes = [
     name: "Danh sách",
     component: CustomerList,
   },
+
+  {
+    path: "/feedback/detail",
+    exact: true,
+    name: "Chi tiết",
+    component: FeedbackDetail,
+  },
+  {
+    path: "/feedback/new",
+    exact: true,
+    name: "Thêm mới",
+    component: FeedBackNew,
+  },
+  {
+    path: "/feedback",
+    exact: true,
+    name: "Danh sách",
+    component: FeedBackList,
+  },
+
   /*================== The End code of Team - Quản lý bán hàng =================*/
   /*================== Start code of Team - Quản lý bán hàng =================*/
   { path: "/order", exact: true, name: "danh-sach-don-hang", component: Order },

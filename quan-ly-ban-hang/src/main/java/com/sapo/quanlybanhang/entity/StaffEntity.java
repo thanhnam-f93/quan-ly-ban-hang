@@ -63,5 +63,6 @@ public class StaffEntity {
     @OneToMany(mappedBy = "staffBill")
     private List<BillEntity> billEntities = new ArrayList();
 
-
+//    @OneToMany(mappedBy = "staffEntity")
+//    private List<FeedBackEntity> feedBackEntities = new ArrayList();
 }

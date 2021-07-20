@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.User;
 import java.util.Collection;
 
 public class MyUser extends User {
+
     String fullName;
 
     public MyUser(String username, String password, boolean enabled,
@@ -18,7 +19,14 @@ public class MyUser extends User {
         return fullName;
     }
 
+    public int id;
     public void setFullName(String fullName) {
         this.fullName = fullName;
+    }
+    public void setId(int id){
+        this.id =id;
+    }
+    public int getId(){
+        return id;
     }
 }

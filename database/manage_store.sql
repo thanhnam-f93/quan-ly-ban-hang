@@ -187,7 +187,7 @@ CREATE TABLE `customers` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `phone` (`phone`),
   UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=78 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=82 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -196,39 +196,41 @@ CREATE TABLE `customers` (
 
 LOCK TABLES `customers` WRITE;
 /*!40000 ALTER TABLE `customers` DISABLE KEYS */;
-INSERT INTO `customers` VALUES (25,'0399439339','Nxx@gmail.com','Hà Nội','Nam','2001-02-02','adsa','2021-12-02','Nguyễn Văn a','2000-02-02','Nguyễn Văn v','trần hà phong','on'),(26,'0392439378','N1@gmail.com','Hà Nội','Nu','2002-02-02','adsa','2020-12-02','Nguyễn Văn a','2001-02-02','Nguyễn Văn b','IRON MEN','on'),(27,'0392439369','N2@gmail.com','Hà Nội','Nam','2003-02-02','adsa','2021-02-02','Nguyễn Văn a','2002-02-02','Nguyễn Văn c','HULK','on'),(28,'0392439359','N3@gmail.com','Hà Nội','Nam','2010-02-02','adsa','2020-03-02','Nguyễn Văn a','1977-02-02','Nguyễn Văn d','BAT MAN','on'),(29,'0392439349','N4@gmail.com','Hà Nội','Nam','2004-02-02','adsa','2021-02-02','Nguyễn Văn a','1975-02-02','Nguyễn Văn e','JOCKER','on'),(31,'0332439349','N5@gmail.com','Hà Nội','Nam','2005-02-02','adsa','2020-02-02','Nguyễn Văn a','1988-02-02','Nguyễn Văn f','WONDER WOMEN','on'),(32,'0392439338','N6@gmail.com','Hà Nội','Nam','2006-02-02','adsa','2007-02-02','Nguyễn Văn a','1967-02-02','Nguyễn Văn g','SUPERMAN','on'),(33,'0392439337','N7@gmail.com','Hà Nội','Nam','2007-02-02','adsa','2008-03-02','Nguyễn Văn a','1966-02-02','Nguyễn Văn h','FLASH','on'),(34,'0392439336','N8@gmail.com','Hà Nội','Nu','2008-02-02','adsa','2008-03-02','Nguyễn Văn a','1994-02-02','Nguyễn Văn j','GREEN LATE','on'),(35,'0392439335','N9@gmail.com','Hà Nội','Nam','2013-02-02','adsa','2008-02-02','Nguyễn Văn a','1995-02-02','Nguyễn Văn k','DOCTOR STRANGER','on'),(36,'0392439334','N10@gmail.com','Hà Nội','Nam','2012-02-02','adsa','2014-07-02','Nguyễn Văn a','1995-02-02','Nguyễn Văn l','SPIDER MAN','on'),(37,'0392439333','N22@gmail.com','Hà Nội','Nu','2011-02-02','adsa','2014-08-02','Nguyễn Văn a','1999-02-02','Nguyễn Văn x','THOR','on'),(38,'0392439332','N11@gmail.com','Hà Nội','Nam','1983-02-02','adsa','2014-02-02','Nguyễn Văn a','2006-02-02','Nguyễn Văn z','LOKI','on'),(39,'0392439331','N12@gmail.com','Hà Nội','Nam','1988-02-02','adsa','2014-03-02','Nguyễn Văn a','2009-02-02','Nguyễn Văn b','CAPTAIN AMERICAN','on'),(40,'0392459331','N124@gmail.com','Hà Nội','Nam','1988-02-02','adsa','2014-05-02','Nguyễn Văn a','2009-02-02','Nguyễn Văn b','VU THANH NAM','on'),(41,'0916225588','thanhnam@gmail.com','Nam Dinh','Nam','1993-10-21','It is My Nam','2000-09-11','Nguyen Van an','2010-09-09','Vu VAn Nam','Vu Thanh Nan','on'),(42,'0392439339','thanhnam.humg93@gmail.com','Sai Gon','Nam','2017-06-14','hahahahha','2021-07-13','','2021-07-13','Ngyễn quang phúc','MacBook111','on'),(47,'0916113957','thanhnamw.humg93@gmail.com','266 Doi Can , Ba Dinh , Ha Noi','Nam','1987-05-12','ghi chu them item spring','2021-07-12','Ngyễn quang phúc','2021-07-13','Ngyễn quang phúc','spring 555','on'),(60,'03924393391','thanhnwam.humg93@gmail.com','266 Doi Can , Ba Dinh , Ha Noi','Nu','2021-07-01',NULL,'2021-07-11','Ngyễn quang phúc','2021-07-15','Ngyễn quang phúc','Le Anh Tung','on'),(65,'0392469584','Nwwsw4@gmail.com','Hà Nội','Nam','2004-02-01','adsa','2021-02-01','Nguyễn Văn a','1975-02-01','Nguyễn Văn e','JOCKER','on'),(67,'0392439330','thanham.humg93@gmail.com','Sai Gon','Nu','2021-07-01','44444444','2021-07-13','','2021-07-13','Ngyễn quang phúc','trần hà Binh Le','on'),(68,'0392439311','thanhnam.hdumg93@gmail.com','Sai Gon','Nu','2021-07-02','ddddddddd','2021-07-13','','2021-07-13','Ngyễn quang phúc','MacBook11ss','on'),(69,'0916113958','thanhndam.humg93@gmail.com','Hà Nội','Nu','2021-06-30','dddddddddd','2021-07-13','','2021-07-13','Ngyễn quang phúc','new Customer','on'),(70,'03924393395','thanhndam.humfg93@gmail.com','Hà Nội','Nu','2021-07-03',NULL,'2021-07-13','','2021-07-13','Ngyễn quang phúc','trần hà Binh Le','on'),(71,'0392439999','thanhnam11.humg93@gmail.com','Nghe An','Nu','2021-06-30','hihihi','2021-07-13','','2021-07-13','Ngyễn quang phúc','Super Cat','on'),(72,'09554477889','fdfdff@gmail.com','Hà Nội','Nu','2021-06-27','rêrêrêr','2021-07-13','Ngyễn quang phúc','2021-07-15','Ngyễn quang phúc','fdsfdsfsdfd','on'),(73,'0394555566','Nwwsw34@gmail.com','Hà Nội','Nu','2004-01-31','adsa','2021-01-31','Ngyễn quang phúc','2021-07-15','Nguyễn Văn e','JOCKEeR','on'),(74,'03924393393','thanhn3am.humg93@gmail.com','Hà Nội','Nu','2021-06-30','33333333333333333','2021-07-14','Ngyễn quang phúc','2021-07-15','Ngyễn quang phúc','trần hà Binh Le22222','on'),(75,'03924393321','thanhnam.hum2g93@gmail.com','Sai Gon','Nu','2021-07-01','222222222222222','2021-07-15','','2021-07-15','Ngyễn quang phúc','trần hà Binh Le22222','on'),(76,'0392439344','thanhnam.humg97@gmail.com','266 Doi Can , Ba Dinh , Ha Noi','Nu','2021-06-29','444','2021-07-15','','2021-07-15','Ngyễn quang phúc','MacBook11','on'),(77,'0394555500','Nwwsw734@gmail.com',NULL,NULL,'2004-02-01',NULL,NULL,NULL,'2021-07-15',NULL,'Phuc Nguyen',NULL);
+INSERT INTO `customers` VALUES (25,'0399439339','Nxx@gmail.com','Hà Nội','Nam','2001-02-02','adsa','2021-12-02','Nguyễn Văn a','2000-02-02','Nguyễn Văn v','trần hà phong','on'),(26,'0392439378','N1@gmail.com','Hà Nội','Nu','2002-02-02','adsa','2020-12-02','Nguyễn Văn a','2001-02-02','Nguyễn Văn b','IRON MEN','on'),(27,'0392439369','N2@gmail.com','Hà Nội','Nam','2003-02-02','adsa','2021-02-02','Nguyễn Văn a','2002-02-02','Nguyễn Văn c','HULK','on'),(28,'0392439359','N3@gmail.com','Hà Nội','Nam','2010-02-02','adsa','2020-03-02','Nguyễn Văn a','1977-02-02','Nguyễn Văn d','BAT MAN','on'),(29,'0392439349','N4@gmail.com','Hà Nội','Nam','2004-02-02','adsa','2021-02-02','Nguyễn Văn a','1975-02-02','Nguyễn Văn e','JOCKER','on'),(31,'0332439349','N5@gmail.com','Hà Nội','Nam','2005-02-02','adsa','2020-02-02','Nguyễn Văn a','1988-02-02','Nguyễn Văn f','WONDER WOMEN','on'),(32,'0392439338','N6@gmail.com','Hà Nội','Nam','2006-02-02','adsa','2007-02-02','Nguyễn Văn a','1967-02-02','Nguyễn Văn g','SUPERMAN','on'),(33,'0392439337','N7@gmail.com','Hà Nội','Nam','2007-02-02','adsa','2008-03-02','Nguyễn Văn a','1966-02-02','Nguyễn Văn h','FLASH','on'),(34,'0392439336','N8@gmail.com','Hà Nội','Nu','2008-02-02','adsa','2008-03-02','Nguyễn Văn a','1994-02-02','Nguyễn Văn j','GREEN LATE','on'),(35,'0392439335','N9@gmail.com','Hà Nội','Nam','2013-02-02','adsa','2008-02-02','Nguyễn Văn a','1995-02-02','Nguyễn Văn k','DOCTOR STRANGER','on'),(36,'0392439334','N10@gmail.com','Hà Nội','Nam','2012-02-02','adsa','2014-07-02','Nguyễn Văn a','1995-02-02','Nguyễn Văn l','SPIDER MAN','on'),(37,'0392439333','N22@gmail.com','Hà Nội','Nu','2011-02-02','adsa','2014-08-02','Nguyễn Văn a','1999-02-02','Nguyễn Văn x','THOR','on'),(38,'0392439332','N11@gmail.com','Hà Nội','Nam','1983-02-02','adsa','2014-02-02','Nguyễn Văn a','2006-02-02','Nguyễn Văn z','LOKI','on'),(39,'0392439331','N12@gmail.com','Hà Nội','Nam','1988-02-02','adsa','2014-03-02','Nguyễn Văn a','2009-02-02','Nguyễn Văn b','CAPTAIN AMERICAN','on'),(40,'0392459331','N124@gmail.com','Hà Nội','Nam','1988-02-02','adsa','2014-05-02','Nguyễn Văn a','2009-02-02','Nguyễn Văn b','VU THANH NAM','on'),(41,'0916225588','thanhnam@gmail.com','Nam Dinh','Nam','1993-10-21','It is My Nam','2000-09-11','Nguyen Van an','2010-09-09','Vu VAn Nam','Vu Thanh Nan','on'),(42,'0392439339','thanhnam.humg93@gmail.com','Sai Gon','Nam','2017-06-14','hahahahha','2021-07-13','','2021-07-13','Ngyễn quang phúc','MacBook111','on'),(47,'0916113957','thanhnamw.humg93@gmail.com','266 Doi Can , Ba Dinh , Ha Noi','Nam','1987-05-12','ghi chu them item spring','2021-07-12','Ngyễn quang phúc','2021-07-13','Ngyễn quang phúc','spring 555','on'),(60,'03924393391','thanhnwam.humg93@gmail.com','266 Doi Can , Ba Dinh , Ha Noi','Nu','2021-07-01',NULL,'2021-07-11','Ngyễn quang phúc','2021-07-15','Ngyễn quang phúc','Le Anh Tung','on'),(65,'0392469584','Nwwsw4@gmail.com','Hà Nội','Nam','2004-02-01','adsa','2021-02-01','Nguyễn Văn a','1975-02-01','Nguyễn Văn e','JOCKER','on'),(67,'0392439330','thanham.humg93@gmail.com','Sai Gon','Nu','2021-07-01','44444444','2021-07-13','','2021-07-13','Ngyễn quang phúc','trần hà Binh Le','on'),(68,'0392439311','thanhnam.hdumg93@gmail.com','Sai Gon','Nu','2021-07-02','ddddddddd','2021-07-13','','2021-07-13','Ngyễn quang phúc','MacBook11ss','on'),(69,'0916113958','thanhndam.humg93@gmail.com','Hà Nội','Nu','2021-06-30','dddddddddd','2021-07-13','','2021-07-13','Ngyễn quang phúc','new Customer','on'),(70,'03924393395','thanhndam.humfg93@gmail.com','Hà Nội','Nu','2021-07-03',NULL,'2021-07-13','','2021-07-13','Ngyễn quang phúc','trần hà Binh Le','on'),(71,'0392439999','thanhnam11.humg93@gmail.com','Nghe An','Nu','2021-06-30','hihihi','2021-07-13','','2021-07-13','Ngyễn quang phúc','Super Cat','on'),(72,'09554477889','fdfdff@gmail.com','Hà Nội','Nu','2021-06-27','rêrêrêr','2021-07-13','Ngyễn quang phúc','2021-07-15','Ngyễn quang phúc','fdsfdsfsdfd','on'),(73,'0394555566','Nwwsw34@gmail.com','Hà Nội','Nam','2004-01-30','adsa','2021-01-30','Ngyễn quang phúc','2021-07-16','Nguyễn Văn e','ahihi','on'),(74,'03924393393','thanhn3am.humg93@gmail.com','Hà Nội','Nu','2021-06-30','33333333333333333','2021-07-14','Ngyễn quang phúc','2021-07-15','Ngyễn quang phúc','trần hà Binh Le22222','on'),(75,'03924393321','thanhnam.hum2g93@gmail.com','Sai Gon','Nu','2021-07-01','222222222222222','2021-07-15','','2021-07-15','Ngyễn quang phúc','trần hà Binh Le22222','on'),(76,'0392439344','thanhnam.humg97@gmail.com','266 Doi Can , Ba Dinh , Ha Noi','Nu','2021-06-29','444','2021-07-15','','2021-07-15','Ngyễn quang phúc','MacBook11','on'),(77,'0394555500','Nwwsw734@gmail.com',NULL,NULL,'2004-02-01',NULL,NULL,NULL,'2021-07-15',NULL,'Phuc Nguyen',NULL),(78,'0394551100','Nwwswxcc734@gmail.com',NULL,NULL,'2004-02-01',NULL,NULL,NULL,'2021-07-16',NULL,'Phuc Nguyendddd',NULL),(79,'0394581100','Nwwswxcc234@gmail.com',NULL,NULL,'2004-02-01',NULL,NULL,NULL,'2021-07-16',NULL,'Phuc Nguyendddd',NULL),(80,'0394581101','Nwwswxcc1234@gmail.com',NULL,NULL,'2004-02-01',NULL,NULL,NULL,'2021-07-16',NULL,'Phuc Nguyendddd',NULL),(81,'03924393392','thanhnasm.humg93@gmail.com','Hà Nội','Nam','2021-06-29',NULL,'2021-07-18','','2021-07-18','Ngyễn quang phúc','spring bôtz','on');
 /*!40000 ALTER TABLE `customers` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `feedback`
+-- Table structure for table `feedbacks`
 --
 
-DROP TABLE IF EXISTS `feedback`;
+DROP TABLE IF EXISTS `feedbacks`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `feedback` (
-  `id` int NOT NULL,
-  `customer_id` varchar(45) NOT NULL,
-  `created_date` date NOT NULL,
-  `created_by` int NOT NULL,
-  `content` varchar(250) NOT NULL,
-  `response_type` int NOT NULL,
-  `slove` tinyint NOT NULL,
+CREATE TABLE `feedbacks` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `created_by` varchar(45) NOT NULL,
+  `customer_id` int NOT NULL,
+  `created_date` date DEFAULT NULL,
+  `content` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `slove` varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `title` varchar(45) DEFAULT NULL,
+  `modified_date` date DEFAULT NULL,
+  `modified_by` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `customer_id_idx` (`created_by`),
-  CONSTRAINT `created_by` FOREIGN KEY (`id`) REFERENCES `staff` (`id`),
-  CONSTRAINT `response_type` FOREIGN KEY (`id`) REFERENCES `response` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  KEY `fk_customers` (`customer_id`),
+  CONSTRAINT `fk_customers` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `feedback`
+-- Dumping data for table `feedbacks`
 --
 
-LOCK TABLES `feedback` WRITE;
-/*!40000 ALTER TABLE `feedback` DISABLE KEYS */;
-/*!40000 ALTER TABLE `feedback` ENABLE KEYS */;
+LOCK TABLES `feedbacks` WRITE;
+/*!40000 ALTER TABLE `feedbacks` DISABLE KEYS */;
+INSERT INTO `feedbacks` VALUES (1,'staff2',33,'2009-06-03','ok','ok','title1',NULL,NULL),(2,'staff22',35,'2020-09-09','bad','pendding','title1',NULL,NULL),(3,'staff23',32,'2020-09-09','bad','ok','title3',NULL,NULL),(4,'staff22',33,'2020-09-09','bad','ok','title4',NULL,NULL),(5,'staff21',33,'2020-09-09','bad','pendding','title5',NULL,NULL),(6,'staff21',37,'2020-09-09','bad','pendding','title6',NULL,NULL),(7,'staff22',36,'2009-06-03','bad','pendding','title7',NULL,NULL),(8,'staff23',38,'2009-06-03','ok','pendding','title8',NULL,NULL),(9,'staff23',39,'2009-06-03','ok','ok','title9',NULL,NULL),(10,'namvt',39,'2009-06-02','okvvvvvvvvvvvvzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz','ok','title9',NULL,NULL),(11,'namvt',39,'2009-06-02','okvvss11','ok','title9',NULL,NULL),(12,'Ngyễn quang phúc',68,'2021-07-19','zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz','pendding',NULL,'2021-07-19',''),(13,'Ngyễn quang phúc',47,'2021-07-19','xxxxx','pendding',NULL,'2021-07-19',''),(14,'Ngyễn quang phúc',71,'2021-07-19','cccccccccccccccc','pendding',NULL,'2021-07-19',''),(15,'Ngyễn quang phúc',75,'2021-07-19','hahhahahaha','pendding',NULL,'2021-07-19',''),(16,'Ngyễn quang phúc',71,'2021-07-19','ssssssssss','pendding',NULL,'2021-07-19','');
+/*!40000 ALTER TABLE `feedbacks` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -352,30 +354,6 @@ INSERT INTO `products` VALUES (1,'#A','Áo khoác Chino thời thượng SID5670
 UNLOCK TABLES;
 
 --
--- Table structure for table `response`
---
-
-DROP TABLE IF EXISTS `response`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `response` (
-  `id` int NOT NULL,
-  `name` varchar(45) NOT NULL,
-  `description` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `response`
---
-
-LOCK TABLES `response` WRITE;
-/*!40000 ALTER TABLE `response` DISABLE KEYS */;
-/*!40000 ALTER TABLE `response` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `roles`
 --
 
@@ -467,7 +445,7 @@ UNLOCK TABLES;
 --
 -- Table structure for table `staff_role`
 --
-select * from customers;
+
 DROP TABLE IF EXISTS `staff_role`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
@@ -534,24 +512,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-07-16  5:15:25
-drop procedure getNewCustomersByMonth
-    DELIMITER &&
-CREATE PROCEDURE getNewCustomersByMonth(in m int, in y int)
-BEGIN
-select count(*) as Khach_hang_moi from customers where month(created_date) =m and year(created_date) =y;
-END
-&&
-DELIMITER ;
-call getNewCustomersByMonth(2, 2021);
-call getNewCustomersByDay(1,2, 2021);
-
-drop procedure getNewCustomersByDay
-DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `getNewCustomersByDay`(in d int,in m int, in y int)
-BEGIN
-select count(*) as Khach_hang_moi from customers where day(created_date) = d and month(created_date) =m and year(created_date) =y
-;
-END ;;
-DELIMITER ;
-
+-- Dump completed on 2021-07-20  7:19:18

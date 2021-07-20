@@ -1,5 +1,6 @@
 package com.sapo.quanlybanhang.dto;
 
+import com.sapo.quanlybanhang.entity.FeedBackEntity;
 import com.sapo.quanlybanhang.entity.RoleEntity;
 import lombok.Data;
 
@@ -59,5 +60,7 @@ public class StaffDto {
     private List<String> roleName = new ArrayList();
 
     private List<RoleEntity> roleEntity = new ArrayList<>();
+
+    private List<FeedBackEntity> feedBackEntities = new ArrayList<>();
 
 }
