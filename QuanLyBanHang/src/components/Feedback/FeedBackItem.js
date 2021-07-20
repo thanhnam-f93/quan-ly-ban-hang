@@ -17,6 +17,7 @@ function FeedBackItem({ feedback, index }) {
         <td>{feedback.customerName}</td>
         <td>{feedback.title}</td>
         <td>{feedback.slove}</td>
+        <td>{new Date(feedback.createdDate).toLocaleDateString()}</td>
       </tr>
     </>
   );

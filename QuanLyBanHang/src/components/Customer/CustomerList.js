@@ -4,18 +4,10 @@ import CustomerItem from "./CustomerItem";
 import NavBar from "./NavBar";
 import "../../apis/css.scss";
 import { reactLocalStorage } from "reactjs-localstorage";
-import Select from "react-select";
-import { dataRecord } from "./data";
 import DisplayResultPagination from "./DisplayResultPagination";
 import {
   CPagination,
-  CDropdown,
-  CDropdownItem,
-  CDropdownMenu,
-  CDropdownToggle,
-  CFormGroup,
 } from "@coreui/react";
-import { height } from "dom-helpers";
 function CustomerList() {
   const headers = {
     Authorization: "Bearer " + reactLocalStorage.get("token"),
@@ -62,20 +54,10 @@ function CustomerList() {
       .get(URL, { headers })
       .then((response) => {
         const result = response.data;
-
-        // const totalPage = response.data.totalPage;
         setTotalPage(response.data.totalPages);
         setTotalElements(response.data.totalElements);
-        // console.log("totalPage", totalPage);
-
-        //  const currentPage = result.pageable.pageNumber;
-        //  setPage(currentPage);
-        //   console.log("currentPage", currentPage);
-
         const cus = result.content;
         setCustomers(cus);
-        //    console.log("cus", customers);
-
         setIsLoading(false);
       })
       .catch((error) => {

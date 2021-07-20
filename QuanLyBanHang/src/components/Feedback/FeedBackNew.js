@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { Redirect } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { reactLocalStorage } from "reactjs-localstorage";
 import { dataSlove } from "./../Customer/data";
@@ -72,6 +73,18 @@ function FeedBackNew() {
     console.log(feedback);
   };
   //
+  const handleChangeSlove = () => {
+    console.log("sw ", sw);
+    if (sw) {
+      console.log("true:   ");
+      setFeedback({ ...feedback, slove: "ok" });
+    } else {
+      console.log("false:   ");
+      setFeedback({ ...feedback, slove: "pendding" });
+    }
+
+    console.log(feedback);
+  };
   function ResetForm() {
     const inputs = document.getElementsByTagName("input");
     console.log("input", inputs);
@@ -85,25 +98,39 @@ function FeedBackNew() {
     axios
       .post(APIPost, feedback, { headers })
       .then((response) => {
-        //  ResetForm();
-        Swal.fire("Good job!", "Thêm mới thành công", "success");
-        history.push({
-          pathname: "/feedback",
+        // history.push({
+        //   pathname: "/feedback",
+        // });
+        Swal.fire({
+          position: "top-center",
+          icon: "success",
+          title: "Thêm mới Thành công",
+          showConfirmButton: false,
+          timer: 1000,
         });
-        setFeedback({
-          createdDate: new Date(),
-          modifiedDate: new Date(),
-          createdBy: reactLocalStorage.get("name"),
-          modifiedBy: "",
-          slove: "pendding",
-        });
+        ResetForm();
+        <Redirect
+          to={{
+            pathname: "/feedback/detail",
+            state: { feedback: feedback },
+          }}
+        />;
+        // setFeedback({
+        //   createdDate: new Date(),
+        //   modifiedDate: new Date(),
+        //   createdBy: reactLocalStorage.get("name"),
+        //   modifiedBy: "",
+        //   slove: "pendding",
+        // });
       })
       .catch(function (error) {
         if (error.response) {
           Swal.fire({
-            icon: "error",
-            title: "Warning",
-            text: "Bạn chưa chọn khách hàng !",
+            position: "top-center",
+            icon: "warning",
+            title: "Bạn chưa chọn Khách hàng nào",
+            showConfirmButton: false,
+            timer: 1000,
           });
         }
       });
@@ -120,22 +147,19 @@ function FeedBackNew() {
       setModal(true);
       setPage(1);
       setSearch(vl);
-    }, 1000);
+    }, 500);
     // }
   };
   //
-  const handleChangeSlove = () => {
-    setSw(!sw);
-    const s = sw ? "done" : "pendding";
-    setFeedback({ ...feedback, slove: s });
-    console.log(feedback);
-  };
+
   // const {
   //   register,
   //   handleSubmit,
   //   formState: { errors },
   // } = useForm();
-
+  useEffect(() => {
+    setFeedback({ ...feedback, slove: sw ? "ok" : "pendding" });
+  }, [sw]);
   useEffect(() => {
     getData();
   }, [page, search, limit, name]);
@@ -160,11 +184,7 @@ function FeedBackNew() {
                     placeholder="Tìm kiếm thông tin Khách hàng"
                     value={name}
                     onChange={handleChangeName}
-                    //  onChange={setIsName}
                   />
-                  {/* <div className="search-customer">
-                    <i class="bi bi-search"></i>
-                  </div> */}
                   <Modal
                     modal={modal}
                     setModal={setModal}
@@ -184,10 +204,10 @@ function FeedBackNew() {
                     Tiêu đề
                   </CLabel>
                   <CInput
-                    name="tittle"
+                    name="title"
                     type="text"
                     placeholder="Tiêu đề"
-                    defaultValue={feedback.tittle}
+                    defaultValue={feedback.title}
                     onChange={handleChange}
                   />
                 </CFormGroup>
@@ -202,9 +222,13 @@ function FeedBackNew() {
                     size="lg"
                     labelOn={"\u2713"}
                     labelOff={"\u2715"}
-                    onChange={handleChangeSlove}
-                    defaultChecked={sw}
+                    onChange={() => {
+                      setSw(!sw);
+                      // handleChangeSlove();
+                    }}
+                    defaultChecked={feedback.slove === "ok" ? true : false}
                   />
+                  {feedback.slove}
                 </CFormGroup>
               </CRow>
               <CFormGroup>

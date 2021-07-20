@@ -17,7 +17,7 @@ function DisplayResultPagination({
     // }
   }, []);
   return (
-    <div className="row  font-weight-bold ">
+    <div className="row  font-italic ">
       <span style={{ paddingTop: "10px" }}>Hiển thị &nbsp;</span>
       <div style={{ maxHeight: "34px", minWidth: "80px" }}>
         <Select
@@ -33,9 +33,9 @@ function DisplayResultPagination({
 
       <div style={{ paddingTop: "10px" }}>
         <span>&nbsp; kết quả : Từ &nbsp;</span>&nbsp;
-        {(page - 1) * limit + 1} &nbsp;<span>&nbsp; đến &nbsp; </span>&nbsp;{" "}
-        {page * limit}&nbsp;
-        <span>&nbsp; trên tổng &nbsp; </span>&nbsp; {totalElements}{" "}
+        {(page - 1) * limit + 1} &nbsp;<span>đến </span>&nbsp; {page * limit}
+        &nbsp;
+        <span>&nbsp; trên tổng </span> {totalElements}{" "}
       </div>
     </div>
   );

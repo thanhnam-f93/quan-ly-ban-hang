@@ -1,10 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { useHistory, useLocation } from "react-router-dom";
-import Select from "react-select";
 import Swal from "sweetalert2";
-import { useForm } from "react-hook-form";
 import axios from "axios";
-import { dataSlove } from "./../Customer/data";
 import { reactLocalStorage } from "reactjs-localstorage";
 import {
   CCard,
@@ -18,8 +14,7 @@ import {
   CSwitch,
 } from "@coreui/react";
 function FeedbackDetail(props) {
-  //const history = useHistory();
-  var fb = props.location.state.feedback;
+  const fb = props.location.state.feedback;
   const [feedback, setFeedback] = useState(fb);
   const headers = {
     Authorization: "Bearer " + reactLocalStorage.get("token"),
@@ -27,29 +22,11 @@ function FeedbackDetail(props) {
   const [sw, setSw] = useState(false);
   const handleChangeSlove = () => {
     setSw(!sw);
-    const s = sw ? "done" : "pendding";
+    const s = sw ? "ok" : "pendding";
     setFeedback({ ...feedback, slove: s });
     console.log(feedback);
   };
-  function handleChange(e) {
-    const name = e.target.name;
-    const value = e.target.value;
-    // feedback = { ...feedback, [name]: value };
-    setFeedback({ ...feedback, [name]: value });
-    console.log("feedbackUpdate", feedback);
-  }
-  function handleChangeGender(e) {
-    const value = e.value;
-    // feedback = { ...feedback, gender: value };
-    setFeedback({ ...feedback, gender: value });
-    console.log("feedbackUpdate", feedback);
-  }
   function updatefeedback() {
-    // feedback = {
-    //   ...feedback,
-    //   modifiedDate: new Date().toISOString(),
-    //   modifiedBy: reactLocalStorage.get("name"),
-    // };
     setFeedback({
       ...feedback,
       modifiedDate: new Date().toISOString(),
@@ -71,56 +48,10 @@ function FeedbackDetail(props) {
         Swal.fire({
           icon: "error",
           title: "Warning",
-          text: "Error:",
-          // footer: '<a href="">Why do I have this issue?</a>',
+          text: "Error:" + error,
         });
       });
   }
-  // const {
-  //   register,
-  //   handleSubmit,
-  //   formState: { errors },
-  // } = useForm();
-
-  // function deletefeedback(id) {
-  //   const API = `http://localhost:8080/feedbacks/off/${id}`;
-  //   Swal.fire({
-  //     title: "Are you sure?",
-  //     text: "You won't be able to revert this!",
-  //     icon: "warning",
-  //     showCancelButton: true,
-  //     confirmButtonColor: "#3085d6",
-  //     cancelButtonColor: "#d33",
-  //     confirmButtonText: "Yes, delete it!",
-  //   }).then((result) => {
-  //     if (result.isConfirmed) {
-  //       axios
-  //         .get(API, { headers })
-  //         .then(function (response) {
-  //           Swal.fire("Good job!", "Delete Complete!", "success");
-  //           history.goBack();
-  //         })
-  //         .catch(function (error) {
-  //           Swal.fire({
-  //             icon: "error",
-  //             title: "Error",
-  //             text: "Delete Failure: " + error.response.data,
-  //           });
-  //           console.log(error.response);
-  //         });
-  //       Swal.fire("Deleted!", "Your file has been deleted.", "success");
-  //     }
-  //   });
-  // }
-  function ResetForm() {
-    const inputs = document.getElementsByTagName("input");
-    console.log("input", inputs);
-    for (const input of inputs) {
-      input.value = "";
-    }
-    document.getElementsByTagName("textarea")[0].value = "";
-  }
-
   useEffect(() => {
     // effect
     // return () => {
@@ -140,16 +71,12 @@ function FeedbackDetail(props) {
             <CCardHeader>Thông tin Khách hàng</CCardHeader>
             <CCardBody>
               <CFormGroup>
-                <CLabel htmlFor="name">
-                  Tên{" "}
-                  <span style={{ color: "red", fontWeight: "bolder" }}>*</span>
-                </CLabel>
+                <CLabel htmlFor="name">Tên</CLabel>
                 <CInput
                   name="name"
                   disabled
                   placeholder="Tên khách hàng"
                   defaultValue={feedback.customerName}
-                  onChange={handleChange}
                 />
               </CFormGroup>
               <CRow>
@@ -161,7 +88,6 @@ function FeedbackDetail(props) {
                     disabled
                     placeholder="Tiêu đề"
                     defaultValue={feedback.tittle}
-                    onChange={handleChange}
                   />
                 </CFormGroup>
                 <CFormGroup className="col-6">
@@ -172,16 +98,8 @@ function FeedbackDetail(props) {
                     >
                       Trạng thái
                     </CLabel>
-                    {/* <Select
-                    name="gender"
-                    options={dataSlove}
-                    defaultValue={{
-                      label: feedback.slove,
-                      value: feedback.slove,
-                    }}
-                    onChange={handleChangeGender}
-                  /> */}
                     <CSwitch
+                      style={{ paddingLeft: "100px" }}
                       name="status"
                       className={"mx-1"}
                       size="lg"
@@ -190,7 +108,7 @@ function FeedbackDetail(props) {
                       labelOn={"\u2713"}
                       labelOff={"\u2715"}
                       onChange={handleChangeSlove}
-                      defaultChecked={sw}
+                      defaultChecked={feedback.slove === "true" ? true : false}
                     />
                   </CRow>
                 </CFormGroup>
@@ -204,7 +122,6 @@ function FeedbackDetail(props) {
                   disabled
                   placeholder="Ý kiến Khách hàng"
                   defaultValue={feedback.content}
-                  onChange={handleChange}
                 />
               </CFormGroup>
             </CCardBody>
@@ -262,34 +179,14 @@ function FeedbackDetail(props) {
       </div>
       <div className="row">
         <div className="col-6">
-          {/* <button
-            className="btn btn-primary"
-            onClick={ResetForm}
-            style={{ marginLeft: "10px", backgroundColor: "#0089ff" }}
-          >
-            Hủy
-          </button> */}
           <button
             className="btn btn-primary"
-            // onClick={handleSubmit(updatefeedback)}
             onClick={updatefeedback}
             style={{ marginLeft: "10px", backgroundColor: "#0089ff" }}
           >
             Cập nhật
           </button>
         </div>
-        {/* <div className="col-6">
-          <button
-            style={{
-              marginLeft: "10px",
-              width: "55px",
-              backgroundColor: "#0089ff",
-            }}
-            className="btn btn-primary  float-right"
-          >
-            Xóa
-          </button>
-        </div> */}
       </div>
     </div>
   );

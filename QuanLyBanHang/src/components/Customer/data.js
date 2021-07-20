@@ -1,4 +1,5 @@
 import { reactLocalStorage } from "reactjs-localstorage";
+
 export const dataGender = [
   { value: "", label: "Khác" },
   { value: "Nam", label: "Nam" },
@@ -16,7 +17,7 @@ export const dataRecord = [
   { value: 20, label: "20" },
 ];
 export const dataSlove = [
-  { value: "done", label: "done" },
+  { value: "ok", label: "ok" },
   { value: "pendding", label: "pendding" },
 ];
 export const dataMonth = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
