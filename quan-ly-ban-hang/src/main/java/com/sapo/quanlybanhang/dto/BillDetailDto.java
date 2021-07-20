@@ -10,4 +10,5 @@ public class BillDetailDto {
     private Integer quanlity;
     private Long discount;
     private String productCode;
+    private Long priceProduct;
 }

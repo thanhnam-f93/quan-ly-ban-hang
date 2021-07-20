@@ -111,6 +111,9 @@
             &:last-child{
                 margin-bottom: 30px;
             }
+            &:first-child{
+                
+            }
             input{
                 border:none;
                 border-bottom-style: solid;
@@ -122,13 +125,27 @@
                     border-bottom-style: solid;
                     border-bottom-width: 0.5px;
                     border-bottom-color: black  ;
+                    cursor: pointer;
+                    background-color: #e5e5e5;
+
                 }
                 &:focus{
+                    outline: none;
                     border:none;
-                    outline:none;
                     border-bottom-style: solid;
                     border-bottom-width: 0.5px;
-                    border-bottom-color: black  ;
+                    border-bottom-color: black;
+                    text-align: right;
+                }
+                
+              
+            }
+        }
+        .payment-1-4{
+            input{
+                &:hover{
+                    background-color: white;
+                    cursor:text;
                 }
             }
         }

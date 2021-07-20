@@ -24,7 +24,8 @@ const ChartDashBoard = (props) => {
   
    
     return (
-        <CCardBody>
+      
+        <CCardBody >
         <CChartBar
             datasets={[
               {
@@ -41,6 +42,7 @@ const ChartDashBoard = (props) => {
             }}
           />
            </CCardBody>
+           
      
     );
 }

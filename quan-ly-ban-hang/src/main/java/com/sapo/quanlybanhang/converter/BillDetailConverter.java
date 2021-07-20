@@ -21,6 +21,7 @@ public class BillDetailConverter {
         dto.setProductName(entity.getProductBill().getName());
         dto.setQuanlity(entity.getQuanlity());
         dto.setProductCode(entity.getProductBill().getCode());
+        dto.setPriceProduct(entity.getProductBill().getPrice());
         return dto;
     }
 }

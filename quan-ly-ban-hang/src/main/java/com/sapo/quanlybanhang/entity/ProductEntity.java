@@ -43,7 +43,7 @@ public class ProductEntity {
     private String size;
 
     @Column(name = "price")
-    private float price;
+    private Long price;
 
     @Column(name = "decription")
     private String description;

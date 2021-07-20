@@ -32,15 +32,6 @@ public class CategoryEntity {
     private List<ProductEntity> productEntities;
 
 
-    public CategoryEntity(int id, String code, String name, Date createdDate, Date modifiedDate, String create_by, String modified_by) {
-        this.id = id;
-        this.code = code;
-        this.name = name;
-        this.createdDate = createdDate;
-        this.modifiedDate = modifiedDate;
-        this.create_by = create_by;
-        this.modified_by = modified_by;
-    }
 
     public CategoryEntity() {
     }

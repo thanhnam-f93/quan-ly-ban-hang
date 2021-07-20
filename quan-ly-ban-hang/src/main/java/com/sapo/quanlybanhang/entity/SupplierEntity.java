@@ -1,21 +1,16 @@
 package com.sapo.quanlybanhang.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
 @Entity
 @Table(name = "supplier")
-@NoArgsConstructor
-@Getter
-@Setter
-@AllArgsConstructor
+@Data
 public class SupplierEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,10 +27,10 @@ public class SupplierEntity {
     private String phone;
     @Column(name = "state")
     private String state;
-    @Column(name = "created_date")
+    @Column(name ="created_date")
     @CreationTimestamp
     private Date createdDate;
-    @Column(name = "modified_date")
+    @Column(name ="modified_date")
     private Date modifiedDate;
     @Column(name = "created_by")
     private String createdBy;
@@ -46,5 +41,6 @@ public class SupplierEntity {
     @OneToMany(mappedBy = "supplier", cascade = CascadeType.ALL)
     private List<ProductEntity> productEntities;
 
-
+    public SupplierEntity() {
+    }
 }

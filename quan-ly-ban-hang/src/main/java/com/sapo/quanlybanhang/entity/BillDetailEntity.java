@@ -5,21 +5,21 @@ import lombok.Data;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "bill_details")
+@Table (name = "return_order_details")
 @Data
-public class BillDetailEntity {
+public class BillDetailEntity  {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    private  Integer id;
 
-    @Column(name = "code")
-    private String code;
+    @Column (name = "code")
+    private  String code;
 
     @Column(name = "quanlity")
-    private Integer quanlity;
+    private  Integer quanlity;
 
     @Column(name = "discount")
-    private Long discount;
+    private  Long discount;
 
     @Column(name = "price")
     private Long price;
@@ -29,8 +29,10 @@ public class BillDetailEntity {
     private ProductEntity productBill;
 
     @ManyToOne
-    @JoinColumn(name = "bill_id")
+    @JoinColumn(name = "return_order_id")
     private BillEntity bill;
+
+
 
 
 }

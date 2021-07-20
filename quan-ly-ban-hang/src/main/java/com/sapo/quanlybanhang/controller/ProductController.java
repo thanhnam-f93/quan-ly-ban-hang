@@ -1,10 +1,11 @@
 package com.sapo.quanlybanhang.controller;
 
-import com.sapo.quanlybanhang.dto.InputProductDto;
-import com.sapo.quanlybanhang.dto.OrderPageable;
-import com.sapo.quanlybanhang.dto.ProductDto;
-import com.sapo.quanlybanhang.dto.UpdateDto;
+import com.sapo.quanlybanhang.dto.*;
+import com.sapo.quanlybanhang.entity.ProductEntity;
 import com.sapo.quanlybanhang.service.ProductService;
+import com.sapo.quanlybanhang.service.UploadService;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -12,7 +13,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:3000")
@@ -21,18 +24,23 @@ import java.util.List;
 public class ProductController {
     @Autowired
     private ProductService productService;
+    @Autowired
+    private UploadService uploadService;
 
 
     @GetMapping(value = "/products")
     public List<ProductDto> getAll() {
         return productService.getAll();
     }
+    @GetMapping(value = "/products1")
+    public List<ProductDto> getAll1() {
+        return productService.getAll1();
+    }
 
     @GetMapping(value = "/day")
     public List<ProductDto> filterByDay() {
         return productService.getAllByDay();
     }
-
     @GetMapping(value = "/month")
 
     public List<ProductDto> filterByMonth() {
@@ -83,20 +91,23 @@ public class ProductController {
 //    }
 
     @GetMapping(value = "/productSearch")
-    public List<ProductDto> search(@RequestParam String keyword, @RequestParam String filter, @RequestParam int pageNo, @RequestParam int pageSize) {
-        if (keyword == "" && filter == "") {
-            return productService.findPaginated(pageNo, pageSize);
-        } else if (keyword != "" && filter == "") {
-            return productService.searchByNameAndCode(keyword, pageNo, pageSize);
-        } else if (keyword == "" && filter != "") {
-            return productService.searchByCatePagination(filter, pageNo, pageSize);
-        } else if (keyword != "" && filter != "") {
-            return productService.searchByNameAndCodeByCategoryPagination(filter, keyword, pageNo, pageSize);
-        } else
-            return null;
+    public List<ProductDto> search(@RequestParam String keyword,@RequestParam String filter,@RequestParam int pageNo,@RequestParam int pageSize) {
+       if( keyword =="" && filter=="") {
+           return productService.findPaginated(pageNo, pageSize);
+       }
+       else if(keyword !="" && filter==""){
+           return productService.searchByNameAndCode(keyword,pageNo,pageSize);
+       }
+       else if(keyword =="" && filter !=""){
+           return productService.searchByCatePagination(filter,pageNo,pageSize);
+       }
+       else if (keyword !="" && filter!=""){
+           return productService.searchByNameAndCodeByCategoryPagination(filter,keyword,pageNo,pageSize);
+       }
+       else
+           return  null;
     }
-
-    //    @GetMapping(value = "/productSearchByKey")
+//    @GetMapping(value = "/productSearchByKey")
 //    public List<ProductDto> searchAll(@RequestParam String keyword) {
 //        if( keyword == "" ){
 //            return productService.getAll();
@@ -105,19 +116,23 @@ public class ProductController {
 //            return productService.searchByKey(keyword);
 //        }
 //    }
-    @GetMapping(value = "/productSearchByKey")
-    public List<ProductDto> searchAll(@RequestParam String keyword, @RequestParam String filter) {
-        if (keyword == "" && filter == "") {
-            return productService.getAll();
-        } else if (keyword != "" && filter == "") {
-            return productService.searchByKey(keyword);
-        } else if (keyword == "" && filter != "") {
-            return productService.searchByCate(filter);
-        } else if (keyword != "" && filter != "") {
-            return productService.searchByNameAndCodeByCategory(filter, keyword);
-        } else return null;
-
+@GetMapping(value = "/productSearchByKey")
+public List<ProductDto> searchAll(@RequestParam String keyword,@RequestParam String filter) {
+    if( keyword == "" && filter==""){
+        return productService.getAll();
     }
+    else if (keyword !="" && filter=="") {
+        return productService.searchByKey(keyword);
+    }
+    else if(keyword == "" && filter != ""){
+        return productService.searchByCate(filter);
+    }
+    else if(keyword != "" && filter != ""){
+        return productService.searchByNameAndCodeByCategory(filter,keyword);
+    }
+    else return null;
+
+}
 
 //    @GetMapping(value = "/productss")
 //    public List<ProductDto> searchByName(@RequestParam String keyword) {
@@ -126,42 +141,43 @@ public class ProductController {
 //    }
 
     @GetMapping(value = "/product_searchByCategory/{keyword}")
-    public List<ProductDto> filterByCategory(@PathVariable int keyword) {
+    public List<ProductDto> filterByCategory(@PathVariable int keyword)
+    {
         return productService.searchByCategory(keyword);
     }
-
     @GetMapping(value = "/productsearchByCategory")
-    public List<ProductDto> filterByCategory(@RequestParam String keyword) {
+    public List<ProductDto> filterByCategory(@RequestParam String keyword)
+    {
         return productService.searchByCate(keyword);
     }
 
     @GetMapping(value = "/product_searchByCategories")
-    public List<ProductDto> searchCatePagination(@RequestParam String keyword, @RequestParam int pageNo, @RequestParam int pageSize) {
+    public List<ProductDto> searchCatePagination(@RequestParam String keyword,@RequestParam int pageNo,@RequestParam int pageSize)
+    {
 
-        return productService.searchByCatePagination(keyword, pageNo, pageSize);
+        return productService.searchByCatePagination(keyword,pageNo,pageSize);
     }
-
     @GetMapping(value = "/productsearchByCategories")
-    public List<ProductDto> filterByCategory(@RequestParam int keyword, @RequestParam int pageNo, @RequestParam int pageSize) {
+    public List<ProductDto> filterByCategory(@RequestParam int keyword,@RequestParam int pageNo,@RequestParam int pageSize)
+    {
 
-        return productService.searchByCategories(keyword, pageNo, pageSize);
+        return productService.searchByCategories(keyword,pageNo,pageSize);
     }
 
     @GetMapping(value = "/product")
-    public List<ProductDto> findPaginated(@RequestParam int pageNo, @RequestParam int pageSize) {
+    public List<ProductDto> findPaginated(@RequestParam int pageNo,@RequestParam int pageSize) {
         return productService.findPaginated(pageNo, pageSize);
 
     }
 
     @GetMapping(value = "/productByCategory")
-    public List<ProductDto> searchByNameAndCodeByCategoryPagination(@RequestParam String filter, @RequestParam String keyword, @RequestParam int pageNo, @RequestParam int pageSize) {
-        return productService.searchByNameAndCodeByCategoryPagination(filter, keyword, pageNo, pageSize);
+    public List<ProductDto> searchByNameAndCodeByCategoryPagination(@RequestParam String filter, @RequestParam String keyword, @RequestParam int pageNo,@RequestParam int pageSize) {
+        return productService.searchByNameAndCodeByCategoryPagination(filter,keyword,pageNo,pageSize);
 
     }
-
     @GetMapping(value = "/productByCategorys")
-    public List<ProductDto> searchByNameAndCodeByCategory(@RequestParam String filter, @RequestParam String keyword) {
-        return productService.searchByNameAndCodeByCategory(filter, keyword);
+    public List<ProductDto> searchByNameAndCodeByCategory(@RequestParam String filter,@RequestParam String keyword) {
+        return productService.searchByNameAndCodeByCategory(filter,keyword);
 
     }
 
@@ -171,19 +187,24 @@ public class ProductController {
     }
 
     @PutMapping(value = "/products/{id}")
-    public ResponseEntity<UpdateDto> updateProduct(@PathVariable int id, @RequestBody UpdateDto updateDto) {
+    public ResponseEntity<?> updateProduct(@PathVariable int id, @RequestBody UpdateDto updateDto) {
 
-        productService.updateProduct(id, updateDto);
+      return  productService.updateProduct(id, updateDto);
 
-        return new ResponseEntity<>(HttpStatus.OK);
+//        return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PostMapping("/find-all")
-    public List<ProductDto> findAll(@RequestBody OrderPageable orderPageable) {
+    @PostMapping ("/find-all")
+    public List<ProductDto> findAll(@RequestBody OrderPageable orderPageable){
 
-        Sort sort = Sort.by("createdDate").descending();
-        Pageable pageable = PageRequest.of(orderPageable.getPage() - 1, orderPageable.getLimit(), sort);
-        return productService.findAll(pageable);
-    }
+            Sort sort = Sort.by("createdDate").descending();
+            Pageable pageable = PageRequest.of(orderPageable.getPage()-1,orderPageable.getLimit(),sort);
+            return  productService.findAll(pageable);
+        }
 
+        @PostMapping(value = "/image")
+    public void uploadFile(@RequestParam("file") MultipartFile file) throws IOException {
+            uploadService.uploadFile(file);
+
+        }
 }

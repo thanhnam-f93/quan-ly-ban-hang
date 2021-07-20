@@ -41,5 +41,7 @@ public class OrderDto {
 
     private String customerEmail;
 
+    private Long discount;
+
 
 }

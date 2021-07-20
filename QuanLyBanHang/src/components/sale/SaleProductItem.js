@@ -16,6 +16,7 @@ const SaleProductItem = ({item,index, listProductOption}) => {
  const getAmount =(e)=>{
    let val = e.target.value;
    let exp = /^\d+$/;
+   val = val.replace(/,/g,'');
    if(exp.test(val)){
      let val1 = item.numberProduct;
      if(val>val1){
@@ -40,10 +41,11 @@ const SaleProductItem = ({item,index, listProductOption}) => {
  }
 //  ----------------press button increment amount--------------------
 const incrementAmount =()=>{
-  if (item.numberProduct>itemValue){
-    let val= itemValue;
-    item['amount']=val+1;
-    setItemValue(val+1);
+  var x = parseInt(itemValue);
+  if (item.numberProduct>x){  
+    item['amount']=x+1;
+    console.log("giá trị:",x+1);
+    setItemValue(x+1);
     setAmountChange(!amountChange);
   }
  
@@ -51,7 +53,7 @@ const incrementAmount =()=>{
 
 const decrementAmount =()=>{
   if(itemValue>1){
-    let val = itemValue;
+    let val = parseInt(itemValue);
     item['amount']=val-1;
     setItemValue(val-1);
   }
@@ -72,7 +74,7 @@ const decrementAmount =()=>{
       <td className="h-3">{item.name}</td>
       <td className="h-4 h-4-4">
       <span className = 's-2'><i className="fas fa-arrow-up" onClick = {incrementAmount}></i></span>
-      <span><input type = 'text' value = {FormatMoney(itemValue)}  maxLength = "5" onChange = {(e)=>getAmount(e)}/></span>
+      <span><input type = 'text' value = {FormatMoney(new Number(itemValue))}  maxLength = "5" onChange = {(e)=>getAmount(e)}/></span>
       <span className = 's-2'><i className="fas fa-arrow-down" onClick = {decrementAmount}></i></span>
       </td>
       <td className="h-5">{FormatMoney(item.price)}</td>

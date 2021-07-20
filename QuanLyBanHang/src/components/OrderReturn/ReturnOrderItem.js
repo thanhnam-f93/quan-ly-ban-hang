@@ -15,7 +15,7 @@ const ReturnOrderItem = (props) => {
     }
     const redirectDetail = ()=>{
       const location = {
-        pathname: `/order-detail/${item.id}/2`, 
+        pathname: `/return/return-order-detail/${item.id}`, 
         state:{item:item}  
       }
     history.push (location);

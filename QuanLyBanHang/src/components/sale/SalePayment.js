@@ -9,10 +9,12 @@ import { FormatMoney } from "src/helpers/FormatMoney";
 import { callApi, callApiNotJwt } from "src/apis/ApiCaller";
 import List from "./List";
 import SaleSearchCustomer from "./SaleSearchCustomer";
+import SaleDiscount from "./SaleDiscount";
 const SalePayment = ({ isShowCustomer, setIsShowCustomer }) => {
   const { jwt } = useContext(JwtContext);
   const [isShow, setIsShow] = useState(false);
-  const { productOption, amountChange } = useContext(SalerContext);
+  const { productOption, amountChange, setProductOption } =
+    useContext(SalerContext);
   const handleClose = () => setIsShow(false);
   const [total, setTotal] = useState(0);
   const [MoneyOfCustomer, setMoneyOfCustomer] = useState(0);
@@ -24,48 +26,89 @@ const SalePayment = ({ isShowCustomer, setIsShowCustomer }) => {
   const [orderDto, setOrderDto] = useState();
   const [isShowInfor, setInforCustomer] = useState(false);
   const [inforCustomer, setInforBtn] = useState({});
+  const [isShowDiscount, setIsShowDiscount] = useState(false);
+  const [isCheckTypeDiscount, setTypeDiscount] = useState(false);
+  const [discountConverter, setDiscountConverter] = useState(0);
 
   // const [isShowCustomer, setIsShowCustomer] = useState(false);
   console.log("payment:", isShowCustomer);
   const addCustomer = () => {
     setIsShow(true);
   };
-  console.log("mảng lựa chọn là", productOption);
+  console.log("mảng lựa chọn là", isCheckTypeDiscount);
   useEffect(() => {
     let val = 0;
+    let discountCv = 0;
+    console.log("payment-value of dismount:", dismount);
     for (const ob of productOption) {
       val += ob["amount"] * ob["price"];
     }
     setTotal(val);
     console.log("tổng :", val);
-    console.log("sale payment product:", productOption);
-    setGivedMoney(val - (val * dismount) / 100);
-    setLessMoney(MoneyOfCustomer - givedMoney);
+    if (isCheckTypeDiscount) {
+      setDiscountConverter(dismount);
+      discountCv = dismount;
+    } else {
+      setDiscountConverter((dismount * val) / 100);
+      discountCv = (dismount * val) / 100;
+    }
+    setMoneyOfCustomer(val - discountCv);
+    setGivedMoney(val - discountCv);
+    if (MoneyOfCustomer - givedMoney < 0) {
+      setLessMoney(0);
+    } else {
+      setLessMoney(MoneyOfCustomer - givedMoney);
+    }
+
     if (productOption.length == 0) {
       setDismount(0);
       setMoneyOfCustomer(0);
     }
+    console.log("sale-payment-productOption", productOption);
     var orderDetailDtos = productOption.map((item) => {
+      console.log("item.amount * item.priceProduct",item.price);
       return {
-        discount: item.price,
+        price: item.amount * item.price,
         productId: item.id,
         quanlity: item.amount,
+        // dismount: dismount,
       };
     });
-    setOrderDto({ customId: 1, orderDetailDtos: orderDetailDtos });
-  }, [productOption, total, amountChange, dismount, isShowCustomer, isCheck]);
+    setOrderDto({
+      customerId:inforCustomer.id,
+      discount: discountCv,
+      price: total,
+      orderDetailDtos: orderDetailDtos,
+    });
+  }, [
+    productOption,
+    total,
+    amountChange,
+    dismount,
+    isCheckTypeDiscount,
+    isShowCustomer,
+    isCheck,
+  ]);
 
   const getMoneyOfCustomer = (e) => {
+    console.log("gt", typeof e.target.value);
     let val = e.target.value;
+    val = val.replace(/,/g, "");
+    console.log("giá trị:", val);
     let exp = /^\d+$/;
     if (exp.test(val)) {
       console.log("ok");
+      console.log("val", typeof val);
       setMoneyOfCustomer(FormatMoney(val));
-      setLessMoney(val - givedMoney);
+      if (val - givedMoney < 0) {
+        setLessMoney(0);
+      } else {
+        setLessMoney(val - givedMoney);
+      }
     } else {
       console.log("lỗi");
-      setMoneyOfCustomer(0);
-      setLessMoney(0 - givedMoney);
+      setMoneyOfCustomer(givedMoney);
+      setLessMoney(0);
     }
   };
 
@@ -104,22 +147,9 @@ const SalePayment = ({ isShowCustomer, setIsShowCustomer }) => {
   };
   // -----------------------------validate input----------------------------
   const getDismount = (e) => {
-    let val = e.target.value;
-    let exp = /^\d{1,3}\.?\d*$/;
-    console.log("getDismount", val);
-    if (val > 100) {
-      console.log("not bigger 100");
-      val = 20;
-    } else {
-      if (exp.test(val)) {
-        console.log("ok");
-      } else {
-        console.log("not ok");
-        val = 20;
-      }
-    }
-    setDismount(val);
-    setGivedMoney(total - (total * val) / 100);
+    console.log("payment-discount:", isCheckTypeDiscount);
+    setIsShowDiscount(true);
+    console.log("giá trị của dismount:", dismount);
   };
 
   // -----------------------create bill-----------------------
@@ -128,7 +158,6 @@ const SalePayment = ({ isShowCustomer, setIsShowCustomer }) => {
       alert("Chưa có sản phẩm nào!");
     } else {
       console.log("orderDto,", orderDto);
-      console.log("orderDto", orderDto);
       callApi("orders", "POST", orderDto, jwt).then((response) => {
         if (response.status !== 200) {
           alert("thao tác thất bại");
@@ -138,14 +167,15 @@ const SalePayment = ({ isShowCustomer, setIsShowCustomer }) => {
           alert("thao tác thành công");
           console.log(data.content);
           setCustomer(data.content);
+          setProductOption([]);
         });
       });
     }
   };
 
-  const isShowInforCustomer= ()=>{
+  const isShowInforCustomer = () => {
     setInforCustomer(false);
-  }
+  };
   return (
     <div className="sale-payment">
       <div className="customer">
@@ -162,7 +192,7 @@ const SalePayment = ({ isShowCustomer, setIsShowCustomer }) => {
             </div>
             <span>
               {" "}
-              <i class="fas fa-times" onClick = {isShowInforCustomer}></i>
+              <i class="fas fa-times" onClick={isShowInforCustomer}></i>
             </span>
           </div>
         ) : (
@@ -187,7 +217,14 @@ const SalePayment = ({ isShowCustomer, setIsShowCustomer }) => {
           <div className="search-customer">
             <List
               data={listCustomer}
-              render={(item, index) => <SaleSearchCustomer setInforBtn ={setInforBtn} setIsShowCustomer={setIsShowCustomer}  setShowInfor = {setInforCustomer} item={item} />}
+              render={(item, index) => (
+                <SaleSearchCustomer
+                  setInforBtn={setInforBtn}
+                  setIsShowCustomer={setIsShowCustomer}
+                  setShowInfor={setInforCustomer}
+                  item={item}
+                />
+              )}
             />
           </div>
         ) : (
@@ -204,12 +241,12 @@ const SalePayment = ({ isShowCustomer, setIsShowCustomer }) => {
           <span>{FormatMoney(total)}</span>
         </div>
         <div className="payment-1-2 p-1-1">
-          <span>Chiết khấu(%)</span>
+          <span>Chiết khấu</span>
           <input
             type="text"
-            value={dismount}
-            placeholder="%"
-            onChange={getDismount}
+            value={FormatMoney(parseInt(discountConverter))}
+            placeholder=""
+            onClick={getDismount}
           />
         </div>
         <div className="payment-1-3 p-1-1">
@@ -220,8 +257,7 @@ const SalePayment = ({ isShowCustomer, setIsShowCustomer }) => {
           <span> Tiền khách đưa</span>
           <input
             type="text"
-            class="numeric"
-            value={FormatMoney(MoneyOfCustomer)}
+            value={FormatMoney(new Number(MoneyOfCustomer))}
             onChange={getMoneyOfCustomer}
           />
         </div>
@@ -237,7 +273,16 @@ const SalePayment = ({ isShowCustomer, setIsShowCustomer }) => {
           <span>Thanh Toán</span>
         </div>
       </div>
-      <SaleAddCustomer isShow={isShow} setIsShow={setIsShow} />
+      <SaleAddCustomer setInforBtn = {setInforBtn} isShow={isShow} setIsShow={setIsShow} />
+      <SaleDiscount
+        total={total}
+        setDismount={setDismount}
+        isShowDiscount={isShowDiscount}
+        setIsShowDiscount={setIsShowDiscount}
+        isCheckTypeDiscount={isCheckTypeDiscount}
+        setTypeDiscount={setTypeDiscount}
+        dismount={dismount}
+      />
     </div>
   );
 };

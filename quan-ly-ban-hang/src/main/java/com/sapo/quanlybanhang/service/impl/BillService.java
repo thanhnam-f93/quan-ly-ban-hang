@@ -26,7 +26,7 @@ import java.util.stream.Collectors;
 @Service
 public class BillService implements IBillService {
     public static final String PREFIX = "HOA";
-    public static final Logger logger = LoggerFactory.getLogger(BillService.class);
+    public  static final Logger logger = LoggerFactory.getLogger(BillService.class);
     @Autowired
     private ProductRepository productRepository;
 
@@ -44,55 +44,48 @@ public class BillService implements IBillService {
 
     @Autowired
     private IBillDao billDao;
-
     @Override
     public BillDto save(BillDto billDto) {
         Long price = 0L;
         Long discount = 0L;
-        Integer index = 0;
+        Integer index =0;
         Integer amount = 0;
         List<BillDetailEntity> billDetailEntities = new ArrayList();
         OrderEntity orderEntity = orderRepository.findOneById(billDto.getOrderId());
         BillEntity billEntity = BillConverter.toEntity(billDto);
         List<OrderDetailDto> orderDetailDtos = billDto.getOrderDetailDtos();
-        if (System.currentTimeMillis() > (orderEntity.getCreatedDate().getTime() + 2592000000L)) {
+        if(System.currentTimeMillis()>(orderEntity.getCreatedDate().getTime()+2592000000L)){
             return null;
         }
         List<Integer> odi = orderDetailDtos.stream()
                 .map(item -> item.getId()).collect(Collectors.toList());
         List<OrderDetailEntity> orderDetailEntities = orderDetailRepository.findAllById(odi);
-        for (OrderDetailEntity item : orderDetailEntities) {
+        for(OrderDetailEntity item : orderDetailEntities ){
             OrderDetailDto orderDetailDto = orderDetailDtos.get(index);
-            if (item.getRemainAmount() < orderDetailDto.getAmountPay()) {
+            if(item.getRemainAmount()<orderDetailDto.getAmountPay()){
                 orderDetailDto.setAmountPay(item.getQuanlity());
             }
-            if (item.getRemainAmount() <= 0) {
+            if(item.getRemainAmount()<=0){
                 return null;
             }
-            item.setRemainAmount(item.getRemainAmount() - orderDetailDto.getAmountPay());
-            item.getProduct().setNumberProduct(item.getProduct().getNumberProduct() + orderDetailDto.getAmountPay());
-            discount = checkPrice(orderDetailDto, item, orderEntity);
-            price += discount * orderDetailDto.getAmountPay();
-//            price += orderDetailDto.getAmountPay() * orderDetailDto.getDiscount();
+            item.setRemainAmount(item.getRemainAmount()-orderDetailDto.getAmountPay());
+            item.getProduct().setNumberProduct(item.getProduct().getNumberProduct()+orderDetailDto.getAmountPay());
             BillDetailEntity billDetailEntity = new BillDetailEntity();
-            billDetailEntity.setDiscount(discount);
             billDetailEntity.setBill(billEntity);
-            billDetailEntity.setPrice(discount * orderDetailDto.getAmountPay());
+            billDetailEntity.setPrice(item.getPrice());
             billDetailEntity.setQuanlity(orderDetailDto.getAmountPay());
             billDetailEntity.setProductBill(item.getProduct());
             billDetailEntities.add(billDetailEntity);
-            index += 1;
+            index +=1;
         }
-        StaffEntity staffEntity = staffRepository.findOneByPhone(SecurityUtils.getPrincipal().getUsername());
-        billEntity.setPrice(price);
+        StaffEntity staffEntity =  staffRepository.findOneByPhone(SecurityUtils.getPrincipal().getUsername());
+        billEntity.setPrice(billDto.getPrice());
         billEntity.setCreatedBy(SecurityUtils.getPrincipal().getFullName());
         billEntity.setStaffBill(staffEntity);
         billEntity.setCustomerBill(orderEntity.getCustomer());
         billEntity.setOrderEntity(orderEntity);
         billEntity.setBillDetailEntities(billDetailEntities);
         billEntity.setCreatedDate(new Timestamp(System.currentTimeMillis()));
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyMMddHHmmss");
-        billEntity.setCode(this.PREFIX + LocalDateTime.now().format(formatter));
         billEntity = billRepository.save(billEntity);
 
         return BillConverter.toDto(billEntity);
@@ -101,10 +94,10 @@ public class BillService implements IBillService {
     @Override
     public Long checkPrice(OrderDetailDto dto, OrderDetailEntity entity, OrderEntity orderEntity) {
         Long discount = 0L;
-        if (System.currentTimeMillis() < (orderEntity.getCreatedDate().getTime() + 604800000L)) {
+        if(System.currentTimeMillis()<(orderEntity.getCreatedDate().getTime()+604800000L)){
             discount = dto.getDiscount();
-        } else if (System.currentTimeMillis() < (orderEntity.getCreatedDate().getTime() + 2592000000L)) {
-            discount = dto.getDiscount() * 70 / 100;
+        }else if(System.currentTimeMillis()<(orderEntity.getCreatedDate().getTime()+ 2592000000L)){
+            discount = dto.getDiscount()*70/100;
         }
 
         return discount;
@@ -113,7 +106,7 @@ public class BillService implements IBillService {
     @Override
     public List<BillDto> findAll(Pageable pageable) {
         List<BillEntity> list = billRepository.findAll(pageable).getContent();
-        return list.stream().map(item -> BillConverter.toDto(item)).collect(Collectors.toList());
+        return list.stream().map(item-> BillConverter.toDto(item)).collect(Collectors.toList());
     }
 
     @Override
@@ -129,6 +122,6 @@ public class BillService implements IBillService {
 
     @Override
     public Integer getTotalItem() {
-        return (int) billRepository.count();
+        return (int)billRepository.count();
     }
 }

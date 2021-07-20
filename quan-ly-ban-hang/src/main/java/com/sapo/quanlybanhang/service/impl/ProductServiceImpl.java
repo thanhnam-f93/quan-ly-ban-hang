@@ -4,20 +4,22 @@ import com.sapo.quanlybanhang.converter.Converter;
 import com.sapo.quanlybanhang.converter.ProductConverter;
 import com.sapo.quanlybanhang.dto.InputProductDto;
 import com.sapo.quanlybanhang.dto.ProductDto;
+
 import com.sapo.quanlybanhang.dto.UpdateDto;
 import com.sapo.quanlybanhang.entity.*;
-import com.sapo.quanlybanhang.repository.BrandRepository;
-import com.sapo.quanlybanhang.repository.CategoryRepository;
-import com.sapo.quanlybanhang.repository.ProductRepository;
-import com.sapo.quanlybanhang.repository.SupplierRepository;
+import com.sapo.quanlybanhang.repository.*;
 import com.sapo.quanlybanhang.service.ProductService;
-import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.Repository;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.modelmapper.ModelMapper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,6 +49,17 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public List getAll1() {
+        List<ProductEntity> productEntities = productRepository.getAll1();
+        List<ProductDto> productDtos = new ArrayList<>();
+        Converter converter = new Converter();
+        for (ProductEntity item : productEntities) {
+            productDtos.add(converter.ConverterToDtoProduct(item));
+        }
+        return productDtos;
+    }
+
+    @Override
     public ResponseEntity<?> create(InputProductDto inputProductDTO) {
 
         Converter converter = new Converter();
@@ -58,6 +71,7 @@ public class ProductServiceImpl implements ProductService {
                 .setMatchingStrategy(MatchingStrategies.STRICT);
         ProductEntity productEntity = modelMapper.map(inputProductDTO, ProductEntity.class);
 
+
         if (inputProductDTO.getCode() == "") {
             ProductEntity productEntity1 = productRepository.findFirstByOrderByIdDesc();
             productEntity.setCode(("SKU" + String.valueOf(productEntity1.getId() + 1)));
@@ -65,6 +79,25 @@ public class ProductServiceImpl implements ProductService {
             if (productRepository.existsByCode(inputProductDTO.getCode())) {
                 return ResponseEntity.badRequest().body(new Message(" error : code trung "));
             }
+        }
+        if (inputProductDTO.getName() == "") {
+            return ResponseEntity.badRequest().body(new Message(" error : ma ko dc trong "));
+        }
+
+//        if(inputProductDTO.getNumberProduct() <= 0){
+//            return ResponseEntity.badRequest().body(new Message(" error : so luong ko duoc chong "));
+//        }
+//        if(inputProductDTO.getPrice() == 0){
+//            return ResponseEntity.badRequest().body(new Message(" error : ma ko dc trong "));
+//        }
+        if (inputProductDTO.getCategoryName() == "") {
+            return ResponseEntity.badRequest().body(new Message(" error : loai ko dc trong "));
+        }
+        if (inputProductDTO.getBrandName() == "") {
+            return ResponseEntity.badRequest().body(new Message(" error : nhan hieu ko dc trong "));
+        }
+        if (inputProductDTO.getSupplierName() == "") {
+            return ResponseEntity.badRequest().body(new Message(" error : ko dc trong "));
         }
 
         productEntity.setCategory(categoriesEntity);
@@ -329,20 +362,35 @@ public class ProductServiceImpl implements ProductService {
             return productDtos;
         }
         return null;
-
     }
 
-
     @Override
-    public ProductDto updateProduct(int id, UpdateDto updateDto) {
+    public ResponseEntity<?> updateProduct(int id, UpdateDto updateDto) {
         ProductEntity product = productRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Not found."));
         CategoryEntity categoryEntity = categoryRepository.findByName(updateDto.getCategoryName());
         BrandEntity brandEntity = brandRepository.findByName((updateDto.getBrandName()));
         SupplierEntity supplierEntity = supplierRepository.findByName(updateDto.getSupplierName());
+
+
+//      if(updateDto.getCode() == ""){
+//            ProductEntity productEntity1 = productRepository.findFirstByOrderByIdDesc();
+//            updateDto.setCode(("SKU" + String.valueOf(productEntity1.getId()+1)));
+//        }
+//     else {
+//            if(productRepository.existsByCode(updateDto.getCode())){
+//                return ResponseEntity.badRequest().body(new Message(" error : code trung "));
+//            }
+//        }
+
+        if (updateDto.getName() == "") {
+            return ResponseEntity.badRequest().body(new Message(" error : ma ko dc trong "));
+        }
+
         product.setCode(updateDto.getCode());
         product.setName(updateDto.getName());
         product.setCategory(categoryEntity);
         product.setNumberProduct(updateDto.getNumberProduct());
+        product.setSellProduct(updateDto.getSellProduct());
         product.setPrice(updateDto.getPrice());
         product.setDescription(updateDto.getDescription());
         product.setBrand(brandEntity);
@@ -353,9 +401,10 @@ public class ProductServiceImpl implements ProductService {
         product.setImage(updateDto.getImage());
         productRepository.save(product);
         Converter converter = new Converter();
-        return converter.ConverterToDtoProduct(product);
 
-
+        ProductDto productsDTO = converter.ConverterToDtoProduct(product);
+        return ResponseEntity.ok(productsDTO);
+//        return converter.ConverterToDtoProduct(product);
     }
 
     @Override

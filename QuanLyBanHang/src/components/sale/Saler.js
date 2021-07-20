@@ -42,7 +42,7 @@ const Saler = () => {
   const getAmounts = (amount, item) => {
     for (const ob of productOption) {
       if (ob["id"] == item["id"]) {
-        ob["amount"] = amount;
+        ob["amount"] = parseInt(amount);
       }
     }
   };

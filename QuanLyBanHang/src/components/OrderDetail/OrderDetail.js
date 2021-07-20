@@ -12,8 +12,8 @@ const OrderDetail = () => {
   const customerInfor = reactLocalStorage.getObject('infor');
   const [orderDto, setOrderDto] = useState([]);
   const param = useParams();
-  const {id,type} = param;
-  console.log("orderDetail:"+id+"/"+type);
+  const {id,code,createdDate} = param;
+  console.log("orderDetail:"+id+"/"+code);
   useEffect(() => {
       console.log("types:"+param.id);
       callApiNotJwt(`order-details/${id}`,"GET",jwt)
@@ -34,6 +34,10 @@ const OrderDetail = () => {
   return (
     <div>
       <div className="order-detail">
+        <div className = "order-detail-code">
+          <span>{code}</span>
+          <span>{createdDate}</span>
+        </div>
         <div className="row">
           <div className = "col-lg-8 order-infor">
               <OrderInfor order = {orderDto} />

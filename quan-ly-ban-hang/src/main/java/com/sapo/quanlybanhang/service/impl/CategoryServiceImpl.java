@@ -3,10 +3,14 @@ package com.sapo.quanlybanhang.service.impl;
 import com.sapo.quanlybanhang.converter.Converter;
 import com.sapo.quanlybanhang.dto.CategoryDto;
 import com.sapo.quanlybanhang.dto.ProductDto;
+import com.sapo.quanlybanhang.entity.BrandEntity;
 import com.sapo.quanlybanhang.entity.CategoryEntity;
 import com.sapo.quanlybanhang.entity.ProductEntity;
 import com.sapo.quanlybanhang.repository.CategoryRepository;
+import com.sapo.quanlybanhang.repository.ProductRepository;
 import com.sapo.quanlybanhang.service.CategoryService;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -43,9 +47,20 @@ public class CategoryServiceImpl implements CategoryService {
         categoryDto.setId(categoryEntity.getId());
         categoryDto.setCode(categoryEntity.getCode());
         categoryDto.setName(categoryEntity.getName());
-        categoryDto.setProductDtoList(productDtos);
+//        categoryDto.setProductDtoList(productDtos);
 
-        return categoryDto;
+        return  categoryDto;
+    }
+
+    @Override
+    public CategoryDto create(CategoryDto categoryDto) {
+        ModelMapper modelMapper = new ModelMapper();
+        modelMapper.getConfiguration()
+                .setMatchingStrategy(MatchingStrategies.STRICT);
+        CategoryEntity categoryEntity = modelMapper.map(categoryDto, CategoryEntity.class);
+        categoryRepository.save(categoryEntity);
+        Converter converter = new Converter();
+        return converter.ConverterToDtoCategory(categoryEntity);
     }
 
 

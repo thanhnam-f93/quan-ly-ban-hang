@@ -5,9 +5,20 @@ import "./scss/SaleAddCustomer.scss"
 import ModalDialog from "react-bootstrap/ModalDialog";
 import { CButton } from "@coreui/react";
 import { Modal } from "react-bootstrap";
-const SaleAddCustomer = ({isShow,setIsShow}) => {
+import { callApi } from "src/apis/ApiCaller";
+import { JwtContext } from "src/context/JwtContext";
+import axios from "axios";
+import Swal from "sweetalert2";
+import { reactLocalStorage } from "reactjs-localstorage";
+const APIPost = "http://localhost:8080/customers";
+const headers = {
+    Authorization: "Bearer " + reactLocalStorage.get("token"),
+  };
+const SaleAddCustomer = ({isShow,setIsShow, setInforBtn}) => {
     const [isName,setName]= useState(false);
     const [isPhone,setPhone] = useState(false);
+    const [customerDto, setCustomer] = useState({});
+    const {jwt} = useContext(JwtContext);
 // --------------------------validate input--------------------------
 
 
@@ -18,6 +29,7 @@ const validateName = (e)=>{
         setName(true);
     }else{
        setName(false);
+       setCustomer({...customerDto,name:val});
     }
 }
 
@@ -26,6 +38,7 @@ const validatePhone= (e)=>{
     let exp = /((09|03|07|08|05)+([0-9]{8})\b)/g;
     if(exp.test(val)){
         setPhone(false);
+        setCustomer({...customerDto,phone:val});
     }else{
         console.log("no ok");
         setPhone(true);
@@ -42,10 +55,44 @@ const submit = ()=>{
     }else if(val2=="" || isPhone ==true){
         document.getElementById("input-phone").focus();
         setPhone(true);
+    }else{
+        console.log("customer",customerDto);
+        callApi("customers", "POST", customerDto, jwt).then((response) => {
+            if (response.status !== 200) {
+              alert("tạo thất bại");
+              return;
+            }else{
+              response.json().then((data) => {
+                alert("thao tác thành công");
+                setInforBtn(data);
+               
+              });
+        
+            }
+                  
+          });
     }
+
 }
 
     const handleClose =()=>setIsShow(false);
+    const getDateOfBirth = (e)=>{
+        let val = e.target.value;
+        console.log(val);
+        setCustomer({...customerDto,dateOfBirth:val});
+    }
+
+    const getEmail = (e)=>{
+        let val = e.target.value;
+        setCustomer({...customerDto,email:val});
+    }
+
+    const getAddress = (e)=>{
+        let val = e.target.value;
+        setCustomer({...customerDto,address:val});
+    }
+
+    
   return (
     <Modal
     dialogClassName="modal-90w"
@@ -63,8 +110,8 @@ const submit = ()=>{
     <Modal.Body>
     <div className = "add-customer">
         <div className = 'h-1 h-1-2 '>
-            <span style ={{color:isName ?"red":"#768192"}} id = "p-1">Tên khách hàng</span>
-            <CInput style = {{borderColor:isName ?"red":"#768192"}} id = "input-name" type="text" onChange = {validateName} required  />
+            <p style ={{color:isName ?"red":"#768192"}} id = "p-1">Tên khách hàng</p>
+            <CInput style = {{borderColor:isName ?"red":"#768192"}} id = "input-name" type="text" onChange = {validateName}   />
             {isName ?<span style = {{color:"red",fontSize:"12px"}}>Tên không được để trống</span>:""}
         </div>
         <div className = 'h-1 h-1-2 '>
@@ -74,17 +121,17 @@ const submit = ()=>{
         </div>
         <div className = 'h-1 '>
             <p>Email</p>
-            <CInput type="email"  placeholder="jane.doe@example.com" required />
+            <CInput type="email"  placeholder="jane.doe@example.com" onChange = {getEmail} />
         </div>
         
         <div className = 'h-1 '>
             <p>Ngày sinh</p>
-            <CInput type="date" name="date-input" placeholder="date" />
+            <CInput type="date" name="date-input" placeholder="date" onChange = {getDateOfBirth} />
         </div>
 
         <div className = "h-1 h-1-1">
             <p>Địa chỉ</p>
-            <CInput type="text"  />
+            <CInput type="text" onChange = {getAddress} />
         </div>
     </div>
     </Modal.Body>

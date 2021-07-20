@@ -1,16 +1,13 @@
 package com.sapo.quanlybanhang.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
 
 
 @Entity
-@Table(name = "oder_detail")
+@Table(name = "order_detail")
 @Data
 @EqualsAndHashCode
 @NoArgsConstructor
@@ -28,17 +25,17 @@ public class OrderDetailEntity implements Serializable {
     @Column(name = "discount")
     private Long discount;
 
-    @Column(name = "code")
-    private String code;
+    @Column (name = "code")
+    private  String code;
 
     @ManyToOne
     @JoinColumn(name = "order_id")
     private OrderEntity order;
 
-    @Column(name = "remain_amount")
+    @Column (name = "remain_quantity")
     private Integer remainAmount;
 
-    @Column(name = "price")
+    @Column (name = "price")
     private Long price;
 
     @ManyToOne

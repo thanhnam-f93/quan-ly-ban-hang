@@ -1,5 +1,6 @@
 package com.sapo.quanlybanhang.controller;
 
+import com.sapo.quanlybanhang.dto.BrandDto;
 import com.sapo.quanlybanhang.dto.CategoryDto;
 import com.sapo.quanlybanhang.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,5 +24,10 @@ public class CategoryController {
     public CategoryDto getById(@PathVariable int id) {
 
         return categoryService.findById(id);
+    }
+    @PostMapping(value = "/categories")
+    public CategoryDto create(@RequestBody CategoryDto categoryDto) {
+        categoryService.create(categoryDto);
+        return categoryDto;
     }
 }

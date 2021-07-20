@@ -37,6 +37,7 @@ const ReturnOrder = () => {
     console.log("useeffect:" + orderPageable);
 
     callApi("bill", "post", orderPageable, jwt).then((response) => {
+      console.log("trả về:",response);
       if (response.status !== 200) {
         alert("thao tác thất bại");
         return;
@@ -92,5 +93,6 @@ const ReturnOrder = () => {
     </div>
   );
 };
+
 
 export default ReturnOrder;
