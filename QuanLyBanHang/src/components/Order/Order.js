@@ -6,7 +6,6 @@ import OrderHeader from "./OrderHeader";
 import OrderTable from "./OrderTable";
 import "./scss/order.scss";
 import { CPagination } from "@coreui/react";
-import { DateRangePicker } from "react-date-range";
 import List from "../sale/List";
 import NewNotOrder from "src/helpers/NewNotOrder";
 
