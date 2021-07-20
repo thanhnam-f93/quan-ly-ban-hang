@@ -94,6 +94,7 @@ const CustomerList = React.lazy(() =>
 const ListProduct = React.lazy(() => import('./components/ListProduct/ListProduct'));
 const Update = React.lazy(() => import('./components/ListProduct/Update'));
 const Create = React.lazy(() => import('./components/ListProduct/Create'));
+const StatisticalProduct = React.lazy(() => import('./components/ListProduct/StatisticalProduct'));
 
 /*================== The End code of Team - Quản lý bán hàng =================*/
 
@@ -231,7 +232,7 @@ const routes = [
     name: "List",
     component: CustomerList,
   },
-  /*================== The End code of Team - Quản lý bán hàng =================*/
+  /*================== The End code of Team - Quản lý bán hàng =================*/ 
 /*================== Start code of Team - Quản lý bán hàng =================*/
   { path: '/order', exact: true,  name: 'danh-sach-don-hang', component: Order },
   { path: '/dropdown', exact: true,  name: 'danh-sach-don-hang', component: DropDown },
@@ -247,6 +248,7 @@ const routes = [
   { path: '/supplier', exact: true,  name: 'Supplier', component: ListSupplier },
   { path: '/logins', exact: true,  name: '', component: Logins },
   { path: '/saler', exact: true,  name: 'ban-hang', component: Saler },
+  { path: '/statistical', exact: true,  name: 'Thống kê sản phẩm', component: StatisticalProduct },
 
   
   { path: '/settings', exact: true,  name: 'Cấu hình', component: Setting },

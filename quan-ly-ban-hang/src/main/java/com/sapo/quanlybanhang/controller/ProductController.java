@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+
+import java.sql.Date;
 import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:3000")
@@ -36,6 +38,16 @@ public class ProductController {
     public List<ProductDto> getAll1() {
         return productService.getAll1();
     }
+
+    @GetMapping(value = "/statistical")
+    public List<Object[]> statistical(@RequestParam Date start, @RequestParam Date to) {
+        return productService.statistical(start,to);
+    }
+    @GetMapping(value = "/statisticals")
+    public List<Object[]> statisticalPagination(@RequestParam Date start, @RequestParam Date to,@RequestParam int pageNo,@RequestParam int pageSize) {
+        return productService.statisticalPagination(start,to,pageNo,pageSize);
+    }
+
 
     @GetMapping(value = "/day")
     public List<ProductDto> filterByDay() {

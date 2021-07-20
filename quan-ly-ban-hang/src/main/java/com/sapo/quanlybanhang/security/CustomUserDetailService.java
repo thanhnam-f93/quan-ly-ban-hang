@@ -19,6 +19,7 @@ import java.util.List;
 public class CustomUserDetailService implements UserDetailsService {
     @Autowired
     private StaffRepository staffRepository;
+
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
         StaffEntity staffEntity = staffRepository.findOneByPhone(s);

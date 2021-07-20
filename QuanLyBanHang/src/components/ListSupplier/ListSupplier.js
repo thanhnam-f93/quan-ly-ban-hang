@@ -30,7 +30,7 @@ function ListSupplier(props) {
   const [search, setSearch] = useState("");
   const [supplier, setSupplier] = useState([]);
   const [pageNo, setPageNo] = useState(1);
-  const [pageSize, setPageSize] = useState(5);
+  const [pageSize, setPageSize] = useState(10);
   const [total, setTotal] = useState(1);
 
   const config = {
@@ -89,6 +89,7 @@ const config1 = {
 
   const changeSearch = (event) => {
     setSearch(event.target.value);
+    setPageNo(1)
   };
 
   return (
@@ -110,26 +111,19 @@ const config1 = {
             </CCol>
           </CFormGroup>
         </CRow> */}
-        <CRow>
+        {/* <CRow>
           <CCol xs="7" sm="7">
             <CFormGroup row>
               <CInput
                 name="name"
-                placeholder="tìm kiếm mã, số điện thoại,địa chỉ"
+                placeholder="Tìm kiếm mã, số điện thoại,địa chỉ"
                 onChange={changeSearch}
                 value={search}
               />
             </CFormGroup>
           </CCol>
-          <CCol xs="3" sm="2">
-            <CFormGroup row>
-            <CButton block color="secondary" onClick={cancel}>
-              mặc định
-            </CButton>
-            </CFormGroup>
-          </CCol>
-        </CRow>
-        <CRow>
+        </CRow> */}
+        {/* <CRow>
           <CCol xs="1">
           <CFormGroup row>
           <CButton block color="success" onClick={addCategory}>
@@ -138,6 +132,35 @@ const config1 = {
           </CFormGroup>
          
           
+          </CCol>
+        </CRow> */}
+        <CRow>
+          <CCol xs="12" className="px-0" sm="7">
+            <CRow>
+              <CCol xs="8">
+              <CFormGroup >
+              <CInput
+                name="name"
+                placeholder="Tìm kiếm mã, số điện thoại,địa chỉ"
+                onChange={changeSearch}
+                value={search}
+              /> 
+
+            </CFormGroup>
+
+              </CCol>
+              {/* <CCol xs="4">
+              <Select placeholder="Loại danh mục"  options={filterCategory} onChange={changeFilter} />  
+              </CCol> */}
+            </CRow>
+         
+          </CCol>   
+          <CCol className="px-0 d-flex justify-content-end" xs="12" sm="5">
+          <CCol xs="6"  sm="4" >
+          <CButton onClick={addCategory} style={{background:"#0089ff"}}>
+           Tạo sản phẩm
+            </CButton>
+          </CCol>
           </CCol>
         </CRow>
 

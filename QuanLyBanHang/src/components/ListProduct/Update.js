@@ -423,7 +423,7 @@ function Update(props) {
                   <CLabel htmlFor="vat">Tên <span style={{color:"red"}}>*</span></CLabel>
                   <CInput
                     name="name"
-                    placeholder="DE1234567890"
+                    placeholder="Nhap ten"
                     onChange={changeName}
                     value={name}
                     onBlur={changeonBlurName}
@@ -463,6 +463,7 @@ function Update(props) {
                       <CLabel htmlFor="postal-code">Đã bán</CLabel>
                       <CInput
                     name="sellproduct"
+                    disabled
                     value={sellProduct}
    
                   />
@@ -477,6 +478,7 @@ function Update(props) {
                     id="textarea-input"
                     rows="3"
                     placeholder="mô tả"
+                    disabled
                     onChange={changeDescription}
                   />
                 </CFormGroup>
