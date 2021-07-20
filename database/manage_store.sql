@@ -1,9 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.24, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.21, for Win64 (x86_64)
 --
 -- Host: localhost    Database: manage_store
 -- ------------------------------------------------------
 -- Server version	8.0.21
-
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -201,6 +200,31 @@ INSERT INTO `orders` VALUES (123,'SAPO000123',74,3,'Ngyễn quang phúc',NULL,'2
 UNLOCK TABLES;
 
 --
+-- Table structure for table `permissions`
+--
+
+DROP TABLE IF EXISTS `permissions`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `permissions` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `code` varchar(45) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
+  `name` varchar(45) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `permissions`
+--
+
+LOCK TABLES `permissions` WRITE;
+/*!40000 ALTER TABLE `permissions` DISABLE KEYS */;
+INSERT INTO `permissions` VALUES (1,'VIEW_STAFF','Xem nhân viên'),(2,'CREATE_STAFF','Tạo nhân viên'),(3,'UPDATE_STAFF','Cập nhật nhân viên'),(4,'SEARCH_STAFF','Tìm kiếm nhân viên'),(5,'VIEW_PRODUCT','Xem sản phẩm'),(6,'CREATE_PRODUCT','Tạo sản phẩm'),(7,'UPDATE_PRODUCT','Cập nhật sản phẩm'),(8,'DELETE_PRODUCT','Xóa sản phẩm'),(9,'SEARCH_PRODUCT','Tìm kiếm sản phẩm'),(10,'FILTER_PRODUCT','Lọc sản phẩm'),(11,'VIEW_CUSTOMER','Xem khách hàng'),(12,'CREATE_CUSTOMER','Tạo khách hàng'),(13,'UPDATE_CUSTOMER','Cập nhật khách hàng'),(14,'DELETE_CUSTOMER','Xóa khách hàng'),(15,'SEARCH_CUSTOMER','Tìm kiếm khách hàng'),(16,'FILTER_CUSTOMER','Lọc khách hàng'),(17,'VIEW_ORDER','Xem hóa đơn'),(18,'CREATE_ORDER','Tạo hóa đơn'),(19,'SEARCH_ORDER','Tìm kiếm hóa đơn'),(20,'FILTER_ORDER','Lọc hóa đơn'),(21,'VIEW_STATISTICAL','Xem báo cáo'),(22,'VIEW_ROLE','Xem vai trò'),(23,'CREATE_ROLE','Tạo vai trò'),(24,'UPDATE_ROLE','Cập nhật vai trò');
+/*!40000 ALTER TABLE `permissions` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `products`
 --
 
@@ -317,6 +341,33 @@ INSERT INTO `return_orders` VALUES (76,'RSAPO00076',75,3,NULL,NULL,'2021-07-19 1
 UNLOCK TABLES;
 
 --
+-- Table structure for table `role_permission`
+--
+
+DROP TABLE IF EXISTS `role_permission`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `role_permission` (
+  `role_id` int NOT NULL,
+  `permission_id` int NOT NULL,
+  PRIMARY KEY (`role_id`,`permission_id`),
+  KEY `fk_permission_idx` (`permission_id`),
+  CONSTRAINT `fk_permission` FOREIGN KEY (`permission_id`) REFERENCES `permissions` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `fk_role` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `role_permission`
+--
+
+LOCK TABLES `role_permission` WRITE;
+/*!40000 ALTER TABLE `role_permission` DISABLE KEYS */;
+INSERT INTO `role_permission` VALUES (3,1),(4,1),(3,2),(3,3),(3,4),(3,5),(3,6),(3,7),(3,8),(3,9),(3,10),(3,11),(3,12),(3,13),(3,14),(3,15),(3,16),(3,17),(3,18),(3,19),(3,20),(3,21),(3,22),(3,23),(3,24);
+/*!40000 ALTER TABLE `role_permission` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `roles`
 --
 
@@ -333,7 +384,7 @@ CREATE TABLE `roles` (
   `modified_date` date DEFAULT NULL,
   `modified_by` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -342,7 +393,7 @@ CREATE TABLE `roles` (
 
 LOCK TABLES `roles` WRITE;
 /*!40000 ALTER TABLE `roles` DISABLE KEYS */;
-INSERT INTO `roles` VALUES (1,'nhân viên bán hàng','STAFF_SALE',NULL,NULL,NULL,NULL,NULL),(2,'nhân viên chăm sóc khách hàng','STAFF_CARE',NULL,NULL,NULL,NULL,NULL),(3,'chủ cửa hàng','ADMIN',NULL,NULL,NULL,NULL,NULL);
+INSERT INTO `roles` VALUES (1,'nhân viên bán hàng','STAFF_SALE',NULL,NULL,NULL,NULL,NULL),(2,'nhân viên chăm sóc khách hàng','STAFF_CARE',NULL,NULL,NULL,NULL,NULL),(3,'chủ cửa hàng','ADMIN',NULL,NULL,NULL,NULL,NULL),(4,'Nhan vien xem Staff',NULL,'Chi co quyen xem Staff','2021-07-20','Ngyễn quang phúc',NULL,NULL);
 /*!40000 ALTER TABLE `roles` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -392,7 +443,7 @@ CREATE TABLE `staff` (
   `modified_date` date DEFAULT NULL,
   `modified_by` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -401,7 +452,7 @@ CREATE TABLE `staff` (
 
 LOCK TABLES `staff` WRITE;
 /*!40000 ALTER TABLE `staff` DISABLE KEYS */;
-INSERT INTO `staff` VALUES (1,'Nguyễn Văn a','12345678','Hà Nội','A@gmail.com','123652458','2000-02-02','làm việc','2121-02-02','Admin','Admin',NULL,NULL),(2,'Nguyễn Văn B','12345678','Hà Nội','B@gmail.com','87654321','2000-02-02','làm việc','2021-02-02','Admin','Admin',NULL,NULL),(3,'Ngyễn quang phúc','$2a$10$DYrVLl77vG3V9s3PqCYZUeEi9VBFsVzmCt.1MJTf3V3DpdlaayY3q','Hà Nội','admin@gmail.com','123','2000-02-02','chủ','2020-02-02','Admin','Admin',NULL,NULL);
+INSERT INTO `staff` VALUES (1,'Nguyễn Văn a','12345678','Hà Nội','A@gmail.com','123652458','2000-02-02','làm việc','2121-02-02','Admin','Admin',NULL,NULL),(2,'Nguyễn Văn B','12345678','Hà Nội','B@gmail.com','87654321','2000-02-02','làm việc','2021-02-02','Admin','Admin',NULL,NULL),(3,'Ngyễn quang phúc','$2a$10$DYrVLl77vG3V9s3PqCYZUeEi9VBFsVzmCt.1MJTf3V3DpdlaayY3q','Hà Nội','admin@gmail.com','123','2000-02-02','chủ','2020-02-02','Admin','Admin',NULL,NULL),(4,'Tran Van Binh','$2a$10$vABUxLxxXSo7Nuzuzavg1.70L6JAZadIusX0rpvR6ZZXPFKYdRz0K','Hà Nội','ABC@gmail.com','0376655731','2000-02-03','Đang làm việc','2021-07-20','Ngyễn quang phúc',NULL,NULL,NULL),(5,'Tran Van Cung','$2a$10$qGg9GXRNALvepU/jnqd6oe0hBUFa4uBBXWv8EJWgIieaKYrVTeXGq','Hà Nội','ABC@gmail.com','0376655732','1991-10-17','Đang làm việc','2021-07-20','Ngyễn quang phúc',NULL,NULL,NULL);
 /*!40000 ALTER TABLE `staff` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -429,7 +480,7 @@ CREATE TABLE `staff_role` (
 
 LOCK TABLES `staff_role` WRITE;
 /*!40000 ALTER TABLE `staff_role` DISABLE KEYS */;
-INSERT INTO `staff_role` VALUES (1,1),(2,2),(3,3);
+INSERT INTO `staff_role` VALUES (1,1),(2,2),(3,3),(4,1),(5,4);
 /*!40000 ALTER TABLE `staff_role` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -475,4 +526,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-07-20 19:17:35
+-- Dump completed on 2021-07-21  1:47:55

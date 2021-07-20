@@ -72,10 +72,16 @@ const [errorCheckUnique, setErrorCheckUnique] = useState();
         });
         history.goBack() })
       .catch(function (error) {
+
+        if(error.response.data.status == 403){
+          history.push("/error");
+        }
+
         if(error.response){
           setErrorCheckUnique(error.response.data);
           console.log("ahihi:",error.response.data)
         }
+   
       });
   }
   console.log("binh kiem loi ", errorCheckUnique)
