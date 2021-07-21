@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import querystring from 'query-string';
+import querystring from "query-string";
 import Pagination from "./Pagination";
-import {Link} from 'react-router-dom'
-import "../../apis/css.scss"
+import { Link } from "react-router-dom";
+import "../../apis/css.scss";
 
 import {
   getCategory,
@@ -11,7 +11,6 @@ import {
   getCate,
   Filter,
   ApiQuan,
-
 } from "../../apis/Product";
 import {
   CButton,
@@ -24,84 +23,78 @@ import {
   CInputGroupPrepend,
   CRow,
   CPagination,
-  CCard
+  CCard,
 } from "@coreui/react";
-import swal from 'sweetalert';
+import swal from "sweetalert";
 
 import Select from "react-select";
 
 import axios from "axios";
 import { set } from "react-hook-form";
 
-
 function ListProduct(props) {
   const id = useState(props.match.params.id);
   const [search, setSearch] = useState("");
-  const [option,setOption]= useState("ahihih");
+  const [option, setOption] = useState("ahihih");
   const [filter, setFilter] = useState("");
-  const [product,setProduct] = useState([]);
+  const [product, setProduct] = useState([]);
   const [pageNo, setPageNo] = useState(1);
-  const [pageSize,setPageSize]= useState(10);
-  const [total,setTotal] = useState(1);
-  const [filterCategory, setFilterOptionCategory] = useState([{value:"", label:"tất cả"}]);
+  const [pageSize, setPageSize] = useState(10);
+  const [total, setTotal] = useState(1);
+  const [filterCategory, setFilterOptionCategory] = useState([
+    { value: "", label: "tất cả" },
+  ]);
   const [categories, setCategories] = useState([]);
-  
-  
+
   const config = {
-    method: 'get',
+    method: "get",
     url: `http://localhost:8080/api/v1/productSearch?keyword=${search}&filter=${filter}&pageNo=${pageNo}&pageSize=${pageSize}`,
     headers: {
-        'Authorization': `Bearer ${localStorage.getItem("token")}`,
-        'Content-Type': 'application/json'
-    }
-};
-const config3 = {
-  method: 'get',
-  url: `http://localhost:8080/api/v1/product_searchByCategories?keyword=${search}&pageNo=${pageNo}&pageSize=${pageSize}`,
-  headers: {
-      'Authorization': `Bearer ${localStorage.getItem("token")}`,
-      'Content-Type': 'application/json'
-  }
-};
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+  };
+  const config3 = {
+    method: "get",
+    url: `http://localhost:8080/api/v1/product_searchByCategories?keyword=${search}&pageNo=${pageNo}&pageSize=${pageSize}`,
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+  };
 
-const config1 = {
-  method: 'get',
-  url: `http://localhost:8080/api/v1/productSearchByKey?keyword=${search}&filter=${filter}`,
-  headers: {
-      'Authorization': `Bearer ${localStorage.getItem("token")}`,
-      'Content-Type': 'application/json'
-  }
-};
+  const config1 = {
+    method: "get",
+    url: `http://localhost:8080/api/v1/productSearchByKey?keyword=${search}&filter=${filter}`,
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+  };
 
+  const config2 = {
+    method: "get",
+    url: `http://localhost:8080/api/v1/categories`,
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+  };
 
-const config2 = {
-  method: 'get',
-  url: `http://localhost:8080/api/v1/categories`,
-  headers: {
-      'Authorization': `Bearer ${localStorage.getItem("token")}`,
-      'Content-Type': 'application/json'
-  }
-};
-
-
- useEffect(() => {
-  // axios.get(`http://localhost:8080/api/v1/productSearch?keyword=${search}&pageNo=${pageNo}&pageSize=${pageSize}`)
-   axios(config).then((item) => {
+  useEffect(() => {
+    // axios.get(`http://localhost:8080/api/v1/productSearch?keyword=${search}&pageNo=${pageNo}&pageSize=${pageSize}`)
+    axios(config).then((item) => {
       setProduct(item.data);
-      console.log(item)
+      console.log(item);
     });
-}, [search,pageNo,pageSize,filter]);
+  }, [search, pageNo, pageSize, filter]);
 
-
-useEffect(() => {
- // axios.get(`http://localhost:8080/api/v1/productSearchByKey?keyword=${search}`)
- axios(config1)
-     .then((item) => {
-       setTotal(Math.ceil(item.data.length/pageSize));
-     });
- }, [search,filter]);
-
-
+  useEffect(() => {
+    // axios.get(`http://localhost:8080/api/v1/productSearchByKey?keyword=${search}`)
+    axios(config1).then((item) => {
+      setTotal(Math.ceil(item.data.length / pageSize));
+    });
+  }, [search, filter]);
 
   useEffect(() => {
     axios(config2).then((res) => {
@@ -109,7 +102,6 @@ useEffect(() => {
       console.log(res.data);
     });
   }, []);
-
 
   useEffect(() => {
     categories.map((item) => {
@@ -121,7 +113,6 @@ useEffect(() => {
       //   setPageNo(1);
       // }
     });
-
   }, [categories]);
 
   const addCategory = () => {
@@ -132,64 +123,60 @@ useEffect(() => {
     props.history.push(`product/update-category/${id}`);
   };
 
-
-
   const changeSearch = (event) => {
-    setSearch(event.target.value)
-    setPageNo(1)
-  };
-  const changeFilter =(event)=>{
-    setFilter(event.value)
+    setSearch(event.target.value);
     setPageNo(1);
-  
-    console.log(event.value)
-  }
+  };
+  const changeFilter = (event) => {
+    setFilter(event.value);
+    setPageNo(1);
+
+    console.log(event.value);
+  };
   const cancel = (e) => {
-    setOption("aaaaaaa")
+    setOption("aaaaaaa");
     setFilter("");
     setSearch("");
     setPageNo(1);
   };
 
   return (
-    
     <>
       <div>
-      <CRow>
+        <CRow>
           <CCol xs="12" className="px-0" sm="7">
             <CRow>
               <CCol xs="8">
-              <CFormGroup >
-              <CInput
-                name="name"
-                placeholder="Tìm kiếm theo tên sản phẩm, mã sản phẩm"
-                value={search}
-                onChange={changeSearch}
-              />  
-
-            </CFormGroup>
-
+                <CFormGroup>
+                  <CInput
+                    name="name"
+                    placeholder="Tìm kiếm theo tên sản phẩm, mã sản phẩm"
+                    value={search}
+                    onChange={changeSearch}
+                  />
+                </CFormGroup>
               </CCol>
               <CCol xs="4">
-              <Select placeholder="Loại danh mục"  options={filterCategory} onChange={changeFilter} />  
+                <Select
+                  placeholder="Loại danh mục"
+                  options={filterCategory}
+                  onChange={changeFilter}
+                />
               </CCol>
             </CRow>
-         
-          </CCol>   
+          </CCol>
           <CCol className="px-0 d-flex justify-content-end" xs="12" sm="5">
-          <CCol xs="6"  sm="4" >
-          <CButton onClick={addCategory} style={{background:"#0089ff"}}>
-           Tạo sản phẩm
-            </CButton>
-          </CCol>
+            <CCol xs="6" sm="4">
+              <CButton onClick={addCategory} style={{ background: "#0089ff" }}>
+                Tạo sản phẩm
+              </CButton>
+            </CCol>
           </CCol>
         </CRow>
-        <CRow>
-        </CRow>
+        <CRow></CRow>
 
         <div className="row">
-          <table className=" table" >
-              
+          <table className=" table">
             <thead>
               <tr>
                 <th>Mã</th>
@@ -201,42 +188,41 @@ useEffect(() => {
                 <th>Ngày tạo</th>
               </tr>
             </thead>
-            <tbody >
-            {/* {currentPosts.map((item)  */}
+            <tbody>
+              {/* {currentPosts.map((item)  */}
               {product.map((item) => (
-              
-                 <tr key={item.id} style={{ cursor: "pointer" }} onClick={() => updateCategory(item.id)} className="lits">
-             
-                   <td>
-                    {item.code}
+                <tr
+                  key={item.id}
+                  style={{ cursor: "pointer" }}
+                  onClick={() => updateCategory(item.id)}
+                  className="lits"
+                >
+                  <td>{item.code}</td>
+                  <td>
+                    <img
+                      src={`${process.env.PUBLIC_URL}/image/${item.image}`}
+                      width="40px"
+                      height="40px"
+                    />{" "}
                   </td>
-                <td><img src={`${process.env.PUBLIC_URL}/image/${item.image}`} width="40px" height="40px" />  </td>
-                  <td style={{color:"blue"}} > {item.name}</td>
+                  <td style={{ color: "blue" }}> {item.name}</td>
                   <td>{item.categoryId}</td>
                   <td>{item.brandID}</td>
                   <td>{item.numberProduct}</td>
                   <td>{item.createdDate}</td>
-                  <td>
-                  </td>
-
+                  <td></td>
                 </tr>
-
               ))}
             </tbody>
           </table>
-          
-       
         </div>
-        <div className="row"> 
-
-        <CPagination
+        <div className="row">
+          <CPagination
             activePage={pageNo}
             pages={total}
             onActivePageChange={setPageNo}
           />
-
         </div>
-    
       </div>
     </>
   );

@@ -13,15 +13,15 @@ import java.util.Date;
 public class FeedBackDto {
 
     private int id;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    private Date createdDate = new Date();
+    @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyy-MM-dd")
+    private Date createdDate;
     private String content;
     private String slove;
     private String createdBy;
     private int customerId;
     private String customerName;
     private String title;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyy-MM-dd")
     private Date modifiedDate= new Date();
     private String modifiedBy;
 

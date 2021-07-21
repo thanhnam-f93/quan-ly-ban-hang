@@ -20,6 +20,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
@@ -46,7 +47,7 @@ public class FeedBackController {
         this.staffService = staffService;
     }
 
-
+//    @PreAuthorize("hasAuthority('VIEW_CUSTOMER')")
     @GetMapping("feedbacks/desc/{id}")
     ResponseEntity<?> getByCustomerIdDesc(
             @PathVariable("id") Integer id,
@@ -65,6 +66,7 @@ public class FeedBackController {
         }
         return null;
     }
+//    @PreAuthorize("hasAuthority('VIEW_CUSTOMER')")
     @GetMapping("feedbacks/asc/{id}")
     ResponseEntity<?> getByCustomerIdAsc(
             @PathVariable("id") Integer id,
@@ -121,6 +123,7 @@ public class FeedBackController {
 //        }
 //        return null;
 //    }
+//@PreAuthorize("hasAuthority('VIEW_CUSTOMER')")
     @GetMapping("feedbacks")
     ResponseEntity<?> getByCustomerAndStaffAsc(
             @RequestParam("slove") String slove,
@@ -139,6 +142,7 @@ public class FeedBackController {
         }
         return null;
     }
+//    @PreAuthorize("hasAuthority('VIEW_CUSTOMER')")
     @GetMapping("feedbacks/search")
     ResponseEntity<?> getByCustomerName(
             @RequestParam("customerName") String customerName,
@@ -163,6 +167,7 @@ public class FeedBackController {
         }
        return null;
     }
+//    @PreAuthorize("hasAuthority('VIEW_CUSTOMER')")
     @GetMapping("feedbacks/range")
     ResponseEntity<?> getByCustomerAndStaffAsc(
             @RequestParam("dayBegin") Date begin,
@@ -182,6 +187,7 @@ public class FeedBackController {
         }
         return null;
     }
+//    @PreAuthorize("hasAuthority('VIEW_CUSTOMER')")
     @PostMapping("feedbacks")
     ResponseEntity<?> save(@Valid
 @RequestBody FeedBackDto feedBackDto
@@ -198,6 +204,7 @@ public class FeedBackController {
         }
 
     }
+//    @PreAuthorize("hasAuthority('VIEW_CUSTOMER')")
     @PutMapping("feedback/{id}")
     ResponseEntity<?> update(@Valid @RequestBody FeedBackDto feedBackDto, @PathVariable("id") Integer id) {
 
@@ -225,6 +232,7 @@ public class FeedBackController {
         }
     }
     // @DeleteMapping("feedbacks/{id}")
+//    @PreAuthorize("hasAuthority('VIEW_CUSTOMER')")
     @GetMapping("feedbacks/page")
     ResponseEntity<?> allPage(
             @RequestParam(name = "pageNo", defaultValue = "0") String pageNo,

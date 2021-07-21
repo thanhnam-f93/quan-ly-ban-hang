@@ -5,9 +5,7 @@ import NavBar from "./NavBar";
 import "../../apis/css.scss";
 import { reactLocalStorage } from "reactjs-localstorage";
 import DisplayResultPagination from "./DisplayResultPagination";
-import {
-  CPagination,
-} from "@coreui/react";
+import { CPagination } from "@coreui/react";
 function CustomerList() {
   const headers = {
     Authorization: "Bearer " + reactLocalStorage.get("token"),
@@ -119,10 +117,9 @@ function CustomerList() {
         </tbody>
       </table>
       <div className="row">
-        <div className="col-6 float-left">
+        <div className="col-6 float-left px-0">
           <CPagination
             id="pagination"
-            align="center"
             addListClass="some-class"
             activePage={page}
             pages={totalPage}

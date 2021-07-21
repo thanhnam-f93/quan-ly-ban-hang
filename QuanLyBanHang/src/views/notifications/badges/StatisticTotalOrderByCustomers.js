@@ -99,23 +99,23 @@ function StatisticTotalOrderByCustomers() {
             })}
           </tbody>
         </table>
-        <CRow>
+        <CRow className="row">
           <CPagination
-            className="col-6"
-            align="center"
+            className="col-5 mx-0 px-0"
             addListClass="some-class"
             activePage={pageNo}
             pages={2}
             onActivePageChange={setPageNo}
           />
-          <DisplayResultPagination
-            className="col-6"
-            page={pageNo}
-            setPage={setPageNo}
-            limit={limit}
-            setLimit={setLimit}
-            totalElements={totalRecord}
-          ></DisplayResultPagination>
+          <div className="col-6 right">
+            <DisplayResultPagination
+              page={pageNo}
+              setPage={setPageNo}
+              limit={limit}
+              setLimit={setLimit}
+              totalElements={totalRecord}
+            ></DisplayResultPagination>
+          </div>
         </CRow>
       </CCard>
       {/* <CDropdown className="m-1 float-right offset-8">

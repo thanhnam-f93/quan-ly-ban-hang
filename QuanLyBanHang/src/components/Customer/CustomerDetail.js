@@ -6,7 +6,7 @@ import axios from "axios";
 import { useForm } from "react-hook-form";
 import { dataGender } from "./data";
 import { reactLocalStorage } from "reactjs-localstorage";
-import "./st.css"
+import "./st.css";
 import {
   CCard,
   CCardHeader,
@@ -66,13 +66,13 @@ function CustomerDetail(props) {
   function deleteCustomer(id) {
     const API = `http://localhost:8080/customers/off/${id}`;
     Swal.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
+      title: "Bạn có chắc không?",
+      text: "Thao tác xóa sẽ không thể khôi phục!",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!",
+      confirmButtonText: "Xóa thành công!",
     }).then((result) => {
       if (result.isConfirmed) {
         axios
@@ -109,8 +109,6 @@ function CustomerDetail(props) {
     formState: { errors },
   } = useForm();
 
-
-
   console.log(watch("example")); // you can watch individual input by pass the name of the input
 
   return (
@@ -132,7 +130,7 @@ function CustomerDetail(props) {
                 </CLabel>
                 <CInput
                   {...register("name", {
-                   // required: true,
+                    // required: true,
                     maxLength: 20,
                     minLength: 3,
                     //   pattern: /^[A-Za-z]+$/i,
@@ -172,10 +170,10 @@ function CustomerDetail(props) {
                 </CLabel>
                 <CInput
                   {...register("phone", {
-                  //  required: true,
+                    //  required: true,
                     maxLength: 11,
                     minLength: 10,
-                   // valueAsNumber: true,
+                    // valueAsNumber: true,
                   })}
                   name="phone"
                   type="tel"
@@ -204,7 +202,7 @@ function CustomerDetail(props) {
                 </CLabel>
                 <CInput
                   {...register("email", {
-                 //   required: true,
+                    //   required: true,
                     maxLength: 50,
                     minLength: 5,
                     pattern: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/,
@@ -232,7 +230,7 @@ function CustomerDetail(props) {
                 <CLabel htmlFor="address">Địa chỉ</CLabel>
                 <CInput
                   {...register("address", {
-                   // required: true,
+                    // required: true,
                     maxLength: 50,
                     minLength: 5,
                   })}
