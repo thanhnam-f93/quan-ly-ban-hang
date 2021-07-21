@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./scss/Report.scss";
 import SelectedReport from "./SelectedReport";
 import "react-day-picker/lib/style.css";
@@ -13,12 +13,32 @@ const Report = () => {
   const [startedTime,setStartedTime] = useState(now);
   const [endedTime, setEndedTime] = useState(nows);
   const [stateOption,setStateOption] = useState(1);
-  
+  const [isCheck,setIsCheck] = useState(false);
   function getLabel(isState){
     if(isState===1) return labels[0];
     if(isState===2)return labels[1];
     if(isState===3)return labels[2];
   }
+
+  const getStartedDate = (date) => {
+    if (date != null) {
+      setStartedTime(date);
+    }
+    setIsCheck(!isCheck)
+  };
+
+  const getEndDate = (date) => {
+    if (date != null) {
+      setEndedTime(date);
+    }
+    setIsCheck(!isCheck)
+
+  };
+
+  useEffect(() => {
+    console.log("eff");
+  
+  }, [startedTime, endedTime,isCheck]);
   return (
     <div className="report-wrap">
       <div className="report-option">
@@ -34,12 +54,14 @@ const Report = () => {
                 <span>Ngày bắt đầu</span>
               <DatePicker 
               selected = {startedTime}
+              onChange={getStartedDate}
               />
             </div>
             <div className="header-input-timer-2">
                 <span>Ngày kết thúc</span>
               <DatePicker
                 selected = {endedTime}
+                onChange={getEndDate}
               />
             </div>
           </div>

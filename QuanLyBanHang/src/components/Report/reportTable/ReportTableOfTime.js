@@ -51,7 +51,7 @@ const ReportTableOfTime = ({ startedTime, endedTime }) => {
         });
       }
     });
-  }, []);
+  }, [startedTime, endedTime]);
 
  
   return (
