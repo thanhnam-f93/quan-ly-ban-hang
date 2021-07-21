@@ -1,5 +1,6 @@
 package com.sapo.quanlybanhang.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.sapo.quanlybanhang.entity.FeedBackEntity;
 import com.sapo.quanlybanhang.entity.RoleEntity;
 import lombok.Data;
@@ -35,19 +36,17 @@ public class StaffDto {
     )
     private String phone;
 
-
     @NotNull(message = "DateOfBirth is mandatory")
-//    @DateTimeFormat(pattern = "dd-MM-yyyy")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     @Past(message = "Date input is invalid for a birth date.")
     private Date dateOfBirth;
 
     private String status;
 
-    //    @NotNull(message = "CreatedDate is mandatory")
-//    @Past(message = "Date input is invalid for created Date.")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date createdDate;
 
-    //    @Past(message = "Date input is invalid for modified Date.")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date modifiedDate;
 
     //    @NotBlank(message = "CreateBy is mandatory")

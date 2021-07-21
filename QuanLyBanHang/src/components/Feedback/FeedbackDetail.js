@@ -108,7 +108,7 @@ function FeedbackDetail(props) {
                       labelOn={"\u2713"}
                       labelOff={"\u2715"}
                       onChange={handleChangeSlove}
-                      defaultChecked={feedback.slove === "true" ? true : false}
+                      defaultChecked={feedback.slove === "ok" ? true : false}
                     />
                   </CRow>
                 </CFormGroup>

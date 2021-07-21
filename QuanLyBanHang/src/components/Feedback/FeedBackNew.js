@@ -35,6 +35,7 @@ function FeedBackNew() {
     Authorization: "Bearer " + reactLocalStorage.get("token"),
   };
   const history = useHistory();
+  const { register, handleSubmit, formState: { errors } } = useForm();
   const getData = async () => {
     setCustomers([]);
     const URL = `http://localhost:8080/customers/search?input=${search}&pageNo=${
@@ -73,18 +74,10 @@ function FeedBackNew() {
     console.log(feedback);
   };
   //
-  const handleChangeSlove = () => {
-    console.log("sw ", sw);
-    if (sw) {
-      console.log("true:   ");
-      setFeedback({ ...feedback, slove: "ok" });
-    } else {
-      console.log("false:   ");
-      setFeedback({ ...feedback, slove: "pendding" });
-    }
+  
 
     console.log(feedback);
-  };
+
   function ResetForm() {
     const inputs = document.getElementsByTagName("input");
     console.log("input", inputs);
@@ -98,9 +91,6 @@ function FeedBackNew() {
     axios
       .post(APIPost, feedback, { headers })
       .then((response) => {
-        // history.push({
-        //   pathname: "/feedback",
-        // });
         Swal.fire({
           position: "top-center",
           icon: "success",
@@ -109,19 +99,16 @@ function FeedBackNew() {
           timer: 1000,
         });
         ResetForm();
-        <Redirect
-          to={{
-            pathname: "/feedback/detail",
-            state: { feedback: feedback },
-          }}
-        />;
-        // setFeedback({
-        //   createdDate: new Date(),
-        //   modifiedDate: new Date(),
-        //   createdBy: reactLocalStorage.get("name"),
-        //   modifiedBy: "",
-        //   slove: "pendding",
-        // });
+        history.push({
+          pathname: "/feedback",
+        
+      });
+        // <Redirect
+        //   to={{
+        //     pathname: "/feedback/detail",
+        //     state: { feedback: feedback },
+        //   }}
+        // />;
       })
       .catch(function (error) {
         if (error.response) {
@@ -137,7 +124,7 @@ function FeedBackNew() {
   };
   //
   const handleChangeName = (e) => {
-    // if (e.key === "Enter") {
+ 
     const vl = e.target.value;
     setName(vl);
     if (typingTimeoutRef.current) {
@@ -148,15 +135,9 @@ function FeedBackNew() {
       setPage(1);
       setSearch(vl);
     }, 500);
-    // }
-  };
-  //
 
-  // const {
-  //   register,
-  //   handleSubmit,
-  //   formState: { errors },
-  // } = useForm();
+  };
+
   useEffect(() => {
     setFeedback({ ...feedback, slove: sw ? "ok" : "pendding" });
   }, [sw]);
@@ -204,12 +185,26 @@ function FeedBackNew() {
                     Tiêu đề
                   </CLabel>
                   <CInput
+                    {...register("title", {
+                      required: true,
+                      maxLength: 20,
+                      minLength: 3,
+                    })}
                     name="title"
                     type="text"
                     placeholder="Tiêu đề"
                     defaultValue={feedback.title}
                     onChange={handleChange}
                   />
+                    {errors.title?.type === "required" && (
+                  <p>Không được để trống</p>
+                )}
+                  {errors.title?.type === "maxLength" && (
+                    <p>Độ dài không được vượt quá 20 kí tự</p>
+                  )}
+                  {errors.title?.type === "minLength" && (
+                    <p>Độ dài không được ít hơn 3 kí tự</p>
+                  )}
                 </CFormGroup>
                 <CFormGroup className="col-2">
                   <CLabel htmlFor="tittle" className="font-weight-bolder">
@@ -236,19 +231,22 @@ function FeedBackNew() {
                   Ý kiến Khách hàng
                 </CLabel>
                 <CTextarea
-                  // {...register("note", {
-                  //   required: true,
-                  //   maxLength: 250,
-                  // })}
+                  {...register("content", {
+                    required: true,
+                    maxLength: 250,
+                  })}
                   style={{ height: "120px" }}
                   name="content"
                   placeholder="Ý kiến Khách hàng"
                   defaultValue={feedback.content}
                   onChange={handleChange}
                 />
-                {/* {errors?.note?.type === "maxLength" && (
+   {errors.content?.type === "required" && (
+                  <p>Không được để trống</p>
+                )}
+                {errors?.content?.type === "maxLength" && (
                   <p>Độ dài không được vượt quá 250 kí tự</p>
-                )} */}
+                )}
               </CFormGroup>
             </CCardBody>
           </CCard>

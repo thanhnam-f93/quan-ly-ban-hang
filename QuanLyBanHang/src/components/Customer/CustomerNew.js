@@ -5,7 +5,7 @@ import Swal from "sweetalert2";
 import { useForm } from "react-hook-form";
 import { reactLocalStorage } from "reactjs-localstorage";
 import { dataGender } from "./data";
-import "./st.css";
+ import "./st.css";
 //import DateTimePicker from 'react-datetime-picker';
 import {
   CCard,
@@ -50,7 +50,7 @@ function CustomerNew() {
     }
     document.getElementsByTagName("textarea")[0].value = "";
   }
-  const Save = async () => {
+  const createCustomer = () => {
     console.log("this is cate", customer);
 
     axios
@@ -65,6 +65,10 @@ function CustomerNew() {
           modifiedBy: "",
           status: "on",
         });
+        history.push({
+          pathname: "/customer/detail",
+          state: { customer}
+      });
       })
       .catch(function (error) {
         if (error.response) {
@@ -81,18 +85,7 @@ function CustomerNew() {
       });
   };
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
-
-  // const onSubmit = (data) => {
-  //   alert("Hahahhahah");
-  //   //alert(JSON.stringify(data));
-  // };
-
-  // console.log(watch("example")); // you can watch individual input by pass the name of the input
+  const { register, handleSubmit, formState: { errors } } = useForm();
 
   return (
     <div>
@@ -105,7 +98,7 @@ function CustomerNew() {
             <CCardBody>
               <CRow>
                 <CFormGroup className="col-6">
-                  <CLabel htmlFor="name">Tên</CLabel>
+                  <CLabel htmlFor="name">Tên</CLabel>   <span style={{ color: "red", fontWeight: "bolder" }}>*</span>
                   <CInput
                     {...register("name", {
                       required: true,
@@ -116,19 +109,19 @@ function CustomerNew() {
                     placeholder="Tên khách hàng"
                     onChange={handleChange}
                   />
-                  {/* {errors?.name?.type === "required" && (
+                  {errors.name?.type === "required" && (
                   <p>Không được để trống</p>
-                )} */}
-                  {errors?.name?.type === "maxLength" && (
+                )}
+                  {errors.name?.type === "maxLength" && (
                     <p>Độ dài không được vượt quá 20 kí tự</p>
                   )}
-                  {errors?.name?.type === "minLength" && (
+                  {errors.name?.type === "minLength" && (
                     <p>Độ dài không được ít hơn 3 kí tự</p>
                   )}
-                  {errors?.name?.type === "pattern" && <p>Tên phải là chữ</p>}
+      
                 </CFormGroup>
                 <CFormGroup className="col-6">
-                  <CLabel htmlFor="gender">Giới tính</CLabel>
+                  <CLabel htmlFor="gender">Giới tính</CLabel>   <span style={{ color: "red", fontWeight: "bolder" }}>*</span>
                   <Select
                     name="gender"
                     options={dataGender}
@@ -140,93 +133,93 @@ function CustomerNew() {
               </CRow>
               <CRow>
                 <CFormGroup className="col-6">
-                  <CLabel htmlFor="phone">Số điện thoại</CLabel>
+                  <CLabel htmlFor="phone">Số điện thoại</CLabel>   <span style={{ color: "red", fontWeight: "bolder" }}>*</span>
                   <CInput
-                    // {...register("phone", {
-                    //   required: true,
-                    //   maxLength: 11,
-                    //   minLength: 10,
-                    //   valueAsNumber: true,
-                    // })}
+                    {...register("phone", {
+                      required: true,
+                      maxLength: 11,
+                      minLength: 10,
+                      // valueAsNumber: true,
+                    })}
                     name="phone"
                     type="tel"
                     placeholder="Phone Number"
                     pattern="0[0-9]{9}"
                     onChange={handleChange}
                   />
-                  {errors?.phone?.type === "maxLength" && (
+                  {errors.phone?.type === "maxLength" && (
                     <p>Độ dài không được vượt quá 11 kí tự</p>
                   )}
-                  {errors?.phone?.type === "minLength" && (
+                  {errors.phone?.type === "minLength" && (
                     <p>Độ dài không được ít hơn 10 kí tự</p>
                   )}
-                  {errors?.phone?.type === "valueAsNumber" && (
+                  {/* {errors.phone?.type === "valueAsNumber" && (
                     <p>Yêu cầu phải nhập vào là số</p>
-                  )}
+                  )} */}
                 </CFormGroup>
                 <CFormGroup className="col-6">
-                  <CLabel htmlFor="email">Email</CLabel>
+                  <CLabel htmlFor="email">Email</CLabel>   <span style={{ color: "red", fontWeight: "bolder" }}>*</span>
                   <CInput
-                    // {...register("email", {
-                    //   required: true,
-                    //   maxLength: 50,
-                    //   minLength: 5,
-                    //   pattern: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
-                    // })}
+                    {...register("email", {
+                      required: true,
+                      maxLength: 50,
+                      minLength: 5,
+                      pattern: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+                    })}
                     name="email"
                     placeholder="Email"
                     onChange={handleChange}
                   />
-                  {errors?.email?.type === "required" && (
+                  {errors.email?.type === "required" && (
                     <p>Không được để trống</p>
                   )}
-                  {errors?.email?.type === "maxLength" && (
+                  {errors.email?.type === "maxLength" && (
                     <p>Độ dài không được vượt quá 50 kí tự</p>
                   )}
-                  {errors?.email?.type === "minLength" && (
+                  {errors.email?.type === "minLength" && (
                     <p>Độ dài không được ít hơn 5 kí tự</p>
                   )}
-                  {errors?.email?.type === "pattern" && (
+                  {errors.email?.type === "pattern" && (
                     <p>Email Không đúng định dạng</p>
                   )}
                 </CFormGroup>
               </CRow>
               <CRow>
                 <CFormGroup className="col-6">
-                  <CLabel htmlFor="address">Địa chỉ</CLabel>
+                  <CLabel htmlFor="address">Địa chỉ</CLabel>   <span style={{ color: "red", fontWeight: "bolder" }}>*</span>
                   <CInput
-                    // {...register("address", {
-                    //   required: true,
-                    //   maxLength: 50,
-                    //   minLength: 5,
-                    // })}
+                    {...register("address", {
+                      required: true,
+                      maxLength: 50,
+                      minLength: 5,
+                    })}
                     name="address"
                     placeholder="Địa chỉ"
                     onChange={handleChange}
                   />
-                  {errors?.address?.type === "required" && (
+                  {errors.address?.type === "required" && (
                     <p>Không được để trống</p>
                   )}
-                  {errors?.address?.type === "maxLength" && (
+                  {errors.address?.type === "maxLength" && (
                     <p>Độ dài không được vượt quá 50 kí tự</p>
                   )}
-                  {errors?.address?.type === "minLength" && (
+                  {errors.address?.type === "minLength" && (
                     <p>Độ dài không được ít hơn 5 kí tự</p>
                   )}
                 </CFormGroup>
                 <CFormGroup className="col-6">
-                  <CLabel htmlFor="birthday">Ngày sinh</CLabel>
+                  <CLabel htmlFor="birthday">Ngày sinh</CLabel>   <span style={{ color: "red", fontWeight: "bolder" }}>*</span>
                   <CInput
-                    // {...register("dateOfBirth", {
-                    //   required: true,
-                    // })}
+                    {...register("dateOfBirth", {
+                      required: true,
+                    })}
                     name="dateOfBirth"
                     type="date"
                     max={new Date().toISOString().slice(0, 10)}
                     placeholder="Ngày sinh"
                     onChange={handleChange}
                   />
-                  {errors?.dateOfBirth?.type === "required" && (
+                  {errors.dateOfBirth?.type === "required" && (
                     <p>Không được để trống</p>
                   )}
                 </CFormGroup>
@@ -237,21 +230,21 @@ function CustomerNew() {
                     Thông tin bổ sung về khách hàng
                   </CLabel>
                   <CTextarea
-                    {...register("note", {
-                      required: true,
-                      maxLength: 250,
-                    })}
+                    // {...register("note", {
+                    //   required: true,
+                    //   maxLength: 250,
+                    // })}
                     style={{ height: "100px" }}
                     name="note"
                     placeholder="Ghi chú thông tin Khách hàng"
                     onChange={handleChange}
                   />
-                  {errors?.note?.type === "required" && (
+                  {/* {errors.note?.type === "required" && (
                     <p>Không được để trống</p>
                   )}
-                  {errors?.note?.type === "maxLength" && (
+                  {errors.note?.type === "maxLength" && (
                     <p>Độ dài không được vượt quá 250 kí tự</p>
-                  )}
+                  )} */}
                 </CFormGroup>
               </CRow>
             </CCardBody>
@@ -274,9 +267,9 @@ function CustomerNew() {
         </div>
         <div className="col-6">
           <button
-            type="submit"
+           
             className="btn btn-success"
-            onClick={handleSubmit(Save)}
+            onClick={handleSubmit(createCustomer)}
             style={{ marginLeft: "10px", backgroundColor: "#0089ff" }}
           >
             Thêm mới

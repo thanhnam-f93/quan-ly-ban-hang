@@ -6,6 +6,7 @@ import axios from "axios";
 import { useForm } from "react-hook-form";
 import { dataGender } from "./data";
 import { reactLocalStorage } from "reactjs-localstorage";
+import "./st.css"
 import {
   CCard,
   CCardHeader,
@@ -54,7 +55,7 @@ function CustomerDetail(props) {
         Swal.fire({
           icon: "error",
           title: "Warning" + error.response.status,
-          text: "Error: " + error.response.data,
+          text: "Error: " + error.response.data.phone,
           // footer: '<a href="">Why do I have this issue?</a>',
         });
         console.log("data", error.response.data);
@@ -108,10 +109,7 @@ function CustomerDetail(props) {
     formState: { errors },
   } = useForm();
 
-  // const onSubmit = (data) => {
-  //   alert(JSON.stringify(data));
-  // };
-  // your form submit function which will invoke after successful validation
+
 
   console.log(watch("example")); // you can watch individual input by pass the name of the input
 
@@ -133,12 +131,12 @@ function CustomerDetail(props) {
                   <span style={{ color: "red", fontWeight: "bolder" }}>*</span>
                 </CLabel>
                 <CInput
-                  // {...register("name", {
-                  //   required: true,
-                  //   maxLength: 20,
-                  //   minLength: 3,
-                  //   //   pattern: /^[A-Za-z]+$/i,
-                  // })}
+                  {...register("name", {
+                   // required: true,
+                    maxLength: 20,
+                    minLength: 3,
+                    //   pattern: /^[A-Za-z]+$/i,
+                  })}
                   name="name"
                   placeholder="Tên khách hàng"
                   defaultValue={customer.name}
@@ -173,12 +171,12 @@ function CustomerDetail(props) {
                   <span style={{ color: "red", fontWeight: "bolder" }}>*</span>
                 </CLabel>
                 <CInput
-                  // {...register("phone", {
-                  //   required: true,
-                  //   maxLength: 11,
-                  //   minLength: 10,
-                  //   valueAsNumber: true,
-                  // })}
+                  {...register("phone", {
+                  //  required: true,
+                    maxLength: 11,
+                    minLength: 10,
+                   // valueAsNumber: true,
+                  })}
                   name="phone"
                   type="tel"
                   pattern="[0]{1}[0-9]{9}"
@@ -195,9 +193,9 @@ function CustomerDetail(props) {
                 {errors?.phone?.type === "minLength" && (
                   <p>Độ dài không được ít hơn 10 kí tự</p>
                 )}
-                {errors?.phone?.type === "valueAsNumber" && (
+                {/* {errors?.phone?.type === "valueAsNumber" && (
                   <p>Yêu cầu phải nhập vào là số</p>
-                )}
+                )} */}
               </CFormGroup>
               <CFormGroup>
                 <CLabel htmlFor="email">
@@ -205,12 +203,12 @@ function CustomerDetail(props) {
                   <span style={{ color: "red", fontWeight: "bolder" }}>*</span>
                 </CLabel>
                 <CInput
-                  // {...register("email", {
-                  //   required: true,
-                  //   maxLength: 50,
-                  //   minLength: 5,
-                  //   pattern: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/,
-                  // })}
+                  {...register("email", {
+                 //   required: true,
+                    maxLength: 50,
+                    minLength: 5,
+                    pattern: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/,
+                  })}
                   name="email"
                   type="mail"
                   placeholder="Email"
@@ -233,11 +231,11 @@ function CustomerDetail(props) {
               <CFormGroup>
                 <CLabel htmlFor="address">Địa chỉ</CLabel>
                 <CInput
-                  // {...register("address", {
-                  //   required: true,
-                  //   maxLength: 50,
-                  //   minLength: 5,
-                  // })}
+                  {...register("address", {
+                   // required: true,
+                    maxLength: 50,
+                    minLength: 5,
+                  })}
                   name="address"
                   placeholder="Địa chỉ"
                   defaultValue={customer.address}

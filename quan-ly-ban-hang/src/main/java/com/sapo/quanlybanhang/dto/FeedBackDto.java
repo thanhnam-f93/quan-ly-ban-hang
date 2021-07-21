@@ -1,5 +1,6 @@
 package com.sapo.quanlybanhang.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.sapo.quanlybanhang.entity.CustomerEntity;
 import com.sapo.quanlybanhang.entity.StaffEntity;
 import lombok.AllArgsConstructor;
@@ -12,6 +13,7 @@ import java.util.Date;
 public class FeedBackDto {
 
     private int id;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date createdDate = new Date();
     private String content;
     private String slove;
@@ -19,6 +21,7 @@ public class FeedBackDto {
     private int customerId;
     private String customerName;
     private String title;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date modifiedDate= new Date();
     private String modifiedBy;
 

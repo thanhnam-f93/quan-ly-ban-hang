@@ -33,7 +33,7 @@ const AddStaff = () => {
         )
   }, []);
 
-
+  
   const [staff, setStaff] = useState({ createdDate: new Date(), createBy: localStorage.getItem("name"), roleId: [1], status: "Đang làm việc" })
 
   const getValueSelect = () => {
@@ -84,7 +84,7 @@ const [errorCheckUnique, setErrorCheckUnique] = useState();
    
       });
   }
-  console.log("binh kiem loi ", errorCheckUnique)
+
   /* End - Code */
 
 /* Validation */

@@ -19,7 +19,7 @@ const StaffDetail = (props) => {
   const [roles, setRoles] = useState([]);
 
   useEffect(() => {
-   callApi('get', 'roles')
+   callApi('get', 'listRoles')
       .then(response => { setRoles(response.data) })
       .catch(error =>{
         if(error.response.data.status == 403){

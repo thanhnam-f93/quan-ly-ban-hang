@@ -1,6 +1,7 @@
 package com.sapo.quanlybanhang.dto;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jdk.jfr.Timestamp;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -33,12 +34,17 @@ public class CustomerDto implements Serializable {
     private String gender;
     @Size(min = 5, max = 250, message = "Độ dài của Địa chỉ phải lớn hơn 2 và nhỏ hơn 250 kí tự")
     private String address;
+
     @Past(message = "Ngày sinh không được lớn hơn hiện tại")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date dateOfBirth;
 
     @Past(message = "Date Create must Before Present")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date createdDate;
+
     @Timestamp
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date modifiedDate = new Date();
   //  @NotNull(message = "Không được để trống Create By")
     private String createBy;

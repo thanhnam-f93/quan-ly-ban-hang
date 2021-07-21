@@ -1,5 +1,6 @@
 package com.sapo.quanlybanhang.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.sapo.quanlybanhang.entity.PermissionEntity;
 import com.sapo.quanlybanhang.entity.RoleEntity;
 import lombok.Data;
@@ -21,8 +22,10 @@ public class RoleDto {
 
     private String notes;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date createdDate;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date modifiedDate;
 
     private String createBy;
